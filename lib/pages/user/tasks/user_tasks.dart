@@ -11,6 +11,8 @@ class UserTasks extends StatefulWidget {
 }
 
 class _UserTasksState extends State<UserTasks> {
+  bool _isEmpty = true;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -28,19 +30,59 @@ class _UserTasksState extends State<UserTasks> {
   _buildTaskView() {
     return Panel(
       title: "任务",
-      child: GridView.builder(
-        itemCount: 10,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-          height: 160,
-          crossAxisCount: context.responsive(1, md: 2, lg: 3, xl: 4),
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
+      child: Padding(
+        padding: EdgeInsets.all(
+          context.responsive(8, lg: 32),
         ),
-        itemBuilder: (context, index) {
-          return _buildTaskCard();
-        },
+        child: _isEmpty
+            ? _buildEmpty()
+            : GridView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+                  height: 160,
+                  crossAxisCount: context.responsive(1, md: 2, xl: 3, xxl: 4),
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemBuilder: (context, index) {
+                  return _buildTaskCard();
+                },
+              ),
+      ),
+    );
+  }
+
+  _buildEmpty() {
+    return Container(
+      padding: const EdgeInsets.all(40),
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/images/empty.png",
+            height: 134,
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Text(
+            "当前没有发布活动",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            "定期查看任务中心，不错过任何活动！",
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -52,6 +94,7 @@ class _UserTasksState extends State<UserTasks> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+            width: 92,
             color: Colors.deepPurpleAccent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -90,13 +133,13 @@ class _UserTasksState extends State<UserTasks> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "可兑换500 USDT 灵活适用基金代金券！",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    "可兑换500 USDT 灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！",
+                    style: TextStyle(fontSize: 16, height: 1),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "2023-05-03 01:24(UTC+8)到期",
@@ -104,7 +147,7 @@ class _UserTasksState extends State<UserTasks> {
                       fontSize: 12,
                     ),
                   ),
-                  Spacer(),
+                  // Spacer(),
                   ElevatedButton(
                     onPressed: null,
                     child: Text("已过期"),

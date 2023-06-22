@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const _xs = 576;
 const _sm = 768;
-const _md = 920;
+const _md = 992;
 const _lg = 1200;
 const _xl = 1440;
 
