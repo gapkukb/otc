@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:otc/pages/user/verification/verification.dart';
 
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
@@ -35,16 +33,7 @@ class ResetPassword extends StatelessWidget {
                   height: 64,
                 ),
                 FilledButton(
-                  onPressed: () {
-                    // Navigator.of(context).push(
-                    //   PageRouteBuilder(
-                    //     opaque: false,
-                    //     pageBuilder: (BuildContext context, _, __) =>
-                    //         UserPhoneVerification(),
-                    //   ),
-                    // );
-                    context.push('/bind_f2a');
-                  },
+                  onPressed: () {},
                   child: IgnorePointer(
                     child: Text("下一步"),
                   ),

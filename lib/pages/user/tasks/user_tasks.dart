@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/pages/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/pages/components/panel/panel.dart';
 import 'package:otc/utils/responsive.dart';
+import 'package:otc/widgets/ui_empty_view.dart';
 
 class UserTasks extends StatefulWidget {
   const UserTasks({super.key});
@@ -22,6 +24,14 @@ class _UserTasksState extends State<UserTasks> {
         children: [
           _buildHeader(),
           _buildTaskView(),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                context.push('/phone_verification');
+              },
+              child: Text("忘记密码"),
+            ),
+          )
         ],
       ),
     );
@@ -35,7 +45,10 @@ class _UserTasksState extends State<UserTasks> {
           context.responsive(8, lg: 32),
         ),
         child: _isEmpty
-            ? _buildEmpty()
+            ? const UiEmptyView(
+                title: "当前没有发布活动",
+                subtitle: "定期查看任务中心，不错过任何活动！",
+              )
             : GridView.builder(
                 itemCount: 10,
                 shrinkWrap: true,
@@ -51,38 +64,6 @@ class _UserTasksState extends State<UserTasks> {
                   return _buildTaskCard();
                 },
               ),
-      ),
-    );
-  }
-
-  _buildEmpty() {
-    return Container(
-      padding: const EdgeInsets.all(40),
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            "assets/images/empty.png",
-            height: 134,
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Text(
-            "当前没有发布活动",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            "定期查看任务中心，不错过任何活动！",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ],
       ),
     );
   }

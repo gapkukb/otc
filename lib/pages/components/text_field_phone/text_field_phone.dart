@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/widgets/form/text_filed/text_field.dart';
+import 'package:otc/widgets/ui_text_field.dart';
 
 class TextFieldPhone extends StatelessWidget {
   String code = "+86";

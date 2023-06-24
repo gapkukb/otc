@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/pages/components/text_field_phone/text_field_phone.dart';
-import 'package:otc/widgets/form/text_filed/text_field.dart';
+import 'package:otc/widgets/ui_text_field.dart';
 
 class RegisterMain extends StatefulWidget {
   const RegisterMain({super.key});
