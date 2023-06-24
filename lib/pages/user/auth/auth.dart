@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserAuth extends StatefulWidget {
   const UserAuth({super.key});
@@ -8,26 +9,28 @@ class UserAuth extends StatefulWidget {
 }
 
 class _UserAuthState extends State<UserAuth> {
-  bool _isAuthed = true;
+  bool _isAuthed = false;
+
+  static const List<String> statusText = ["未认证", "审核中", "已完成认证 "];
 
   static List<dynamic> items = [
     {
       "level": "初级认证",
-      "checked": false,
+      "status": 0,
       "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
       "subtitle": "要求：1.姓名    2.年龄    3.身份证",
       "onTap": () {}
     },
     {
       "level": "中级认证",
-      "checked": false,
+      "status": 1,
       "title": "法币限额 200000 USDT 每日，提币限额 5000 USDT 每日",
       "subtitle": "要求：1.手持身份证照片",
       "onTap": () {}
     },
     {
       "level": "高级认证",
-      "checked": false,
+      "status": 2,
       "title": "无限额法币交易，提币限额 10000 USDT 每日",
       "subtitle": "要求：1.手持身份证照片视频",
       "onTap": () {}
@@ -36,10 +39,12 @@ class _UserAuthState extends State<UserAuth> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [_buildUser()],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [_buildUser()],
+      ),
     );
   }
 
@@ -90,7 +95,8 @@ class _UserAuthState extends State<UserAuth> {
                       onTap: _isAuthed
                           ? null
                           : () {
-                              print('object');
+                              // /auth_senior
+                              context.push('/auth_junior');
                             },
                     ),
                   ],
@@ -140,16 +146,19 @@ class _UserAuthState extends State<UserAuth> {
   }
 
   _buildCard(dynamic item) {
+    var isUnAuth = item['status'] == 0;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
-          onTap: item['onTap'],
+          onTap: !isUnAuth ? null : item['onTap'],
+          tileColor: isUnAuth ? null : Colors.blue.withOpacity(0.1),
           isThreeLine: true,
+          contentPadding: const EdgeInsets.only(left: 8),
           leading: SizedBox(
             width: 24,
             child: Checkbox(
-              value: item['checked'],
-              onChanged: (value) {},
+              value: !isUnAuth,
+              onChanged: null,
             ),
           ),
           title: Column(
@@ -179,11 +188,15 @@ class _UserAuthState extends State<UserAuth> {
               color: Colors.grey.shade700,
             ),
           ),
-          trailing: const Row(
+          trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("去认证"),
-              Icon(Icons.arrow_right),
+              Text(
+                statusText[item['status']],
+                style:
+                    TextStyle(color: item['status'] == 1 ? Colors.red : null),
+              ),
+              const Icon(Icons.arrow_right),
             ],
           )),
     );

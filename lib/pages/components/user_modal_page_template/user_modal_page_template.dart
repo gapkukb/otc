@@ -20,54 +20,59 @@ class UserModalPageTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 460,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      legend,
-                      style: const TextStyle(
-                        color: Color(0xff7C7C7C),
+      child: SingleChildScrollView(
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 460,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(0),
+                    title: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        legend,
+                        style: const TextStyle(
+                          color: Color(0xff7C7C7C),
+                        ),
+                      ),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color(0xff0D163A),
+                        ),
+                      ),
+                    ),
+                    trailing: const Opacity(
+                      opacity: 0.2,
+                      child: Icon(
+                        Icons.security,
+                        size: 40,
                       ),
                     ),
                   ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Color(0xff0D163A),
-                      ),
-                    ),
+                  const SizedBox(height: 8),
+                  const Divider(
+                    height: 0.1,
+                    thickness: 0.5,
                   ),
-                  trailing: const Opacity(
-                    opacity: 0.2,
-                    child: Icon(
-                      Icons.security,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Divider(height: 1),
-                const SizedBox(height: 24),
-                ...children,
-                const SizedBox(height: 32),
-                _buildActions(context),
-              ],
+                  const SizedBox(height: 24),
+                  ...children,
+                  const SizedBox(height: 32),
+                  _buildActions(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -82,7 +87,7 @@ class UserModalPageTemplate extends StatelessWidget {
         TextButton(
           child: const Text("取消"),
           onPressed: () {
-            context.pop();
+            if (context.canPop()) context.pop();
           },
         ),
         TextButton(

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
 import 'package:otc/pages/user/auth/auth.dart';
+import 'package:otc/pages/user/auth/auth_junior.dart';
+import 'package:otc/pages/user/auth/auth_primary.dart';
+import 'package:otc/pages/user/auth/auth_senior.dart';
 import 'package:otc/pages/user/bindings/binding_phone.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
 import 'package:otc/pages/user/email_address/email_address.dart';
@@ -112,6 +115,24 @@ final router = GoRouter(
       path: '/bind_f2a',
       pageBuilder: (context, state) => ModalRoutePage(
         const BindingPhone(),
+      ),
+    ),
+    GoRoute(
+      path: '/auth_primary',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const AuthPrimary(),
+      ),
+    ),
+    GoRoute(
+      path: '/auth_junior',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const AuthJunior(),
+      ),
+    ),
+    GoRoute(
+      path: '/auth_senior',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const AuthSenior(),
       ),
     ),
     GoRoute(
