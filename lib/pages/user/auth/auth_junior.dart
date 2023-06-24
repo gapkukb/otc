@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:otc/pages/components/modal/modal.dart';
 import 'package:otc/pages/components/user_modal_page_template/user_modal_page_template.dart';
-import 'package:otc/widgets/ui_file_picker.dart';
+import 'package:otc/widgets/ui_image_picker.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 import 'package:intl/intl.dart';
 
@@ -39,9 +40,14 @@ class _AuthJuniorState extends State<AuthJunior> {
       title: "中级认证",
       nextText: "继续",
       onCompelete: () {
-        setState(() {
-          _isNext = !_isNext;
-        });
+        Modal.show(
+          okText: "完成",
+          title: "您的个人信息上传成功",
+          content: "平台会在48小时内审核完毕！",
+          onOk: () {
+            Navigator.of(context).pop();
+          },
+        );
       },
       children: _isNext ? _buildNext() : _buildPrimary(),
     );
@@ -78,7 +84,30 @@ class _AuthJuniorState extends State<AuthJunior> {
           color: Colors.black45,
         ),
       ),
-      UiFilePicker()
+      const SizedBox(height: 16),
+      const Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Text("身份证正面（人像面）"),
+                SizedBox(height: 8),
+                UiFilePicker(),
+              ],
+            ),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              children: [
+                Text("身份证正面（人像面）"),
+                SizedBox(height: 8),
+                UiFilePicker(),
+              ],
+            ),
+          ),
+        ],
+      ),
     ];
   }
 }

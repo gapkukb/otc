@@ -69,7 +69,7 @@ class UserModalPageTemplate extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   ...children,
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
                   _buildActions(context),
                 ],
               ),

@@ -1,7 +1,12 @@
+library modal;
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:bot_toast/src/toast_widget/animation.dart'
     show loadingAnimation;
 import 'package:flutter/material.dart';
+import 'package:otc/router/router.dart';
+
+part './modal_bottom_sheet_item.dart';
 
 class Modal {
   static const showAnimationWidget = BotToast.showAnimationWidget;
@@ -16,12 +21,16 @@ class Modal {
   static const showText = BotToast.showText;
   static const showWidget = BotToast.showWidget;
 
+  static CancelFunc alert() {
+    return Modal.show();
+  }
+
   static CancelFunc show({
     String okText = "确定",
-    String cancelText = "取消",
+    String? cancelText,
     String title = "温馨提示",
     String content = "",
-    bool asynClose = false,
+    bool asyncClose = false,
     Function()? onOk,
     Function()? onDecline,
   }) {
@@ -32,6 +41,7 @@ class Modal {
       crossPage: false,
       toastBuilder: (cancelFunc) {
         return AlertDialog(
+          actionsPadding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(4),
@@ -40,19 +50,20 @@ class Modal {
           title: Text(title),
           content: Text(content),
           actions: <Widget>[
-            TextButton(
-              child: Text(cancelText),
-              onPressed: () {
-                if (asynClose == false) {
-                  cancelFunc();
-                  onDecline?.call();
-                }
-              },
-            ),
+            if (cancelText != null)
+              TextButton(
+                child: Text(cancelText),
+                onPressed: () {
+                  if (asyncClose == false) {
+                    cancelFunc();
+                    onDecline?.call();
+                  }
+                },
+              ),
             TextButton(
               child: Text(okText),
               onPressed: () {
-                if (asynClose == false) {
+                if (asyncClose == false) {
                   cancelFunc();
                   onOk?.call();
                 }
@@ -63,4 +74,6 @@ class Modal {
       },
     );
   }
+
+  static const showBottomSheet = modalShowBottomSheet;
 }
