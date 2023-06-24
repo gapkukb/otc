@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Countdown extends StatefulWidget {
@@ -42,17 +41,17 @@ class _CountdownState extends State<Countdown> with WidgetsBindingObserver {
         title: const Text(''),
       ),
       body: Center(
-        child: CountdownTimer(
-          endTime: endTime,
-          widgetBuilder: (_, time) {
-            if (time == null) {
-              return Text('Game over');
-            }
-            return Text(
-                'days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
-          },
-        ),
-      ),
+          // child: CountdownTimer(
+          //   endTime: endTime,
+          //   widgetBuilder: (_, time) {
+          //     if (time == null) {
+          //       return Text('Game over');
+          //     }
+          //     return Text(
+          //         'days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
+          //   },
+          // ),
+          ),
     );
   }
 }
