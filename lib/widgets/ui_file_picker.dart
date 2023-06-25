@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,6 +55,8 @@ class _UiFilePickerState extends State<UiFilePicker> {
           final result = await picker.pickImage(
             source: source,
             imageQuality: 80,
+            maxWidth: 1080,
+            maxHeight: 720,
           );
           if (result != null) {
             setState(() {
@@ -148,15 +148,30 @@ class _UiFilePickerState extends State<UiFilePicker> {
                       wantKeepAlive: false,
                     ),
                     Positioned(
-                      bottom: 16,
+                      left: 16,
                       right: 16,
-                      child: MaterialButton(
-                        minWidth: 0,
-                        visualDensity: VisualDensity.compact,
-                        color: Colors.redAccent,
-                        textColor: Colors.white,
-                        onPressed: _crop,
-                        child: const Text("编辑"),
+                      bottom: 16,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MaterialButton(
+                            minWidth: 0,
+                            visualDensity: VisualDensity.compact,
+                            color: Colors.redAccent,
+                            textColor: Colors.white,
+                            onPressed: _crop,
+                            child: const Text("编辑"),
+                          ),
+                          MaterialButton(
+                            minWidth: 0,
+                            visualDensity: VisualDensity.compact,
+                            color: Colors.blueAccent,
+                            textColor: Colors.white,
+                            onPressed: _crop,
+                            child: const Text("使用"),
+                          )
+                        ],
                       ),
                     )
                   ],

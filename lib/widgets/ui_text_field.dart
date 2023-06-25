@@ -80,7 +80,7 @@ class UiTextField extends TextField {
       formatters.add(FilteringTextInputFormatter.digitsOnly);
     }
 
-    if (super.inputFormatters != null) {
+    if (super.inputFormatters != null && super.inputFormatters!.isNotEmpty) {
       formatters.addAll(super.inputFormatters!);
     }
 
@@ -107,10 +107,8 @@ class _UITextFieldState extends State<UiTextField> {
       focusNode: widget.focusNode ?? _focus,
       undoController: widget.undoController,
       decoration: widget.decoration!.copyWith(
-        label: widget.label == null
-            ? widget.decoration?.label
-            : Text(widget.label!),
-        border: const OutlineInputBorder(),
+        label: widget.decoration?.label ?? Text(widget.label!),
+        border: widget.decoration?.border ?? const OutlineInputBorder(),
         suffixIcon: _suffixIcon(),
         counterText: widget.decoration?.counterText ?? "",
       ),

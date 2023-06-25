@@ -11,26 +11,26 @@ ShellRouteBuilder userLayout = (context, state, child) {
   GlobalKey<_AAAAState> _key = GlobalKey();
 
   return context.responsive(
-    SafeArea(
-      child: Scaffold(
-        drawer: const Drawer(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(0),
-              bottomRight: Radius.circular(0),
-            ),
+    Scaffold(
+      drawer: const Drawer(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(0),
+            bottomRight: Radius.circular(0),
           ),
-          child: UserDrawer(),
         ),
-        appBar: userAppBar(),
-        body: context.responsive(
+        child: UserDrawer(),
+      ),
+      appBar: userAppBar(),
+      body: SafeArea(
+        child: context.responsive(
           child,
           lg: SelectionArea(child: child),
         ),
-        bottomNavigationBar: context.responsive(
-          const UserBottomNarbar(),
-          lg: const SizedBox.shrink(),
-        ),
+      ),
+      bottomNavigationBar: context.responsive(
+        const UserBottomNarbar(),
+        lg: const SizedBox.shrink(),
       ),
     ),
     lg: SafeArea(

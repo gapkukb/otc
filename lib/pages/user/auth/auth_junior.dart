@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otc/pages/components/modal/modal.dart';
 import 'package:otc/pages/components/user_modal_page_template/user_modal_page_template.dart';
-import 'package:otc/widgets/ui_image_picker.dart';
+import 'package:otc/widgets/ui_file_picker.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 import 'package:intl/intl.dart';
 
@@ -37,7 +37,7 @@ class _AuthJuniorState extends State<AuthJunior> {
   Widget build(BuildContext context) {
     return UserModalPageTemplate(
       legend: "身份认证",
-      title: "中级认证",
+      title: "中级身份认证",
       nextText: "继续",
       onCompelete: () {
         Modal.show(

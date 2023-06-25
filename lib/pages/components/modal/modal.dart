@@ -21,8 +21,42 @@ class Modal {
   static const showText = BotToast.showText;
   static const showWidget = BotToast.showWidget;
 
-  static CancelFunc alert() {
-    return Modal.show();
+  static CancelFunc alert({
+    String okText = "确定",
+    String title = "温馨提示",
+    String content = "",
+    bool asyncClose = false,
+    Function()? onOk,
+    Function()? onDecline,
+  }) {
+    return Modal.show(
+      okText: okText,
+      title: title,
+      content: content,
+      asyncClose: asyncClose,
+      onOk: onOk,
+      onDecline: onDecline,
+    );
+  }
+
+  static CancelFunc confirm({
+    String okText = "确定",
+    String cancelText = "取消",
+    String title = "温馨提示",
+    String content = "",
+    bool asyncClose = false,
+    Function()? onOk,
+    Function()? onDecline,
+  }) {
+    return Modal.show(
+      okText: okText,
+      cancelText: cancelText,
+      title: title,
+      content: content,
+      asyncClose: asyncClose,
+      onOk: onOk,
+      onDecline: onDecline,
+    );
   }
 
   static CancelFunc show({
@@ -39,9 +73,11 @@ class Modal {
       wrapAnimation: loadingAnimation,
       backgroundColor: Colors.black45,
       crossPage: false,
+      allowClick: false,
+      clickClose: true,
       toastBuilder: (cancelFunc) {
         return AlertDialog(
-          actionsPadding: EdgeInsets.zero,
+          actionsPadding: const EdgeInsets.all(8),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(4),
@@ -51,7 +87,7 @@ class Modal {
           content: Text(content),
           actions: <Widget>[
             if (cancelText != null)
-              TextButton(
+              OutlinedButton(
                 child: Text(cancelText),
                 onPressed: () {
                   if (asyncClose == false) {
@@ -60,7 +96,11 @@ class Modal {
                   }
                 },
               ),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
               child: Text(okText),
               onPressed: () {
                 if (asyncClose == false) {

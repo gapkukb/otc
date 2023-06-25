@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/router/router.dart';
 
 class UserAuth extends StatefulWidget {
   const UserAuth({super.key});
@@ -19,21 +20,27 @@ class _UserAuthState extends State<UserAuth> {
       "status": 0,
       "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
       "subtitle": "要求：1.姓名    2.年龄    3.身份证",
-      "onTap": () {}
+      "onTap": (BuildContext context) {
+        context.push('/auth_primary');
+      }
     },
     {
       "level": "中级认证",
-      "status": 1,
+      "status": 0,
       "title": "法币限额 200000 USDT 每日，提币限额 5000 USDT 每日",
       "subtitle": "要求：1.手持身份证照片",
-      "onTap": () {}
+      "onTap": (BuildContext context) {
+        context.push('/auth_junior');
+      }
     },
     {
       "level": "高级认证",
-      "status": 2,
+      "status": 0,
       "title": "无限额法币交易，提币限额 10000 USDT 每日",
       "subtitle": "要求：1.手持身份证照片视频",
-      "onTap": () {}
+      "onTap": (BuildContext context) {
+        context.push('/auth_senior');
+      }
     },
   ];
 
@@ -150,7 +157,7 @@ class _UserAuthState extends State<UserAuth> {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
-          onTap: !isUnAuth ? null : item['onTap'],
+          onTap: !isUnAuth ? null : () => item['onTap'](context),
           tileColor: isUnAuth ? null : Colors.blue.withOpacity(0.1),
           isThreeLine: true,
           contentPadding: const EdgeInsets.only(left: 8),

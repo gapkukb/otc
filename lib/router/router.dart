@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/pages/agent/agent.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/auth/auth_junior.dart';
@@ -12,9 +13,14 @@ import 'package:otc/pages/user/email_address/email_address.dart';
 import 'package:otc/pages/user/f2a/f2a.dart';
 import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
+import 'package:otc/pages/user/setting/setting.dart';
+import 'package:otc/pages/user/setting/setting_nickname.dart';
+import 'package:otc/pages/user/setting/update_avatar.dart';
 import 'package:otc/pages/user/verification/verification.dart';
 import 'package:otc/pages/user/rebate/rebate.dart';
 import 'package:otc/pages/user/tasks/user_tasks.dart';
+import 'package:otc/pages/wallet/banks/wallet_banks.dart';
+import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/router/modal_route.dart';
 import '../pages/index.dart';
@@ -25,7 +31,7 @@ final routerKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: routerKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/auth',
+  initialLocation: '/wallet_banks',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // if (accessable) {
@@ -85,6 +91,23 @@ final router = GoRouter(
           path: '/auth',
           builder: (context, state) => const UserAuth(),
         ),
+        GoRoute(
+          path: '/setting',
+          builder: (context, state) => const UserSetting(),
+        ),
+      ],
+    ),
+    ShellRoute(
+      builder: walletLayout,
+      routes: [
+        GoRoute(
+          path: '/wallet_home',
+          builder: (context, state) => const WalletHome(),
+        ),
+        GoRoute(
+          path: '/wallet_banks',
+          builder: (context, state) => const WalletBanks(),
+        ),
       ],
     ),
     GoRoute(
@@ -133,6 +156,24 @@ final router = GoRouter(
       path: '/auth_senior',
       pageBuilder: (context, state) => ModalRoutePage(
         const AuthSenior(),
+      ),
+    ),
+    GoRoute(
+      path: '/agent',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const Agent(),
+      ),
+    ),
+    GoRoute(
+      path: '/setting_nickname',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const SettingNickname(),
+      ),
+    ),
+    GoRoute(
+      path: '/update_avatar',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const UpdateAvatar(),
       ),
     ),
     GoRoute(
