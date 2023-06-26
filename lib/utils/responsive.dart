@@ -17,15 +17,37 @@ extension Responsive on BuildContext {
     T? xl,
     T? xxl,
   }) {
-    final w = MediaQuery.of(this).size.width;
-
-    if (w < _xs) return defaultVal;
-    if (w < _sm) return sm ?? defaultVal;
-    if (w < _md) return md ?? sm ?? defaultVal;
-    if (w < _lg) return lg ?? md ?? sm ?? defaultVal;
-    if (w < _xl) return xl ?? lg ?? md ?? sm ?? defaultVal;
+    if (width < _xs) return defaultVal;
+    if (width < _sm) return sm ?? defaultVal;
+    if (width < _md) return md ?? sm ?? defaultVal;
+    if (width < _lg) return lg ?? md ?? sm ?? defaultVal;
+    if (width < _xl) return xl ?? lg ?? md ?? sm ?? defaultVal;
 
     return xxl ?? xl ?? lg ?? md ?? sm ?? defaultVal;
+  }
+
+  get width {
+    return MediaQuery.of(this).size.width;
+  }
+
+  get xs {
+    return width < _xs;
+  }
+
+  get sm {
+    return width < _sm;
+  }
+
+  get md {
+    return width < _md;
+  }
+
+  get lg {
+    return width > _lg;
+  }
+
+  get xl {
+    return width > _xl;
   }
 }
 

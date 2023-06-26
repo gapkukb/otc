@@ -22,6 +22,7 @@ import 'package:otc/pages/user/tasks/user_tasks.dart';
 import 'package:otc/pages/wallet/banks/wallet_address.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_addition.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_dc_addition.dart';
+import 'package:otc/pages/wallet/funds/contract_wallet.dart';
 import 'package:otc/pages/wallet/funds/funds.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
@@ -34,7 +35,7 @@ final routerKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: routerKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/funds',
+  initialLocation: '/contract_wallet',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // if (accessable) {
@@ -130,6 +131,10 @@ final router = GoRouter(
           builder: (context, state) => const Funds(),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/contract_wallet',
+      builder: (context, state) => const ContractWallet(),
     ),
     GoRoute(
       path: '/phone_verification',

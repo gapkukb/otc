@@ -46,9 +46,9 @@ class UiFlex extends StatelessWidget {
   }
 }
 
-class UiFlex2 extends StatelessWidget {
-  final List<dynamic>? data;
-  final Widget Function(int index) itemBuilder;
+class UiFlex2<T extends dynamic> extends StatelessWidget {
+  final List<T> data;
+  final Widget Function(T item, int index) itemBuilder;
   const UiFlex2({
     super.key,
     this.data = const [],
@@ -65,7 +65,9 @@ class UiFlex2 extends StatelessWidget {
         Axis.vertical,
         md: Axis.horizontal,
       ),
-      children: List.generate(data!.length, itemBuilder).map((e) {
+      children:
+          List.generate(data.length, (index) => itemBuilder(data[index], index))
+              .map((e) {
         return context.responsive(
           e,
           md: Expanded(child: e),
