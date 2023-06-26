@@ -21,12 +21,14 @@ class UiEmptyView extends StatelessWidget {
   });
 
   static const _titleStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.bold,
+    color: Color(0xff888888),
   );
 
   static const _subTitleTyle = TextStyle(
-    fontSize: 16,
+    fontSize: 12,
+    color: Color(0xff999999),
   );
 
   @override
@@ -52,9 +54,12 @@ class UiEmptyView extends StatelessWidget {
                 style: titleStyle ?? _titleStyle,
               ),
           if (subtitleWidget == null && subtitle != null)
-            Text(
-              subtitle!,
-              style: _subTitleTyle,
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                subtitle!,
+                style: _subTitleTyle,
+              ),
             )
           else if (subtitleWidget != null)
             subtitleWidget!,

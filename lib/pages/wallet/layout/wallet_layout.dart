@@ -4,7 +4,10 @@ import 'package:go_router/go_router.dart';
 ShellRouteBuilder walletLayout = (context, state, child) {
   return Scaffold(
     body: SafeArea(
-      child: child,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: child,
+      ),
     ),
   );
 };

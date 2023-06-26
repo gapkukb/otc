@@ -19,7 +19,10 @@ import 'package:otc/pages/user/setting/update_avatar.dart';
 import 'package:otc/pages/user/verification/verification.dart';
 import 'package:otc/pages/user/rebate/rebate.dart';
 import 'package:otc/pages/user/tasks/user_tasks.dart';
-import 'package:otc/pages/wallet/banks/wallet_banks.dart';
+import 'package:otc/pages/wallet/banks/wallet_address.dart';
+import 'package:otc/pages/wallet/banks/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/banks/wallet_address_dc_addition.dart';
+import 'package:otc/pages/wallet/funds/funds.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/router/modal_route.dart';
@@ -31,7 +34,7 @@ final routerKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: routerKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/wallet_banks',
+  initialLocation: '/funds',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // if (accessable) {
@@ -106,7 +109,25 @@ final router = GoRouter(
         ),
         GoRoute(
           path: '/wallet_banks',
-          builder: (context, state) => const WalletBanks(),
+          builder: (context, state) => const WalletAddressDC(),
+        ),
+        GoRoute(
+          path: '/wallet_addition',
+          pageBuilder: (context, state) => ModalRoutePage(
+            WalletAddressAddition(
+              addType: (state.extra as AddType?) ?? AddType.bank,
+            ),
+          ),
+        ),
+        GoRoute(
+          path: '/wallet_addition_dc',
+          pageBuilder: (context, state) => ModalRoutePage(
+            WalletAddressDcAddition(),
+          ),
+        ),
+        GoRoute(
+          path: '/funds',
+          builder: (context, state) => const Funds(),
         ),
       ],
     ),

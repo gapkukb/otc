@@ -14,7 +14,7 @@ class Panel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(
-        // mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

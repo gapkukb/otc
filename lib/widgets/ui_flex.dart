@@ -45,3 +45,32 @@ class UiFlex extends StatelessWidget {
     );
   }
 }
+
+class UiFlex2 extends StatelessWidget {
+  final List<dynamic>? data;
+  final Widget Function(int index) itemBuilder;
+  const UiFlex2({
+    super.key,
+    this.data = const [],
+    required this.itemBuilder,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Flex(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      direction: context.responsive(
+        Axis.vertical,
+        md: Axis.horizontal,
+      ),
+      children: List.generate(data!.length, itemBuilder).map((e) {
+        return context.responsive(
+          e,
+          md: Expanded(child: e),
+        );
+      }).toList(),
+    );
+  }
+}

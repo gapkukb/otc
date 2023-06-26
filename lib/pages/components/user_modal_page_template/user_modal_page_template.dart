@@ -5,14 +5,16 @@ class UserModalPageTemplate extends StatelessWidget {
   final String legend;
   final String title;
   final String nextText;
+  final IconData icon;
   final List<Widget> children;
   final void Function() onCompelete;
 
   const UserModalPageTemplate({
     super.key,
     this.legend = "账户安全",
-    required this.title,
     this.nextText = "确定",
+    this.icon = Icons.security,
+    required this.title,
     required this.onCompelete,
     required this.children,
   });
@@ -54,10 +56,10 @@ class UserModalPageTemplate extends StatelessWidget {
                         ),
                       ),
                     ),
-                    trailing: const Opacity(
+                    trailing: Opacity(
                       opacity: 0.2,
                       child: Icon(
-                        Icons.security,
+                        icon,
                         size: 40,
                       ),
                     ),
