@@ -64,6 +64,8 @@ dependencies:
     sdk: flutter
   flutter_hooks: ^0.18.6
   hooks_riverpod: ^2.3.6
+  build_runner: ^2.4.5
+  json_serializable: ^6.7.0
 
 dev_dependencies:
   flutter_test:
@@ -115,3 +117,6 @@ flutter_intl:
   enabled: true
   class_name: X
   main_locale: zh
+
+jsonToDart:
+  outputFolder: lib/models

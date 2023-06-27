@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otc/utils/responsive.dart';
 
-
-
 // GridResponsiveDelegate<T extends int>(this.sm,
 //     this.md,
 //     this.lg,
