@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/pages/advertise/advertise.dart';
+import 'package:otc/pages/advertise/layout/advertise_layout.dart';
 import 'package:otc/pages/agent/agent.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
 import 'package:otc/pages/user/auth/auth.dart';
@@ -35,7 +37,7 @@ final routerKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: routerKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/contract_wallet',
+  initialLocation: '/advertise',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // if (accessable) {
@@ -129,6 +131,15 @@ final router = GoRouter(
         GoRoute(
           path: '/funds',
           builder: (context, state) => const Funds(),
+        ),
+      ],
+    ),
+    ShellRoute(
+      builder: advertiseLayout,
+      routes: [
+        GoRoute(
+          path: '/advertise',
+          builder: (context, state) => const Advertise(),
         ),
       ],
     ),
