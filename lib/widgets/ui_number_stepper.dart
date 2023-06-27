@@ -10,10 +10,10 @@ class UiNumberStepper extends StatefulWidget {
 
   const UiNumberStepper({
     super.key,
-    this.unit = "%",
+    this.unit = "",
     this.min = 1.0,
     this.max = double.infinity,
-    this.step = 0.05,
+    this.step = 1,
     this.disabeld = false,
   });
 
@@ -33,30 +33,25 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
-      body: IgnorePointer(
-        ignoring: widget.disabeld,
-        child: FormField(
-          builder: (field) {
-            _field = field;
-            return Row(
-              children: [
-                IconButton(
-                  onPressed: decrease,
-                  icon: const Icon(Icons.remove),
-                ),
-                Text("$_value${widget.unit}"),
-                IconButton(
-                  onPressed: increase,
-                  icon: const Icon(Icons.add),
-                ),
-              ],
-            );
-          },
-        ),
+    return IgnorePointer(
+      ignoring: widget.disabeld,
+      child: FormField(
+        builder: (field) {
+          _field = field;
+          return Row(
+            children: [
+              IconButton(
+                onPressed: decrease,
+                icon: const Icon(Icons.remove),
+              ),
+              Text("$_value${widget.unit}"),
+              IconButton(
+                onPressed: increase,
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
