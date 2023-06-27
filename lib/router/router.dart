@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/pages/advertise/advertise.dart';
+import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
 import 'package:otc/pages/agent/agent.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
@@ -211,6 +212,12 @@ final router = GoRouter(
       path: '/update_avatar',
       pageBuilder: (context, state) => ModalRoutePage(
         const UpdateAvatar(),
+      ),
+    ),
+    GoRoute(
+      path: '/advertise_place',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const AdvertisePlace(),
       ),
     ),
     GoRoute(

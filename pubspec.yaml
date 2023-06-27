@@ -59,6 +59,7 @@ dependencies:
     image_cropper: ^5.0.0
     video_player: ^2.6.1
     data_table_2: ^2.5.3
+    flutter_countdown_timer: ^4.1.0
 
 dev_dependencies:
     flutter_test:
