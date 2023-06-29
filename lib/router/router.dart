@@ -38,7 +38,7 @@ final routerKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: routerKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/advertise',
+  initialLocation: '/',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // if (accessable) {

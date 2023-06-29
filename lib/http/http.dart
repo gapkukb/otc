@@ -264,28 +264,3 @@ class Http {
     };
   }
 }
-
-void main() {
-  var http = Http(HttpOptions(
-    receiveTimeout: Duration(seconds: 10),
-    baseUrl: "https://segmentfault.com",
-    headers: {
-      'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-      'X-RapidAPI-Host': 'imdb8.p.rapidapi.com',
-    },
-  ));
-  var get = http.newMethod("get");
-
-  var fetch = get("/a/1190000020416153");
-  void test({required Function onSetle}) async {
-    int i = 0;
-    return Future.doWhile(() async {
-      if (i == 5) return false;
-      onSetle(await fetch({"q": 'game of thr'}));
-      i++;
-      return true;
-    });
-  }
-
-  test(onSetle: print);
-}

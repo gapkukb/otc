@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/router/router.dart';
+import 'package:otc/theme/theme.dart';
 
 final appBar = AppBar(
   // title: const Text("ttitle"),
@@ -15,7 +16,8 @@ final appBar = AppBar(
         ),
         child: const Text("注册"),
         onPressed: () {
-          context.go('/rebate');
+          // context.go('/rebate');
+          theme.toggleTheme();
         },
       );
     }),

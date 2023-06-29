@@ -2,11 +2,15 @@ library globals;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'prefs.dart';
+part 'keys.dart';
 
-class Globals {
-  static late final SharedPreferences prefs;
-  static Future<void> intialize() async {
+class _Globals {
+  late final SharedPreferences prefs;
+  Future<void> intialize() async {
     prefs = await SharedPreferences.getInstance();
   }
+
+  final keys = _Keys();
 }
+
+var globals = _Globals();

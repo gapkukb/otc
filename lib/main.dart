@@ -2,27 +2,55 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/globals/globals.dart';
 import 'package:otc/router/router.dart';
+import 'package:otc/theme/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Globals.intialize();
+  await globals.intialize();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   usePathUrlStrategy();
-  runApp(const App());
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    theme.addListener(themeHandle);
+    super.initState();
+  }
+
+  @override
+  dispose() {
+    theme.removeListener(themeHandle);
+    super.dispose();
+  }
+
+  themeHandle() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -45,15 +73,14 @@ class App extends StatelessWidget {
       },
       builder: BotToastInit(),
       routerConfig: router,
-      title: X.current.title,
+      // title: X.current.title,
       onGenerateTitle: (context) {
         return X.current.title;
       },
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      themeMode: theme.mode,
+      theme: lightTheme,
+      darkTheme: darkTheme,
     );
   }
 }
