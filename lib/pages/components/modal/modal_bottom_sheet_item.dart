@@ -26,7 +26,7 @@ modalShowBottomSheet({
   showModalBottomSheet(
     useSafeArea: true,
     constraints: const BoxConstraints.tightFor(),
-    context: routerKey.currentContext!,
+    context: navigatorKey.currentContext!,
     backgroundColor: Colors.transparent,
     isScrollControlled: false,
     builder: (context) {

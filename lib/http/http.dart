@@ -1,7 +1,15 @@
+library http;
+
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import '../router/router.dart';
+import 'package:go_router/go_router.dart';
 
-int num = 0;
+part './filter.dart';
+part './retry.dart';
+part './cache.dart';
+part './error.dart';
 
 enum DataType {
   json,
@@ -199,18 +207,12 @@ class HttpOptions extends BaseOptions {
   }
 }
 
-final _defaultOptions = HttpOptions(
-  baseUrl: '/',
-  sendTimeout: const Duration(seconds: 30),
-  connectTimeout: const Duration(seconds: 30),
-  receiveTimeout: const Duration(seconds: 30),
-);
-
 class Http {
   static late final Dio dio;
 
   Http(HttpOptions options) {
     dio = Dio(options);
+    dio.interceptors.add(filterInterceptor);
   }
 
   HttpFunc<String, BindAbort> newMethod(

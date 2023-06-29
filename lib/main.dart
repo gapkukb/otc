@@ -53,6 +53,8 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    navigatorKey.currentState!.pushNamed('sf');
+
     return MaterialApp.router(
       // 国际化
       localizationsDelegates: const [

@@ -33,10 +33,10 @@ import 'package:otc/router/modal_route.dart';
 import '../pages/index.dart';
 import '../pages/register/register.dart';
 
-final routerKey = GlobalKey<NavigatorState>();
+final navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
-  navigatorKey: routerKey,
+  navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
   initialLocation: '/',
   debugLogDiagnostics: true,
@@ -50,6 +50,7 @@ final router = GoRouter(
   errorBuilder: (context, state) {
     // if (state.error == 404) {
     // }
+
     return const Page404();
   },
   observers: [BotToastNavigatorObserver()],

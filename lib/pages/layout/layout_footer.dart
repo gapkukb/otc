@@ -117,7 +117,7 @@ class LayoutFooter extends StatelessWidget {
                         onTap: () {
                           if (item.callback == null) {
                             print(item);
-                            routerKey.currentContext!.go(item.path!);
+                            navigatorKey.currentContext!.go(item.path!);
                           } else {
                             item.callback!(item);
                           }
