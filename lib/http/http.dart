@@ -1,6 +1,7 @@
-import 'dart:developer';
-
+import 'dart:async';
 import 'package:dio/dio.dart';
+
+int num = 0;
 
 enum DataType {
   json,
@@ -9,20 +10,105 @@ enum DataType {
   file,
 }
 
-class MethodFunction<T> {
-  late Function abort;
-  late Function request;
+typedef HttpFunc<T, R> = R Function(
+  T path, {
+  Duration? connectTimeout,
+  Duration? receiveTimeout,
+  Duration? sendTimeout,
+  String? baseUrl,
+  Map<String, dynamic>? queryParameters,
+  Map<String, dynamic>? extra,
+  Map<String, dynamic>? headers,
+  ResponseType? responseType,
+  String? contentType,
+  ValidateStatus? validateStatus,
+  bool? receiveDataWhenStatusError,
+  bool? followRedirects,
+  int? maxRedirects,
+  bool? persistentConnection,
+  RequestEncoder? requestEncoder,
+  ResponseDecoder? responseDecoder,
+  ListFormat? listFormat,
+});
 
-  Future<T> call([
-    Map<dynamic, dynamic>? data,
-    T? model,
-  ]) {
-    return request() as dynamic;
+class BindAbort<T> {
+  Function abort = () {};
+  late Function request;
+  late HttpOptions options;
+  late Dio dio;
+
+  Future<Response<dynamic>> call(
+    dynamic data, {
+    String? path,
+    Duration? connectTimeout,
+    Duration? receiveTimeout,
+    Duration? sendTimeout,
+    String? baseUrl,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? extra,
+    Map<String, dynamic>? headers,
+    ResponseType? responseType,
+    String? contentType,
+    ValidateStatus? validateStatus,
+    bool? receiveDataWhenStatusError,
+    bool? followRedirects,
+    int? maxRedirects,
+    bool? persistentConnection,
+    RequestEncoder? requestEncoder,
+    ResponseDecoder? responseDecoder,
+    ListFormat? listFormat,
+  }) async {
+    options = options.copyWith(
+      path: path,
+      connectTimeout: connectTimeout,
+      receiveTimeout: receiveTimeout,
+      sendTimeout: sendTimeout,
+      baseUrl: baseUrl,
+      queryParameters: queryParameters,
+      extra: extra,
+      headers: headers,
+      responseType: responseType,
+      contentType: contentType,
+      validateStatus: validateStatus,
+      receiveDataWhenStatusError: receiveDataWhenStatusError,
+      followRedirects: followRedirects,
+      maxRedirects: maxRedirects,
+      persistentConnection: persistentConnection,
+      requestEncoder: requestEncoder,
+      responseDecoder: responseDecoder,
+      listFormat: listFormat,
+    );
+
+    final token = CancelToken();
+    abort = token.cancel;
+
+    return dio.request(
+      options.path!,
+      cancelToken: token,
+      data: data,
+      options: Options(
+        method: options.method,
+        sendTimeout: options.sendTimeout,
+        receiveTimeout: options.receiveTimeout,
+        extra: options.extra,
+        headers: options.headers,
+        responseType: options.responseType,
+        contentType: options.contentType,
+        validateStatus: options.validateStatus,
+        receiveDataWhenStatusError: options.receiveDataWhenStatusError,
+        followRedirects: options.followRedirects,
+        maxRedirects: options.maxRedirects,
+        persistentConnection: options.persistentConnection,
+        requestEncoder: options.requestEncoder,
+        responseDecoder: options.responseDecoder,
+        listFormat: options.listFormat,
+      ),
+    );
   }
 
-  MethodFunction({
-    required this.abort,
-    required this.request,
+  BindAbort({
+    required this.options,
+    required this.dio,
   });
 }
 
@@ -37,6 +123,7 @@ class HttpOptions extends BaseOptions {
   final bool repeatable;
   // 传递到服务器的数据类型
   final DataType dataType;
+  final String? path;
 
   HttpOptions({
     super.baseUrl,
@@ -62,29 +149,55 @@ class HttpOptions extends BaseOptions {
     this.cancelable = false,
     this.repeatable = false,
     this.retry = 0,
+    this.path,
   });
-}
 
-typedef HttpFunc<T, R> = R Function(
-  T path, {
-  Duration? connectTimeout,
-  Duration? receiveTimeout,
-  Duration? sendTimeout,
-  String? baseUrl,
-  Map<String, dynamic>? queryParameters,
-  Map<String, dynamic>? extra,
-  Map<String, dynamic>? headers,
-  ResponseType? responseType,
-  String? contentType,
-  ValidateStatus? validateStatus,
-  bool? receiveDataWhenStatusError,
-  bool? followRedirects,
-  int? maxRedirects,
-  bool? persistentConnection,
-  RequestEncoder? requestEncoder,
-  ResponseDecoder? responseDecoder,
-  ListFormat? listFormat,
-});
+  @override
+  HttpOptions copyWith({
+    method,
+    baseUrl,
+    queryParameters,
+    path,
+    connectTimeout,
+    receiveTimeout,
+    sendTimeout,
+    extra,
+    headers,
+    responseType,
+    contentType,
+    validateStatus,
+    receiveDataWhenStatusError,
+    followRedirects,
+    maxRedirects,
+    persistentConnection,
+    requestEncoder,
+    responseDecoder,
+    listFormat,
+  }) {
+    return HttpOptions(
+      method: method ?? this.method,
+      baseUrl: baseUrl ?? this.baseUrl,
+      queryParameters: queryParameters ?? this.queryParameters,
+      connectTimeout: connectTimeout ?? this.connectTimeout,
+      receiveTimeout: receiveTimeout ?? this.receiveTimeout,
+      sendTimeout: sendTimeout ?? this.sendTimeout,
+      extra: extra ?? Map.from(this.extra),
+      headers: headers ?? Map.from(this.headers),
+      responseType: responseType ?? this.responseType,
+      contentType: contentType ?? this.contentType,
+      validateStatus: validateStatus ?? this.validateStatus,
+      receiveDataWhenStatusError:
+          receiveDataWhenStatusError ?? this.receiveDataWhenStatusError,
+      followRedirects: followRedirects ?? this.followRedirects,
+      maxRedirects: maxRedirects ?? this.maxRedirects,
+      persistentConnection: persistentConnection ?? this.persistentConnection,
+      requestEncoder: requestEncoder ?? this.requestEncoder,
+      responseDecoder: responseDecoder ?? this.responseDecoder,
+      listFormat: listFormat ?? this.listFormat,
+      path: path ?? this.path,
+    );
+  }
+}
 
 final _defaultOptions = HttpOptions(
   baseUrl: '/',
@@ -94,13 +207,15 @@ final _defaultOptions = HttpOptions(
 );
 
 class Http {
-  late final Dio dio;
+  static late final Dio dio;
 
   Http(HttpOptions options) {
     dio = Dio(options);
   }
 
-  HttpFunc<String, HttpFunc<dynamic, MethodFunction>> newMethod(String method) {
+  HttpFunc<String, BindAbort> newMethod(
+    String method,
+  ) {
     return (
       path, {
       connectTimeout,
@@ -121,7 +236,10 @@ class Http {
       responseDecoder,
       listFormat,
     }) {
-      Options options = Options(
+      final token = CancelToken();
+
+      var options = HttpOptions(
+        path: path,
         method: method,
         contentType: contentType,
         followRedirects: followRedirects,
@@ -139,66 +257,17 @@ class Http {
         validateStatus: validateStatus,
       );
 
-      return (
-        data, {
-        connectTimeout,
-        receiveTimeout,
-        sendTimeout,
-        baseUrl,
-        queryParameters,
-        extra,
-        headers,
-        responseType,
-        contentType,
-        validateStatus,
-        receiveDataWhenStatusError,
-        followRedirects,
-        maxRedirects,
-        persistentConnection,
-        requestEncoder,
-        responseDecoder,
-        listFormat,
-      }) {
-        final token = CancelToken();
-        options = options.copyWith(
-          receiveTimeout: receiveTimeout,
-          sendTimeout: sendTimeout,
-          extra: extra,
-          headers: headers,
-          responseType: responseType,
-          contentType: contentType,
-          validateStatus: validateStatus,
-          receiveDataWhenStatusError: receiveDataWhenStatusError,
-          followRedirects: followRedirects,
-          maxRedirects: maxRedirects,
-          persistentConnection: persistentConnection,
-          requestEncoder: requestEncoder,
-          responseDecoder: responseDecoder,
-          listFormat: listFormat,
-        );
-        return MethodFunction(
-          request: () {
-            dio.get(
-              path,
-            );
-            return dio.request(
-              path,
-              cancelToken: token,
-              data: data,
-              options: options,
-            );
-          },
-          abort: () {
-            token.cancel("requstion was aborted!");
-          },
-        );
-      };
+      return BindAbort(
+        options: options,
+        dio: dio,
+      );
     };
   }
 }
 
 void main() {
   var http = Http(HttpOptions(
+    receiveTimeout: Duration(seconds: 10),
     baseUrl: "https://segmentfault.com",
     headers: {
       'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
@@ -208,6 +277,15 @@ void main() {
   var get = http.newMethod("get");
 
   var fetch = get("/a/1190000020416153");
+  void test({required Function onSetle}) async {
+    int i = 0;
+    return Future.doWhile(() async {
+      if (i == 5) return false;
+      onSetle(await fetch({"q": 'game of thr'}));
+      i++;
+      return true;
+    });
+  }
 
-  fetch({"q": 'game of thr'})().then((value) {});
+  test(onSetle: print);
 }
