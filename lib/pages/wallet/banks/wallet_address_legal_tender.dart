@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/components/modal/modal.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_addition.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_webchat_and_alipay.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_bank.dart';

@@ -64,6 +64,8 @@ dependencies:
     sdk: flutter
   json_serializable: ^6.7.0
   flutter_riverpod: ^2.3.6
+  connectivity_plus: ^4.0.1
+  sidebarx: ^0.16.0
 
 dev_dependencies:
   build_runner: ^2.4.5

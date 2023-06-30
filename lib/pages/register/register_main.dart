@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/components/text_field_phone/text_field_phone.dart';
+import 'package:otc/components/text_field_phone/text_field_phone.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class RegisterMain extends StatefulWidget {

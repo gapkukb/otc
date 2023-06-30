@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/code_field/code_field.dart';
-import 'package:otc/pages/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/code_field/code_field.dart';
+import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class BindingPhoneUpdate extends StatefulWidget {

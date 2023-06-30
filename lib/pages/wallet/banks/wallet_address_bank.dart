@@ -1,6 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/modal/modal.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
 class WalletAddressBank extends StatefulWidget {

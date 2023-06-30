@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_addition_bank.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_addition_wechat_and_alipay.dart';
 

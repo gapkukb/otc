@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class BindingPhoneVerification extends StatefulWidget {

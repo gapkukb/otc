@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/components/tip/tip.dart';
+import 'package:otc/components/tip/tip.dart';
 import 'package:otc/pages/user/home/fee.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/pages/user/home/log.dart';

@@ -3,7 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otc/pages/components/modal/modal.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:photo_view/photo_view.dart';
 
 class UiFilePicker extends StatefulWidget {

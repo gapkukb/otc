@@ -1,15 +1,22 @@
 library http;
 
 import 'dart:async';
+import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/generated/l10n.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/pages/user/home/overview.dart';
 import '../router/router.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 
-part './filter.dart';
-part './retry.dart';
-part './cache.dart';
-part './error.dart';
+part 'loading.dart';
+part 'retry.dart';
+part 'cache.dart';
+part 'exception.dart';
+part 'log.dart';
 
 enum DataType {
   json,
@@ -39,7 +46,7 @@ typedef HttpFunc<T, R> = R Function(
   ListFormat? listFormat,
 });
 
-class BindAbort<T> {
+class RequestWrapper<T> {
   Function abort = () {};
   late Function request;
   late HttpOptions options;
@@ -114,7 +121,7 @@ class BindAbort<T> {
     );
   }
 
-  BindAbort({
+  RequestWrapper({
     required this.options,
     required this.dio,
   });
@@ -181,6 +188,11 @@ class HttpOptions extends BaseOptions {
     requestEncoder,
     responseDecoder,
     listFormat,
+    silent,
+    dataType,
+    cancelable,
+    repeatable,
+    retry,
   }) {
     return HttpOptions(
       method: method ?? this.method,
@@ -203,6 +215,11 @@ class HttpOptions extends BaseOptions {
       responseDecoder: responseDecoder ?? this.responseDecoder,
       listFormat: listFormat ?? this.listFormat,
       path: path ?? this.path,
+      silent: silent ?? this.silent,
+      dataType: dataType ?? this.dataType,
+      cancelable: cancelable ?? this.cancelable,
+      repeatable: repeatable ?? this.repeatable,
+      retry: retry ?? this.retry,
     );
   }
 }
@@ -212,10 +229,10 @@ class Http {
 
   Http(HttpOptions options) {
     dio = Dio(options);
-    dio.interceptors.add(filterInterceptor);
+    dio.interceptors.add(LoadingInterceptor());
   }
 
-  HttpFunc<String, BindAbort> newMethod(
+  HttpFunc<String, RequestWrapper> newMethod(
     String method,
   ) {
     return (
@@ -259,7 +276,7 @@ class Http {
         validateStatus: validateStatus,
       );
 
-      return BindAbort(
+      return RequestWrapper(
         options: options,
         dio: dio,
       );

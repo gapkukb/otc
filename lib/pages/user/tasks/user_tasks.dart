@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
-import 'package:otc/pages/components/panel/panel.dart';
+import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/panel/panel.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 

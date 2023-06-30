@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
-import 'package:otc/pages/components/panel/panel.dart';
+import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/panel/panel.dart';
 import 'package:otc/utils/responsive.dart';
 
 class C2cAgentProfile extends StatefulWidget {

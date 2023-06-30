@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/gridview/gridview.dart';
-import 'package:otc/pages/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
-import 'package:otc/pages/components/panel/panel.dart';
+import 'package:otc/components/gridview/gridview.dart';
+import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/panel/panel.dart';
 import 'package:otc/pages/user/c2c/c2c_agent_data.dart';
 import 'package:otc/pages/user/c2c/c2c_agent_profile.dart';
 import 'package:otc/pages/user/c2c/c2c_chart.dart';

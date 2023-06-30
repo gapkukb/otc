@@ -1,3 +1,17 @@
 {
-  "title": "My Bit"
+  "title": "My Bit",
+  "common": {
+    "ok": "确定",
+    "cancel": "取消",
+    "unauthorized": "请先登录您的账户",
+    "bad_request": "错误的请求",
+    "weak_network": "请求失败,请检查网络连接",
+    "forbidden": "您的权限不足,请联系管理员",
+    "not_found": "找不到所请求的资源",
+    "interal_server_error": "服务器内部错误，请稍后再试",
+    "not_implemented": "服务器不支持的请求",
+    "bad_gateway": "网关错误，请稍后再试",
+    "server_inavailable": "系统正在维护，请稍后再试",
+    "gateway_timeout": "网关相应超时，请联系管理员"
+  }
 }

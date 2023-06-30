@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/components/panel/panel.dart';
+import 'package:otc/components/panel/panel.dart';
 
 class C2cAgentData extends StatefulWidget {
   const C2cAgentData({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/components/modal/modal.dart';
-import 'package:otc/pages/components/panel/panel.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/components/panel/panel.dart';
 import 'package:otc/pages/user/setting/update_currency.dart';
 
 class UserSetting extends StatefulWidget {
