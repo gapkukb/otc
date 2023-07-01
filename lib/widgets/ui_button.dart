@@ -13,6 +13,12 @@ enum UiButtonShape {
   circle,
 }
 
+enum UiButtonType {
+  solid,
+  outline,
+  text,
+}
+
 class UiButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool disabled;
