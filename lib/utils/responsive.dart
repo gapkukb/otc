@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 const _xs = 576;
@@ -7,6 +7,10 @@ const _md = 992;
 const _lg = 1200;
 const _xl = 1440;
 
+final isFixedWidth = Platform.isAndroid || Platform.isIOS || Platform.isFuchsia;
+final isXs =
+    WidgetsBinding.instance.platformDispatcher.views.first.physicalSize.width <
+        _xs;
 // 移动端优先
 
 extension Responsive on BuildContext {
@@ -18,6 +22,7 @@ extension Responsive on BuildContext {
     T? xl,
     T? xxl,
   }) {
+    if (isFixedWidth) return isXs ? defaultVal : sm ?? defaultVal;
     if (width < _xs) return defaultVal;
     if (width < _sm) return sm ?? defaultVal;
     if (width < _md) return md ?? sm ?? defaultVal;
@@ -49,13 +54,5 @@ extension Responsive on BuildContext {
 
   get xl {
     return width > _xl;
-  }
-}
-
-extension Size on BuildContext {
-  double fixedHeight(double defaultVal) {
-    final w = MediaQuery.of(this).size.width;
-
-    return w / defaultVal;
   }
 }

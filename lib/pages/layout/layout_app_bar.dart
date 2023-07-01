@@ -16,8 +16,7 @@ final appBar = AppBar(
         ),
         child: const Text("注册"),
         onPressed: () {
-          // context.go('/rebate');
-          theme.toggleTheme();
+          context.push('/register');
         },
       );
     }),

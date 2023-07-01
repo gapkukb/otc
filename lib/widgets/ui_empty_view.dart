@@ -22,7 +22,7 @@ class UiEmptyView extends StatelessWidget {
 
   static const _titleStyle = TextStyle(
     fontSize: 18,
-    fontWeight: FontWeight.bold,
+    // fontWeight: FontWeight.bold,
     color: Color(0xff888888),
   );
 

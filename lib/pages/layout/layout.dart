@@ -13,18 +13,18 @@ ShellRouteBuilder layout = (context, state, child) {
         lg: SelectionArea(child: child),
       ),
       // bottomNavigationBar: LayoutFooter()
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.abc),
-            label: '123',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.abc),
-            label: '123',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.abc),
+      //       label: '123',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.abc),
+      //       label: '123',
+      //     ),
+      //   ],
+      // ),
     ),
   );
 };

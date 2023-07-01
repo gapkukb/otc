@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -53,14 +54,13 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    navigatorKey.currentState!.pushNamed('sf');
-
     return MaterialApp.router(
       // 国际化
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        CountryLocalizations.delegate,
         X.delegate,
       ],
       // 默认中文

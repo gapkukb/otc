@@ -38,7 +38,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/',
+  initialLocation: '/register',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // if (accessable) {
@@ -63,14 +63,14 @@ final router = GoRouter(
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: '/register',
-          builder: (context, state) => const Register(),
-        ),
-        GoRoute(
           path: '/wallet_home',
           builder: (context, state) => const WalletHome(),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const Register(),
     ),
     ShellRoute(
       builder: userLayout,
