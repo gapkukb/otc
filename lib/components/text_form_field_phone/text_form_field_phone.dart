@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:otc/globals/globals.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
@@ -34,8 +35,11 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
   @override
   Widget build(BuildContext context) {
     return UiTextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: const TextInputType.numberWithOptions(decimal: false),
       labelText: "手机号码",
+      maxLength: 16,
+      name: "phone",
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
         hintStyle: TextStyle(color: Colors.grey[300]),
         hintText: example,

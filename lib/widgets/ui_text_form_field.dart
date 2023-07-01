@@ -57,6 +57,8 @@ class UiTextFormField extends StatefulWidget {
   final TextMagnifierConfiguration? magnifierConfiguration;
   final TextEditingController? controller;
   final String? labelText;
+  final String? name;
+  final Map<String, dynamic>? formState;
 
   const UiTextFormField({
     super.key,
@@ -115,6 +117,8 @@ class UiTextFormField extends StatefulWidget {
     this.spellCheckConfiguration,
     this.magnifierConfiguration,
     this.labelText,
+    this.formState,
+    this.name,
   });
 
   @override
@@ -175,7 +179,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       onTapOutside: widget.onTapOutside,
       onEditingComplete: widget.onEditingComplete,
       onFieldSubmitted: widget.onFieldSubmitted,
-      onSaved: widget.onSaved,
+      onSaved: _onSave,
       validator: widget.validator,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
@@ -200,6 +204,13 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       spellCheckConfiguration: widget.spellCheckConfiguration,
       magnifierConfiguration: widget.magnifierConfiguration,
     );
+  }
+
+  void _onSave(value) {
+    widget.onSaved?.call(value);
+    if (widget.name != null) {
+      widget.formState?.update(widget.name!, (_) => value);
+    }
   }
 
   _toogleClearButton() {

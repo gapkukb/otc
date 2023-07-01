@@ -71,6 +71,7 @@ dependencies:
   autoscale_tabbarview: ^1.0.2
   country_code_picker: ^3.0.0
   phone_numbers_parser: ^8.0.0
+  slider_captcha: ^1.0.0
 
 dev_dependencies:
   build_runner: ^2.4.5

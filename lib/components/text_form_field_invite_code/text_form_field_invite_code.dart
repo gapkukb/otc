@@ -10,9 +10,16 @@ class TextFormFieldInviteCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const UiTextFormField(
-      labelText: "邀请码(选填)",
+    return UiTextFormField(
+      labelText: "邀请码",
       maxLength: 6,
+      name: "invite_code",
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "请填写邀请码";
+        }
+        return null;
+      },
     );
   }
 }

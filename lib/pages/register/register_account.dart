@@ -6,20 +6,25 @@ import 'package:otc/components/text_form_field_email/text_form_field_email.dart'
 import 'package:otc/components/text_form_field_invite_code/text_form_field_invite_code.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
-class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key});
+class RegisterAccount extends StatefulWidget {
+  const RegisterAccount({super.key});
 
   @override
-  State<RegisterForm> createState() => _RegisterFormState();
+  State<RegisterAccount> createState() => _RegisterAccountState();
 }
 
-class _RegisterFormState extends State<RegisterForm>
+class _RegisterAccountState extends State<RegisterAccount>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   bool _showEmail = true;
   late TabController _controller;
+
+  String _username = "";
+  String _password = "";
+  String _invitationCode = "";
 
   @override
   void initState() {
@@ -109,10 +114,13 @@ class _RegisterFormState extends State<RegisterForm>
                   UiButton(
                     fullWidth: true,
                     label: "注册",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Modal.showText(text: "注册成功");
-                      }
+                    onPressed: () async {
+                      // if (_formKey.currentState!.validate()) {
+                      await context.push('/slider_captcha');
+                      await context.push('/register_validation');
+
+                      // Modal.showText(text: "注册成功");
+                      // }
                     },
                   ),
                   const SizedBox(height: 16),
@@ -132,7 +140,7 @@ class _RegisterFormState extends State<RegisterForm>
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

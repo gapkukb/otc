@@ -4,8 +4,8 @@ import 'package:otc/utils/responsive.dart';
 class Tip extends StatelessWidget {
   String message;
   double? iconSize;
-  Color iconColor;
-  IconData iconData;
+  Color? iconColor;
+  IconData? iconData;
   TextStyle? style;
 
   Tip({
@@ -13,15 +13,15 @@ class Tip extends StatelessWidget {
     required this.message,
     this.style,
     this.iconSize,
-    this.iconColor = Colors.white,
-    this.iconData = Icons.help,
+    this.iconColor,
+    this.iconData,
   });
 
   @override
   Widget build(BuildContext context) {
     var icon = Icon(
-      iconData,
-      color: iconColor,
+      iconData ?? Icons.help,
+      color: iconColor ?? Theme.of(context).hintColor,
       size: iconSize,
     );
 
@@ -42,10 +42,10 @@ class Tip extends StatelessWidget {
         },
         icon: icon,
       ),
-      lg: Tooltip(
+      sm: Tooltip(
         message: message,
         textStyle: style,
-        child: icon,
+        child: GestureDetector(child: icon),
       ),
     );
   }

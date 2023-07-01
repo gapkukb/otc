@@ -5,7 +5,9 @@ import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
 import 'package:otc/pages/agent/agent.dart';
+import 'package:otc/pages/register/register.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
+import 'package:otc/pages/slider_captcha/slider_captcha.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/auth/auth_junior.dart';
 import 'package:otc/pages/user/auth/auth_primary.dart';
@@ -31,7 +33,6 @@ import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/router/modal_route.dart';
 import '../pages/index.dart';
-import '../pages/register/register.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -219,6 +220,13 @@ final router = GoRouter(
       path: '/advertise_place',
       pageBuilder: (context, state) => ModalRoutePage(
         const AdvertisePlace(),
+      ),
+    ),
+    GoRoute(
+      path: '/slider_captcha',
+      pageBuilder: (context, state) => ModalRoutePage(
+        const SliderCaptcha(),
+        false,
       ),
     ),
     GoRoute(

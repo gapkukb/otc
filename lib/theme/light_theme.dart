@@ -8,4 +8,9 @@ ThemeData lightTheme = ThemeData(
     surfaceTintColor: Colors.white,
     color: Colors.white,
   ),
+  dialogTheme: DialogTheme(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+  ),
 );

@@ -22,7 +22,7 @@ extension Responsive on BuildContext {
     T? xl,
     T? xxl,
   }) {
-    if (isFixedWidth) return isXs ? defaultVal : sm ?? defaultVal;
+    // if (isFixedWidth) return isXs ? defaultVal : sm ?? defaultVal;
     if (width < _xs) return defaultVal;
     if (width < _sm) return sm ?? defaultVal;
     if (width < _md) return md ?? sm ?? defaultVal;

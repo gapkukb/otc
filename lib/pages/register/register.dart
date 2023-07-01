@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/register/register_form.dart';
+import 'package:otc/pages/register/register_account.dart';
 import 'package:otc/utils/responsive.dart';
 
-class Register extends StatefulWidget {
+class Register extends StatelessWidget {
   const Register({super.key});
 
-  @override
-  State<Register> createState() => _RegisterState();
-}
-
-class _RegisterState extends State<Register>
-    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +14,7 @@ class _RegisterState extends State<Register>
             child: context.md
                 ? const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: RegisterForm(),
+                    child: RegisterAccount(),
                   )
                 : Row(
                     children: [
@@ -37,7 +31,7 @@ class _RegisterState extends State<Register>
                             Container(
                               width: 518,
                               alignment: Alignment.center,
-                              child: const RegisterForm(),
+                              child: const RegisterAccount(),
                             )
                           ],
                         ),

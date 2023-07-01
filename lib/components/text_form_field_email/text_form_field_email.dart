@@ -14,6 +14,7 @@ class TextFormFieldEmail extends StatelessWidget {
     return UiTextFormField(
       keyboardType: TextInputType.emailAddress,
       labelText: "邮箱地址",
+      name: "email",
       decoration: const InputDecoration(
         hintText: "eg:jack@gmail.com",
       ),
