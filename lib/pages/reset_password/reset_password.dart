@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/user/verification/verification.dart';
+import 'package:otc/pages/user/captcha/captcha.dart';
 
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});

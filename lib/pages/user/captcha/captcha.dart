@@ -1,37 +1,69 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/countdown_button/countdown_button.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
-class UserVerification extends StatefulWidget {
-  final bool isPhoneEditing;
-  const UserVerification({
+class CaptchaServiceType {
+  static const String any = "";
+  static const String addBankcard = "add-bankcard";
+  static const String editBankcard = "edit-bankcard";
+  static const String delBankcard = "del-bankcard";
+  static const String addAddressBook = "add-address-book";
+  static const String editAddressBook = "edit-address-book";
+  static const String delAddressBook = "del-address-book";
+  static const String addQrcode = "add-qrcode";
+  static const String editQrcode = "edit-qrcode";
+  static const String delQrcode = "del-qrcode";
+  static const String boundEmail = "bound-email";
+  static const String boundPhone = "bound-phone";
+  static const String register = "register";
+}
+
+class CaptchaDeviceType {
+  static const String phone = "PHONE";
+  static const String email = "EMAIL";
+}
+
+class Captcha extends StatefulWidget {
+  final String device;
+  final String service;
+  final String account;
+
+  const Captcha({
     super.key,
-    this.isPhoneEditing = true,
+    required this.device,
+    required this.service,
+    this.account = "123132",
   });
 
   @override
-  State<UserVerification> createState() => _UserVerificationState();
+  State<Captcha> createState() => _CaptchaState();
 }
 
 int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 3;
 
-class _UserVerificationState extends State<UserVerification> {
+class _CaptchaState extends State<Captcha> {
   final TextEditingController _controller = TextEditingController();
   final int _length = 6;
-  late final String typeText;
-
-  static _getType(bool flag) {
-    return flag ? '手机' : '邮箱';
-  }
+  bool _isPhone = false;
 
   @override
   void initState() {
-    typeText = _getType(widget.isPhoneEditing);
+    _isPhone = widget.device == CaptchaDeviceType.phone;
     super.initState();
+  }
+
+  String get typeText {
+    return getType(_isPhone);
+  }
+
+  getType(bool isphone) {
+    return isphone ? '手机' : '邮箱';
   }
 
   @override
@@ -87,27 +119,15 @@ class _UserVerificationState extends State<UserVerification> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "请输入您在${typeText}u****n@gmail.com收到的6位验证码，验证码30分钟有效",
+                  "请输入您在${typeText}${maskingAccount}收到的6位验证码，验证码30分钟有效",
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xff667086),
                   ),
                 ),
                 const SizedBox(height: 24),
-                widget.isPhoneEditing
-                    ? _buildPhoneTextField()
-                    : _buildEmailTextField(),
-                TextButton(
-                  child: Text("切换${_getType(!widget.isPhoneEditing)}验证"),
-                  onPressed: () {
-                    context.pop();
-                    context.push(
-                      widget.isPhoneEditing
-                          ? '/email_verification'
-                          : '/phone_verification',
-                    );
-                  },
-                ),
+                _isPhone ? _buildPhoneTextField() : _buildEmailTextField(),
+                _buildToggleButton(),
                 const SizedBox(height: 24),
                 _buildActions(),
               ],
@@ -115,6 +135,23 @@ class _UserVerificationState extends State<UserVerification> {
           ),
         ),
       ),
+    );
+  }
+
+  // 脱敏
+  String get maskingAccount {
+    if (_isPhone) {
+      return widget.account.replaceRange(
+        3,
+        widget.account.length - 4,
+        List.generate(widget.account.length - 7, (index) => "*").join(""),
+      );
+    }
+    var index = widget.account.indexOf("@");
+    return widget.account.replaceRange(
+      1,
+      index - 1,
+      List.generate(index - 1, (index) => "*").join(""),
     );
   }
 
@@ -137,7 +174,9 @@ class _UserVerificationState extends State<UserVerification> {
           onPressed: () {
             if (_controller.text.length != _length) {
               BotToast.showText(text: "请正确填写$_length数字验证码！");
+              return;
             }
+            context.pop(_controller.text);
           },
         ),
       ],
@@ -171,5 +210,36 @@ class _UserVerificationState extends State<UserVerification> {
         child: CountdownButton(),
       ),
     );
+  }
+
+  _buildToggleButton() {
+    if (widget.service == CaptchaServiceType.register) {
+      return const SizedBox.shrink();
+    }
+    return TextButton(
+      child: Text("切换${getType(!_isPhone)}验证"),
+      onPressed: () {
+        setState(() {
+          _isPhone = !_isPhone;
+        });
+      },
+    );
+  }
+
+  send() async {
+    var payload = {
+      "device": _isPhone ? CaptchaDeviceType.phone : CaptchaDeviceType.email,
+      "session": widget.service,
+    };
+    // 如果value不存在，则视为未登录
+    if (widget.account == null) {
+      payload.addAll({
+        "account": widget.account!,
+      });
+      await apis.user.sendCaptchaWithLogout(payload);
+    } else {
+      await apis.user.sendCaptcha(payload);
+    }
+    Modal.showText(text: "验证码已发送,请注意查收");
   }
 }

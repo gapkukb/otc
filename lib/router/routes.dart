@@ -96,15 +96,13 @@ final List<RouteBase> routes = [
     builder: (context, state) => const ContractWallet(),
   ),
   CustomRoute(
-    path: '/phone_verification',
+    path: '/captcha',
     pageBuilder: (context, state) => ModalRoutePage(
-      const UserVerification(isPhoneEditing: true),
-    ),
-  ),
-  CustomRoute(
-    path: '/email_verification',
-    pageBuilder: (context, state) => ModalRoutePage(
-      const UserVerification(isPhoneEditing: false),
+      Captcha(
+        device: (state.extra as dynamic)['device'],
+        service: (state.extra as dynamic)['service'],
+        account: (state.extra as dynamic)['account'],
+      ),
     ),
   ),
   CustomRoute(

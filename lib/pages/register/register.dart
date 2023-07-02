@@ -9,7 +9,15 @@ class Register extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
+        child: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/register.png"),
+              fit: BoxFit.cover,
+              // opacity: 0.8,
+            ),
+          ),
           child: SingleChildScrollView(
             child: context.md
                 ? const Padding(

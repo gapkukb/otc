@@ -26,7 +26,7 @@ import 'package:otc/pages/user/layout/user_layout.dart';
 import 'package:otc/pages/user/setting/setting.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
 import 'package:otc/pages/user/setting/update_avatar.dart';
-import 'package:otc/pages/user/verification/verification.dart';
+import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/pages/user/rebate/rebate.dart';
 import 'package:otc/pages/user/tasks/user_tasks.dart';
 import 'package:otc/pages/wallet/banks/wallet_address.dart';
