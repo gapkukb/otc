@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: "Poppins", sans-serif;
+			}
+			body,
+			flt-glass-pane,
+			flt-glass-pane * p {
+				image-rendering: pixelated;
+			}
+			.box {
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: #000;
+			}
+			.animation {
+				height: 32px;
+				display: flex;
+				transform: rotate(180deg);
+			}
+			.animation span {
+				width: 8px;
+				margin: 0 2px;
+				border-radius: 6px;
+				/* background-color: #fff; */
+				animation: loader 2s infinite;
+			}
+			@keyframes loader {
+				0%,
+				100% {
+					height: 4px;
+					background: #0081c9;
+				}
+				25% {
+					height: 32px;
+					background: #ffb100;
+				}
+				50% {
+					height: 16px;
+					background: #54b435;
+				}
+				75% {
+					height: 32px;
+					background: #ff6464;
+				}
+			}
+			.animation span:nth-child(1) {
+				animation-delay: 0.2s;
+			}
+			.animation span:nth-child(2) {
+				animation-delay: 0.4s;
+			}
+			.animation span:nth-child(3) {
+				animation-delay: 0.6s;
+			}
+			.animation span:nth-child(4) {
+				animation-delay: 0.8s;
+			}
+			.animation span:nth-child(5) {
+				animation-delay: 1s;
+			}
+		</style>
+		<!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+		<base href="$FLUTTER_BASE_HREF" />
+
+		<meta charset="UTF-8" />
+		<meta
+			content="IE=Edge"
+			http-equiv="X-UA-Compatible"
+		/>
+		<meta
+			name="description"
+			content="A new Flutter project."
+		/>
+
+		<!-- iOS meta tags & icons -->
+		<meta
+			name="apple-mobile-web-app-capable"
+			content="yes"
+		/>
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black"
+		/>
+		<meta
+			name="apple-mobile-web-app-title"
+			content="otc"
+		/>
+		<link
+			rel="apple-touch-icon"
+			href="icons/Icon-192.png"
+		/>
+
+		<!-- Favicon -->
+		<link
+			rel="icon"
+			type="image/png"
+			href="favicon.png"
+		/>
+
+		<title>otc</title>
+		<link
+			rel="manifest"
+			href="manifest.json"
+		/>
+
+		<script>
+			// The value below is injected by flutter build, do not touch.
+			var serviceWorkerVersion = null;
+		</script>
+		<!-- This script adds the flutter initialization JS code -->
+		<script
+			src="flutter.js"
+			defer
+		></script>
+		<script>
+			const wait_until = setInterval(() => {
+				var elt = document.querySelector("flt-glass-pane");
+				if (elt) {
+					clearInterval(wait_until);
+					var sheet = new CSSStyleSheet();
+					sheet.replaceSync("flt-scene-host * p, flt-scene-host * canvas { image-rendering: pixelated; }");
+					elt.shadowRoot.adoptedStyleSheets = [sheet];
+				}
+			}, 500);
+		</script>
+	</head>
+	<body>
+		<div class="box">
+			<div class="animation">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<script>
+			window.addEventListener("load", function (ev) {
+				// Download main.dart.js
+				_flutter.loader.loadEntrypoint({
+					serviceWorker: {
+						serviceWorkerVersion: serviceWorkerVersion,
+					},
+					onEntrypointLoaded: function (engineInitializer) {
+						engineInitializer.initializeEngine().then(function (appRunner) {
+							appRunner.runApp();
+						});
+					},
+				});
+			});
+		</script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css"
+		/>
+		<script
+			defer
+			src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"
+		></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+	</body>
+</html>
