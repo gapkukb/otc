@@ -1,10 +1,9 @@
 library router;
 
-import 'dart:developer';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/layout/page_layout/page_layout.dart';
 import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
@@ -47,7 +46,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/register',
+  initialLocation: '/page_layout',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

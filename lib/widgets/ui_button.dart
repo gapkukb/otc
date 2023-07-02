@@ -32,26 +32,31 @@ class UiButton extends StatelessWidget {
   final IconData? iconData;
   final Icon? icon;
   final bool? iconOnRight;
+  final EdgeInsets? padding;
 
-  const UiButton(
-      {super.key,
-      required this.onPressed,
-      this.disabled = false,
-      this.label,
-      this.child,
-      this.size = UiButtonSize.small,
-      this.fullWidth = false,
-      this.shape,
-      this.color,
-      this.variant,
-      this.iconData,
-      this.icon,
-      this.iconOnRight});
+  const UiButton({
+    super.key,
+    required this.onPressed,
+    this.disabled = false,
+    this.label,
+    this.child,
+    this.size = UiButtonSize.small,
+    this.fullWidth = false,
+    this.shape,
+    this.color,
+    this.variant,
+    this.iconData,
+    this.icon,
+    this.iconOnRight,
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
     var themeColor = Theme.of(context).primaryColor;
     return MaterialButton(
+      padding: padding ??
+          (size == UiButtonSize.mini ? const EdgeInsets.all(0) : null),
       minWidth: fullWidth
           ? double.infinity
           : size == UiButtonSize.mini
@@ -102,24 +107,29 @@ class UiButton extends StatelessWidget {
 
   Widget _buildChild() {
     Icon? $icon = icon ?? (iconData == null ? null : Icon(iconData));
-    Widget $child = child ??
-        Text(
-          label ?? "",
-          style: TextStyle(fontSize: _fontSize[size]),
-        );
+    Widget? $text = child ??
+        (label == null
+            ? null
+            : Text(
+                label!,
+                style: TextStyle(fontSize: _fontSize[size]),
+              ));
 
-    if ($icon == null) {
-      return $child;
+    if ($icon != null && $text != null) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        textDirection: iconOnRight == true ? TextDirection.rtl : null,
+        children: [
+          $icon,
+          const SizedBox(width: 4),
+          $text,
+        ],
+      );
     }
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      textDirection: iconOnRight == true ? TextDirection.rtl : null,
-      children: [
-        $icon,
-        const SizedBox(width: 4),
-        $child,
-      ],
-    );
+    if ($icon != null) {
+      return $icon;
+    }
+    return $text!;
   }
 
   static final Map<UiButtonSize, double> _size = {

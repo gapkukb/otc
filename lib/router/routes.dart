@@ -1,6 +1,10 @@
 part of router;
 
 final List<RouteBase> routes = [
+  CustomRoute(
+    path: '/page_layout',
+    builder: (context, state) => const PageLayout(),
+  ),
   CustomShellRoute(
     builder: layout,
     routes: [

@@ -11,13 +11,15 @@ class Register extends StatelessWidget {
       body: SafeArea(
         child: Container(
           alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/register.png"),
-              fit: BoxFit.cover,
-              // opacity: 0.8,
-            ),
-          ),
+          decoration: context.md
+              ? const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/register.png"),
+                    fit: BoxFit.fitHeight,
+                    // opacity: 0.8,
+                  ),
+                )
+              : null,
           child: SingleChildScrollView(
             child: context.md
                 ? const Padding(
