@@ -13,10 +13,10 @@ class TextFormFieldInviteCode extends StatelessWidget {
     return UiTextFormField(
       labelText: "邀请码",
       maxLength: 6,
-      name: "invite_code",
+      name: "invitationCode",
       validator: (value) {
-        if (value!.isEmpty) {
-          return "请填写邀请码";
+        if (value!.isEmpty || value.length < 6) {
+          return "邀请码格式不正确，必须是6位字符";
         }
         return null;
       },

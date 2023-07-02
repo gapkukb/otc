@@ -39,7 +39,7 @@ class UiButton extends StatelessWidget {
       this.disabled = false,
       this.label,
       this.child,
-      this.size = UiButtonSize.medium,
+      this.size = UiButtonSize.small,
       this.fullWidth = false,
       this.shape,
       this.color,

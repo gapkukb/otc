@@ -1,6 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/components/countdown_button/countdown_button.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class UserVerification extends StatefulWidget {
@@ -14,7 +17,7 @@ class UserVerification extends StatefulWidget {
   State<UserVerification> createState() => _UserVerificationState();
 }
 
-int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 3;
 
 class _UserVerificationState extends State<UserVerification> {
   final TextEditingController _controller = TextEditingController();
@@ -119,14 +122,18 @@ class _UserVerificationState extends State<UserVerification> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        TextButton(
-          child: Text("取消"),
+        UiButton(
+          label: "取消",
+          size: UiButtonSize.small,
+          variant: UiButtonVariant.text,
           onPressed: () {
             context.pop();
           },
         ),
-        TextButton(
-          child: Text("下一步"),
+        UiButton(
+          label: "下一步",
+          size: UiButtonSize.small,
+          variant: UiButtonVariant.text,
           onPressed: () {
             if (_controller.text.length != _length) {
               BotToast.showText(text: "请正确填写$_length数字验证码！");
@@ -159,22 +166,9 @@ class _UserVerificationState extends State<UserVerification> {
     return InputDecoration(
       label: Text("$typeText验证码"),
       border: const OutlineInputBorder(),
-      suffixIcon: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: MaterialButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          onPressed: () {},
-          // child: CountdownTimer(
-          //   endTime: endTime,
-          //   widgetBuilder: (_, time) {
-          //     if (time == null) {
-          //       return const Text('重新获取');
-          //     }
-          //     return Text('${time.sec}S');
-          //   },
-          // ),
-        ),
+      suffixIcon: const Padding(
+        padding: EdgeInsets.only(right: 8.0),
+        child: CountdownButton(),
       ),
     );
   }

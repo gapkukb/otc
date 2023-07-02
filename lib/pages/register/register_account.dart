@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_invite_code/text_form_field_invite_code.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
-import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class RegisterAccount extends StatefulWidget {
@@ -19,12 +21,12 @@ class RegisterAccount extends StatefulWidget {
 class _RegisterAccountState extends State<RegisterAccount>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-  bool _showEmail = true;
-  late TabController _controller;
+  final Map<String, dynamic> _formState = {};
 
-  String _username = "";
-  String _password = "";
-  String _invitationCode = "";
+  bool _showEmail = true;
+  bool _agreement = false;
+
+  late TabController _controller;
 
   @override
   void initState() {
@@ -55,29 +57,6 @@ class _RegisterAccountState extends State<RegisterAccount>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            UiButton(
-              onPressed: () {},
-              label: "阿西吧",
-              shape: UiButtonShape.square,
-              variant: UiButtonVariant.outline,
-              size: UiButtonSize.mini,
-            ),
-            UiButton(
-              onPressed: () {},
-              label: "阿西吧",
-              shape: UiButtonShape.rounded,
-              variant: UiButtonVariant.outline,
-              size: UiButtonSize.mini,
-              iconData: Icons.abc,
-              iconOnRight: true,
-            ),
-            UiButton(
-              onPressed: () {},
-              label: "阿西吧",
-              shape: UiButtonShape.circle,
-              variant: UiButtonVariant.elevated,
-              size: UiButtonSize.mini,
-            ),
             Text(
               "注册账号",
               style: Theme.of(context).textTheme.headlineSmall,
@@ -104,7 +83,10 @@ class _RegisterAccountState extends State<RegisterAccount>
                 children: [
                   const SizedBox(height: 32),
                   _showEmail
-                      ? const TextFormFieldEmail()
+                      ? TextFormFieldEmail(
+                          name: "email",
+                          formState: _formState,
+                        )
                       : const TextFormFieldPhone(),
                   const SizedBox(height: 32),
                   const TextFormFieldPassword(),
@@ -113,7 +95,13 @@ class _RegisterAccountState extends State<RegisterAccount>
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      Checkbox(value: true, onChanged: (checked) {}),
+                      Checkbox(
+                        value: _agreement,
+                        onChanged: (checked) {
+                          _agreement = checked!;
+                          setState(() {});
+                        },
+                      ),
                       Text.rich(
                         TextSpan(
                           text: '我已经阅读并且同意',
@@ -137,14 +125,7 @@ class _RegisterAccountState extends State<RegisterAccount>
                   UiButton(
                     fullWidth: true,
                     label: "注册",
-                    onPressed: () async {
-                      // if (_formKey.currentState!.validate()) {
-                      await context.push('/slider_captcha');
-                      await context.push('/register_validation');
-
-                      // Modal.showText(text: "注册成功");
-                      // }
-                    },
+                    onPressed: register,
                   ),
                   const SizedBox(height: 16),
                   Text.rich(
@@ -171,5 +152,28 @@ class _RegisterAccountState extends State<RegisterAccount>
         ),
       ),
     );
+  }
+
+  register() async {
+    var code = await context.push(
+      '/email_verification',
+      extra: {
+        "email": _formState['username'],
+      },
+    ) as String;
+
+    inspect(code);
+
+    // if (_formKey.currentState!.validate()) {
+    //   if (!_agreement) {
+    //     Modal.showText(text: "请阅读并同意使用条款");
+    //     return;
+    //   }
+    //   _formKey.currentState!.save();
+    //   await context.push('/email_verification');
+    //   // await apis.user.register(_formState);
+    //   // await context.push('/register_validation');
+    //   // Modal.showText(text: "注册成功");
+    // }
   }
 }

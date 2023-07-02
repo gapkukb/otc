@@ -80,7 +80,7 @@ class _RegisterValidationState extends State<RegisterValidation>
                 children: [
                   const SizedBox(height: 32),
                   _showEmail
-                      ? const TextFormFieldEmail()
+                      ? TextFormFieldEmail()
                       : const TextFormFieldPhone(),
                   const SizedBox(height: 32),
                   const TextFormFieldPassword(),

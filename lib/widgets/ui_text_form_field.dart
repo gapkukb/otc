@@ -208,8 +208,12 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
 
   void _onSave(value) {
     widget.onSaved?.call(value);
-    if (widget.name != null) {
-      widget.formState?.update(widget.name!, (_) => value);
+    if (widget.name != null && widget.formState != null) {
+      widget.formState?.update(
+        widget.name!,
+        (_) => value,
+        ifAbsent: () => value,
+      );
     }
   }
 

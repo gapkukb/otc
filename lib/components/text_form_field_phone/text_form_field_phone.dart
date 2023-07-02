@@ -38,7 +38,7 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
       labelText: "手机号码",
       maxLength: 16,
-      name: "phone",
+      name: "username",
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
         hintStyle: TextStyle(color: Colors.grey[300]),

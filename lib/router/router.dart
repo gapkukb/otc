@@ -39,6 +39,7 @@ import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/router/modal_route.dart';
 import '../pages/index.dart';
 
+part './route.dart';
 part './routes.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -46,12 +47,14 @@ final navigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.home.path,
+  initialLocation: '/register',
   debugLogDiagnostics: true,
   redirect: (context, state) {
-    inspect(state);
-    // if (accessable) {
-    //   return '/';
+    // for (var element in routes) {
+    //   if (element.runtimeType == CustomShellRoute) {
+    //     var route = deepFind(element as CustomShellRoute, state.location);
+    //     if (route == null) {}
+    //   }
     // }
 
     return null;
@@ -63,191 +66,5 @@ final router = GoRouter(
     return const Page404();
   },
   observers: [BotToastNavigatorObserver()],
-  routes: [
-    ShellRoute(
-      builder: layout,
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const HomePage(),
-        ),
-        GoRoute(
-          path: '/wallet_home',
-          builder: (context, state) => const WalletHome(),
-        ),
-      ],
-    ),
-    GoRoute(
-      path: '/register',
-      builder: (context, state) => const Register(),
-    ),
-    ShellRoute(
-      builder: userLayout,
-      routes: [
-        GoRoute(
-          path: '/user',
-          builder: (context, state) => const UserHome(),
-        ),
-        GoRoute(
-          path: '/c2c',
-          builder: (context, state) => const UserC2C(),
-        ),
-        GoRoute(
-          path: '/rebate',
-          builder: (context, state) => const UserRebate(),
-        ),
-        GoRoute(
-          path: '/tasks',
-          builder: (context, state) => const UserTasks(),
-        ),
-        GoRoute(
-          path: '/reset_password',
-          builder: (context, state) => const ResetPassword(),
-        ),
-        GoRoute(
-          path: '/auth',
-          builder: (context, state) => const UserAuth(),
-        ),
-        GoRoute(
-          path: '/setting',
-          builder: (context, state) => const UserSetting(),
-        ),
-      ],
-    ),
-    ShellRoute(
-      builder: walletLayout,
-      routes: [
-        GoRoute(
-          path: '/wallet_home',
-          builder: (context, state) => const WalletHome(),
-        ),
-        GoRoute(
-          path: '/wallet_banks',
-          builder: (context, state) => const WalletAddressDC(),
-        ),
-        GoRoute(
-          path: '/wallet_addition',
-          pageBuilder: (context, state) => ModalRoutePage(
-            WalletAddressAddition(
-              addType: (state.extra as AddType?) ?? AddType.bank,
-            ),
-          ),
-        ),
-        GoRoute(
-          path: '/wallet_addition_dc',
-          pageBuilder: (context, state) => ModalRoutePage(
-            WalletAddressDcAddition(),
-          ),
-        ),
-        GoRoute(
-          path: '/funds',
-          builder: (context, state) => const Funds(),
-        ),
-      ],
-    ),
-    ShellRoute(
-      builder: advertiseLayout,
-      routes: [
-        GoRoute(
-          path: '/advertise',
-          builder: (context, state) => const Advertise(),
-        ),
-      ],
-    ),
-    GoRoute(
-      path: '/contract_wallet',
-      builder: (context, state) => const ContractWallet(),
-    ),
-    GoRoute(
-      path: '/phone_verification',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const UserVerification(isPhoneEditing: true),
-      ),
-    ),
-    GoRoute(
-      path: '/email_verification',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const UserVerification(isPhoneEditing: false),
-      ),
-    ),
-    GoRoute(
-      path: '/f2a',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const UserF2a(),
-      ),
-    ),
-    GoRoute(
-      path: '/email',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const UserEmailAddress(),
-      ),
-    ),
-    GoRoute(
-      path: '/bind_f2a',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const BindingPhone(),
-      ),
-    ),
-    GoRoute(
-      path: '/auth_primary',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const AuthPrimary(),
-      ),
-    ),
-    GoRoute(
-      path: '/auth_junior',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const AuthJunior(),
-      ),
-    ),
-    GoRoute(
-      path: '/auth_senior',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const AuthSenior(),
-      ),
-    ),
-    GoRoute(
-      path: '/agent',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const Agent(),
-      ),
-    ),
-    GoRoute(
-      path: '/setting_nickname',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const SettingNickname(),
-      ),
-    ),
-    GoRoute(
-      path: '/update_avatar',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const UpdateAvatar(),
-      ),
-    ),
-    GoRoute(
-      path: '/advertise_place',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const AdvertisePlace(),
-      ),
-    ),
-    GoRoute(
-      path: '/slider_captcha',
-      pageBuilder: (context, state) => ModalRoutePage(
-        const SliderCaptcha(),
-        false,
-      ),
-    ),
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      path: '/456',
-      builder: (context, state) => const HomePage(),
-    ),
-    Route(
-      path: Routes.home.path,
-      builder: (context, state) => const LegalTerms(),
-    ),
-  ],
+  routes: routes,
 );
