@@ -175,29 +175,16 @@ class _PageLayoutState extends State<PageLayout> {
             ],
           ),
           Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: 100,
-                          itemBuilder: (context, index) {
-                            return Text("data");
-                          },
-                        ),
-                      ),
-                      Text("bottom"),
-                    ],
-                  ),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: List.generate(10, (index) => Text("data"))
+                  ..add(Container(
+                    child: Text('Your super cool Footer'),
+                    color: Colors.amber,
+                  )),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
