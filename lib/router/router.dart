@@ -1,3 +1,7 @@
+library router;
+
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +9,7 @@ import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
 import 'package:otc/pages/agent/agent.dart';
+import 'package:otc/pages/legal_terms/legal_terms.dart';
 import 'package:otc/pages/register/register.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
 import 'package:otc/pages/slider_captcha/slider_captcha.dart';
@@ -34,14 +39,17 @@ import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/router/modal_route.dart';
 import '../pages/index.dart';
 
+part './routes.dart';
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/register',
+  initialLocation: Routes.home.path,
   debugLogDiagnostics: true,
   redirect: (context, state) {
+    inspect(state);
     // if (accessable) {
     //   return '/';
     // }
@@ -236,6 +244,10 @@ final router = GoRouter(
     GoRoute(
       path: '/456',
       builder: (context, state) => const HomePage(),
+    ),
+    Route(
+      path: Routes.home.path,
+      builder: (context, state) => const LegalTerms(),
     ),
   ],
 );

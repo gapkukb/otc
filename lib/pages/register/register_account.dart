@@ -55,6 +55,29 @@ class _RegisterAccountState extends State<RegisterAccount>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            UiButton(
+              onPressed: () {},
+              label: "阿西吧",
+              shape: UiButtonShape.square,
+              variant: UiButtonVariant.outline,
+              size: UiButtonSize.mini,
+            ),
+            UiButton(
+              onPressed: () {},
+              label: "阿西吧",
+              shape: UiButtonShape.rounded,
+              variant: UiButtonVariant.outline,
+              size: UiButtonSize.mini,
+              iconData: Icons.abc,
+              iconOnRight: true,
+            ),
+            UiButton(
+              onPressed: () {},
+              label: "阿西吧",
+              shape: UiButtonShape.circle,
+              variant: UiButtonVariant.elevated,
+              size: UiButtonSize.mini,
+            ),
             Text(
               "注册账号",
               style: Theme.of(context).textTheme.headlineSmall,
@@ -102,7 +125,7 @@ class _RegisterAccountState extends State<RegisterAccount>
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  print('Privacy Policy"');
+                                  context.push('/terms');
                                 },
                             ),
                           ],
