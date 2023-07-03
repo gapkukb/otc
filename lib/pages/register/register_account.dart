@@ -12,6 +12,7 @@ import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart'
 import 'package:otc/pages/register/register_success.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/utils/navigator.dart';
 
 class RegisterAccount extends StatefulWidget {
   const RegisterAccount({super.key});
@@ -57,7 +58,7 @@ class _RegisterAccountState extends State<RegisterAccount>
       borderOnForeground: true,
       child: Padding(
         padding: const EdgeInsets.all(40.0),
-        child: RegisterSuccess(),
+        child: _successful ? const RegisterSuccess() : _buildBody(),
       ),
     );
   }
@@ -96,11 +97,17 @@ class _RegisterAccountState extends State<RegisterAccount>
                       name: "account",
                       formState: _formState,
                     )
-                  : const TextFormFieldPhone(),
+                  : TextFormFieldPhone(
+                      formState: _formState,
+                    ),
               const SizedBox(height: 32),
-              const TextFormFieldPassword(),
+              TextFormFieldPassword(
+                formState: _formState,
+              ),
               const SizedBox(height: 32),
-              const TextFormFieldInviteCode(),
+              TextFormFieldInviteCode(
+                formState: _formState,
+              ),
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -164,25 +171,26 @@ class _RegisterAccountState extends State<RegisterAccount>
 
   register() async {
     var device = _showEmail ? CaptchaDeviceType.email : CaptchaDeviceType.phone;
-    var code = await context.push(
-      '/captcha',
-      extra: {
-        "device": device,
-        "service": CaptchaServiceType.register,
-        "account": _formState['username'],
-      },
-    ) as String;
 
     if (_formKey.currentState!.validate()) {
       if (!_agreement) {
         Modal.showText(text: "请阅读并同意使用条款");
         return;
       }
+
       _formKey.currentState!.save();
-      // await context.push('/email_verification');
+
+      var code = await openCaptchaView(
+        context: context,
+        device: device,
+        service: CaptchaServiceType.register,
+        account: _formState['account'],
+      );
+
+      inspect(_formState);
       var payload = {
         "captcha": code,
-        "device": device,
+        "device": device.value,
         ..._formState,
       };
       await apis.user.register(payload);

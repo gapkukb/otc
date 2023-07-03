@@ -1,8 +1,10 @@
 part of http;
 
-class ErrorInterceptor extends Interceptor {
+class ExceptionInterceptor extends Interceptor {
   @override
   void onResponse(response, handler) {
+    print('----------ExceptionInterceptor onResponse-----------');
+    inspect(response);
     // 这里处理业务错误
     // 解析格式 {int code,String msg,bool success}
     if (response.data['success']) {
@@ -18,22 +20,26 @@ class ErrorInterceptor extends Interceptor {
             response.requestOptions.sourceStackTrace ?? StackTrace.current,
         type: DioExceptionType.badResponse,
       );
+
       super.onError(e, ErrorInterceptorHandler());
     }
   }
 
   @override
-  void onError(e, handler) async {
+  void onError(err, handler) async {
+    print('----------ExceptionInterceptor onError-----------');
     // 这里处理http错误
-    HttpException exception = HttpException.create(e);
+    HttpException exception = HttpException.create(err);
 
     // dio默认错误，进一步判断是否无网络状态
-    if (e.type == DioExceptionType.unknown) {
+    if (err.type == DioExceptionType.unknown) {
       if (await Connectivity().checkConnectivity() == ConnectivityResult.none) {
-        exception = HttpException(-100, "网络连接已断开，请检查您的网络");
+        exception = HttpException(-100, "网络开小差了,请检查网络");
       }
     }
-    super.onError(e.copyWith(error: exception), handler);
+    super.onError(err.copyWith(error: exception), handler);
+
+    Modal.showText(text: exception.msg);
   }
 }
 
@@ -89,7 +95,7 @@ class HttpException implements Exception {
           }
         }
       default:
-        return HttpException(-1, e.message!);
+        return HttpException(-1, e.message ?? "未知错误");
     }
   }
 }

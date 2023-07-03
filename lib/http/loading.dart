@@ -6,6 +6,7 @@ class LoadingInterceptor extends Interceptor {
   @override
   void onRequest(options, handler) {
     close = Modal.showLoading();
+
     super.onRequest(options, handler);
   }
 

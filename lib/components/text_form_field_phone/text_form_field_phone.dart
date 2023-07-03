@@ -9,11 +9,10 @@ import 'package:phone_numbers_parser/metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 class TextFormFieldPhone extends StatefulWidget {
-  final TextEditingController? controller;
-
+  final Map<String, dynamic>? formState;
   const TextFormFieldPhone({
     super.key,
-    this.controller,
+    this.formState,
   });
 
   @override
@@ -40,6 +39,7 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
       maxLength: 16,
       name: "username",
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      formState: widget.formState,
       decoration: InputDecoration(
         hintStyle: TextStyle(color: Colors.grey[300]),
         hintText: example,

@@ -12,7 +12,11 @@ final http = Http(HttpOptions(
   receiveTimeout: duration,
   sendTimeout: duration,
   connectTimeout: duration,
-  baseUrl: "http://otc.737.com/api",
+  // 开发环境
+  // baseUrl: "http://otc.737.com/api",
+  // ath 本地环境
+  baseUrl: "http://10.92.21.1:8082",
+
   headers: {
     globals.keys.token: globals.prefs.getString(globals.keys.token),
   },

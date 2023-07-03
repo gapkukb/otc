@@ -6,8 +6,12 @@ import 'package:otc/widgets/ui_text_form_field.dart';
 
 class TextFormFieldPassword extends StatefulWidget {
   final TextEditingController? controller;
+  final String? name;
+  final Map<String, dynamic>? formState;
   const TextFormFieldPassword({
     super.key,
+    this.formState,
+    this.name,
     this.controller,
   });
 
@@ -57,6 +61,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
       maxLines: 1,
       labelText: "密码",
       name: "password",
+      formState: widget.formState,
       validator: (value) {
         final String val = value ?? "";
         bool step1 = true;

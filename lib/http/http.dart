@@ -1,9 +1,11 @@
 library http;
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/components/modal/modal.dart';
@@ -97,7 +99,8 @@ class RequestWrapper<T> {
     final token = CancelToken();
     abort = token.cancel;
 
-    return dio.request(
+    return dio
+        .request(
       options.path!,
       cancelToken: token,
       data: data,
@@ -118,7 +121,16 @@ class RequestWrapper<T> {
         responseDecoder: options.responseDecoder,
         listFormat: options.listFormat,
       ),
-    );
+    )
+        .then((value) {
+      print('++++++++++++++++++++++++++++++++++++++++++++');
+      inspect(value);
+      return value;
+    }).catchError((err) {
+      print('----------------------------------------');
+      inspect(err);
+      throw err;
+    });
   }
 
   RequestWrapper({
@@ -229,7 +241,9 @@ class Http {
 
   Http(HttpOptions options) {
     dio = Dio(options);
-    dio.interceptors.add(LoadingInterceptor());
+    dio.interceptors
+      ..add(LoadingInterceptor())
+      ..add(ExceptionInterceptor());
   }
 
   HttpFunc<String, RequestWrapper> newMethod(
@@ -255,8 +269,6 @@ class Http {
       responseDecoder,
       listFormat,
     }) {
-      final token = CancelToken();
-
       var options = HttpOptions(
         path: path,
         method: method,

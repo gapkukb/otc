@@ -1,38 +1,47 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/index.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/countdown_button/countdown_button.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/widgets/ui_button.dart';
-import 'package:otc/widgets/ui_text_field.dart';
+import 'package:otc/widgets/ui_text_form_field.dart';
 
-class CaptchaServiceType {
-  static const String any = "";
-  static const String addBankcard = "add-bankcard";
-  static const String editBankcard = "edit-bankcard";
-  static const String delBankcard = "del-bankcard";
-  static const String addAddressBook = "add-address-book";
-  static const String editAddressBook = "edit-address-book";
-  static const String delAddressBook = "del-address-book";
-  static const String addQrcode = "add-qrcode";
-  static const String editQrcode = "edit-qrcode";
-  static const String delQrcode = "del-qrcode";
-  static const String boundEmail = "bound-email";
-  static const String boundPhone = "bound-phone";
-  static const String register = "register";
+enum CaptchaDeviceType {
+  phone("PHONE"),
+  email("EMAIL");
+
+  const CaptchaDeviceType(this.value);
+
+  final String value;
 }
 
-class CaptchaDeviceType {
-  static const String phone = "PHONE";
-  static const String email = "EMAIL";
+enum CaptchaServiceType {
+  addBankcard("add-bankcard"),
+  editBankcard("edit-bankcard"),
+  delBankcard("del-bankcard"),
+  addAddressBook("add-address-book"),
+  editAddressBook("edit-address-book"),
+  delAddressBook("del-address-book"),
+  addQrcode("add-qrcode"),
+  editQrcode("edit-qrcode"),
+  delQrcode("del-qrcode"),
+  boundEmail("bound-email"),
+  boundPhone("bound-phone"),
+  register("register");
+
+  const CaptchaServiceType(this.value);
+
+  final String value;
 }
 
 class Captcha extends StatefulWidget {
-  final String device;
-  final String service;
-  final String account;
+  final CaptchaDeviceType device;
+  final CaptchaServiceType service;
+  final String? account;
 
   const Captcha({
     super.key,
@@ -48,8 +57,10 @@ class Captcha extends StatefulWidget {
 int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 3;
 
 class _CaptchaState extends State<Captcha> {
-  final TextEditingController _controller = TextEditingController();
+  final _controller = TextEditingController();
+
   final int _length = 6;
+  String code = "";
   bool _isPhone = false;
 
   @override
@@ -126,7 +137,7 @@ class _CaptchaState extends State<Captcha> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                _isPhone ? _buildPhoneTextField() : _buildEmailTextField(),
+                _buildTextField(),
                 _buildToggleButton(),
                 const SizedBox(height: 24),
                 _buildActions(),
@@ -140,15 +151,17 @@ class _CaptchaState extends State<Captcha> {
 
   // 脱敏
   String get maskingAccount {
+    final String text = widget.account ?? "";
+    if (text == "") return "";
     if (_isPhone) {
-      return widget.account.replaceRange(
+      return text.replaceRange(
         3,
-        widget.account.length - 4,
-        List.generate(widget.account.length - 7, (index) => "*").join(""),
+        text.length - 4,
+        List.generate(text.length - 7, (index) => "*").join(""),
       );
     }
-    var index = widget.account.indexOf("@");
-    return widget.account.replaceRange(
+    var index = text.indexOf("@");
+    return text.replaceRange(
       1,
       index - 1,
       List.generate(index - 1, (index) => "*").join(""),
@@ -183,31 +196,29 @@ class _CaptchaState extends State<Captcha> {
     );
   }
 
-  _buildPhoneTextField() {
-    return UiTextField(
+  _buildTextField() {
+    return UiTextFormField(
+      controller: _controller,
       keyboardType: const TextInputType.numberWithOptions(
         decimal: false,
       ),
-      controller: _controller,
       maxLength: _length,
       decoration: _inputDecoration(),
+      validator: (value) {
+        return value!.length == _length ? null : "必须是6位数字";
+      },
     );
-  }
-
-  _buildEmailTextField() {
-    return TextField(
-        keyboardType: TextInputType.emailAddress,
-        controller: _controller,
-        decoration: _inputDecoration());
   }
 
   _inputDecoration() {
     return InputDecoration(
       label: Text("$typeText验证码"),
       border: const OutlineInputBorder(),
-      suffixIcon: const Padding(
-        padding: EdgeInsets.only(right: 8.0),
-        child: CountdownButton(),
+      suffixIcon: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: CountdownButton(
+          onPressed: send,
+        ),
       ),
     );
   }
@@ -226,13 +237,15 @@ class _CaptchaState extends State<Captcha> {
     );
   }
 
-  send() async {
-    var payload = {
-      "device": _isPhone ? CaptchaDeviceType.phone : CaptchaDeviceType.email,
-      "session": widget.service,
+  Future send() async {
+    final Map<String, dynamic> payload = {
+      "device": _isPhone
+          ? CaptchaDeviceType.phone.value
+          : CaptchaDeviceType.email.value,
+      "session": widget.service.value,
     };
-    // 如果value不存在，则视为未登录
-    if (widget.account == null) {
+
+    if (widget.service == CaptchaServiceType.register) {
       payload.addAll({
         "account": widget.account!,
       });
@@ -240,6 +253,7 @@ class _CaptchaState extends State<Captcha> {
     } else {
       await apis.user.sendCaptcha(payload);
     }
+    inspect(payload);
     Modal.showText(text: "验证码已发送,请注意查收");
   }
 }

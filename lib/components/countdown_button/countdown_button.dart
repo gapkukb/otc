@@ -11,15 +11,19 @@ class CountdownButton extends StatefulWidget {
   final int duration;
   final bool disabled;
   final void Function()? onEnd;
+  final Future Function()? onPressed;
+  final CountdownTimerController? controller;
 
   const CountdownButton({
     super.key,
     this.beforeText = "获取验证码",
     this.endText = "重新获取",
     this.runingText,
-    this.duration = 60,
+    this.duration = 5,
     this.disabled = false,
     this.onEnd,
+    this.onPressed,
+    this.controller,
   });
 
   @override
@@ -60,6 +64,7 @@ class _CountdownButtonState extends State<CountdownButton> {
           disabled: widget.disabled || disabled,
           onPressed: _send,
           child: CountdownTimer(
+            controller: widget.controller,
             endTime: _endTime,
             widgetBuilder: (_, time) {
               return Text(
@@ -83,7 +88,13 @@ class _CountdownButtonState extends State<CountdownButton> {
     );
   }
 
-  _send() {
+  _send() async {
+    if (disabled) return;
+    await widget.onPressed?.call();
+    start();
+  }
+
+  start() {
     setState(() {
       _endTime = DateTime.now().millisecondsSinceEpoch + duration;
       isResend = true;
