@@ -7,12 +7,14 @@ class LayoutFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.horizontal,
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         our(),
-        siteMap(),
+        const SizedBox(width: 16),
+        Expanded(
+          child: siteMap(),
+        ),
       ],
     );
   }
@@ -96,13 +98,15 @@ class LayoutFooter extends StatelessWidget {
 
     final dataList = json.map((e) => SiteMapStruct.formJson(e)).toList();
 
-    return Row(
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
       children: dataList
           .map(
             (col) => Padding(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     col.colName,
@@ -116,7 +120,6 @@ class LayoutFooter extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           if (item.callback == null) {
-                            print(item);
                             navigatorKey.currentContext!.go(item.path!);
                           } else {
                             item.callback!(item);
