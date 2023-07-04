@@ -20,13 +20,7 @@ part 'cache.dart';
 part 'exception.dart';
 part 'log.dart';
 part 'refresh.dart';
-
-enum DataType {
-  json,
-  form,
-  lencode,
-  file,
-}
+part 'data_type.dart';
 
 typedef HttpFunc<T, R> = R Function(
   T path, {
@@ -124,8 +118,6 @@ class RequestWrapper<T> {
       ),
     )
         .then((value) {
-      print('++++++++++++++++++++++++++++++++++++++++++++');
-      inspect(value);
       return value;
     });
   }
@@ -239,8 +231,9 @@ class Http {
   Http(HttpOptions options) {
     dio = Dio(options);
     dio.interceptors
-      ..add(LoadingInterceptor())
-      ..add(ExceptionInterceptor());
+      ..add(DataTypeInterceptor())
+      ..add(ExceptionInterceptor())
+      ..add(LoadingInterceptor());
   }
 
   HttpFunc<String, RequestWrapper> newMethod(
