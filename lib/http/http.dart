@@ -19,6 +19,7 @@ part 'retry.dart';
 part 'cache.dart';
 part 'exception.dart';
 part 'log.dart';
+part 'refresh.dart';
 
 enum DataType {
   json,
@@ -126,10 +127,6 @@ class RequestWrapper<T> {
       print('++++++++++++++++++++++++++++++++++++++++++++');
       inspect(value);
       return value;
-    }).catchError((err) {
-      print('----------------------------------------');
-      inspect(err);
-      throw err;
     });
   }
 

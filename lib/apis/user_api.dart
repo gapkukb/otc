@@ -1,7 +1,7 @@
 part of apis;
 
 class _User {
-  final login = get("/");
+  final login = get("/auth/login");
   final logout = get("/");
   final register = post("/auth/register");
   final getInfo = get("/");

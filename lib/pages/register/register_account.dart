@@ -9,6 +9,7 @@ import 'package:otc/components/text_form_field_email/text_form_field_email.dart'
 import 'package:otc/components/text_form_field_invite_code/text_form_field_invite_code.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
+import 'package:otc/pages/login/login_util.dart';
 import 'package:otc/pages/register/register_success.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -194,6 +195,14 @@ class _RegisterAccountState extends State<RegisterAccount>
         ..._formState,
       };
       await apis.user.register(payload);
+
+      await loginUtil(
+        username: "username",
+        password: _formState['password'],
+      );
+      setState(() {
+        _successful = true;
+      });
     }
   }
 }
