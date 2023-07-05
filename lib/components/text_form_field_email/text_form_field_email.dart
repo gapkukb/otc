@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/globals/globals.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class TextFormFieldEmail extends UiTextFormField {
@@ -15,7 +15,7 @@ class TextFormFieldEmail extends UiTextFormField {
             hintText: "eg:jack@gmail.com",
           ),
           validator: (value) {
-            return globals.regexp.email.hasMatch(value ?? "")
+            return global.regexp.email.hasMatch(value ?? "")
                 ? null
                 : "邮箱地址格式不正确";
           },

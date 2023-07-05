@@ -9,6 +9,7 @@ final List<RouteBase> routes = [
     builder: layout,
     routes: [
       CustomRoute(
+        name: RoutesName.home.name,
         path: '/',
         builder: (context, state) => const HomePage(),
       ),
@@ -19,8 +20,20 @@ final List<RouteBase> routes = [
     ],
   ),
   CustomRoute(
-    path: '/register',
-    builder: (context, state) => const Register(),
+    name: RoutesName.account.name,
+    path: '/account/:type',
+    redirect: (context, state) {
+      // 已经登录禁止再次访问
+      if (global.authorization == null) {
+        return null;
+      }
+      return '/';
+    },
+    builder: (context, state) {
+      return Account(
+        type: state.pathParameters['type'],
+      );
+    },
   ),
   CustomShellRoute(
     builder: userLayout,

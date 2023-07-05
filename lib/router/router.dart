@@ -3,13 +3,15 @@ library router;
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/http/http.dart';
 import 'package:otc/layout/page_layout/page_layout.dart';
 import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
 import 'package:otc/pages/agent/agent.dart';
 import 'package:otc/pages/legal_terms/legal_terms.dart';
-import 'package:otc/pages/register/register.dart';
+import 'package:otc/pages/account/account.dart';
 import 'package:otc/pages/reset_password/reset_password.dart';
 import 'package:otc/pages/slider_captcha/slider_captcha.dart';
 import 'package:otc/pages/user/auth/auth.dart';
@@ -40,13 +42,14 @@ import '../pages/index.dart';
 
 part './route.dart';
 part './routes.dart';
+part './routes_name.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: '/register',
+  initialLocation: '/account/login',
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

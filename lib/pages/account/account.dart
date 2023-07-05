@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/register/register_account.dart';
 import 'package:otc/utils/responsive.dart';
+import './register/register.dart';
+import './login/login.dart';
 
-class Register extends StatelessWidget {
-  const Register({super.key});
+class AccountType {
+  static const register = "register";
+  static const login = "login";
+}
+
+class Account extends StatelessWidget {
+  final String? type;
+  const Account({
+    super.key,
+    this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final child = type == AccountType.login ? const Login() : const Register();
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -22,9 +34,9 @@ class Register extends StatelessWidget {
               : null,
           child: SingleChildScrollView(
             child: context.md
-                ? const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: RegisterAccount(),
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: child,
                   )
                 : Row(
                     children: [
@@ -41,7 +53,7 @@ class Register extends StatelessWidget {
                             Container(
                               width: 518,
                               alignment: Alignment.center,
-                              child: const RegisterAccount(),
+                              child: child,
                             )
                           ],
                         ),

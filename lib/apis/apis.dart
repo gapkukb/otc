@@ -1,6 +1,6 @@
 library apis;
 
-import 'package:otc/globals/globals.dart';
+import 'package:otc/global/global.dart';
 
 import '../http/http.dart';
 part './app_api.dart';
@@ -18,7 +18,7 @@ final http = Http(HttpOptions(
   baseUrl: "http://10.92.21.1:8082",
 
   headers: {
-    globals.keys.authorization: globals.prefs.getString(globals.keys.token),
+    global.keys.authorization: global.authorization,
   },
 ));
 

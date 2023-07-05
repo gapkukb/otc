@@ -13,6 +13,7 @@ import 'package:otc/pages/user/home/overview.dart';
 import '../router/router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
+import 'package:otc/global/global.dart';
 
 part 'loading.dart';
 part 'retry.dart';
@@ -94,8 +95,7 @@ class RequestWrapper<T> {
     final token = CancelToken();
     abort = token.cancel;
 
-    return dio
-        .request(
+    return dio.request(
       options.path!,
       cancelToken: token,
       data: data,
@@ -116,10 +116,7 @@ class RequestWrapper<T> {
         responseDecoder: options.responseDecoder,
         listFormat: options.listFormat,
       ),
-    )
-        .then((value) {
-      return value;
-    });
+    );
   }
 
   RequestWrapper({

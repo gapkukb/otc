@@ -1,7 +1,14 @@
 part of http;
 
-extension DioExceptionExtension on DioException {
-  String get bizError => "BizError";
+// 客户端自定义的错误码
+class BizErrorCode {
+  static const weakNetwork = 90000;
+  static const unknown = 90001;
+  static const cancel = 90002;
+  static const connectionTimeout = 90003;
+  static const sendTimeout = 90004;
+  static const receiveTimeout = 90005;
+  static const badResponse = 90006;
 }
 
 class ExceptionInterceptor extends Interceptor {
@@ -18,12 +25,11 @@ class ExceptionInterceptor extends Interceptor {
         message: null,
         response: response,
         // ignore: invalid_use_of_internal_member
-        stackTrace:
-            response.requestOptions.sourceStackTrace ?? StackTrace.current,
+        // stackTrace: StackTrace.current,
         type: DioExceptionType.badResponse,
       );
 
-      onError(e, ErrorInterceptorHandler());
+      return handler.reject(e);
     }
   }
 
@@ -35,25 +41,33 @@ class ExceptionInterceptor extends Interceptor {
 
       // dio默认错误，进一步判断是否无网络状态
       if (err.type == DioExceptionType.unknown) {
-        if (await Connectivity().checkConnectivity() ==
-            ConnectivityResult.none) {
-          exception = HttpException(-100, "网络开小差了,请检查网络");
+        final result = await Connectivity().checkConnectivity();
+
+        if (result == ConnectivityResult.none) {
+          exception = HttpException(BizErrorCode.weakNetwork, "网络开小差了,请检查网络");
         }
       }
       err = err.copyWith(error: exception);
     }
 
-    Modal.showText(text: (err.error as _Exception).message);
+    final String? msg = (err.error as _Exception).message;
+
+    if (msg != null && msg.isNotEmpty) {
+      Modal.showText(text: msg);
+    }
+
+    global.logger.e(err);
+
     return super.onError(err, handler);
   }
 }
 
 abstract class _Exception implements Exception {
   final int code;
-  final String message;
+  final String? message;
 
   _Exception([
-    this.code = -1,
+    this.code = BizErrorCode.unknown,
     this.message = 'unknow error',
   ]);
 
@@ -72,13 +86,13 @@ class HttpException extends _Exception {
   factory HttpException.create(DioException e) {
     switch (e.type) {
       case DioExceptionType.cancel:
-        return HttpException(-1, "请求取消");
+        return HttpException(BizErrorCode.cancel, "请求取消");
       case DioExceptionType.connectionTimeout:
-        return HttpException(-1, "您的网络信号弱，连接服务器超时");
+        return HttpException(BizErrorCode.connectionTimeout, "您的网络信号弱，连接服务器超时");
       case DioExceptionType.sendTimeout:
-        return HttpException(-1, "请求服务器超时");
+        return HttpException(BizErrorCode.sendTimeout, "请求服务器超时");
       case DioExceptionType.receiveTimeout:
-        return HttpException(-1, "服务器响应超时");
+        return HttpException(BizErrorCode.receiveTimeout, "服务器响应超时");
       case DioExceptionType.badResponse:
         {
           try {
@@ -104,15 +118,15 @@ class HttpException extends _Exception {
               default:
                 return HttpException(
                   statusCode,
-                  e.response?.statusMessage ?? '未知错误-$statusCode',
+                  e.response?.statusMessage ?? '网络错误-$statusCode',
                 );
             }
           } on Exception catch (_) {
-            return HttpException(-1, '未知错误');
+            return HttpException(BizErrorCode.unknown, '未知错误');
           }
         }
       default:
-        return HttpException(-1, e.message ?? "未知错误");
+        return HttpException(BizErrorCode.unknown, e.message ?? "未知错误");
     }
   }
 }
@@ -127,11 +141,11 @@ class BizException extends _Exception {
     return BizException(e.response?.data['code'], e.message!);
     // switch (e.type) {
     //   case DioExceptionType.connectionTimeout:
-    //     return BizException(-1, "服务器连接超时");
+    //     return BizException(bizErrorCode, "服务器连接超时");
     //   case DioExceptionType.sendTimeout:
-    //     return BizException(-1, "发送请求超时");
+    //     return BizException(bizErrorCode, "发送请求超时");
     //   case DioExceptionType.receiveTimeout:
-    //     return BizException(-1, "服务器响应超时");
+    //     return BizException(bizErrorCode, "服务器响应超时");
     //   default:
     //     return BizException(e.response?.data['code'], e.message!);
     // }

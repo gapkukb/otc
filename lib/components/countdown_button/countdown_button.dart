@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
-import 'package:otc/globals/globals.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -41,7 +41,7 @@ class _CountdownButtonState extends State<CountdownButton> {
   void initState() {
     render = widget.runingText ?? (time) => "${time.sec}S";
     _endTime = DateTime.now().millisecondsSinceEpoch;
-    var cachedTime = globals.prefs.getInt(globals.keys.countdownTime);
+    var cachedTime = global.prefs.getInt(global.keys.countdownTime);
 
     if (cachedTime != null && _endTime < cachedTime) {
       _endTime = cachedTime;
@@ -99,7 +99,7 @@ class _CountdownButtonState extends State<CountdownButton> {
       _endTime = DateTime.now().millisecondsSinceEpoch + duration;
       isResend = true;
       disabled = true;
-      globals.prefs.setInt(globals.keys.countdownTime, _endTime);
+      global.prefs.setInt(global.keys.countdownTime, _endTime);
     });
   }
 }

@@ -9,20 +9,20 @@ import 'package:otc/components/text_form_field_email/text_form_field_email.dart'
 import 'package:otc/components/text_form_field_invite_code/text_form_field_invite_code.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
-import 'package:otc/pages/login/login_util.dart';
-import 'package:otc/pages/register/register_success.dart';
+import 'package:otc/pages/account/login/login_util.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/utils/navigator.dart';
+import './register_success.dart';
 
-class RegisterAccount extends StatefulWidget {
-  const RegisterAccount({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<RegisterAccount> createState() => _RegisterAccountState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _RegisterAccountState extends State<RegisterAccount>
+class _RegisterState extends State<Register>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formState = {};
@@ -157,7 +157,7 @@ class _RegisterAccountState extends State<RegisterAccount>
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.go("/login");
+                          context.go("/account/login");
                         },
                     ),
                   ],
