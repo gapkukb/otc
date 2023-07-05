@@ -13,9 +13,9 @@ final http = Http(HttpOptions(
   sendTimeout: duration,
   connectTimeout: duration,
   // 开发环境
-  // baseUrl: "http://otc.737.com/api",
+  baseUrl: "http://otc.737.com/api",
   // ath 本地环境
-  baseUrl: "http://10.92.21.1:8082",
+  // baseUrl: "http://10.92.21.1:8082",
 
   headers: {
     global.keys.authorization: global.authorization,

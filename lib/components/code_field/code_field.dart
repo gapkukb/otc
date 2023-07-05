@@ -24,15 +24,13 @@ class CodeField extends StatefulWidget {
   });
 
   @override
-  State<CodeField> createState() {
-    controller ??= TextEditingController();
-    return _CodeFieldState();
-  }
+  State<CodeField> createState() => _CodeFieldState();
 }
 
 class _CodeFieldState extends State<CodeField> {
   bool isRunning = false;
   bool isFirstTime = true;
+  late TextEditingController controller;
 
   get disabled {
     return isRunning || (widget.target == "");
@@ -44,6 +42,18 @@ class _CodeFieldState extends State<CodeField> {
         isRunning = false;
       });
     }
+  }
+
+  @override
+  void initState() {
+    controller = widget.controller ?? TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override

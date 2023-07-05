@@ -24,7 +24,7 @@ class _Global {
     authorization = prefs.getString(keys.authorization);
   }
 
-  updateToken(String? newToken) {
+  setToken(String? newToken) {
     final String key = keys.authorization;
 
     authorization = newToken;

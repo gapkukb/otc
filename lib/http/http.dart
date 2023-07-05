@@ -94,29 +94,32 @@ class RequestWrapper<T> {
 
     final token = CancelToken();
     abort = token.cancel;
-
-    return dio.request(
-      options.path!,
-      cancelToken: token,
-      data: data,
-      options: Options(
-        method: options.method,
-        sendTimeout: options.sendTimeout,
-        receiveTimeout: options.receiveTimeout,
-        extra: options.extra,
-        headers: options.headers,
-        responseType: options.responseType,
-        contentType: options.contentType,
-        validateStatus: options.validateStatus,
-        receiveDataWhenStatusError: options.receiveDataWhenStatusError,
-        followRedirects: options.followRedirects,
-        maxRedirects: options.maxRedirects,
-        persistentConnection: options.persistentConnection,
-        requestEncoder: options.requestEncoder,
-        responseDecoder: options.responseDecoder,
-        listFormat: options.listFormat,
-      ),
-    );
+    try {
+      return dio.request(
+        options.path!,
+        cancelToken: token,
+        data: data,
+        options: Options(
+          method: options.method,
+          sendTimeout: options.sendTimeout,
+          receiveTimeout: options.receiveTimeout,
+          extra: options.extra,
+          headers: options.headers,
+          responseType: options.responseType,
+          contentType: options.contentType,
+          validateStatus: options.validateStatus,
+          receiveDataWhenStatusError: options.receiveDataWhenStatusError,
+          followRedirects: options.followRedirects,
+          maxRedirects: options.maxRedirects,
+          persistentConnection: options.persistentConnection,
+          requestEncoder: options.requestEncoder,
+          responseDecoder: options.responseDecoder,
+          listFormat: options.listFormat,
+        ),
+      );
+    } catch (e) {
+      return Future.value();
+    }
   }
 
   RequestWrapper({
@@ -229,8 +232,8 @@ class Http {
     dio = Dio(options);
     dio.interceptors
       ..add(DataTypeInterceptor())
-      ..add(ExceptionInterceptor())
-      ..add(LoadingInterceptor());
+      ..add(ExceptionInterceptor());
+    // ..add(LoadingInterceptor());
   }
 
   HttpFunc<String, RequestWrapper> newMethod(

@@ -1,7 +1,7 @@
 part of http;
 
 // 客户端自定义的错误码
-class BizErrorCode {
+class ClientErrorCode {
   static const weakNetwork = 90000;
   static const unknown = 90001;
   static const cancel = 90002;
@@ -11,40 +11,40 @@ class BizErrorCode {
   static const badResponse = 90006;
 }
 
-class ExceptionInterceptor extends Interceptor {
+class ExceptionInterceptor extends InterceptorsWrapper {
   @override
-  void onResponse(response, handler) {
+  onResponse(response, handler) {
     if (response.data['success']) {
-      // handler.next(response);
+      super.onResponse(response, handler);
 
-      return super.onResponse(response, handler);
+      global.logger.i(response);
     } else {
-      var e = DioException(
+      final err = DioException(
         requestOptions: response.requestOptions,
         error: BizException(response.data['code'], response.data['message']),
         message: null,
         response: response,
         // ignore: invalid_use_of_internal_member
-        // stackTrace: StackTrace.current,
+        stackTrace: StackTrace.current,
         type: DioExceptionType.badResponse,
       );
 
-      return handler.reject(e);
+      throw err;
     }
   }
 
   @override
-  void onError(err, handler) async {
+  onError(err, handler) async {
     if (err.error is! BizException) {
       // 这里处理http错误
       HttpException exception = HttpException.create(err);
 
       // dio默认错误，进一步判断是否无网络状态
       if (err.type == DioExceptionType.unknown) {
-        final result = await Connectivity().checkConnectivity();
-
-        if (result == ConnectivityResult.none) {
-          exception = HttpException(BizErrorCode.weakNetwork, "网络开小差了,请检查网络");
+        if (await Connectivity().checkConnectivity() ==
+            ConnectivityResult.none) {
+          exception =
+              HttpException(ClientErrorCode.weakNetwork, "网络开小差了,请检查网络");
         }
       }
       err = err.copyWith(error: exception);
@@ -58,7 +58,7 @@ class ExceptionInterceptor extends Interceptor {
 
     global.logger.e(err);
 
-    return super.onError(err, handler);
+    super.onError(err, handler);
   }
 }
 
@@ -67,7 +67,7 @@ abstract class _Exception implements Exception {
   final String? message;
 
   _Exception([
-    this.code = BizErrorCode.unknown,
+    this.code = ClientErrorCode.unknown,
     this.message = 'unknow error',
   ]);
 
@@ -86,13 +86,14 @@ class HttpException extends _Exception {
   factory HttpException.create(DioException e) {
     switch (e.type) {
       case DioExceptionType.cancel:
-        return HttpException(BizErrorCode.cancel, "请求取消");
+        return HttpException(ClientErrorCode.cancel, "请求取消");
       case DioExceptionType.connectionTimeout:
-        return HttpException(BizErrorCode.connectionTimeout, "您的网络信号弱，连接服务器超时");
+        return HttpException(
+            ClientErrorCode.connectionTimeout, "您的网络信号弱，连接服务器超时");
       case DioExceptionType.sendTimeout:
-        return HttpException(BizErrorCode.sendTimeout, "请求服务器超时");
+        return HttpException(ClientErrorCode.sendTimeout, "请求服务器超时");
       case DioExceptionType.receiveTimeout:
-        return HttpException(BizErrorCode.receiveTimeout, "服务器响应超时");
+        return HttpException(ClientErrorCode.receiveTimeout, "服务器响应超时");
       case DioExceptionType.badResponse:
         {
           try {
@@ -122,11 +123,11 @@ class HttpException extends _Exception {
                 );
             }
           } on Exception catch (_) {
-            return HttpException(BizErrorCode.unknown, '未知错误');
+            return HttpException(ClientErrorCode.unknown, '未知错误');
           }
         }
       default:
-        return HttpException(BizErrorCode.unknown, e.message ?? "未知错误");
+        return HttpException(ClientErrorCode.unknown, e.message ?? "未知错误");
     }
   }
 }
