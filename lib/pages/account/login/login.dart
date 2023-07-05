@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/apis/apis.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
@@ -10,7 +7,6 @@ import 'package:otc/pages/account/login/login_util.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
-import 'package:otc/utils/navigator.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

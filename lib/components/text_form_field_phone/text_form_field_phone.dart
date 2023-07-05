@@ -85,7 +85,7 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
       validator: (value) {
         var ph = PhoneNumber(isoCode: _isoCode, nsn: value!);
 
-        if (value == null || !ph.isValid(type: PhoneNumberType.mobile)) {
+        if (!ph.isValid(type: PhoneNumberType.mobile)) {
           return "请输入正确的手机号码";
         }
         return null;
