@@ -22,13 +22,87 @@ class _UserHomeState extends State<UserHome> {
           Row(
             children: [
               Expanded(
-                child: const userNameView(),
+                child: _buildBaseInfo(),
               ),
               SizedBox(
-                width: 200,
-                child: const userSecurityLevel(),
-              )
+                width: 300,
+                height: 220,
+                child: Card(
+                  child: Column(
+                    children: [
+                      const ListTile(
+                        // isThreeLine: true,
+                        title: Text("安全等级"),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
+                      const Divider(
+                        height: 2,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Indicator(
+                            value: 50,
+                            secondarColor: Colors.blue.shade200,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
+          ),
+          Card(
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/images/WaveHeader.png"),
+                    ),
+                  ),
+                  child: ListTile(
+                    tileColor: Colors.transparent,
+                    title: Row(
+                      children: [
+                        const Text(
+                          "验证您的账户",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Tip(message: "阿西吧"),
+                      ],
+                    ),
+                    subtitle: const Text(
+                      "通过认证，得更高交易额度",
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    trailing: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: const Color(0xff016452),
+                      ),
+                      child: const Text(
+                        "去KYC认证",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      onPressed: () {
+                        context.go("/c2c");
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const Overview(),
           const Fee(),
@@ -37,86 +111,8 @@ class _UserHomeState extends State<UserHome> {
       ),
     );
   }
-}
 
-class userSecurityLevel extends StatelessWidget {
-  const userSecurityLevel({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          const ListTile(
-            title: Text("安全等级"),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            subtitle: Divider(),
-          ),
-          Indicator(
-            value: 50,
-            secondarColor: Colors.blue.shade200,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: const DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage("assets/images/WaveHeader.png"),
-              ),
-            ),
-            child: ListTile(
-              tileColor: Colors.transparent,
-              title: Row(
-                children: [
-                  const Text(
-                    "验证您的账户",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Tip(message: "阿西吧"),
-                ],
-              ),
-              subtitle: const Text(
-                "通过认证，得更高交易额度",
-                style: TextStyle(
-                  color: Colors.white,
-                  letterSpacing: 2,
-                ),
-              ),
-              trailing: FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color(0xff016452),
-                ),
-                child: const Text(
-                  "去KYC认证",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                onPressed: () {
-                  context.go("/c2c");
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class userNameView extends StatelessWidget {
-  const userNameView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Card _buildBaseInfo() {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(
