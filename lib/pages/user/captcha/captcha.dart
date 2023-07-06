@@ -42,12 +42,14 @@ class Captcha extends StatefulWidget {
   final CaptchaDeviceType device;
   final CaptchaServiceType service;
   final String? account;
+  final bool autoStart;
 
   const Captcha({
     super.key,
     required this.device,
     required this.service,
     this.account = "123132",
+    this.autoStart = true,
   });
 
   @override
@@ -58,6 +60,9 @@ int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 3;
 
 class _CaptchaState extends State<Captcha> {
   final _controller = TextEditingController();
+  final countdownTimerController = CountdownTimerController(
+    endTime: DateTime.now().millisecondsSinceEpoch,
+  );
 
   final int _length = 6;
   String code = "";
@@ -66,6 +71,9 @@ class _CaptchaState extends State<Captcha> {
   @override
   void initState() {
     _isPhone = widget.device == CaptchaDeviceType.phone;
+    if (widget.autoStart) {
+      send();
+    }
     super.initState();
   }
 
@@ -177,7 +185,7 @@ class _CaptchaState extends State<Captcha> {
           size: UiButtonSize.small,
           variant: UiButtonVariant.text,
           onPressed: () {
-            context.pop();
+            context.pop(null);
           },
         ),
         UiButton(
@@ -217,6 +225,7 @@ class _CaptchaState extends State<Captcha> {
       suffixIcon: Padding(
         padding: const EdgeInsets.only(right: 8.0),
         child: CountdownButton(
+          controller: countdownTimerController,
           onPressed: send,
         ),
       ),
@@ -253,7 +262,7 @@ class _CaptchaState extends State<Captcha> {
     } else {
       await apis.user.sendCaptcha(payload);
     }
-    inspect(payload);
+
     Modal.showText(text: "验证码已发送,请注意查收");
   }
 }

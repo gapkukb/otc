@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,7 +86,6 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
       ),
       validator: (value) {
         var ph = PhoneNumber(isoCode: _isoCode, nsn: value!);
-
         if (!ph.isValid(type: PhoneNumberType.mobile)) {
           return "请输入正确的手机号码";
         }

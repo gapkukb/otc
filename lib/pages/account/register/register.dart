@@ -99,6 +99,7 @@ class _RegisterState extends State<Register>
                       formState: _formState,
                     )
                   : TextFormFieldPhone(
+                      name: "account",
                       formState: _formState,
                     ),
               const SizedBox(height: 32),
@@ -188,12 +189,12 @@ class _RegisterState extends State<Register>
         account: _formState['account'],
       );
 
-      inspect(_formState);
       var payload = {
         "captcha": code,
         "device": device.value,
         ..._formState,
       };
+      inspect(payload);
       await apis.user.register(payload);
 
       await loginUtil(

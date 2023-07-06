@@ -12,7 +12,7 @@ part 'regexp.dart';
 class _Global {
   late final SharedPreferences prefs;
   late final BaseDeviceInfo deviceInfo;
-  late final String? authorization;
+  late String? authorization;
 
   final keys = _Keys();
   final regexp = _Regexp();

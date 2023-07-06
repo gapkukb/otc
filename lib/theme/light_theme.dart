@@ -13,4 +13,11 @@ ThemeData lightTheme = ThemeData(
       borderRadius: BorderRadius.circular(8),
     ),
   ),
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(
+      fontSize: 40,
+      fontWeight: FontWeight.bold,
+      color: Color(0xff44475c),
+    ),
+  ),
 );

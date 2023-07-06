@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/global/global.dart';
@@ -11,5 +13,5 @@ loginUtil({
     "password": password,
   }));
 
-  await global.setToken(resp.data);
+  await global.setToken(resp.data['data']);
 }
