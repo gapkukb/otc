@@ -111,7 +111,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       UiButton(
                         variant: UiButtonVariant.text,
                         onPressed: () {
-                          context.go("/reset_password");
+                          context.go("/retrieve_password");
                         },
                         label: "忘记密码",
                       ),

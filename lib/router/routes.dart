@@ -55,8 +55,8 @@ final List<RouteBase> routes = [
         builder: (context, state) => const UserTasks(),
       ),
       CustomRoute(
-        path: '/reset_password',
-        builder: (context, state) => const ResetPassword(),
+        path: '/retrieve_password',
+        builder: (context, state) => RetrievePassword(),
       ),
       CustomRoute(
         path: '/auth',

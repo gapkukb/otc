@@ -12,7 +12,7 @@ import 'package:otc/pages/advertise/layout/advertise_layout.dart';
 import 'package:otc/pages/agent/agent.dart';
 import 'package:otc/pages/legal_terms/legal_terms.dart';
 import 'package:otc/pages/account/account.dart';
-import 'package:otc/pages/reset_password/reset_password.dart';
+import 'package:otc/pages/retrieve_password/retrieve_password.dart';
 import 'package:otc/pages/slider_captcha/slider_captcha.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/auth/auth_junior.dart';
