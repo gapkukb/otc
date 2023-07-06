@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/pages/user/layout/user_appbar.dart';
 import 'package:otc/pages/user/layout/user_drawer.dart';
 import 'package:otc/pages/user/layout/user_bottom_narbar.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/utils/responsive.dart';
 
 ShellRouteBuilder userLayout = (context, state, child) {
-  GlobalKey<_AAAAState> _key = GlobalKey();
+  GlobalKey<_SidebarMenuState> _key = GlobalKey();
 
   return context.responsive(
     Scaffold(
@@ -33,59 +34,89 @@ ShellRouteBuilder userLayout = (context, state, child) {
         lg: const SizedBox.shrink(),
       ),
     ),
-    lg: SafeArea(
-      left: true,
-      right: true,
-      child: Scaffold(
-        drawer: SizedBox.shrink(),
-        appBar: userAppBar(onTap: () {
-          _key.currentState?.update();
-        }),
-        body: Builder(
-          builder: (ctx) {
-            return Row(
-              children: [
-                AAAA(
-                  key: _key,
-                ),
-                Expanded(
+    lg: Scaffold(
+      drawerEnableOpenDragGesture: false,
+      body: Builder(
+        builder: (ctx) {
+          return Row(
+            children: [
+              SidebarMenu(
+                key: _key,
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.purple.withAlpha(7),
+                  padding: const EdgeInsets.all(32.0),
                   child: SelectionArea(child: child),
                 ),
-              ],
-            );
-          },
-        ),
-        bottomNavigationBar: context.responsive(
-          const UserBottomNarbar(),
-          lg: const SizedBox.shrink(),
-        ),
+              ),
+            ],
+          );
+        },
       ),
     ),
   );
 };
 
-class AAAA extends StatefulWidget {
-  double width = 0;
+class SidebarMenu extends StatefulWidget {
+  double width = 336;
 
-  AAAA({super.key});
+  SidebarMenu({super.key});
 
   @override
-  State<AAAA> createState() => _AAAAState();
+  State<SidebarMenu> createState() => _SidebarMenuState();
 }
 
-class _AAAAState extends State<AAAA> {
+class _SidebarMenuState extends State<SidebarMenu> {
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      width: widget.width,
-      color: Colors.red,
+    final style = Theme.of(context).textTheme.titleSmall;
+    final currentPath = GoRouter.of(context).location;
+
+    return SizedBox(
+      width: 300,
+      child: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          final selected = currentPath == item['path'];
+          final $style =
+              !selected ? style : style!.copyWith(fontWeight: FontWeight.bold);
+
+          return ListTile(
+            enableFeedback: true,
+            enabled: true,
+            // tileColor: Colors.deepPurple.shade100,
+            selectedTileColor: Colors.deepPurple.shade100,
+            selected: selected,
+            shape: const StadiumBorder(),
+            leading: const Icon(
+              Icons.fiber_manual_record,
+              size: 18,
+              color: Colors.black,
+            ),
+            title: Text(
+              item['label'],
+              style: $style,
+            ),
+            trailing: Text(
+              "100+",
+              style: $style,
+            ),
+          );
+        },
+      ),
     );
   }
 
-  void update() {
-    setState(() {
-      widget.width = widget.width == 0 ? 280 : 0;
-    });
-  }
+  static const List<Map<String, dynamic>> items = [
+    {"label": "总览", "path": "/user"},
+    {"label": "C2C用户中心", "path": "/user/home"},
+    {"label": "返佣", "path": "/user/home"},
+    {"label": "任务中心", "path": "/user/home"},
+    {"label": "账户安全", "path": "/user/home"},
+    {"label": "身份认证", "path": "/user/home"},
+    {"label": "做市商认证", "path": "/user/home"},
+    {"label": "设置", "path": "/user/home"},
+  ];
 }

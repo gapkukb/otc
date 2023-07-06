@@ -4,7 +4,9 @@ class _User {
   final login = get("/auth/login");
   final logout = get("/");
   final register = post("/auth/register");
-  final getUser = get("/customer");
+  final getUser = get(
+    "/customer",
+  );
   final getUserDetail = get("/customer/detail");
   //未登录时获取验证码
   final sendCaptchaWithLogout = post("/captcha/no-login/send");

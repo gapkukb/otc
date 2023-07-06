@@ -1,0 +1,23 @@
+{
+  "__className": "UserModel",
+  "r@id": 0,
+  "r@username": "",
+  "r@email": "",
+  "r@phone": "",
+  "r@regIp": "",
+  "r@regServerName": "",
+  "r@regReferer": "",
+  "r@regDevice": "",
+  "r@emailValid": true,
+  "r@idValid": true,
+  "r@phoneValid": true,
+  "r@nickname": "",
+  "r@avatar": "",
+  "r@disabled": true,
+  "r@type": "",
+  "r@invitationCode": "",
+  "r@lockedUntil": "",
+  "r@locked": true,
+  "r@createdTime": "",
+  "r@payPass": true
+}
