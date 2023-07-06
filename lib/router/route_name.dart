@@ -4,4 +4,5 @@ import 'package:go_router/go_router.dart';
 class RouteName {
   static const home = 'home';
   static const user = 'home';
+  static const c2c = 'c2c';
 }

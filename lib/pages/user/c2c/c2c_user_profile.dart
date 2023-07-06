@@ -82,7 +82,7 @@ class _C2cUserProfileState extends State<C2cUserProfile> {
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: _items.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             height: context.responsive(56, lg: 94),

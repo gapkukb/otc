@@ -103,6 +103,14 @@ class _SidebarMenuState extends State<SidebarMenu> {
               "100+",
               style: $style,
             ),
+            onTap: item['onTap'] ??
+                () {
+                  if (item['pathname'] == null) {
+                    context.go(item['path']);
+                  } else {
+                    context.goNamed(item['pathname']);
+                  }
+                },
           );
         },
       ),
@@ -111,7 +119,7 @@ class _SidebarMenuState extends State<SidebarMenu> {
 
   static const List<Map<String, dynamic>> items = [
     {"label": "总览", "path": "/user"},
-    {"label": "C2C用户中心", "path": "/user/home"},
+    {"label": "C2C用户中心", "path": "/user/c2c"},
     {"label": "返佣", "path": "/user/home"},
     {"label": "任务中心", "path": "/user/home"},
     {"label": "账户安全", "path": "/user/home"},

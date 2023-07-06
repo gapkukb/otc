@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Panel extends StatelessWidget {
-  String title;
-  Widget child;
+  static const style = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
 
-  Panel({
+  final String title;
+  final Widget child;
+
+  const Panel({
     super.key,
     required this.title,
     required this.child,
@@ -21,18 +26,17 @@ class Panel extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 16,
-              horizontal: 32,
+              horizontal: 24,
             ),
             child: Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+              style: style,
             ),
           ),
           const Divider(
             height: 1,
+            thickness: 0.5,
+            // color: Colors.grey.shade100,
           ),
           child,
         ],

@@ -44,8 +44,7 @@ class _FeeState extends State<Fee> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
+    return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -75,7 +74,8 @@ class _FeeState extends State<Fee> {
                     indent: 24,
                   ),
                   lg: const VerticalDivider(
-                    width: 1,
+                    thickness: 1,
+                    width: 0.3,
                     endIndent: 16,
                     indent: 16,
                   ),

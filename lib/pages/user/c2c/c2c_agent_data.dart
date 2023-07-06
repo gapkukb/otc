@@ -33,6 +33,11 @@ class _C2cAgentDataState extends State<C2cAgentData> {
       child: SizedBox(
         width: double.infinity,
         child: DataTable(
+          dividerThickness: 0.01,
+          headingTextStyle: const TextStyle(
+            color: Colors.grey,
+            fontSize: 12,
+          ),
           columns: _columns,
           rows: _items.map(_buidRow).toList(),
         ),
