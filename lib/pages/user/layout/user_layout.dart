@@ -119,11 +119,11 @@ class _SidebarMenuState extends State<SidebarMenu> {
 
   static const List<Map<String, dynamic>> items = [
     {"label": "总览", "path": "/user"},
-    {"label": "C2C用户中心", "path": "/user/c2c"},
-    {"label": "返佣", "path": "/user/home"},
-    {"label": "任务中心", "path": "/user/home"},
-    {"label": "账户安全", "path": "/user/home"},
-    {"label": "身份认证", "path": "/user/home"},
+    {"label": "C2C用户中心", "path": "/c2c"},
+    {"label": "返佣", "path": "/rebate"},
+    {"label": "任务中心", "path": "/tasks"},
+    {"label": "账户安全", "path": "/security"},
+    {"label": "身份认证", "path": "/auth"},
     {"label": "做市商认证", "path": "/user/home"},
     {"label": "设置", "path": "/user/home"},
   ];

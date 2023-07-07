@@ -12,8 +12,22 @@ class UserTasks extends StatefulWidget {
   State<UserTasks> createState() => _UserTasksState();
 }
 
-class _UserTasksState extends State<UserTasks> {
-  bool _isEmpty = true;
+class _UserTasksState extends State<UserTasks>
+    with SingleTickerProviderStateMixin {
+  late final TabController controller;
+  bool _isEmpty = false;
+
+  @override
+  void initState() {
+    controller = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +38,6 @@ class _UserTasksState extends State<UserTasks> {
         children: [
           _buildHeader(),
           _buildTaskView(),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                context.push('/phone_verification');
-              },
-              child: Text("忘记密码"),
-            ),
-          )
         ],
       ),
     );
@@ -39,32 +45,65 @@ class _UserTasksState extends State<UserTasks> {
 
   _buildTaskView() {
     return Panel(
-      title: "任务",
-      child: Padding(
-        padding: EdgeInsets.all(
-          context.responsive(8, lg: 32),
-        ),
-        child: _isEmpty
-            ? const UiEmptyView(
-                title: "当前没有发布活动",
-                subtitle: "定期查看任务中心，不错过任何活动！",
-              )
-            : GridView.builder(
-                itemCount: 10,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate:
-                    SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-                  height: 160,
-                  crossAxisCount: context.responsive(1, md: 2, xl: 3, xxl: 4),
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemBuilder: (context, index) {
-                  return _buildTaskCard();
-                },
+      titleWidget: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Text(
+              "任务",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const Spacer(),
+            TabBar(
+              controller: controller,
+              isScrollable: true,
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.black,
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelPadding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              labelStyle: const TextStyle(fontSize: 12),
+              indicator: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                color: Colors.black,
               ),
+              tabs: const [
+                Text("进行中"),
+                Text("历史任务"),
+              ],
+            )
+          ],
+        ),
       ),
+      child: _buildTab(),
+    );
+  }
+
+  Padding _buildTab() {
+    return Padding(
+      padding: EdgeInsets.all(
+        context.responsive(8, lg: 32),
+      ),
+      child: _isEmpty
+          ? const UiEmptyView(
+              title: "当前没有发布活动",
+              subtitle: "定期查看任务中心，不错过任何活动！",
+            )
+          : GridView.builder(
+              itemCount: 10,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+                height: 160,
+                crossAxisCount: context.responsive(1, md: 2, xl: 3, xxl: 4),
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                return _buildTaskCard();
+              },
+            ),
     );
   }
 

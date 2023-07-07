@@ -5,4 +5,8 @@ class RouteName {
   static const home = 'home';
   static const user = 'home';
   static const c2c = 'c2c';
+  static const rebate = 'rebate';
+  static const tasks = 'tasks';
+  static const security = 'security';
+  static const auth = 'auth';
 }

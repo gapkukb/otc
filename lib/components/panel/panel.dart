@@ -6,13 +6,17 @@ class Panel extends StatelessWidget {
     fontWeight: FontWeight.w600,
   );
 
-  final String title;
+  final String? title;
+  final Widget? titleWidget;
   final Widget child;
+  final Widget? footer;
 
   const Panel({
     super.key,
-    required this.title,
+    this.title,
     required this.child,
+    this.titleWidget,
+    this.footer,
   });
 
   @override
@@ -23,22 +27,24 @@ class Panel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 24,
-            ),
-            child: Text(
-              title,
-              style: style,
-            ),
-          ),
+          titleWidget ??
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 24,
+                ),
+                child: Text(
+                  title!,
+                  style: style,
+                ),
+              ),
           const Divider(
             height: 1,
             thickness: 0.5,
             // color: Colors.grey.shade100,
           ),
           child,
+          if (footer != null) footer!,
         ],
       ),
     );
