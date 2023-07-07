@@ -12,12 +12,36 @@ import 'package:otc/pages/user/layout/user_layout.dart';
 import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/security/security.dart';
 import 'package:otc/pages/user/setting/setting.dart';
+import 'package:otc/pages/user/setting/setting_avatar.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
 import 'package:otc/pages/user/tasks/user_tasks.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address.dart';
+import 'package:otc/pages/wallet/layout/wallet_layout.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_dc_addition.dart';
+import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
+import 'package:otc/pages/wallet/wallet_funds/wallet_funds.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/modal_page.dart';
 
 final GlobalKey<NavigatorState> shellKey = GlobalKey();
+
+GoRoute createModalPage({
+  required String name,
+  required String path,
+  Page<dynamic> Function(BuildContext, GoRouterState)? pageBuilder,
+  Widget? page,
+}) {
+  return GoRoute(
+    parentNavigatorKey: shellKey,
+    name: name,
+    path: path,
+    pageBuilder: pageBuilder ??
+        (context, state) => ModalPage(
+              page!,
+            ),
+  );
+}
 
 final List<RouteBase> routes = [
   //需要鉴权的页面
@@ -27,6 +51,7 @@ final List<RouteBase> routes = [
       return child;
     },
     routes: [
+      // 用户中心
       ShellRoute(
         builder: userLayout,
         routes: [
@@ -72,6 +97,27 @@ final List<RouteBase> routes = [
           ),
         ],
       ),
+      //钱包
+      ShellRoute(
+        builder: walletLayout,
+        routes: [
+          GoRoute(
+            name: RouteName.wallet,
+            path: '/wallet',
+            builder: (context, state) => const WalletHome(),
+          ),
+          GoRoute(
+            name: RouteName.walletAddress,
+            path: '/wallet_address',
+            builder: (context, state) => const WalletAddress(),
+          ),
+          GoRoute(
+            name: RouteName.walletFunds,
+            path: '/wallet_funds',
+            builder: (context, state) => const WalletFunds(),
+          ),
+        ],
+      ),
       GoRoute(
         parentNavigatorKey: shellKey,
         name: RouteName.authPrimary,
@@ -103,6 +149,28 @@ final List<RouteBase> routes = [
         pageBuilder: (context, state) => ModalPage(
           const SettingNickname(),
         ),
+      ),
+      GoRoute(
+        parentNavigatorKey: shellKey,
+        name: RouteName.settingAvatar,
+        path: '/setting_avatar',
+        pageBuilder: (context, state) => ModalPage(
+          const SettingAvatar(),
+        ),
+      ),
+      createModalPage(
+        name: RouteName.walletAddition,
+        path: '/wallet_addition',
+        pageBuilder: (context, state) => ModalPage(
+          WalletAddressAddition(
+            addType: (state.extra as AddType?) ?? AddType.bank,
+          ),
+        ),
+      ),
+      createModalPage(
+        name: RouteName.walletAdditionDc,
+        path: '/wallet_addition_dc',
+        page: WalletAddressDcAddition(),
       ),
     ],
   ),

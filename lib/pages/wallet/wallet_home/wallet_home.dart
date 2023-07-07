@@ -1,6 +1,12 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/panel/panel.dart';
+import 'package:otc/components/tip/tip.dart';
+import 'package:otc/utils/number.dart';
 import 'package:otc/utils/responsive.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 class WalletHome extends StatefulWidget {
   const WalletHome({super.key});
@@ -9,122 +15,166 @@ class WalletHome extends StatefulWidget {
   State<WalletHome> createState() => _WalletHomeState();
 }
 
-List<dynamic> data = [
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-  {"Name": "John", "Age": 28, "Role": "Senior Supervisor"},
-  {"Name": "Jane", "Age": 32, "Role": "Regional Administrator"},
-];
-
 class _WalletHomeState extends State<WalletHome> {
   static final List<Map<String, dynamic>> buttons = [
     {
-      "onPressed": () {
-        print('1111111');
-      },
-      "child": Text("充值")
+      "child": "充值",
+      "onPressed": () {},
     },
-    {"onPressed": () {}, "child": Text("提现")},
-    {"onPressed": () {}, "child": Text("站内转账")},
+    {
+      "child": "提现",
+      "variant": UiButtonVariant.outline,
+      "onPressed": () {},
+    },
+    {
+      "child": "站内转账",
+      "variant": UiButtonVariant.outline,
+      "onPressed": () {},
+    },
+  ];
+
+  static final List<Map<String, dynamic>> statics = [
+    {
+      "label": "账户余额",
+      "value": 0,
+    },
+    {
+      "label": "可用余额",
+      "value": 0,
+    },
+    {
+      "label": "冻结余额",
+      "value": 0,
+    },
+  ];
+
+  static final List<Map<String, dynamic>> wallets = [
+    {
+      "label": "资金",
+      "balance": 0,
+      "validBalance": 0,
+      "invalidBalance": 0,
+      "path": "/",
+    },
+    {
+      "label": "现货",
+      "balance": 0,
+      "validBalance": 0,
+      "invalidBalance": 0,
+      "path": "/",
+    },
+    {
+      "label": "合约",
+      "balance": 0,
+      "validBalance": 0,
+      "invalidBalance": 0,
+      "path": "/",
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            "钱包总览",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Row(
-            children: buttons.map((e) {
-              return HitTestBlocker(
-                up: false,
-                child: OutlinedButton(
-                  onPressed: e['onPressed'],
-                  child: e['child'],
-                ),
-              );
-            }).toList(),
-          ),
-          IntrinsicHeight(
-            child: Flex(
-              direction: context.responsive(
-                Axis.vertical,
-                md: Axis.horizontal,
-              ),
-              children: [
-                _item(),
-                SizedBox(
-                  width: 8,
-                  height: 8,
-                ),
-                _item(),
-                SizedBox(
-                  width: 8,
-                  height: 8,
-                ),
-                _item(),
-              ],
-            ),
-          ),
-          _list()
+          _buildTop(),
+          _buildStatics(context),
+          _buildDataBoard(),
         ],
       ),
     );
   }
 
-  _item() {
-    return const Expanded(
-      child: Card(
-        child: ListTile(
-          title: Text("账户余额"),
-          subtitle: Text.rich(TextSpan(
-              text: "590.00",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-              ),
-              children: [
-                TextSpan(
-                  text: " usdt",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+  Widget _buildStatics(BuildContext context) {
+    return GridView.builder(
+      itemCount: statics.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+        crossAxisCount: 3,
+        crossAxisSpacing: 8,
+        height: 100,
+      ),
+      itemBuilder: (context, index) {
+        return _buildStaticsItem(statics[index]);
+      },
+      cacheExtent: 100.0,
+    );
+  }
+
+  Card _buildTop() {
+    return Card(
+      child: ListTile(
+        isThreeLine: true,
+        title: const Text(
+          "钱包总览",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 24.0),
+          child: Wrap(
+            spacing: 8,
+            children: buttons.map((e) {
+              return HitTestBlocker(
+                up: false,
+                child: UiButton(
+                  shape: UiButtonShape.rounded,
+                  variant: e['variant'],
+                  onPressed: e['onPressed'],
+                  label: e['child'],
                 ),
-              ])),
+              );
+            }).toList(),
+          ),
+        ),
+        trailing: TextButton(
+          onPressed: () {},
+          child: const Text("充值提现记录"),
         ),
       ),
     );
   }
 
-  _list() {
-    return Builder(builder: (context) {
-      return Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+  _buildStaticsItem(Map<String, dynamic> item) {
+    return Card(
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 32,
+        ),
+        title: Text(item['label']),
+        subtitle: Text.rich(TextSpan(
+            text: (item['value'] as num).decimalize(),
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
+            children: const [
+              TextSpan(
+                text: " usdt",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ])),
+      ),
+    );
+  }
+
+  _buildDataBoard() {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
         child: DataTable(
-          // border: ,
-          dividerThickness: 0,
-          columns: [
+          headingTextStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          dividerThickness: 0.01,
+          columns: const [
             DataColumn(
               label: Text("类型"),
             ),
@@ -141,34 +191,49 @@ class _WalletHomeState extends State<WalletHome> {
               label: Text("操作"),
             ),
           ],
-          rows: data
-              .map(
-                (e) => DataRow(
-                  cells: [
-                    DataCell(
-                      Text(e['Name']),
-                    ),
-                    DataCell(
-                      Text(e['Age'].toString()),
-                    ),
-                    DataCell(
-                      Text(e['Role']),
-                    ),
-                    DataCell(
-                      Text(e['Role']),
-                    ),
-                    DataCell(
-                      TextButton(
-                        child: Text("查看"),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              )
-              .toList(),
+          rows: wallets.map(_buildDashboardItem).toList(),
         ),
-      );
-    });
+      ),
+    );
+  }
+
+  DataRow _buildDashboardItem(Map<String, dynamic> item) {
+    return DataRow(
+      cells: [
+        DataCell(
+          Row(
+            children: [
+              Text(
+                item['label'],
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Tip(
+                iconSize: 16,
+                message: "您的C2C交易钱包",
+              )
+            ],
+          ),
+        ),
+        DataCell(
+          Text("${(item['balance'] as num).decimalize()} USDT"),
+        ),
+        DataCell(
+          Text("${(item['validBalance'] as num).decimalize()} USDT"),
+        ),
+        DataCell(
+          Text("${(item['invalidBalance'] as num).decimalize()} USDT"),
+        ),
+        DataCell(
+          UiButton(
+            label: "查看",
+            size: UiButtonSize.mini,
+            variant: UiButtonVariant.text,
+            onPressed: () {
+              context.go(item['path']);
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

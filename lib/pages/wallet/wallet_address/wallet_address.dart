@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_dc.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_legal_tender.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_dc.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_legal_tender.dart';
 
-class WalletAddressDC extends StatelessWidget {
-  const WalletAddressDC({super.key});
+class WalletAddress extends StatelessWidget {
+  const WalletAddress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +12,7 @@ class WalletAddressDC extends StatelessWidget {
       initialIndex: 1,
       child: Card(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TabBar(
               tabs: [
@@ -19,9 +20,17 @@ class WalletAddressDC extends StatelessWidget {
                 Tab(text: '提币地址管理'),
               ],
               labelColor: Colors.black,
+              isScrollable: true,
+              padding: EdgeInsets.only(left: 16.0),
+              dividerColor: Colors.transparent,
+              physics: NeverScrollableScrollPhysics(),
+            ),
+            Divider(
+              height: 1,
             ),
             Expanded(
               child: TabBarView(
+                // physics: NeverScrollableScrollPhysics(),
                 children: [
                   WalletAddressLegalTender(),
                   WalletAddressMng(),

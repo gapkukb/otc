@@ -2,6 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/modal/modal.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
@@ -80,18 +81,22 @@ class _WalletAddressMngState extends State<WalletAddressMng> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextButton(
+                          UiButton(
+                            variant: UiButtonVariant.text,
+                            size: UiButtonSize.mini,
+                            label: "查看",
                             onPressed: () {},
-                            child: const Text("查看"),
                           ),
-                          TextButton(
+                          UiButton(
+                            variant: UiButtonVariant.text,
+                            size: UiButtonSize.mini,
+                            label: "删除",
                             onPressed: () {
                               Modal.confirm(
                                 content: "确认要删除改收款地址吗",
                                 onOk: () {},
                               );
                             },
-                            child: const Text("删除"),
                           ),
                         ],
                       ),

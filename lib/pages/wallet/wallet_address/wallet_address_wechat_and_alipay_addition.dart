@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 
-class WalletAddressAdditionWechatAndAlipay extends StatelessWidget {
+class WalletAddressWechatAndAlipayAddition extends StatelessWidget {
   final AddType addType;
   final _formKey = GlobalKey<FormState>();
 
-  WalletAddressAdditionWechatAndAlipay({
+  WalletAddressWechatAndAlipayAddition({
     super.key,
     required this.addType,
   });

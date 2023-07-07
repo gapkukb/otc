@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_addition.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_webchat_and_alipay.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_bank.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_webchat_and_alipay.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_bank.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 class WalletAddressLegalTender extends StatefulWidget {
@@ -44,7 +44,10 @@ class _WalletAddressLegalTenderState extends State<WalletAddressLegalTender> {
         children: [
           const Text(
             "您添加的银行卡将在C2C交易出售数字货币时向买方展示作为您的收款方式，请务必使用您本人的实名账户确保买方可以顺利给您转账。",
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 12,
+            ),
           ),
           const SizedBox(height: 16),
           Expanded(
@@ -64,13 +67,16 @@ class _WalletAddressLegalTenderState extends State<WalletAddressLegalTender> {
                         physics: const NeverScrollableScrollPhysics(),
                       ),
                       SizedBox(
-                        width: 140,
+                        width: 160,
                         child: DropdownSearch<String>(
                           dropdownBuilder: (context, selectedItem) {
                             return const Text("收款方式");
                           },
-                          popupProps: const PopupProps.menu(
+                          popupProps: PopupProps.menu(
                             fit: FlexFit.loose,
+                            menuProps: MenuProps(
+                              backgroundColor: Colors.grey.shade100,
+                            ),
                           ),
                           items: itemsLabel,
                           dropdownButtonProps: const DropdownButtonProps(
@@ -110,7 +116,7 @@ class _WalletAddressLegalTenderState extends State<WalletAddressLegalTender> {
                   ),
                   const Expanded(
                     child: TabBarView(
-                      physics: NeverScrollableScrollPhysics(),
+                      // physics: NeverScrollableScrollPhysics(),
                       children: [
                         WalletAddressBank(),
                         WalletAddressWechatAndAlipay(

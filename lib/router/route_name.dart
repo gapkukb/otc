@@ -15,4 +15,11 @@ class RouteName {
   static const authAgent = "auth_agent";
   static const setting = "setting";
   static const settingNickname = "setting_nickname";
+  static const settingAvatar = "setting_avatar";
+  static const wallet = "wallet";
+  static const walletBanks = "wallet_banks";
+  static const walletAddress = "wallet_address";
+  static const walletAddition = "wallet_addition";
+  static const walletAdditionDc = "wallet_addition_dc";
+  static const walletFunds = "wallet_funds";
 }

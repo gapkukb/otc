@@ -17,7 +17,7 @@ class _UserAuthState extends State<UserAuth> {
   static List<dynamic> items = [
     {
       "level": "初级认证",
-      "status": 0,
+      "status": 1,
       "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
       "subtitle": "要求：1.姓名    2.年龄    3.身份证",
       "onTap": (BuildContext context) {
@@ -159,9 +159,9 @@ class _UserAuthState extends State<UserAuth> {
     var isUnAuth = item['status'] == 0;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
+      color: isUnAuth ? null : Colors.grey.shade100,
       child: ListTile(
           onTap: !isUnAuth ? null : () => item['onTap'](context),
-          tileColor: isUnAuth ? null : Colors.blue.withOpacity(0.1),
           isThreeLine: true,
           contentPadding: const EdgeInsets.only(left: 8),
           leading: SizedBox(

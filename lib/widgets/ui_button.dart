@@ -35,22 +35,23 @@ class UiButton extends StatelessWidget {
   final EdgeInsets? padding;
   final TextStyle? labelStyle;
 
-  const UiButton(
-      {super.key,
-      required this.onPressed,
-      this.disabled = false,
-      this.label,
-      this.child,
-      this.size = UiButtonSize.small,
-      this.fullWidth = false,
-      this.shape,
-      this.color,
-      this.variant,
-      this.iconData,
-      this.icon,
-      this.iconOnRight,
-      this.padding,
-      this.labelStyle});
+  const UiButton({
+    super.key,
+    required this.onPressed,
+    this.disabled = false,
+    this.label,
+    this.child,
+    this.size = UiButtonSize.small,
+    this.fullWidth = false,
+    this.shape,
+    this.color,
+    this.variant,
+    this.iconData,
+    this.icon,
+    this.iconOnRight,
+    this.padding,
+    this.labelStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class UiButton extends StatelessWidget {
       minWidth: fullWidth
           ? double.infinity
           : size == UiButtonSize.mini
-              ? 0
+              ? 12
               : null,
       onPressed: disabled ? null : onPressed,
       height: _size[size],

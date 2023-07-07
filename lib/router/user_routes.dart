@@ -25,15 +25,15 @@ import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
 import 'package:otc/pages/user/setting/setting.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
-import 'package:otc/pages/user/setting/update_avatar.dart';
+import 'package:otc/pages/user/setting/setting_avatar.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/pages/user/rebate/rebate.dart';
 import 'package:otc/pages/user/tasks/user_tasks.dart';
-import 'package:otc/pages/wallet/banks/wallet_address.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_addition.dart';
-import 'package:otc/pages/wallet/banks/wallet_address_dc_addition.dart';
-import 'package:otc/pages/wallet/funds/contract_wallet.dart';
-import 'package:otc/pages/wallet/funds/funds.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/wallet_address/wallet_address_dc_addition.dart';
+import 'package:otc/pages/wallet/wallet_funds/contract_wallet.dart';
+import 'package:otc/pages/wallet/wallet_funds/wallet_funds.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/router/modal_page.dart';
@@ -116,7 +116,7 @@ final List<RouteBase> routes = [
       ),
       GoRoute(
         path: '/wallet_banks',
-        builder: (context, state) => const WalletAddressDC(),
+        builder: (context, state) => const WalletAddress(),
       ),
       GoRoute(
         path: '/wallet_addition',
@@ -134,7 +134,7 @@ final List<RouteBase> routes = [
       ),
       GoRoute(
         path: '/funds',
-        builder: (context, state) => const Funds(),
+        builder: (context, state) => const WalletFunds(),
       ),
     ],
   ),
@@ -212,7 +212,7 @@ final List<RouteBase> routes = [
   GoRoute(
     path: '/update_avatar',
     pageBuilder: (context, state) => ModalPage(
-      const UpdateAvatar(),
+      const SettingAvatar(),
     ),
   ),
   GoRoute(

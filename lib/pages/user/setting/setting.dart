@@ -88,7 +88,7 @@ class _UserSettingState extends State<UserSetting> {
       TextButton(
         child: const Text("修改"),
         onPressed: () {
-          context.push('/update_avatar');
+          context.push('/setting_avatar');
         },
       )
     ]);

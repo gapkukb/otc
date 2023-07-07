@@ -3,14 +3,14 @@ import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/router/modal_page.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 
-class UpdateAvatar extends StatefulWidget {
-  const UpdateAvatar({super.key});
+class SettingAvatar extends StatefulWidget {
+  const SettingAvatar({super.key});
 
   @override
-  State<UpdateAvatar> createState() => _UpdateAvatarState();
+  State<SettingAvatar> createState() => _SettingAvatarState();
 }
 
-class _UpdateAvatarState extends State<UpdateAvatar> {
+class _SettingAvatarState extends State<SettingAvatar> {
   @override
   Widget build(BuildContext context) {
     return ModalPageTemplate(
