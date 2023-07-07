@@ -38,21 +38,23 @@ bool ifNotKYC1(int kyc) {
   return true;
 }
 
-class WalletFunds extends StatefulWidget {
-  const WalletFunds({super.key});
+class WalletFutures extends StatefulWidget {
+  const WalletFutures({super.key});
 
   @override
-  State<WalletFunds> createState() => _WalletFundsState();
+  State<WalletFutures> createState() => _WalletFuturesState();
 }
 
-class _WalletFundsState extends State<WalletFunds> {
+class _WalletFuturesState extends State<WalletFutures>
+    with SingleTickerProviderStateMixin {
+  late TabController controller;
   static final List<Map<String, dynamic>> statics = [
     {
-      "label": "账户余额",
+      "label": "保证金余额",
       "value": 0,
     },
     {
-      "label": "可用余额",
+      "label": "余额",
       "value": 0,
     },
     {
@@ -61,63 +63,37 @@ class _WalletFundsState extends State<WalletFunds> {
     },
   ];
 
-  static final List<dynamic> actions = [
-    {
-      "name": "充值",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName)) {}
-      },
-    },
-    {
-      "name": "提币",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "站内转账",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(1)) {}
-      },
-    },
-    {
-      "name": "购买",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "出售",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "划转",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName)) {}
-      },
-    },
-  ];
-
   static final List<Map<String, dynamic>> buttons = [
     {
-      "child": "充值",
-      "onPressed": () {},
+      "child": "划转",
+      "onPressed": () {
+        Modal.alert(content: "此功能正在紧急修复中。");
+      },
     },
     {
-      "child": "提现",
-      "variant": UiButtonVariant.outline,
-      "onPressed": () {},
-    },
-    {
-      "child": "站内转账",
+      "child": "划转记录",
       "variant": UiButtonVariant.outline,
       "onPressed": () {},
     },
   ];
 
-  static final currencyCollection = CurrencyCollection.values;
+  @override
+  void initState() {
+    controller = TabController(length: 2, vsync: this);
+    controller.addListener(updateView);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(updateView);
+    controller.dispose();
+    super.dispose();
+  }
+
+  updateView() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,12 +103,46 @@ class _WalletFundsState extends State<WalletFunds> {
         mainAxisSize: MainAxisSize.max,
         children: [
           _buildTop(),
+          const Card(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.priority_high,
+                      color: Colors.red,
+                    ),
+                    Text("向合约账户转入保证金资产，即可开始交易。")
+                  ],
+                ),
+              ),
+            ),
+          ),
           _buildStatics(context),
           Panel(
-            title: "资金账户",
-            child: SizedBox(
-              width: double.infinity,
-              child: _buildTable(),
+            titleWidget: TabBar(
+              controller: controller,
+              isScrollable: true,
+              labelPadding: const EdgeInsets.all(16.0),
+              tabs: const [
+                Text("仓位"),
+                Text("资产"),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: controller.index == 0
+                  ? SizedBox(
+                      height: 300,
+                      width: double.infinity,
+                      child: _buildTable(),
+                    )
+                  : SizedBox(
+                      width: double.infinity,
+                      child: _buildTable(),
+                    ),
             ),
           ),
         ],
@@ -145,7 +155,7 @@ class _WalletFundsState extends State<WalletFunds> {
       child: ListTile(
         isThreeLine: true,
         title: const Text(
-          "资金钱包 ",
+          "合约钱包",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w500,
@@ -157,7 +167,7 @@ class _WalletFundsState extends State<WalletFunds> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "可以使用链上交易，平台好友转账",
+                "可以在平台使用合约交易",
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
               const SizedBox(height: 8),
@@ -222,7 +232,7 @@ class _WalletFundsState extends State<WalletFunds> {
             ),
             children: const [
               TextSpan(
-                text: " usdt",
+                text: " USD",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -234,79 +244,40 @@ class _WalletFundsState extends State<WalletFunds> {
   }
 
   _buildTable() {
-    Widget Function(String name) action;
-
-    if (context.md) {
-      action = (dynamic item) {
-        return IconButton(
-          icon: const Icon(Icons.more_vert),
-          onPressed: () {
-            Modal.showBottomSheet(
-              items: actions.map(
-                (e) {
-                  return BottomSheetItem(
-                    label: e['name'],
-                  );
-                },
-              ).toList(),
-              onSelected: (value, item) {},
-            );
-          },
-        );
-      };
-    } else {
-      action = (String item) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: actions
-              .map(
-                (e) => UiButton(
-                  variant: UiButtonVariant.text,
-                  size: UiButtonSize.mini,
-                  onPressed: () {
-                    e['action'](item);
-                  },
-                  child: Text(e['name']),
-                ),
-              )
-              .toList(),
-        );
-      };
-    }
-
     return DataTable(
       columnSpacing: 8,
       horizontalMargin: 8,
       dividerThickness: 0.01,
       headingTextStyle: const TextStyle(color: Colors.grey),
       columns: const [
-        DataColumn2(label: Text("币种"), fixedWidth: 48),
-        DataColumn2(label: Text("全部")),
-        DataColumn2(label: Text("可用")),
-        DataColumn2(label: Text("冻结")),
-        DataColumn2(
-          label: Text(
-            "  操作",
-          ),
-          fixedWidth: 120,
-        ),
+        DataColumn2(label: Text("资产")),
+        DataColumn2(label: Text("余额")),
+        DataColumn2(label: Text("未实现盈亏")),
+        DataColumn2(label: Text("保证金余额")),
+        DataColumn2(label: Text("  操作")),
       ],
-      rows: currencyCollection.map((currency) {
-        return DataRow(
-          cells: [
-            DataCell(
-              UiChip(
-                icon: Icons.abc,
-                text: currency.name,
-              ),
+      rows: CurrencyCollection.values
+          .map(
+            (e) => DataRow(
+              cells: [
+                DataCell(Text(e.name)),
+                DataCell(Text("data")),
+                DataCell(Text("data")),
+                DataCell(Text("data")),
+                DataCell(
+                  UiButton(
+                    variant: UiButtonVariant.text,
+                    size: UiButtonSize.mini,
+                    label: "划转",
+                    onPressed: () {
+                      if (ifUsdt(e.name)) {}
+                    },
+                  ),
+                ),
+              ],
             ),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(action(currency.name)),
-          ],
-        );
-      }).toList(),
+          )
+          .toList(),
     );
   }
 }

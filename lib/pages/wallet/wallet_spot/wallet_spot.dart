@@ -38,14 +38,14 @@ bool ifNotKYC1(int kyc) {
   return true;
 }
 
-class WalletFunds extends StatefulWidget {
-  const WalletFunds({super.key});
+class WalletSpot extends StatefulWidget {
+  const WalletSpot({super.key});
 
   @override
-  State<WalletFunds> createState() => _WalletFundsState();
+  State<WalletSpot> createState() => _WalletSpotState();
 }
 
-class _WalletFundsState extends State<WalletFunds> {
+class _WalletSpotState extends State<WalletSpot> {
   static final List<Map<String, dynamic>> statics = [
     {
       "label": "账户余额",
@@ -63,55 +63,26 @@ class _WalletFundsState extends State<WalletFunds> {
 
   static final List<dynamic> actions = [
     {
-      "name": "充值",
+      "name": "Trade",
       "action": (String currencyName) {
         if (ifUsdt(currencyName)) {}
-      },
-    },
-    {
-      "name": "提币",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "站内转账",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(1)) {}
-      },
-    },
-    {
-      "name": "购买",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "出售",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
       },
     },
     {
       "name": "划转",
       "action": (String currencyName) {
-        if (ifUsdt(currencyName)) {}
+        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
       },
-    },
+    }
   ];
 
   static final List<Map<String, dynamic>> buttons = [
     {
-      "child": "充值",
+      "child": "Trade",
       "onPressed": () {},
     },
     {
-      "child": "提现",
-      "variant": UiButtonVariant.outline,
-      "onPressed": () {},
-    },
-    {
-      "child": "站内转账",
+      "child": "划转",
       "variant": UiButtonVariant.outline,
       "onPressed": () {},
     },
@@ -145,7 +116,7 @@ class _WalletFundsState extends State<WalletFunds> {
       child: ListTile(
         isThreeLine: true,
         title: const Text(
-          "资金钱包 ",
+          "现货钱包",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w500,
@@ -157,7 +128,7 @@ class _WalletFundsState extends State<WalletFunds> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "可以使用链上交易，平台好友转账",
+                "可以在平台使用币币交易",
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
               const SizedBox(height: 8),
@@ -288,7 +259,7 @@ class _WalletFundsState extends State<WalletFunds> {
           label: Text(
             "  操作",
           ),
-          fixedWidth: 120,
+          fixedWidth: 140,
         ),
       ],
       rows: currencyCollection.map((currency) {

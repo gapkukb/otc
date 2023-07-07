@@ -32,7 +32,6 @@ import 'package:otc/pages/user/tasks/user_tasks.dart';
 import 'package:otc/pages/wallet/wallet_address/wallet_address.dart';
 import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
 import 'package:otc/pages/wallet/wallet_address/wallet_address_dc_addition.dart';
-import 'package:otc/pages/wallet/wallet_funds/contract_wallet.dart';
 import 'package:otc/pages/wallet/wallet_funds/wallet_funds.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
@@ -146,10 +145,6 @@ final List<RouteBase> routes = [
         builder: (context, state) => const Advertise(),
       ),
     ],
-  ),
-  GoRoute(
-    path: '/contract_wallet',
-    builder: (context, state) => const ContractWallet(),
   ),
   GoRoute(
     path: '/captcha',

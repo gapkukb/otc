@@ -19,8 +19,11 @@ import 'package:otc/pages/wallet/wallet_address/wallet_address.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
 import 'package:otc/pages/wallet/wallet_address/wallet_address_dc_addition.dart';
+import 'package:otc/pages/wallet/wallet_futures/wallet_futures.dart';
+import 'package:otc/pages/wallet/wallet_history/wallet_history.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/pages/wallet/wallet_funds/wallet_funds.dart';
+import 'package:otc/pages/wallet/wallet_spot/wallet_spot.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/modal_page.dart';
 
@@ -115,6 +118,21 @@ final List<RouteBase> routes = [
             name: RouteName.walletFunds,
             path: '/wallet_funds',
             builder: (context, state) => const WalletFunds(),
+          ),
+          GoRoute(
+            name: RouteName.walletSpot,
+            path: '/wallet_spot',
+            builder: (context, state) => const WalletSpot(),
+          ),
+          GoRoute(
+            name: RouteName.walletFutures,
+            path: '/wallet_futures',
+            builder: (context, state) => const WalletFutures(),
+          ),
+          GoRoute(
+            name: RouteName.walletHistory,
+            path: '/wallet_history',
+            builder: (context, state) => const WalletHistory(),
           ),
         ],
       ),

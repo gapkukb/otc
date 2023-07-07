@@ -9,6 +9,8 @@ class UiClipboard extends StatelessWidget {
   final String? failedMesasge;
   final Function(String text)? successHandle;
   final Function(dynamic error)? failedHandle;
+  final double? iconSize;
+  final Widget? child;
 
   const UiClipboard({
     super.key,
@@ -18,24 +20,36 @@ class UiClipboard extends StatelessWidget {
     this.failedMesasge,
     this.failedHandle,
     this.successHandle,
+    this.iconSize,
+    this.child,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
+    var button = Tooltip(
       message: toolTipText,
-      child: IconButton(
-        onPressed: () async {
-          if (text == null || text == "") return;
-          FlutterClipboard.copy(text!).then((value) {
-            BotToast.showText(text: successMesasge);
-            successHandle?.call(text!);
-          }).catchError((error) {
-            failedHandle?.call(error);
-          });
-        },
-        icon: const Icon(Icons.copy),
+      child: SizedBox.square(
+        dimension: iconSize == null ? null : iconSize! * 2,
+        child: IconButton(
+          iconSize: iconSize,
+          onPressed: () async {
+            if (text == null || text == "") return;
+            FlutterClipboard.copy(text!).then((value) {
+              BotToast.showText(text: successMesasge);
+              successHandle?.call(text!);
+            }).catchError((error) {
+              failedHandle?.call(error);
+            });
+          },
+          icon: const Icon(Icons.copy),
+        ),
       ),
+    );
+
+    if (child == null) return button;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [child!, button],
     );
   }
 }

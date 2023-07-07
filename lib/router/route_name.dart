@@ -22,4 +22,7 @@ class RouteName {
   static const walletAddition = "wallet_addition";
   static const walletAdditionDc = "wallet_addition_dc";
   static const walletFunds = "wallet_funds";
+  static const walletSpot = "wallet_spot";
+  static const walletFutures = "wallet_futures";
+  static const walletHistory = "wallet_history";
 }

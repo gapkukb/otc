@@ -58,7 +58,9 @@ class UiButton extends StatelessWidget {
     var themeColor = Theme.of(context).primaryColor;
     return MaterialButton(
       padding: padding ??
-          (size == UiButtonSize.mini ? const EdgeInsets.all(0) : null),
+          (size == UiButtonSize.mini
+              ? const EdgeInsets.symmetric(horizontal: 4.0)
+              : null),
       minWidth: fullWidth
           ? double.infinity
           : size == UiButtonSize.mini

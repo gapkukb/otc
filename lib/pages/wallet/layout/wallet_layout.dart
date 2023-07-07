@@ -22,17 +22,17 @@ ShellRouteBuilder walletLayout = (context, state, child) {
           icon: Icons.fiber_manual_record,
         ),
         SideBarItem(
-          path: "/",
+          path: "/wallet_spot",
           label: "现货钱包",
           icon: Icons.fiber_manual_record,
         ),
         SideBarItem(
-          path: "/",
+          path: "/wallet_futures",
           label: "合约钱包",
           icon: Icons.fiber_manual_record,
         ),
         SideBarItem(
-          path: "/",
+          path: "/wallet_history",
           label: "历史记录",
           icon: Icons.fiber_manual_record,
         ),
