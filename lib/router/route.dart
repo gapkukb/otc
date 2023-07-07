@@ -7,7 +7,7 @@ import 'package:otc/layout/page_layout/page_layout.dart';
 import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
-import 'package:otc/pages/agent/agent.dart';
+import 'package:otc/pages/user/agent/agent.dart';
 import 'package:otc/pages/legal_terms/legal_terms.dart';
 import 'package:otc/pages/account/account.dart';
 import 'package:otc/pages/retrieve_password/retrieve_password.dart';
@@ -35,7 +35,7 @@ import 'package:otc/pages/wallet/funds/contract_wallet.dart';
 import 'package:otc/pages/wallet/funds/funds.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
-import 'package:otc/router/modal_route.dart';
+import 'package:otc/router/modal_page.dart';
 
 class CustomRoute extends GoRoute {
   final bool? authorizable;

@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/code_field/code_field.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class UserEmailAddressNext extends StatefulWidget {
@@ -19,7 +19,7 @@ class _UserEmailAddressNextState extends State<UserEmailAddressNext> {
 
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       title: "修改邮箱",
       nextText: "完成",
       onCompelete: () async {

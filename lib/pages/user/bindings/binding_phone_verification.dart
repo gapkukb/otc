@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class BindingPhoneVerification extends StatefulWidget {
@@ -13,7 +13,7 @@ class BindingPhoneVerification extends StatefulWidget {
 class _BindingPhoneVerificationState extends State<BindingPhoneVerification> {
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       legend: "绑定手机",
       title: "手机验证",
       nextText: "下一步",

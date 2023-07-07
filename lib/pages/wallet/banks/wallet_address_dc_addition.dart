@@ -1,7 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 
 class ModelFcAddress {
   String name;
@@ -52,7 +52,7 @@ class WalletAddressDcAddition extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: UserModalPageTemplate(
+      child: ModalPageTemplate(
         legend: "提币地址管理",
         title: "添加钱包地址",
         onCompelete: () {

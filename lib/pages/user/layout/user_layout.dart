@@ -124,7 +124,7 @@ class _SidebarMenuState extends State<SidebarMenu> {
     {"label": "任务中心", "path": "/tasks"},
     {"label": "账户安全", "path": "/security"},
     {"label": "身份认证", "path": "/auth"},
-    {"label": "做市商认证", "path": "/user/home"},
-    {"label": "设置", "path": "/user/home"},
+    {"label": "做市商认证", "path": "/auth_agent"},
+    {"label": "设置", "path": "/setting"},
   ];
 }

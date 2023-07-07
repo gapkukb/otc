@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_number_stepper.dart';
 
@@ -34,7 +34,7 @@ class _AdvertisePlaceState extends State<AdvertisePlace> {
 
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       legend: "发布新广告",
       title: "出售",
       icon: Icons.currency_exchange,

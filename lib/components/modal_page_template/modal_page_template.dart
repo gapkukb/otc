@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class UserModalPageTemplate extends StatelessWidget {
+class ModalPageTemplate extends StatelessWidget {
   final String legend;
   final String title;
   final String nextText;
@@ -9,7 +9,7 @@ class UserModalPageTemplate extends StatelessWidget {
   final List<Widget> children;
   final void Function() onCompelete;
 
-  const UserModalPageTemplate({
+  const ModalPageTemplate({
     super.key,
     this.legend = "账户安全",
     this.nextText = "确定",

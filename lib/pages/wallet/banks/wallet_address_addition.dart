@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_addition_bank.dart';
 import 'package:otc/pages/wallet/banks/wallet_address_addition_wechat_and_alipay.dart';
 
@@ -20,7 +20,7 @@ class WalletAddressAddition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       legend: "新增收款方式",
       title: _buildTitle(),
       icon: Icons.credit_card,

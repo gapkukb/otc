@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 import 'package:intl/intl.dart';
 
@@ -33,7 +33,7 @@ class _AuthPrimaryState extends State<AuthPrimary> {
   FocusNode myfocus = FocusNode();
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       legend: "身份认证",
       title: "初级认证",
       onCompelete: () {},

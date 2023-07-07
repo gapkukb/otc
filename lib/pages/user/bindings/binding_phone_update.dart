@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/code_field/code_field.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
 class BindingPhoneUpdate extends StatefulWidget {
@@ -13,7 +13,7 @@ class BindingPhoneUpdate extends StatefulWidget {
 class _BindingPhoneUpdateState extends State<BindingPhoneUpdate> {
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       legend: "绑定手机",
       title: "修改手机",
       onCompelete: () {},

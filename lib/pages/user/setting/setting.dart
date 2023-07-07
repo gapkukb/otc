@@ -14,129 +14,84 @@ class UserSetting extends StatefulWidget {
 class _UserSettingState extends State<UserSetting> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Panel(
-              title: "个人资料",
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  children: [
-                    _buildNickName(),
-                    const SizedBox(height: 16),
-                    _buildAvatar(),
-                  ],
-                ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Panel(
+            title: "个人资料",
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                children: [
+                  _buildNickName(),
+                  const SizedBox(height: 16),
+                  _buildAvatar(),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Panel(
-              title: "个人资料",
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  children: [
-                    _buildNotification(),
-                    const SizedBox(height: 16),
-                    _buildCurrency(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static const titleStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
+
+  ListTile _buildItem({
+    required String title,
+    required String subtitle,
+    required List<Widget> trailing,
+  }) {
+    return ListTile(
+      tileColor: Colors.grey.shade100,
+      title: Text(title, style: titleStyle),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(subtitle),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: trailing,
       ),
     );
   }
 
   _buildNickName() {
-    return ListTile(
-      title: const Text(
-        "昵称",
+    return _buildItem(title: "昵称", subtitle: "为您的个人资料设置自定义昵称。", trailing: [
+      const Text(
+        "我是狗鸡",
         style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+          fontSize: 14,
         ),
       ),
-      subtitle: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: const Text(
-          "为您的个人资料设置自定义昵称。",
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: 14,
-          ),
-        ),
+      TextButton(
+        child: const Text("编辑"),
+        onPressed: () {
+          context.push('/setting_nickname');
+        },
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            "我是狗鸡",
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          TextButton(
-            child: const Text(
-              "编辑",
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-            onPressed: () {
-              context.push('/setting_nickname');
-            },
-          )
-        ],
-      ),
-    );
+    ]);
   }
 
   _buildAvatar() {
-    return ListTile(
-      title: const Text(
-        "头像",
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
+    return _buildItem(title: "头像", subtitle: "请选择一个头像以个性化您的帐户。", trailing: [
+      const CircleAvatar(
+        child: FlutterLogo(),
       ),
-      subtitle: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: const Text(
-          "请选择一个头像以个性化您的帐户。",
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: 14,
-          ),
-        ),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CircleAvatar(
-            child: FlutterLogo(),
-          ),
-          TextButton(
-            child: const Text(
-              "修改",
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-            onPressed: () {
-              context.push('/update_avatar');
-            },
-          )
-        ],
-      ),
-    );
+      TextButton(
+        child: const Text("修改"),
+        onPressed: () {
+          context.push('/update_avatar');
+        },
+      )
+    ]);
   }
 
   final MaterialStateProperty<Icon?> thumbIcon =
@@ -148,80 +103,4 @@ class _UserSettingState extends State<UserSetting> {
       return const Icon(Icons.close);
     },
   );
-
-  bool enable = false;
-
-  _buildNotification() {
-    return ListTile(
-      title: const Text(
-        "通知",
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: const Text(
-          "一旦启用，您将在app和网站内收到相关通知。",
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: 14,
-          ),
-        ),
-      ),
-      trailing: Switch(
-        value: enable,
-        thumbIcon: thumbIcon,
-        onChanged: (value) {
-          setState(() {
-            enable = !enable;
-            Modal.alert(
-              title: enable ? "开启通知" : "关闭通知",
-              content: enable ? "已开启通知，您将在网站内收到相关通知。" : "已关闭通知，您将停止接收到网站内相关通知。",
-            );
-          });
-        },
-      ),
-    );
-  }
-
-  _buildCurrency() {
-    return ListTile(
-      title: const Text(
-        "货币单位",
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: const Text(
-          "网站显示数字货币的计量单位。",
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: 14,
-          ),
-        ),
-      ),
-      trailing: Switch(
-        value: enable,
-        thumbIcon: thumbIcon,
-        onChanged: (value) {
-          setState(() {
-            enable = !enable;
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const UpdateCurrency();
-              },
-            );
-          });
-        },
-      ),
-    );
-  }
 }

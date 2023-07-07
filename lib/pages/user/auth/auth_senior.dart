@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/components/user_modal_page_template/user_modal_page_template.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 import 'package:intl/intl.dart';
@@ -36,7 +36,7 @@ class _AuthSeniorState extends State<AuthSenior> {
 
   @override
   Widget build(BuildContext context) {
-    return UserModalPageTemplate(
+    return ModalPageTemplate(
       legend: "身份认证",
       title: "高级身份认证",
       nextText: "继续",

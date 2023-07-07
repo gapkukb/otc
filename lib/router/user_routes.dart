@@ -7,7 +7,7 @@ import 'package:otc/layout/page_layout/page_layout.dart';
 import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/pages/advertise/advertise_place/advertise_place.dart';
 import 'package:otc/pages/advertise/layout/advertise_layout.dart';
-import 'package:otc/pages/agent/agent.dart';
+import 'package:otc/pages/user/agent/agent.dart';
 import 'package:otc/pages/index.dart';
 import 'package:otc/pages/legal_terms/legal_terms.dart';
 import 'package:otc/pages/account/account.dart';
@@ -36,7 +36,7 @@ import 'package:otc/pages/wallet/funds/contract_wallet.dart';
 import 'package:otc/pages/wallet/funds/funds.dart';
 import 'package:otc/pages/wallet/layout/wallet_layout.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
-import 'package:otc/router/modal_route.dart';
+import 'package:otc/router/modal_page.dart';
 import 'package:otc/router/route_name.dart';
 
 final List<RouteBase> routes = [
@@ -120,7 +120,7 @@ final List<RouteBase> routes = [
       ),
       GoRoute(
         path: '/wallet_addition',
-        pageBuilder: (context, state) => ModalRoutePage(
+        pageBuilder: (context, state) => ModalPage(
           WalletAddressAddition(
             addType: (state.extra as AddType?) ?? AddType.bank,
           ),
@@ -128,7 +128,7 @@ final List<RouteBase> routes = [
       ),
       GoRoute(
         path: '/wallet_addition_dc',
-        pageBuilder: (context, state) => ModalRoutePage(
+        pageBuilder: (context, state) => ModalPage(
           WalletAddressDcAddition(),
         ),
       ),
@@ -153,7 +153,7 @@ final List<RouteBase> routes = [
   ),
   GoRoute(
     path: '/captcha',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       Captcha(
         device: (state.extra as dynamic)['device'],
         service: (state.extra as dynamic)['service'],
@@ -163,67 +163,67 @@ final List<RouteBase> routes = [
   ),
   GoRoute(
     path: '/f2a',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const UserF2a(),
     ),
   ),
   GoRoute(
     path: '/email',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const UserEmailAddress(),
     ),
   ),
   GoRoute(
     path: '/bind_f2a',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const BindingPhone(),
     ),
   ),
   GoRoute(
     path: '/auth_primary',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const AuthPrimary(),
     ),
   ),
   GoRoute(
     path: '/auth_junior',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const AuthJunior(),
     ),
   ),
   GoRoute(
     path: '/auth_senior',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const AuthSenior(),
     ),
   ),
   GoRoute(
     path: '/agent',
-    pageBuilder: (context, state) => ModalRoutePage(
-      const Agent(),
+    pageBuilder: (context, state) => ModalPage(
+      const UserAgent(),
     ),
   ),
   GoRoute(
     path: '/setting_nickname',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const SettingNickname(),
     ),
   ),
   GoRoute(
     path: '/update_avatar',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const UpdateAvatar(),
     ),
   ),
   GoRoute(
     path: '/advertise_place',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const AdvertisePlace(),
     ),
   ),
   GoRoute(
     path: '/slider_captcha',
-    pageBuilder: (context, state) => ModalRoutePage(
+    pageBuilder: (context, state) => ModalPage(
       const SliderCaptcha(),
       false,
     ),
