@@ -73,17 +73,17 @@ class UiButton extends StatelessWidget {
   }
 
   Color? getbackgroundColor(Color themeColor) {
-    if (variant == UiButtonVariant.text) {
+    if (variant == UiButtonVariant.text || variant == UiButtonVariant.outline) {
       return null;
-    }
-    if (variant == UiButtonVariant.outline) {
-      return color;
     }
     return color ?? themeColor;
   }
 
   Color? getColor(Color themeColor) {
-    if (variant == UiButtonVariant.outline || variant == UiButtonVariant.text) {
+    if (variant == UiButtonVariant.outline) {
+      return color;
+    }
+    if (variant == UiButtonVariant.text) {
       return themeColor;
     }
     return color != Colors.white ? Colors.white : null;
@@ -95,7 +95,7 @@ class UiButton extends StatelessWidget {
         return RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(99),
           side: BorderSide(
-            color: themeColor,
+            color: color ?? themeColor,
           ),
         );
       }

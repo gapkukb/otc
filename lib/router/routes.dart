@@ -1,5 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:otc/layout/page_layout/page_layout.dart';
+import 'package:otc/pages/agent_mng/dashboard/dashboard.dart';
+import 'package:otc/pages/order/order_c2c/order_c2c.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
 import 'package:otc/pages/user/rebate/rebate.dart';
@@ -44,6 +46,15 @@ final List<RouteBase> routes = [
         builder: (context, state) => const UserAuth(),
       ),
     ],
+  ),
+  GoRoute(
+    path: '/order_c2c',
+    builder: (context, state) => const OrderC2c(),
+  ),
+
+  GoRoute(
+    path: '/dashboard',
+    builder: (context, state) => const Dashboard(),
   ),
 
   /// 下面是普通页面，不需要鉴权
