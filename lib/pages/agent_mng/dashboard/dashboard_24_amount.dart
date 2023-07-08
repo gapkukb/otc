@@ -3,6 +3,8 @@ import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/components/chart/chart.config.dart';
+import 'package:otc/components/chart/chart.line.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 final data = List.generate(24, (index) {
@@ -14,10 +16,8 @@ final data = List.generate(24, (index) {
 });
 
 class Dashboard24Amount extends StatefulWidget {
-  final List<Map<String, dynamic>> data;
   const Dashboard24Amount({
     super.key,
-    required this.data,
   });
 
   @override
@@ -107,102 +107,41 @@ class _Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 260,
-      child: LineChart(
-        LineChartData(
-          minY: minY + bound,
-          maxY: maxY - bound,
-          lineBarsData: [
-            LineChartBarData(
-              barWidth: 1,
-              spots: data
-                  .map(
-                    (e) => FlSpot(
-                        (e['index'] as int).toDouble(), e['value'] as double),
-                  )
-                  .toList(),
-              isCurved: true,
-              color: Colors.green,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(
-                show: false,
-              ),
-              belowBarData: BarAreaData(
-                show: true,
-                gradient: LinearGradient(
-                  begin: Alignment(0, -1),
-                  end: Alignment(0, 1),
-                  colors: [
-                    Colors.cyan.withOpacity(0.3),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-            ),
-            LineChartBarData(
-              barWidth: 1,
-              spots: data
-                  .map(
-                    (e) => FlSpot((e['index'] as int).toDouble(),
-                        (e['value'] as double) - bound),
-                  )
-                  .toList(),
-              isCurved: true,
-              color: Colors.red,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(
-                show: false,
-              ),
-              belowBarData: BarAreaData(
-                show: true,
-                gradient: LinearGradient(
-                  begin: Alignment(0, -1),
-                  end: Alignment(0, 1),
-                  colors: [
-                    Colors.cyan.withOpacity(0.3),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-            ),
-          ],
-          lineTouchData: LineTouchData(
-            touchTooltipData: LineTouchTooltipData(
-              fitInsideHorizontally: true,
-              fitInsideVertically: true,
-            ),
-          ),
-          titlesData: FlTitlesData(
-            show: true,
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: (value, meta) {
-                  return Transform.translate(
-                    offset: const Offset(0, 16),
-                    child: Text(
-                      data[value.toInt()]['label'] as String,
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  );
-                },
+      child: ChartLine(
+        config: [
+          ChartConifg(
+            color: Colors.green,
+            barWidth: 3,
+            belowAreaGradient: [
+              Colors.green.withAlpha(50),
+              Colors.transparent,
+            ],
+            data: List.generate(
+              24,
+              (index) => ChartDataItem(
+                xAisx: index.toString(),
+                yAisx: math.Random().nextDouble(),
+                index: index,
               ),
             ),
           ),
-          gridData: const FlGridData(
-            drawVerticalLine: false,
+          ChartConifg(
+            color: Colors.pink,
+            barWidth: 3,
+            belowAreaGradient: [
+              Colors.pink.withAlpha(50),
+              Colors.transparent,
+            ],
+            data: List.generate(
+              24,
+              (index) => ChartDataItem(
+                xAisx: index.toString(),
+                yAisx: math.Random().nextDouble(),
+                index: index,
+              ),
+            ),
           ),
-          borderData: FlBorderData(
-            show: false,
-          ),
-        ),
+        ],
       ),
     );
   }

@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/components/chart/chart.bar.dart';
+import 'package:otc/components/chart/chart.config.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 final data = List.generate(24, (index) {
@@ -14,10 +16,8 @@ final data = List.generate(24, (index) {
 });
 
 class Dashboard24Counter extends StatefulWidget {
-  final List<Map<String, dynamic>> data;
   const Dashboard24Counter({
     super.key,
-    required this.data,
   });
 
   @override
@@ -95,72 +95,33 @@ class _Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 260,
-      child: BarChart(
-        BarChartData(
-          alignment: BarChartAlignment.center,
-          // maxY: 1,
-          groupsSpace: 24,
-          barGroups: data.map((item) {
-            return BarChartGroupData(
-              x: item['index'] as int,
-              barsSpace: 4,
-              barRods: [
-                BarChartRodData(
-                  toY: item['value'] as double,
-                  width: 8,
-                  color: Colors.amber,
-                ),
-                BarChartRodData(
-                  toY: item['value'] as double,
-                  width: 8,
-                  color: Colors.blue,
-                  backDrawRodData: BackgroundBarChartRodData(
-                    show: true,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            );
-          }).toList(),
-
-          titlesData: FlTitlesData(
-            show: true,
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: (value, meta) {
-                  return Transform.translate(
-                    offset: const Offset(0, 16),
-                    child: Text(
-                      data[value.toInt()]['label'] as String,
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  );
-                },
+      child: ChartBar(
+        config: [
+          ChartConifg(
+            color: Colors.purple,
+            barWidth: 5,
+            data: List.generate(
+              24,
+              (index) => ChartDataItem(
+                xAisx: index.toString(),
+                yAisx: Random().nextDouble(),
+                index: index,
               ),
             ),
           ),
-          barTouchData: BarTouchData(
-            touchTooltipData: BarTouchTooltipData(
-              fitInsideVertically: true,
-              fitInsideHorizontally: true,
+          ChartConifg(
+            color: Colors.green,
+            barWidth: 5,
+            data: List.generate(
+              24,
+              (index) => ChartDataItem(
+                xAisx: index.toString(),
+                yAisx: Random().nextDouble(),
+                index: index,
+              ),
             ),
           ),
-          gridData: const FlGridData(
-            drawVerticalLine: false,
-          ),
-          borderData: FlBorderData(
-            show: false,
-          ),
-        ),
+        ],
       ),
     );
   }
