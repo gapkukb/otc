@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:otc/pages/agent_mng/dashboard/dashboard_24_amount.dart';
 import 'package:otc/pages/agent_mng/dashboard/dashboard_24_counter.dart';
 import 'package:otc/pages/agent_mng/dashboard/dashboard_overview.dart';
 
@@ -18,13 +19,15 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: const Text(''),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      body: ListView(
         children: [
           DashboardOverview(),
           Dashboard24Counter(
+            data: List.generate(24, (index) {
+              return {"label": "0$index:00", "value": Random().nextInt(10)};
+            }),
+          ),
+          Dashboard24Amount(
             data: List.generate(24, (index) {
               return {"label": "0$index:00", "value": Random().nextInt(10)};
             }),
