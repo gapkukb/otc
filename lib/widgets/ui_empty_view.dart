@@ -8,6 +8,7 @@ class UiEmptyView extends StatelessWidget {
   final Widget? subtitleWidget;
   final TextStyle? subtitleTyle;
   final List<Widget>? actions;
+  final Widget? icon;
 
   const UiEmptyView({
     super.key,
@@ -18,6 +19,7 @@ class UiEmptyView extends StatelessWidget {
     this.titleWidget,
     this.subtitleTyle,
     this.titleStyle,
+    this.icon,
   });
 
   static const _titleStyle = TextStyle(
@@ -41,10 +43,11 @@ class UiEmptyView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            "assets/images/empty.png",
-            height: 134,
-          ),
+          icon ??
+              Image.asset(
+                "assets/images/empty.png",
+                height: 134,
+              ),
           const SizedBox(
             height: 40,
           ),

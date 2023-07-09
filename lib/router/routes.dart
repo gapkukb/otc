@@ -1,6 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:otc/layout/page_layout/page_layout.dart';
+import 'package:otc/pages/agent_mng/agent_setting/agent_setting.dart';
 import 'package:otc/pages/agent_mng/dashboard/dashboard.dart';
+import 'package:otc/pages/agent_mng/rebase_details/rebase_details.dart';
+import 'package:otc/pages/notice/notice.dart';
 import 'package:otc/pages/order/order_c2c/order_c2c.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
@@ -55,6 +58,19 @@ final List<RouteBase> routes = [
   GoRoute(
     path: '/dashboard',
     builder: (context, state) => const Dashboard(),
+  ),
+
+  GoRoute(
+    path: '/rebase_details',
+    builder: (context, state) => const RebaseDetails(),
+  ),
+  GoRoute(
+    path: '/agent_setting',
+    builder: (context, state) => const AgentSetting(),
+  ),
+  GoRoute(
+    path: '/notice',
+    builder: (context, state) => const Notice(),
   ),
 
   /// 下面是普通页面，不需要鉴权
