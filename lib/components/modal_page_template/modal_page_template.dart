@@ -89,7 +89,8 @@ class ModalPageTemplate extends StatelessWidget {
         TextButton(
           child: const Text("取消"),
           onPressed: () {
-            if (context.canPop()) context.pop();
+            // if (context.canPop()) context.pop();
+            Navigator.of(context).maybePop();
           },
         ),
         TextButton(

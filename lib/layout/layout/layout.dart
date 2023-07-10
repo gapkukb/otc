@@ -23,19 +23,22 @@ class Layout extends StatelessWidget {
       appBar: AppBar(
         title: const Text(''),
       ),
-      body: sideBar == null
-          ? child
-          : Row(
-              children: [
-                sideBar!,
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: child,
+      body: Container(
+        width: 1200,
+        child: sideBar == null
+            ? child
+            : Row(
+                children: [
+                  sideBar!,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: child,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 }
