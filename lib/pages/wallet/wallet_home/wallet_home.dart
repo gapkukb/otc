@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
-import 'package:otc/components/panel/panel.dart';
 import 'package:otc/components/tip/tip.dart';
+import 'package:otc/enums/enums.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/number.dart';
-import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class WalletHome extends StatefulWidget {
@@ -54,23 +57,50 @@ class _WalletHomeState extends State<WalletHome> {
       "balance": 0,
       "validBalance": 0,
       "invalidBalance": 0,
-      "path": "/",
+      "path": "/wallet_funds",
+      "tooltip": "您的C2C交易钱包",
     },
     {
       "label": "现货",
       "balance": 0,
       "validBalance": 0,
       "invalidBalance": 0,
-      "path": "/",
+      "path": "/wallet_spot",
+      "tooltip": "您的加密货币交易钱包",
     },
     {
       "label": "合约",
       "balance": 0,
       "validBalance": 0,
       "invalidBalance": 0,
-      "path": "/",
+      "path": "/wallet_futures",
+      "tooltip": "合约账户",
     },
   ];
+
+  double balance = 0.0;
+  double validBalance = 0.0;
+  double freezedBalance = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    apis.wallet.currencyDetails(null).then((value) {
+      final result = (value.data['data'] as List<dynamic>).singleWhere(
+        (element) => element['currency'] == FiatCurrencies.USD.name,
+      );
+
+      inspect(result);
+
+      if (result != null) {
+        statics[0]['value'] = result['balance'];
+        statics[1]['value'] = result['canUsd'];
+        statics[2]['value'] = (result['balance'] - result['canUsd']);
+      }
+
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +140,7 @@ class _WalletHomeState extends State<WalletHome> {
         isThreeLine: true,
         title: const Text(
           "钱包总览",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w500,
-          ),
+          style: Font.x3largeBold,
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 24.0),
@@ -133,8 +160,10 @@ class _WalletHomeState extends State<WalletHome> {
           ),
         ),
         trailing: TextButton(
-          onPressed: () {},
           child: const Text("充值提现记录"),
+          onPressed: () {
+            context.go('/wallet_history');
+          },
         ),
       ),
     );
@@ -150,17 +179,11 @@ class _WalletHomeState extends State<WalletHome> {
         title: Text(item['label']),
         subtitle: Text.rich(TextSpan(
             text: (item['value'] as num).decimalize(),
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
-            children: const [
+            style: Font.x2largeBold,
+            children: [
               TextSpan(
-                text: " usdt",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
+                text: " USD",
+                style: Font.medium.copyWith(fontWeight: FontWeight.normal),
               ),
             ])),
       ),
@@ -209,7 +232,7 @@ class _WalletHomeState extends State<WalletHome> {
               ),
               Tip(
                 iconSize: 16,
-                message: "您的C2C交易钱包",
+                message: item['tooltip'],
               )
             ],
           ),

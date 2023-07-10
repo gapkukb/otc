@@ -1,0 +1,3 @@
+library modal;
+
+class Model {}

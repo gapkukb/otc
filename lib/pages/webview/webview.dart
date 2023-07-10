@@ -15,6 +15,8 @@ class Webview extends StatefulWidget {
 }
 
 class _WebviewState extends State<Webview> {
+  String? title;
+
   final WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setBackgroundColor(Colors.white)
@@ -44,6 +46,11 @@ class _WebviewState extends State<Webview> {
         onMessageReceived: widget.onMessage!,
       );
     }
+    controller.getTitle().then((value) {
+      setState(() {
+        title = value;
+      });
+    });
     super.initState();
   }
 
@@ -57,7 +64,7 @@ class _WebviewState extends State<Webview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: controller.getTitle(),
+        title: Text(title ?? ""),
       ),
       body: WebViewWidget(controller: controller),
     );

@@ -1,11 +1,12 @@
 library apis;
 
 import 'package:otc/global/global.dart';
-
 import '../http/http.dart';
+
 part './app_api.dart';
 part './user_api.dart';
 part './security_api.dart';
+part './wallet.api.dart';
 
 const duration = Duration(seconds: 30);
 
@@ -24,12 +25,13 @@ final http = Http(HttpOptions(
   },
 ));
 
-final get = http.newMethod("get");
-final post = http.newMethod("post");
+final get = http.createMethod("get");
+final post = http.createMethod("post");
 
 class _Apis {
   final user = userApi;
   final security = securityApi;
+  final wallet = walletApi;
 }
 
 var apis = _Apis();

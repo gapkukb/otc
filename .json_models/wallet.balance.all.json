@@ -1,0 +1,11 @@
+[
+  {
+    "__className": "WalletAllBalance",
+
+    "r@currency": "",
+    "r@balance": 0,
+    "r@canUsd": 0,
+    "r@usdtPrice": 0,
+    "r@cnyPrice": 0
+  }
+]
