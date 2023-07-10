@@ -192,10 +192,36 @@ final List<RouteBase> routes = [
       ),
     ],
   ),
+  GoRoute(
+    path: '/order_c2c',
+    builder: (context, state) => const OrderC2c(),
+  ),
+
+  GoRoute(
+    path: '/dashboard',
+    builder: (context, state) => const Dashboard(),
+  ),
+
+  GoRoute(
+    path: '/rebase_details',
+    builder: (context, state) => const RebaseDetails(),
+  ),
+  GoRoute(
+    path: '/agent_setting',
+    builder: (context, state) => const AgentSetting(),
+  ),
+  GoRoute(
+    path: '/notice',
+    builder: (context, state) => const Notice(),
+  ),
 
   /// 下面是普通页面，不需要鉴权
   GoRoute(
     path: '/page_layout',
     builder: (context, state) => const PageLayout(),
+  ),
+  GoRoute(
+    path: '/webview',
+    builder: (context, state) => const Webview(),
   ),
 ];
