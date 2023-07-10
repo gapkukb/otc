@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/layout/page_layout/page_layout.dart';
+import 'package:otc/pages/agent_mng/agent_setting/agent_setting.dart';
+import 'package:otc/pages/agent_mng/dashboard/dashboard.dart';
+import 'package:otc/pages/agent_mng/rebase_details/rebase_details.dart';
+import 'package:otc/pages/notice/notice.dart';
+import 'package:otc/pages/order/order_c2c/order_c2c.dart';
 import 'package:otc/pages/user/agent/agent.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/auth/auth_junior.dart';
@@ -24,6 +29,7 @@ import 'package:otc/pages/wallet/wallet_history/wallet_history.dart';
 import 'package:otc/pages/wallet/wallet_home/wallet_home.dart';
 import 'package:otc/pages/wallet/wallet_funds/wallet_funds.dart';
 import 'package:otc/pages/wallet/wallet_spot/wallet_spot.dart';
+import 'package:otc/pages/webview/webview.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/modal_page.dart';
 
@@ -220,8 +226,8 @@ final List<RouteBase> routes = [
     path: '/page_layout',
     builder: (context, state) => const PageLayout(),
   ),
-  GoRoute(
-    path: '/webview',
-    builder: (context, state) => const Webview(),
-  ),
+  // GoRoute(
+  //   path: '/webview',
+  //   builder: (context, state) => const Webview(),
+  // ),
 ];
