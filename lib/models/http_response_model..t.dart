@@ -2,7 +2,7 @@ class HttpResponseModel {
   String? whether;
   int? code;
   String? message;
-  String? data;
+  dynamic data;
   bool? success;
 
   HttpResponseModel({
@@ -18,7 +18,7 @@ class HttpResponseModel {
       whether: json['whether'] as String?,
       code: json['code'] as int?,
       message: json['message'] as String?,
-      data: json['data'] as String?,
+      data: json['data'] as dynamic,
       success: json['success'] as bool?,
     );
   }

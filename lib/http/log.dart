@@ -1,25 +1,25 @@
 part of http;
 
-final log = Logger('Api')..level = Level.ALL;
+final log = Logger();
 
 class LogInterceptor extends Interceptor {
   Function close = () {};
 
   @override
   void onRequest(options, handler) {
-    log.info(options);
+    log.i(options);
     super.onRequest(options, handler);
   }
 
   @override
   void onError(err, handler) {
-    log.severe(err);
+    log.e(err);
     super.onError(err, handler);
   }
 
   @override
   void onResponse(response, handler) {
-    log.info(response);
+    log.i(response);
     super.onResponse(response, handler);
   }
 }

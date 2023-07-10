@@ -5,7 +5,9 @@ class LoadingInterceptor extends Interceptor {
 
   @override
   void onRequest(options, handler) {
-    close = Modal.showLoading();
+    if ((options.extra['_options'] as InnerOptions).loading) {
+      close = Modal.showLoading();
+    }
 
     super.onRequest(options, handler);
   }

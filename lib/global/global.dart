@@ -36,7 +36,7 @@ class _Global {
     }
 
     //ignore: invalid_null_aware_operator
-    Http.dio?.options.headers.update(
+    http.dio?.options.headers.update(
       key,
       (value) => newToken,
       ifAbsent: () => newToken,

@@ -8,10 +8,10 @@ loginUtil({
   required String username,
   required String password,
 }) async {
-  final resp = await apis.user.login(FormData.fromMap({
+  final resp = await apis.user.login({
     "username": username,
     "password": password,
-  }));
+  });
 
   await global.setToken(resp.data['data']);
 }

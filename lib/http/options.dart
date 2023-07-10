@@ -1,9 +1,6 @@
 //ignore_for_file: dead_null_aware_expression
 
-import 'package:dio/dio.dart';
-import 'package:otc/enums/http.datatype.dart';
-import 'package:otc/regexp/regexp.dart';
-import 'package:otc/utils/map.dart' as map;
+part of http;
 
 noop() {}
 
@@ -23,12 +20,16 @@ class InnerOptions {
   /// 传递到服务器的数据类型
   final HttpDataType? dataType;
 
+  /// 是否开启loading
+  final bool loading;
+
   const InnerOptions({
     this.silent = false,
     this.retry = 0,
     this.cancelable = true,
     this.repeatable = false,
     this.dataType = HttpDataType.json,
+    this.loading = false,
   });
 }
 
@@ -52,6 +53,10 @@ class HttpOptions extends RequestOptions implements InnerOptions {
   /// 传递到服务器的数据类型
   @override
   final HttpDataType? dataType;
+
+  /// 是否开启loading
+  @override
+  final bool loading;
 
   final Map<String, String>? pathParams;
 
@@ -86,6 +91,7 @@ class HttpOptions extends RequestOptions implements InnerOptions {
     this.repeatable = false,
     this.dataType = HttpDataType.json,
     this.pathParams,
+    this.loading = false,
   });
 
   HttpOptions merge(HttpOptions? options) {

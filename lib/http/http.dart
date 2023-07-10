@@ -1,8 +1,27 @@
 library http;
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:otc/http/options.dart';
+import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/models/http_response_model..t.dart';
 import 'package:otc/models/user_model.dart';
+import 'package:otc/enums/http.datatype.dart';
+import 'package:otc/regexp/regexp.dart';
+import 'package:otc/router/router.dart';
+import 'package:otc/utils/map.dart' as map;
+
+part './cache.dart';
+part './data_type.dart';
+part './exception.dart';
+part './loading.dart';
+part './log.dart';
+part './loop.dart';
+part './refresh.dart';
+part './retry.dart';
+part './options.dart';
 
 typedef ModelFactory<T> = T Function(Map<String, dynamic> json);
 
@@ -21,7 +40,7 @@ class Http {
     dio = Dio(options);
   }
 
-  Request<T> Function<T>(String, [ModelFactory<T>?, HttpOptions?]) request2(
+  Request<T> Function<T>(String, [ModelFactory<T>?, HttpOptions?]) createMethod(
     Method method,
   ) {
     return <T>(path, [data, options]) {
@@ -34,13 +53,6 @@ class Http {
       );
     };
   }
-}
-
-_abort() {
-  var h = Http();
-  var post = h.request2(Method.post);
-  var test = post("/", UserModel.fromJson);
-  test().then((value) => null);
 }
 
 class Request<T> {
@@ -64,7 +76,7 @@ class Request<T> {
     }
 
     return dio
-        .request(
+        .request<HttpResponseModel>(
           replacePathParams(
             opt.path,
             opt.pathParams,
@@ -105,6 +117,6 @@ class Request<T> {
             validateStatus: opt.validateStatus,
           ),
         )
-        .then((response) => response.data as T);
+        .then((response) => response.data!.data);
   }
 }

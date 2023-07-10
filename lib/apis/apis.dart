@@ -1,5 +1,6 @@
 library apis;
 
+import 'package:dio/dio.dart';
 import 'package:otc/global/global.dart';
 import '../http/http.dart';
 
@@ -10,7 +11,7 @@ part './wallet.api.dart';
 
 const duration = Duration(seconds: 30);
 
-final http = Http(HttpOptions(
+final http = Http(BaseOptions(
   receiveTimeout: duration,
   sendTimeout: duration,
   connectTimeout: duration,
@@ -25,8 +26,8 @@ final http = Http(HttpOptions(
   },
 ));
 
-final get = http.createMethod("get");
-final post = http.createMethod("post");
+final get = http.createMethod(Method.get);
+final post = http.createMethod(Method.post);
 
 class _Apis {
   final user = userApi;
