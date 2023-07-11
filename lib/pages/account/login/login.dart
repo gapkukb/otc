@@ -5,7 +5,7 @@ import 'package:otc/components/text_form_field_password/text_form_field_password
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
 import 'package:otc/pages/account/login/login_util.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
-import 'package:otc/router/router.dart';
+import 'package:otc/router/router.keys.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class Login extends StatefulWidget {
