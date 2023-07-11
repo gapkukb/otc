@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nil/nil.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/layout/page_layout/page_layout.dart';
 import 'package:otc/pages/agent_mng/agent_setting/agent_setting.dart';
 import 'package:otc/pages/agent_mng/dashboard/dashboard.dart';
@@ -32,6 +34,7 @@ import 'package:otc/pages/wallet/wallet_spot/wallet_spot.dart';
 import 'package:otc/pages/webview/webview.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/modal_page.dart';
+import 'package:otc/router/router.dart';
 
 final GlobalKey<NavigatorState> shellKey = GlobalKey();
 
@@ -52,9 +55,30 @@ GoRoute createModalPage({
   );
 }
 
+class MyNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (global.authorization == null) {
+      router.replace('/login');
+    } else {
+      super.didPush(route, previousRoute);
+    }
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (global.authorization == null) {
+      router.replace('/login');
+    } else {
+      super.didPop(route, previousRoute);
+    }
+  }
+}
+
 final List<RouteBase> routes = [
   //需要鉴权的页面
   ShellRoute(
+    observers: [MyNavigatorObserver()],
     navigatorKey: shellKey,
     builder: (context, state, child) {
       return child;
