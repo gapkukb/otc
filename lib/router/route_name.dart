@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class RouteName {
+  static const register = 'register';
+  static const login = 'login';
   static const home = 'home';
-  static const user = 'home';
+  static const user = 'user';
   static const c2c = 'c2c';
   static const rebate = 'rebate';
   static const tasks = 'tasks';
