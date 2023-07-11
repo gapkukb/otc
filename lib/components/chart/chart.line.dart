@@ -8,6 +8,7 @@ class ChartLine extends ChartBase {
   ChartLine({
     super.key,
     required super.config,
+    super.simple,
   });
 
   @override
@@ -43,9 +44,9 @@ class ChartLine extends ChartBase {
                       : BarAreaData(
                           show: true,
                           gradient: LinearGradient(
-                            begin: const Alignment(0, -1),
+                            begin: Alignment(0, simple ? 0 : -1),
                             end: const Alignment(0, 1),
-                            stops: [0.1, 0.5],
+                            stops: [0.1, simple ? 0.5 : -1],
                             colors: item.belowAreaGradient!,
                           ),
                         ),
@@ -53,6 +54,7 @@ class ChartLine extends ChartBase {
               )
               .toList(),
           lineTouchData: LineTouchData(
+            enabled: false,
             touchSpotThreshold: 100,
             getTouchLineEnd: (barData, spotIndex) {
               return 1000.0;

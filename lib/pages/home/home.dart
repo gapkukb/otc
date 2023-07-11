@@ -6,6 +6,7 @@ import 'package:otc/pages/home/home_biz_plan.dart';
 import 'package:otc/pages/home/home_marqueer.dart';
 import 'package:otc/pages/home/home_services.dart';
 import 'package:otc/pages/home/home_top.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,35 +18,31 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          HomeTop(),
-          HomeMarqueer(),
-          SizedBox(
-            height: 58,
-          ),
-          SizedBox(height: 16),
-          HomeCarousel(),
-          SizedBox(height: 56),
-          Text(
-            "市场",
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: 32),
-          HomeMarket(),
-          SizedBox(height: 16),
-          HomeBizPlan(),
-          SizedBox(height: 96),
-          HomeServices(),
-          SizedBox(height: 96),
-          SizedBox(height: 16),
-          HomeAdvantage(),
-        ],
-      ),
+    return ListView(
+      children: const [
+        HomeTop(),
+        HomeMarqueer(),
+        SizedBox(
+          height: 58,
+        ),
+        SizedBox(height: 16),
+        HomeCarousel(),
+        SizedBox(height: 56),
+        Text(
+          "市场",
+          style: Font.x6largeBold,
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 32),
+        HomeMarket(),
+        SizedBox(height: 16),
+        HomeBizPlan(),
+        SizedBox(height: 96),
+        HomeServices(),
+        SizedBox(height: 96),
+        SizedBox(height: 16),
+        HomeAdvantage(),
+      ],
     );
   }
 }

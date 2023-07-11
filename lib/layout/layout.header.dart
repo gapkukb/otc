@@ -2,6 +2,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nil/nil.dart';
+import 'package:otc/layout/layout.profile.dart';
+import 'package:otc/pages/notice/notice_appbar.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/router.keys.dart';
 import 'package:otc/theme/padding.dart';
@@ -75,75 +77,110 @@ final List<_MenuDatas> _menus = [
   ),
 ];
 
-class LayoutHeader extends AppBar {
-  LayoutHeader({
+class LayoutHeader extends StatelessWidget implements PreferredSizeWidget {
+  final AppBar appBar;
+
+  const LayoutHeader({
     super.key,
-  }) : super(
-          primary: false,
-          leading: Padding(
-            padding: Pads.leftLg,
-            child: Image.asset("assets/images/logo.png"),
-          ),
-          leadingWidth: 80,
-          automaticallyImplyLeading: false,
-          shadowColor: Colors.grey.shade100,
-          // forceMaterialTransparency: true,
-          elevation: 1,
-          surfaceTintColor: Colors.white,
-          scrolledUnderElevation: 1,
-          title: Row(
-            children: [
-              MenuBar(
-                style: MenuStyle(
-                  backgroundColor: _color,
-                  padding: MaterialStateProperty.resolveWith(
-                    (states) => EdgeInsets.zero,
-                  ),
-                  elevation: MaterialStateProperty.resolveWith((states) => 0),
-                ),
-                children: _menus.map((menu) {
-                  return _SubMenu(
-                    menuChildren: menu.children
-                        .map(
-                          (item) => _MenuItem(
-                            title: item.title,
-                            subTitle: item.subTitle,
-                            onPressed: () {
-                              _router.go('/login');
-                            },
-                          ),
-                        )
-                        .toList(),
-                    child: UiChip(
-                      iconOnRight: true,
-                      icon: Icons.keyboard_arrow_down_outlined,
-                      iconSize: 20,
-                      spacing: 2,
-                      text: menu.title,
-                      textStyle: Font.small,
-                    ),
-                  );
-                }).toList(),
+    required this.appBar,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      primary: false,
+      leading: Padding(
+        padding: Pads.leftLg,
+        child: Image.asset("assets/images/logo.png"),
+      ),
+      leadingWidth: 80,
+      automaticallyImplyLeading: false,
+      shadowColor: Colors.grey.shade100,
+      // forceMaterialTransparency: true,
+      elevation: 1,
+      surfaceTintColor: Colors.white,
+      scrolledUnderElevation: 1,
+      title: Row(
+        children: [
+          MenuBar(
+            style: MenuStyle(
+              backgroundColor: _color,
+              padding: MaterialStateProperty.resolveWith(
+                (states) => EdgeInsets.zero,
               ),
-            ],
+              elevation: MaterialStateProperty.resolveWith((states) => 0),
+            ),
+            children: _menus.map(
+              (menu) {
+                return _SubMenu(
+                  menuChildren: menu.children
+                      .map(
+                        (item) => _MenuItem(
+                          title: item.title,
+                          subTitle: item.subTitle,
+                          onPressed: () {
+                            _router.go('/login');
+                          },
+                        ),
+                      )
+                      .toList(),
+                  child: UiChip(
+                    iconOnRight: true,
+                    icon: Icons.keyboard_arrow_down_outlined,
+                    iconSize: 20,
+                    spacing: 2,
+                    text: menu.title,
+                    textStyle: Font.small,
+                  ),
+                );
+              },
+            ).toList(),
           ),
-          actions: [
-            UiButton(
-              label: "登录",
-              variant: UiButtonVariant.text,
-              onPressed: () {
-                _router.go('/login');
-              },
-            ),
-            UiButton(
-              label: "注册",
-              onPressed: () {
-                _router.go('/register');
-              },
-            ),
-            const SizedBox(width: 16),
-          ],
-        );
+        ],
+      ),
+      actions: _buildActions(),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
+
+  List<Widget> _buildActions() {
+    if (true) {
+      return [
+        IconButton(
+          icon: const Icon(Icons.credit_card_outlined),
+          onPressed: () {
+            _router.go('/login');
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.description_outlined),
+          onPressed: () {
+            _router.go('/login');
+          },
+        ),
+        const NoticeAppbar(),
+        LayoutProfile(userName: "我是爸爸"),
+      ];
+    }
+
+    return [
+      UiButton(
+        label: "登录",
+        variant: UiButtonVariant.text,
+        onPressed: () {
+          _router.go('/login');
+        },
+      ),
+      UiButton(
+        label: "注册",
+        onPressed: () {
+          _router.go('/register');
+        },
+      )
+    ];
+  }
 }
 
 class _SubMenu extends SubmenuButton {

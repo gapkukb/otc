@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class UiEmptyView extends StatelessWidget {
   final Widget? titleWidget;
@@ -23,14 +24,9 @@ class UiEmptyView extends StatelessWidget {
   });
 
   static const _titleStyle = TextStyle(
-    fontSize: 18,
+    fontSize: 16,
     // fontWeight: FontWeight.bold,
-    color: Color(0xff888888),
-  );
-
-  static const _subTitleTyle = TextStyle(
-    fontSize: 12,
-    color: Color(0xff999999),
+    color: Colors.black,
   );
 
   @override
@@ -54,14 +50,14 @@ class UiEmptyView extends StatelessWidget {
           titleWidget ??
               Text(
                 title ?? "暂无数据",
-                style: titleStyle ?? _titleStyle,
+                style: titleStyle ?? Font.medium,
               ),
           if (subtitleWidget == null && subtitle != null)
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 subtitle!,
-                style: _subTitleTyle,
+                style: Font.miniGrey,
               ),
             )
           else if (subtitleWidget != null)

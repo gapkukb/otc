@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/router/router.keys.dart';
 
-final GlobalKey<NavigatorState> shellKey = GlobalKey();
-
-CustomTransitionPage ModalPage(Widget child, [bool? barrierDismissible]) {
+CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
   return CustomTransitionPage(
-    barrierColor: Colors.black54,
+    barrierColor: null,
     barrierDismissible: barrierDismissible ?? false,
-    fullscreenDialog: true,
+    fullscreenDialog: false,
     opaque: false,
     transitionsBuilder: (_, __, ___, child) => child,
     child: child,
@@ -21,11 +20,11 @@ GoRoute createModalPage({
   Widget? page,
 }) {
   return GoRoute(
-    parentNavigatorKey: shellKey,
+    parentNavigatorKey: appLayoutKey,
     name: name,
     path: path,
     pageBuilder: pageBuilder ??
-        (context, state) => ModalPage(
+        (context, state) => modalPage(
               page!,
             ),
   );

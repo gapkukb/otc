@@ -103,6 +103,12 @@ class Font {
     fontWeight: FontWeight.bold,
   );
 
+  /// fontSize: 36,fontWeight: FontWeight.bold
+  static const x6largeBold = TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.bold,
+  );
+
   /// fontSize: 12,fontWeight: FontWeight.bold,color: Colors.grey
   static const miniGreyBold =
       TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey);

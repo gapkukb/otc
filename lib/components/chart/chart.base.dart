@@ -4,15 +4,16 @@ import 'package:otc/components/chart/chart.config.dart';
 
 abstract class ChartBase extends StatelessWidget {
   final List<ChartConifg> config;
-
+  final bool simple;
   ChartBase({
     super.key,
     required this.config,
+    this.simple = false,
   });
 
   get titlesData {
     return FlTitlesData(
-      show: true,
+      show: !simple,
       topTitles: const AxisTitles(
         sideTitles: SideTitles(showTitles: false),
       ),
@@ -38,9 +39,13 @@ abstract class ChartBase extends StatelessWidget {
     );
   }
 
-  final gridData = const FlGridData(
-    drawVerticalLine: false,
-  );
+  get gridData {
+    return FlGridData(
+      show: !simple,
+      drawVerticalLine: false,
+    );
+  }
+
   final borderData = FlBorderData(
     show: false,
   );

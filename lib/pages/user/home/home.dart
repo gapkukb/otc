@@ -19,16 +19,14 @@ class UserHome extends StatefulWidget {
 class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          UserTopBlock(),
-          VerifyBlock(),
-          Overview(),
-          Fee(),
-          Log(),
-        ],
-      ),
+    return const Column(
+      children: [
+        UserTopBlock(),
+        VerifyBlock(),
+        Overview(),
+        Fee(),
+        Log(),
+      ],
     );
   }
 }
