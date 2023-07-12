@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/models/user_model.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 
-class HomeTop extends StatelessWidget {
+class HomeTop extends ConsumerWidget {
   const HomeTop({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final user = ref.watch(userProvider);
+
     if (context.md) {
       return Column(
         children: [
           Image.asset("assets/images/top-banner.png"),
           const SizedBox(height: 32),
-          _buildText(context)
+          _buildText(context, user)
         ],
       );
     }
@@ -28,11 +33,11 @@ class HomeTop extends StatelessWidget {
           alignment: Alignment.centerRight,
         ),
       ),
-      child: _buildText(context),
+      child: _buildText(context, user),
     );
   }
 
-  _buildText(BuildContext context) {
+  _buildText(BuildContext context, UserModel? user) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: context.responsive(

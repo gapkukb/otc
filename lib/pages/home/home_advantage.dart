@@ -46,7 +46,7 @@ class HomeAdvantage extends StatelessWidget {
               const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             crossAxisCount: 4,
             height: 420,
-            crossAxisSpacing: 32,
+            // crossAxisSpacing: 32,
           ),
           itemBuilder: (context, index) {
             final item = datalist[index];

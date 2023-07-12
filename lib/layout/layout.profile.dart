@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/pages/user/sidebar.data.dart';
+import 'package:otc/theme/text_theme.dart';
 
-class LayoutProfile extends StatefulWidget {
+class LayoutProfile extends ConsumerStatefulWidget {
   final String userName;
 
   const LayoutProfile({
@@ -9,39 +13,75 @@ class LayoutProfile extends StatefulWidget {
   });
 
   @override
-  State<LayoutProfile> createState() => _LayoutProfileState();
+  ConsumerState<LayoutProfile> createState() => _LayoutProfileState();
 }
 
-class _LayoutProfileState extends State<LayoutProfile> {
+class _LayoutProfileState extends ConsumerState<LayoutProfile> {
   @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      height: 40,
-      shape: const StadiumBorder(),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 32,
-            child: CircleAvatar(
-              foregroundImage: AssetImage(
-                'assets/images/efc12c8f9b0b13c844c7d6086dc4d1d5.jpg',
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 60),
-            child: Text(
-              widget.userName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(width: 8),
-          const Icon(Icons.keyboard_arrow_down_outlined)
-        ],
+  Widget build(context) {
+    return MenuAnchor(
+      // alignmentOffset: const Offset(10, 10),
+      style: const MenuStyle(
+        alignment: Alignment.bottomRight,
       ),
-      onPressed: () {},
+
+      menuChildren: userNavsList.map((item) {
+        return MenuItemButton(
+          style: MenuItemButton.styleFrom(
+            fixedSize: const Size.fromWidth(180.0),
+          ),
+          child: Text(
+            item['label'],
+            style: Font.small,
+          ),
+          onPressed: () {
+            context.go(item['path']);
+          },
+        );
+      }).toList()
+        ..add(MenuItemButton(
+          style: MenuItemButton.styleFrom(
+            fixedSize: const Size.fromWidth(180.0),
+          ),
+          child: const Text("注销", style: Font.small),
+          onPressed: () {},
+        )),
+      builder: (context, controller, child) {
+        return MaterialButton(
+          height: 40,
+          shape: const StadiumBorder(),
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 32,
+                child: CircleAvatar(
+                  foregroundImage: AssetImage(
+                    'assets/images/efc12c8f9b0b13c844c7d6086dc4d1d5.jpg',
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 60),
+                child: Text(
+                  widget.userName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.keyboard_arrow_down_outlined)
+            ],
+          ),
+          onPressed: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
     );
   }
 }

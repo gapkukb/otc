@@ -47,6 +47,7 @@ class HomeBizPlan extends StatelessWidget {
     String description,
   ) {
     return Card(
+      elevation: 10,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
         child: Column(
@@ -170,6 +171,7 @@ class _HomeBizPlanSwiperItemState extends State<HomeBizPlanSwiperItem> {
       onEnter: _switch,
       onExit: _switch,
       child: Card(
+        elevation: 4,
         color: isActive ? const Color(0xff97B2F9) : Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),

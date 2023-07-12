@@ -3,11 +3,12 @@ library apis;
 import 'package:dio/dio.dart';
 import 'package:otc/global/global.dart';
 import '../http/http.dart';
+import '../models/user_model.dart';
 
-part './app_api.dart';
-part './user_api.dart';
-part './security_api.dart';
-part './wallet.api.dart';
+part 'app.api.dart';
+part 'user.api.dart';
+part 'security.api.dart';
+part 'wallet.api.dart';
 
 const duration = Duration(seconds: 30);
 
