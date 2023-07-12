@@ -22,9 +22,6 @@ class _HomeState extends State<Home> {
       children: const [
         HomeTop(),
         HomeMarqueer(),
-        SizedBox(
-          height: 58,
-        ),
         SizedBox(height: 16),
         HomeCarousel(),
         SizedBox(height: 56),
@@ -37,10 +34,9 @@ class _HomeState extends State<Home> {
         HomeMarket(),
         SizedBox(height: 16),
         HomeBizPlan(),
-        SizedBox(height: 96),
+        SizedBox(height: 185),
         HomeServices(),
-        SizedBox(height: 96),
-        SizedBox(height: 16),
+        SizedBox(height: 196),
         HomeAdvantage(),
       ],
     );

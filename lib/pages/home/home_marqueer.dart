@@ -1,4 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:marqueer/marqueer.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -21,18 +23,19 @@ class _HomeMarqueerState extends State<HomeMarqueer> {
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: Marqueer(
-              pps: 60,
-              direction: MarqueerDirection.rtl,
-              restartAfterInteractionDuration: const Duration(seconds: 6),
-              restartAfterInteraction: false,
-              infinity: false,
-              autoStart: true,
-              child: Text(
-                List.generate(
-                        1000, (index) => "jjjjjjjjjjjjjjjjjjjfdasfsdaffdf")
-                    .join(""),
-                style: const TextStyle(height: 1.5),
+            child: CarouselSlider.builder(
+              disableGesture: true,
+              options: CarouselOptions(
+                autoPlay: true,
+                scrollDirection: Axis.vertical,
+                viewportFraction: 1,
+                scrollPhysics: const NeverScrollableScrollPhysics(),
+              ),
+              itemCount: 15,
+              itemBuilder: (context, itemIndex, pageViewIndex) => Container(
+                // height: 30,
+                child: Text(
+                    "测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字"),
               ),
             ),
           ),

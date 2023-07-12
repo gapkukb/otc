@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 
 class HomeAdvantage extends StatelessWidget {
@@ -28,58 +30,66 @@ class HomeAdvantage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: context.responsive(
-        Axis.vertical,
-        md: Axis.horizontal,
-      ),
-      children: datalist.map((item) {
-        final _item = newItem(
-          item['imageName']!,
-          item['title']!,
-          item['subTitle']!,
-        );
-        return context.responsive(
-          _item,
-          md: Flexible(child: _item),
-        );
-      }).toList(),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          "选择XXX的理由",
+          style: Font.x6largeBold,
+        ),
+        const SizedBox(height: 96),
+        GridView.builder(
+          itemCount: datalist.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+            crossAxisCount: 4,
+            height: 420,
+            crossAxisSpacing: 32,
+          ),
+          itemBuilder: (context, index) {
+            final item = datalist[index];
+            return newItem(item);
+          },
+        ),
+      ],
     );
   }
 
-  Widget newItem(String imageName, String title, String subTitle) {
+  Widget newItem(dynamic item) {
     return Card(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 24,
-              horizontal: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  subTitle,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+      elevation: 6,
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.bottomCenter,
+            image: AssetImage(
+              "assets/images/${item['imageName']}",
             ),
           ),
-          const SizedBox(height: 88),
-          Image.asset("assets/images/$imageName"),
-        ],
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 24,
+          horizontal: 16,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item['title'],
+              style: Font.x4largeBold,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              item['subTitle'],
+              style: const TextStyle(
+                fontSize: 22,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

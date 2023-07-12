@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 class HomeBizPlan extends StatelessWidget {
   const HomeBizPlan({super.key});
@@ -8,13 +10,11 @@ class HomeBizPlan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 148),
         const Text(
-          "XXXXXX\n做市商扶持计划",
+          "XXXXXX做市商扶持计划",
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 40,
-          ),
+          style: Font.x6largeBold,
         ),
         const SizedBox(height: 12),
         const Text(
@@ -27,13 +27,12 @@ class HomeBizPlan extends StatelessWidget {
         const SizedBox(height: 48),
         SizedBox(
           height: 48,
-          child: FilledButton.icon(
+          child: UiButton(
+            shape: UiButtonShape.rounded,
             onPressed: () {},
-            icon: const Text("加入商家联盟"),
-            label: const Icon(
-              Icons.keyboard_arrow_right,
-              fill: 0,
-            ),
+            iconData: Icons.keyboard_arrow_right,
+            label: "加入商家联盟",
+            iconOnRight: true,
           ),
         ),
         const SizedBox(height: 96),
@@ -117,18 +116,98 @@ class HomeBizPlan extends StatelessWidget {
       child: Swiper(
         itemBuilder: (context, index) {
           final item = items[index];
-          return swiperItem(
-            item['icon'],
-            item['title'],
-            item['description'],
+          return HomeBizPlanSwiperItem(
+            icon: item['icon'],
+            title: item['title'],
+            description: item['description'],
           );
         },
+
         itemCount: 3,
+        // 区分pc 移动
+        viewportFraction: 0.33333,
+        physics: const NeverScrollableScrollPhysics(),
         pagination: const SwiperPagination(
           builder: RectSwiperPaginationBuilder(
             activeColor: Color(0xff6E2DFA),
             size: Size(54, 6),
             color: Color(0xffEAEAEA),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeBizPlanSwiperItem extends StatefulWidget {
+  final IconData icon;
+  final String title;
+  final String description;
+
+  const HomeBizPlanSwiperItem({
+    super.key,
+    required this.icon,
+    required this.description,
+    required this.title,
+  });
+
+  @override
+  State<HomeBizPlanSwiperItem> createState() => _HomeBizPlanSwiperItemState();
+}
+
+class _HomeBizPlanSwiperItemState extends State<HomeBizPlanSwiperItem> {
+  bool isActive = false;
+
+  _switch(PointerEvent event) {
+    setState(() {
+      isActive = !isActive;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: _switch,
+      onExit: _switch,
+      child: Card(
+        color: isActive ? const Color(0xff97B2F9) : Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  // color: Colors.white,
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.grey,
+                  ),
+                ),
+                child: Icon(
+                  widget.icon,
+                  size: 44,
+                ),
+              ),
+              Column(
+                children: [
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    widget.description,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/chart/chart.config.dart';
 import 'package:otc/components/chart/chart.line.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 class HomeMarket extends StatelessWidget {
   const HomeMarket({super.key});
@@ -53,10 +54,12 @@ class HomeMarket extends StatelessWidget {
             ),
           ),
         ),
-        DataCell(IconButton(
-          icon: const Icon(Icons.keyboard_arrow_right_outlined),
-          onPressed: () {},
-        )),
+        DataCell(
+          const Align(
+            alignment: Alignment.centerRight,
+            child: Icon(Icons.keyboard_arrow_right_outlined),
+          ),
+        ),
       ],
     );
   }
@@ -65,7 +68,7 @@ class HomeMarket extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 10,
+      elevation: 6,
       shadowColor: Colors.black,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -80,8 +83,8 @@ class HomeMarket extends StatelessWidget {
                 DataColumn2(label: Text('币种')),
                 DataColumn2(label: Text('成交均价')),
                 DataColumn2(label: Text('24H涨跌')),
-                DataColumn2(label: Text('走势'), fixedWidth: 120),
-                DataColumn2(label: Text(''), fixedWidth: 70),
+                DataColumn2(label: Text('走势')),
+                DataColumn2(label: Text(''), fixedWidth: 80.0),
               ],
               rows: [
                 row(),
@@ -91,11 +94,10 @@ class HomeMarket extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              minimumSize: const Size(double.minPositive, 48),
-            ),
+          UiButton(
             onPressed: () {},
+            shape: UiButtonShape.rounded,
+            size: UiButtonSize.medium,
             child: const MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Text(

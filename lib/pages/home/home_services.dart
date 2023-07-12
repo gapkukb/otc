@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class HomeServices extends StatefulWidget {
   const HomeServices({super.key});
@@ -13,13 +14,11 @@ class _HomeServicesState extends State<HomeServices> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const Text(
           "核心服务",
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Font.x6largeBold,
         ),
         const Text(
           "你可以选择丰富的交易方式",
@@ -27,10 +26,17 @@ class _HomeServicesState extends State<HomeServices> {
             fontSize: 22,
           ),
         ),
-        const SizedBox(height: 48),
-        Image.asset("assets/images/image 5.png"),
-        const SizedBox(height: 48),
-        collection()
+        const SizedBox(height: 96),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(child: collection()),
+            Image.asset(
+              "assets/images/image 5.png",
+              cacheWidth: 505,
+            )
+          ],
+        ),
       ],
     );
   }
@@ -56,10 +62,13 @@ class _HomeServicesState extends State<HomeServices> {
   ];
   item() {}
   collection() {
-    int index = 0;
-    return Column(
-      children: items.map((item) {
-        index++;
+    return ListView.separated(
+      itemCount: 4,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      separatorBuilder: (context, index) => const SizedBox(height: 48),
+      itemBuilder: (context, index) {
+        final item = items[index];
         return ListTile(
           isThreeLine: true,
           leading: Container(
@@ -71,7 +80,7 @@ class _HomeServicesState extends State<HomeServices> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(100)),
             child: Text(
-              index.toString().padLeft(2, '0'),
+              (index + 1).toString().padLeft(2, '0'),
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
@@ -97,7 +106,7 @@ class _HomeServicesState extends State<HomeServices> {
             ),
           ),
         );
-      }).toList(),
+      },
     );
   }
 }

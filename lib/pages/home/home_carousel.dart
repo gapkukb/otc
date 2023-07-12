@@ -11,9 +11,8 @@ class HomeCarousel extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 4,
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-        height: 148.0,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: 300 / 148,
         crossAxisCount: 4,
         crossAxisSpacing: 16.0,
       ),

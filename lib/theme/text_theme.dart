@@ -97,7 +97,7 @@ class Font {
     fontWeight: FontWeight.bold,
   );
 
-  /// fontSize: 36,fontWeight: FontWeight.bold
+  /// fontSize: 40,fontWeight: FontWeight.bold
   static const x5largeBold = TextStyle(
     fontSize: 36,
     fontWeight: FontWeight.bold,
