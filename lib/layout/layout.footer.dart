@@ -10,6 +10,10 @@ class LayoutFooter extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        const Divider(
+          height: 1,
+          thickness: 0.5,
+        ),
         our(),
         const SizedBox(width: 16),
         Expanded(

@@ -23,24 +23,21 @@ void main() async {
   ]);
   usePathUrlStrategy();
   runApp(
-    const ProviderScope(
-      child: App(),
-    ),
+    const ProviderScope(child: App()),
   );
 }
 
-class App extends ConsumerStatefulWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
-  ConsumerState<App> createState() => _AppState();
+  State<App> createState() => _AppState();
 }
 
-class _AppState extends ConsumerState<App> {
+class _AppState extends State<App> {
   @override
   void initState() {
     theme.addListener(themeHandle);
-
     super.initState();
   }
 
@@ -51,9 +48,7 @@ class _AppState extends ConsumerState<App> {
   }
 
   themeHandle() {
-    if (mounted) {
-      setState(() {});
-    }
+    if (mounted) setState(() {});
   }
 
   @override

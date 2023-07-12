@@ -1,9 +1,11 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nil/nil.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/router.keys.dart';
 import 'package:otc/theme/padding.dart';
@@ -77,7 +79,7 @@ final List<_MenuDatas> _menus = [
   ),
 ];
 
-class LayoutHeader extends StatelessWidget implements PreferredSizeWidget {
+class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
   final AppBar appBar;
 
   const LayoutHeader({
@@ -86,7 +88,8 @@ class LayoutHeader extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final user = ref.watch(userProvider);
     return AppBar(
       primary: false,
       leading: Padding(
@@ -138,15 +141,15 @@ class LayoutHeader extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: _buildActions(),
+      actions: _buildActions(false),
     );
   }
 
   @override
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
 
-  List<Widget> _buildActions() {
-    if (true) {
+  List<Widget> _buildActions(bool isAuthed) {
+    if (isAuthed) {
       return [
         IconButton(
           icon: const Icon(Icons.credit_card_outlined),
@@ -161,7 +164,7 @@ class LayoutHeader extends StatelessWidget implements PreferredSizeWidget {
           },
         ),
         const NoticeAppbar(),
-        LayoutProfile(userName: "我是爸爸"),
+        LayoutProfile(userName: "user"),
       ];
     }
 
