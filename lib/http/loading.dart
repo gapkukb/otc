@@ -18,7 +18,7 @@ class LoadingInterceptor extends Interceptor {
 
   @override
   void onError(err, handler) {
-    if (loadingCounter-- == 0) {
+    if (--loadingCounter == 0) {
       close();
     }
 
@@ -27,7 +27,7 @@ class LoadingInterceptor extends Interceptor {
 
   @override
   void onResponse(response, handler) {
-    if (loadingCounter-- == 0) {
+    if (--loadingCounter == 0) {
       close();
     }
     super.onResponse(response, handler);

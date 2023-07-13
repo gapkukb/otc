@@ -56,8 +56,6 @@ class ExceptionInterceptor extends InterceptorsWrapper {
       Modal.showText(text: msg);
     }
 
-    global.logger.e(err);
-
     super.onError(err, handler);
   }
 }

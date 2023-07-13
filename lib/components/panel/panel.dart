@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class Panel extends StatelessWidget {
-  static const style = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-  );
-
   final String? title;
   final Widget? titleWidget;
   final Widget child;
@@ -35,7 +31,7 @@ class Panel extends StatelessWidget {
                 ),
                 child: Text(
                   title!,
-                  style: style,
+                  style: Font.largeBold,
                 ),
               ),
           const Divider(
@@ -44,7 +40,7 @@ class Panel extends StatelessWidget {
             // color: Colors.grey.shade100,
           ),
           child,
-          if (footer != null) footer!,
+          // if (footer != null) footer!,
         ],
       ),
     );

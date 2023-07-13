@@ -27,10 +27,13 @@ class _User {
   final modifyNickname = post("/customer/modify/nickname");
 
   /// 申请成为maker
-  final applyMaker = get("/customer/maker/apply");
+  final applyMaker = post("/customer/maker/apply");
 
-  /// 上传头像
-  final uploadAvatar = get("/upload/avatar");
+  /// 获取kyc信息
+  final getKyc = post("/customer/kyc");
+
+  /// 获取otc配置
+  final getOtcConfig = get("/otc/config");
 }
 
 final userApi = _User();

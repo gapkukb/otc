@@ -5,6 +5,8 @@ import 'package:bot_toast/src/toast_widget/animation.dart'
     show loadingAnimation;
 import 'package:flutter/material.dart';
 import 'package:otc/router/router.keys.dart';
+import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
 
 part './modal_bottom_sheet_item.dart';
 
@@ -15,7 +17,36 @@ class Modal {
   static const showCustomNotification = BotToast.showCustomNotification;
   static const showCustomText = BotToast.showCustomText;
   static const showEnhancedWidget = BotToast.showEnhancedWidget;
-  static const showLoading = BotToast.showLoading;
+  static void Function() showLoading([String? message]) {
+    if (message == null) {
+      return BotToast.showLoading();
+    }
+    return BotToast.showLoading(
+      wrapToastAnimation: (controller, cancelFunc, widget) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.black54,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          padding: Pads.sm,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                message,
+                style: Font.miniGrey,
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   static const showNotification = BotToast.showNotification;
   static const showSimpleNotification = BotToast.showSimpleNotification;
   static const showText = BotToast.showText;

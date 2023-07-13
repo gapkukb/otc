@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/pages/home/home.dart';
 import 'package:otc/pages/notice/notice_window.dart';
+import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
 import 'package:otc/pages/user/setting/setting.dart';
@@ -35,6 +36,11 @@ final List<RouteBase> routes = [
             name: RouteName.setting,
             path: '/setting',
             builder: (context, state) => const UserSetting(),
+          ),
+          GoRoute(
+            name: RouteName.auth,
+            path: '/auth',
+            builder: (context, state) => const UserAuth(),
           ),
         ],
       ),
