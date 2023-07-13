@@ -7,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/http_response_model..t.dart';
-import 'package:otc/models/user_model.dart';
 import 'package:otc/enums/http.datatype.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.keys.dart';
@@ -38,6 +37,11 @@ class Http {
 
   Http([BaseOptions? options]) {
     dio = Dio(options);
+    dio.interceptors
+      ..add(LogInterceptor())
+      ..add(ExceptionInterceptor())
+      ..add(DataTypeInterceptor())
+      ..add(LoadingInterceptor());
   }
 
   Request<T> Function<T>(String, [ModelFactory<T>?, HttpOptions?]) createMethod(

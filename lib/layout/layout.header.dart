@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nil/nil.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
+import 'package:otc/providers/auth.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/router/router.keys.dart';
@@ -89,7 +90,8 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(context, ref) {
-    final user = ref.watch(userProvider);
+    final isAuthed = ref.watch(authProvider);
+
     return AppBar(
       primary: false,
       leading: Padding(
@@ -141,7 +143,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: _buildActions(false),
+      actions: _buildActions(isAuthed),
     );
   }
 

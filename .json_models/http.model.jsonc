@@ -1,8 +1,0 @@
-{
-  "__className": "HttpResponseModel<T>",
-  "whether": "",
-  "code": 0,
-  "message": "",
-  "data": "$T",
-  "success": true
-}

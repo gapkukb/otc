@@ -3,8 +3,7 @@ library apis;
 import 'package:dio/dio.dart';
 import 'package:otc/global/global.dart';
 import '../http/http.dart';
-import '../models/user_model.dart';
-
+import '../models/user/user.model.dart';
 part 'app.api.dart';
 part 'user.api.dart';
 part 'security.api.dart';

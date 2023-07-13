@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:sidebarx/sidebarx.dart';
 
 class LegalTerms extends StatefulWidget {
   const LegalTerms({super.key});
@@ -10,12 +9,9 @@ class LegalTerms extends StatefulWidget {
 }
 
 class _LegalTermsState extends State<LegalTerms> {
-  late SidebarXController controller;
-
   @override
   void initState() {
     super.initState();
-    controller = SidebarXController(selectedIndex: 0);
   }
 
   @override
@@ -26,14 +22,6 @@ class _LegalTermsState extends State<LegalTerms> {
       ),
       body: Row(
         children: [
-          SidebarX(
-            controller: controller,
-            extendedTheme: SidebarXTheme(width: 300),
-            items: const [
-              SidebarXItem(icon: Icons.home, label: 'Home'),
-              SidebarXItem(icon: Icons.search, label: 'Search'),
-            ],
-          ),
           Expanded(
             child: Column(
               children: [

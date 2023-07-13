@@ -10,6 +10,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/theme.dart';
 
@@ -27,18 +28,19 @@ void main() async {
   );
 }
 
-class App extends StatefulWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  State<App> createState() => _AppState();
+  ConsumerState<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends ConsumerState<App> {
   @override
   void initState() {
-    theme.addListener(themeHandle);
     super.initState();
+    ref.read(userProvider.notifier).updateUser();
+    theme.addListener(themeHandle);
   }
 
   @override

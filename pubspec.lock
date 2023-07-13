@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  autoscale_tabbarview:
-    dependency: "direct main"
-    description:
-      name: autoscale_tabbarview
-      sha256: "29449e8876185acc4763cc6cf26ffcc3f842f42f1502d5964c6d85f489ee1bc4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -101,18 +93,18 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "5e1929ad37d48bd382b124266cb8e521de5548d406a45a5ae6656c13dab73e37"
+      sha256: "10c6bcdbf9d049a0b666702cf1cee4ddfdc38f02a19d35ae392863b47519848b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "2.4.6"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
-      sha256: "6d6ee4276b1c5f34f21fdf39425202712d2be82019983d52f351c94aafbc2c41"
+      sha256: "30859c90e9ddaccc484f56303931f477b1f1ba2bab74aa32ed5d6ce15870f8cf"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.10"
+    version: "7.2.8"
   built_collection:
     dependency: transitive
     description:
@@ -501,6 +493,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      sha256: "2df89855fe181baae3b6d714dc3c4317acf4fccd495a6f36e5e00f24144c6c3b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  freezed_annotation:
+    dependency: "direct main"
+    description:
+      name: freezed_annotation
+      sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -533,14 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-  hover_menu:
-    dependency: "direct main"
-    description:
-      name: hover_menu
-      sha256: "4a28a3fe6de92b4cefbfd0935c5442441125291760ae4a7b568628554c6c0237"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1+3"
   html:
     dependency: transitive
     description:
@@ -694,7 +694,7 @@ packages:
     source: hosted
     version: "0.6.7"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
@@ -702,21 +702,13 @@ packages:
     source: hosted
     version: "4.8.1"
   json_serializable:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: "61a60716544392a82726dd0fa1dd6f5f1fd32aec66422b6e229e7b90d52325c4"
+      sha256: aa1f5a8912615733e0fdc7a02af03308933c93235bdc8d50d0b0c8a8ccb0b969
       url: "https://pub.dev"
     source: hosted
-    version: "6.7.0"
-  json_to_model:
-    dependency: "direct main"
-    description:
-      name: json_to_model
-      sha256: a1e2628df8e9d2b32c4d473a5e923648bed7f267be021a0d3148f4d056d1a5b6
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.4"
+    version: "6.7.1"
   lints:
     dependency: transitive
     description:
@@ -745,10 +737,10 @@ packages:
     dependency: transitive
     description:
       name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
+      sha256: c0bbfe94d46aedf9b8b3e695cf3bd48c8e14b35e3b2c639e0aa7755d589ba946
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.1.0"
   marqueer:
     dependency: "direct main"
     description:
@@ -1045,27 +1037,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  sidebarx:
-    dependency: "direct main"
-    description:
-      name: sidebarx
-      sha256: "871bc09510a6e37e0bb554186f3a2f0082d0aa7ad01c93f93448a025416f6e31"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.16.0"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.99"
-  slider_captcha:
-    dependency: "direct main"
-    description:
-      name: slider_captcha
-      sha256: b3ee90c1d9f35df3085119c5741f31d23b22aa39ee896ee7c37f58396abcefc2
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   source_gen:
     dependency: transitive
     description:
@@ -1078,10 +1054,10 @@ packages:
     dependency: transitive
     description:
       name: source_helper
-      sha256: "3b67aade1d52416149c633ba1bb36df44d97c6b51830c2198e934e3fca87ca1f"
+      sha256: "6adebc0006c37dd63fe05bca0a929b99f06402fc95aa35bf36d67f5c06de01fd"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.3"
+    version: "1.3.4"
   source_span:
     dependency: transitive
     description:
@@ -1130,22 +1106,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      sha256: "8db8f55c77f56968681447d3837c10f27a9e861e238a898fda116c7531def979"
-      url: "https://pub.dev"
-    source: hosted
-    version: "21.2.10"
-  syncfusion_flutter_gauges:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_gauges
-      sha256: "1745eb7cede9d5a67c5c13b706b821a33fead08d45d2354bc80c73a190ae61ad"
-      url: "https://pub.dev"
-    source: hosted
-    version: "21.2.10"
   term_glyph:
     dependency: transitive
     description:
@@ -1419,5 +1379,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.0.3 <=3.7.12"
+  dart: ">=3.0.3 <4.0.0"
   flutter: ">=3.10.0"
