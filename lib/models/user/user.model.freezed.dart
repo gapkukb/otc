@@ -20,7 +20,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ mixin _$UserModel {
   String? get lockedUntil => throw _privateConstructorUsedError;
   bool get locked => throw _privateConstructorUsedError;
   String get createdTime => throw _privateConstructorUsedError;
-  bool get maker => throw _privateConstructorUsedError;
+  bool? get maker => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +53,7 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String username,
       String? email,
       String? phone,
@@ -72,7 +72,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? lockedUntil,
       bool locked,
       String createdTime,
-      bool maker});
+      bool? maker});
 }
 
 /// @nodoc
@@ -107,13 +107,13 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? lockedUntil = freezed,
     Object? locked = null,
     Object? createdTime = null,
-    Object? maker = null,
+    Object? maker = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -186,10 +186,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      maker: null == maker
+      maker: freezed == maker
           ? _value.maker
           : maker // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ) as $Val);
   }
 }
@@ -202,7 +202,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String username,
       String? email,
       String? phone,
@@ -221,7 +221,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String? lockedUntil,
       bool locked,
       String createdTime,
-      bool maker});
+      bool? maker});
 }
 
 /// @nodoc
@@ -254,13 +254,13 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? lockedUntil = freezed,
     Object? locked = null,
     Object? createdTime = null,
-    Object? maker = null,
+    Object? maker = freezed,
   }) {
     return _then(_$_UserModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -333,10 +333,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      maker: null == maker
+      maker: freezed == maker
           ? _value.maker
           : maker // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -370,7 +370,7 @@ class _$_UserModel implements _UserModel {
       _$$_UserModelFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String username;
   @override
@@ -408,7 +408,7 @@ class _$_UserModel implements _UserModel {
   @override
   final String createdTime;
   @override
-  final bool maker;
+  final bool? maker;
 
   @override
   String toString() {
@@ -495,7 +495,7 @@ class _$_UserModel implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {required final int id,
+      {required final String id,
       required final String username,
       required final String? email,
       required final String? phone,
@@ -514,13 +514,13 @@ abstract class _UserModel implements UserModel {
       required final String? lockedUntil,
       required final bool locked,
       required final String createdTime,
-      required final bool maker}) = _$_UserModel;
+      required final bool? maker}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get username;
   @override
@@ -558,7 +558,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get createdTime;
   @override
-  bool get maker;
+  bool? get maker;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

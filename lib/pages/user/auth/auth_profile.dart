@@ -19,16 +19,16 @@ class AuthProfile extends ConsumerWidget {
           children: [
             SizedBox(height: 24),
             Cell(
-              title: "姓名",
-              subtitle: "姓名",
+              titleText: "姓名",
+              trailingText: "姓名",
             ),
             Cell(
-              title: "年龄",
-              subtitle: "姓名",
+              titleText: "年龄",
+              trailingText: "姓名",
             ),
             Cell(
-              title: "身份证",
-              subtitle: "姓名",
+              titleText: "身份证",
+              trailingText: "姓名",
             ),
           ],
         ),

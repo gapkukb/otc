@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/components/avatar/avatar.dart';
+import 'package:otc/components/cell/cell.dart';
+import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
+import 'package:otc/providers/user.provider.dart';
+import 'package:otc/router/route_name.dart';
+import 'package:otc/theme/text_theme.dart';
 
-class UserTopBlock extends StatelessWidget {
+class UserTopBlock extends ConsumerWidget {
   const UserTopBlock({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final user = ref.read(userProvider);
     return Row(
       children: [
         Expanded(
-          child: _buildBaseInfo(),
+          child: _buildBaseInfo(user),
         ),
         SizedBox(
           width: 300,
@@ -17,10 +26,13 @@ class UserTopBlock extends StatelessWidget {
           child: Card(
             child: Column(
               children: [
-                const ListTile(
+                ListTile(
                   // isThreeLine: true,
-                  title: Text("安全等级"),
-                  trailing: Icon(Icons.keyboard_arrow_right),
+                  title: const Text("安全等级"),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
+                  onTap: () {
+                    context.goNamed(RouteName.security);
+                  },
                 ),
                 const Divider(
                   height: 2,
@@ -41,7 +53,7 @@ class UserTopBlock extends StatelessWidget {
     );
   }
 
-  Card _buildBaseInfo() {
+  Card _buildBaseInfo(UserModel user) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -56,20 +68,15 @@ class UserTopBlock extends StatelessWidget {
               visualDensity: const VisualDensity(vertical: 3),
               contentPadding: EdgeInsets.zero,
               minVerticalPadding: 0,
-              leading: const CircleAvatar(
-                radius: 72 / 2,
-                backgroundColor: Colors.amber,
-                backgroundImage: NetworkImage(
-                  "https://th.bing.com/th?id=ORMS.a8f9d726d3d65bdab5013193bd8ef288&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0",
-                ),
+              leading: Avatar(
+                avatar: user.avatar,
+                radius: 72,
               ),
               title: Row(
                 children: [
-                  const Text(
-                    "狗东西SJ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Text(
+                    user.nickname,
+                    style: Font.mediumBold,
                   ),
                   IconButton(
                     icon: const Icon(Icons.settings_outlined),
@@ -78,26 +85,20 @@ class UserTopBlock extends StatelessWidget {
                   )
                 ],
               ),
-              subtitle: const Text(
-                "用户ID：ASD123456",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+              subtitle: Text(
+                "用户ID：${user.username}",
+                style: Font.smallGrey,
               ),
             ),
             const SizedBox(height: 24),
             Text(
-              "上次登录时间：2022-05-11 18:22:01 IP: 180.232.123.107",
-              style: TextStyle(
-                color: Colors.grey,
-              ),
+              "上次登录时间\u0020\u0020\u0020\u0020IP: ",
+              style: Font.smallGrey,
             ),
             const SizedBox(height: 16),
             Text(
-              "上次登录时间：2022-05-11 18:22:01 IP: 180.232.123.107",
-              style: TextStyle(
-                color: Colors.grey,
-              ),
+              "账户创建时间：${user.createdTime}\u0020\u0020\u0020\u0020IP: ${user.regIp}",
+              style: Font.smallGrey,
             ),
           ],
         ),

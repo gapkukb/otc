@@ -132,7 +132,7 @@ class HttpOptions extends RequestOptions implements InnerOptions {
         data: options.data,
         onReceiveProgress: options.onReceiveProgress ?? onReceiveProgress,
         onSendProgress: options.onSendProgress ?? onSendProgress,
-        path: options.path ?? path,
+        path: options.path.isEmpty ? path : options.path,
         queryParameters: options.queryParameters ?? queryParameters,
         silent: options.silent ?? silent,
         retry: options.retry ?? retry,
@@ -148,6 +148,9 @@ class HttpOptions extends RequestOptions implements InnerOptions {
 String replacePathParams(String path, Map<String, String>? mapper) {
   if (mapper == null) return path;
   return path.replaceAllMapped(pathReplacer, (match) {
-    return mapper[match.input]?.toString() ?? match.input;
+    final matched = match.group(0)!;
+    final subMatched = matched.substring(1, matched.length - 1);
+
+    return mapper[subMatched]?.toString() ?? matched;
   });
 }

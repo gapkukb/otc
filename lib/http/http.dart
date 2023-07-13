@@ -85,6 +85,7 @@ class Request<T> {
     if (data != null) {
       $data.addAll(data);
     }
+
     return dio
         .request(
       replacePathParams(

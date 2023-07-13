@@ -3,6 +3,7 @@ library apis;
 import 'package:dio/dio.dart';
 import 'package:otc/constants/base_url.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/models/log/log.model.dart';
 import '../http/http.dart';
 import '../models/user/user.model.dart';
 import '../enums/http.datatype.dart';

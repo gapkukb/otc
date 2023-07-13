@@ -7,7 +7,7 @@ part of 'user.model.dart';
 // **************************************************************************
 
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
-      id: json['id'] as int,
+      id: json['id'] as String,
       username: json['username'] as String,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
@@ -26,7 +26,7 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       lockedUntil: json['lockedUntil'] as String?,
       locked: json['locked'] as bool,
       createdTime: json['createdTime'] as String,
-      maker: json['maker'] as bool,
+      maker: json['maker'] as bool?,
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>

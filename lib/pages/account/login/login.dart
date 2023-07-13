@@ -137,7 +137,7 @@ class _LoginState extends ConsumerState<Login>
             username: _formState['username'],
             password: _formState['password'],
           );
-      GoRouter.of(navigatorKey.currentContext!).pop();
+      if (mounted) Navigator.of(context).maybePop();
       GoRouter.of(navigatorKey.currentContext!).replace('/');
     }
   }

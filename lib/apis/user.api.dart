@@ -34,6 +34,9 @@ class _User {
 
   /// 获取otc配置
   final getOtcConfig = get("/otc/config");
+
+  /// 查询最后N条登录记录
+  final getUserLog = get("/customer/login-log/last/{num}");
 }
 
 final userApi = _User();

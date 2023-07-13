@@ -8,7 +8,7 @@ import 'package:otc/models/user/user.model.dart';
 
 final cachedUser = global.prefs.getString(global.keys.user);
 const faker = UserModel(
-  id: -1,
+  id: "",
   username: "",
   email: "",
   phone: "",

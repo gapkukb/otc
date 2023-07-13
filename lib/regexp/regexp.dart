@@ -1,1 +1,1 @@
-final pathReplacer = RegExp(r"({\w+})");
+final pathReplacer = RegExp(r"{\w+}");

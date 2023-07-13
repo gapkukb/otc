@@ -5,7 +5,7 @@ part 'user.model.g.dart';
 @freezed
 class UserModel with _$UserModel {
   const factory UserModel({
-    required int id,
+    required String id,
     required String username,
     required String? email,
     required String? phone,
@@ -24,7 +24,7 @@ class UserModel with _$UserModel {
     required String? lockedUntil,
     required bool locked,
     required String createdTime,
-    required bool maker,
+    required bool? maker,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, Object?> json) =>

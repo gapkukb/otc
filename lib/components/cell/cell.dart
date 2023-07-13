@@ -1,46 +1,67 @@
 import 'package:flutter/material.dart';
 
 class Cell extends StatelessWidget {
-  final Widget? titleWidget;
-  final String? title;
-  final TextStyle? titleStyle;
-  final Widget? subTitleWidget;
-  final String? subtitle;
-  final TextStyle? subtitleStyle;
-  final EdgeInsets padding;
+  final Widget? title;
+  final String? titleText;
+  final TextStyle? titleTextStyle;
+  final Widget? trailing;
+  final String? trailingText;
+  final TextStyle? trailingTextStyle;
+  final EdgeInsets? padding;
+  final bool evenly;
+  final double? width;
+  final double? height;
+  final Color? backgroundColor;
+  final BoxBorder? border;
 
   const Cell({
     super.key,
+    this.titleText,
+    this.trailingText,
     this.title,
-    this.subtitle,
-    this.titleWidget,
-    this.subTitleWidget,
-    this.titleStyle,
-    this.subtitleStyle,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.trailing,
+    this.titleTextStyle,
+    this.trailingTextStyle,
+    this.evenly = false,
+    this.width,
+    this.height = 56,
+    this.backgroundColor,
+    this.border,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: height,
+      width: width,
       padding: padding,
+      color: backgroundColor,
+      decoration: BoxDecoration(border: border),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          titleWidget ??
-              (title == null
-                  ? const SizedBox.shrink()
-                  : Text(
-                      title!,
-                      style: titleStyle,
-                    )),
-          subTitleWidget ??
-              (subtitle == null
-                  ? const SizedBox.shrink()
-                  : Text(
-                      subtitle!,
-                      style: subtitleStyle,
-                    )),
+          Flexible(
+            fit: evenly ? FlexFit.tight : FlexFit.loose,
+            child: title ??
+                (titleText == null
+                    ? const SizedBox.shrink()
+                    : Text(
+                        titleText!,
+                        style: titleTextStyle,
+                      )),
+          ),
+          Flexible(
+            fit: evenly ? FlexFit.tight : FlexFit.loose,
+            child: trailing ??
+                (trailingText == null
+                    ? const SizedBox.shrink()
+                    : Text(
+                        trailingText!,
+                        style: trailingTextStyle,
+                      )),
+          ),
         ],
       ),
     );

@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/http/http.dart';
+import 'package:otc/models/log/log.model.dart';
 
 class Log extends StatefulWidget {
   const Log({super.key});
@@ -10,6 +15,22 @@ class Log extends StatefulWidget {
 }
 
 class _LogState extends State<Log> {
+  List<LogModel> logs = [];
+  @override
+  void initState() {
+    super.initState();
+
+    apis.user.getUserLog(null, HttpOptions(pathParams: {"num": "3"})).then(
+      (response) {
+        setState(() {
+          logs = List.from(response)
+              .map((item) => LogModel.fromJson(item))
+              .toList(); // this.logs.addAll(logs.map((log) => LogModel.fromJson(log)).toList());
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Panel(
@@ -28,32 +49,25 @@ class _LogState extends State<Log> {
             DataColumn(label: Text("状态")),
             DataColumn(label: Text("IP")),
           ],
-          rows: const [
-            DataRow(
-              cells: [
-                DataCell(Text("2022-05-15 13:13:42")),
-                DataCell(Text("Web")),
-                DataCell(Text("成功")),
-                DataCell(Text("180.232.123.107")),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text("2022-05-15 13:13:42")),
-                DataCell(Text("Web")),
-                DataCell(Text("成功")),
-                DataCell(Text("180.232.123.107")),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text("2022-05-15 13:13:42")),
-                DataCell(Text("Web")),
-                DataCell(Text("成功")),
-                DataCell(Text("180.232.123.107")),
-              ],
-            )
-          ],
+          rows: logs.map(
+            (log) {
+              return DataRow(
+                cells: [
+                  DataCell(Text(log.createdTime)),
+                  DataCell(Text(log.type)),
+                  DataCell(
+                    Text(
+                      log.logged ? "成功" : "失败",
+                      style: TextStyle(
+                        color: log.logged ? Colors.green : Colors.red,
+                      ),
+                    ),
+                  ),
+                  DataCell(Text(log.ip)),
+                ],
+              );
+            },
+          ).toList(),
         ),
       ),
     );

@@ -19,7 +19,7 @@ class UserHome extends StatefulWidget {
 class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return ListView(
       children: [
         UserTopBlock(),
         VerifyBlock(),
