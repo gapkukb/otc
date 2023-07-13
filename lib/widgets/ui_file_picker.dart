@@ -6,8 +6,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:photo_view/photo_view.dart';
 
+class UiFilePickerController extends ChangeNotifier {}
+
 class UiFilePicker extends StatefulWidget {
-  const UiFilePicker({super.key});
+  final Function(File file) onPicked;
+  const UiFilePicker({
+    super.key,
+    required this.onPicked,
+  });
 
   @override
   State<UiFilePicker> createState() => _UiFilePickerState();
@@ -61,6 +67,7 @@ class _UiFilePickerState extends State<UiFilePicker> {
           if (result != null) {
             setState(() {
               file = File(result.path);
+              widget.onPicked(file!);
             });
           }
         },

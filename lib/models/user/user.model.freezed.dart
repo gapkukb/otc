@@ -22,8 +22,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   int get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
   String get regIp => throw _privateConstructorUsedError;
   String get regServerName => throw _privateConstructorUsedError;
   String get regReferer => throw _privateConstructorUsedError;
@@ -36,10 +36,10 @@ mixin _$UserModel {
   bool get disabled => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get invitationCode => throw _privateConstructorUsedError;
-  String get lockedUntil => throw _privateConstructorUsedError;
+  String? get lockedUntil => throw _privateConstructorUsedError;
   bool get locked => throw _privateConstructorUsedError;
   String get createdTime => throw _privateConstructorUsedError;
-  bool get payPass => throw _privateConstructorUsedError;
+  bool get maker => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,8 +55,8 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {int id,
       String username,
-      String email,
-      String phone,
+      String? email,
+      String? phone,
       String regIp,
       String regServerName,
       String regReferer,
@@ -69,10 +69,10 @@ abstract class $UserModelCopyWith<$Res> {
       bool disabled,
       String type,
       String invitationCode,
-      String lockedUntil,
+      String? lockedUntil,
       bool locked,
       String createdTime,
-      bool payPass});
+      bool maker});
 }
 
 /// @nodoc
@@ -90,8 +90,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? email = null,
-    Object? phone = null,
+    Object? email = freezed,
+    Object? phone = freezed,
     Object? regIp = null,
     Object? regServerName = null,
     Object? regReferer = null,
@@ -104,10 +104,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? disabled = null,
     Object? type = null,
     Object? invitationCode = null,
-    Object? lockedUntil = null,
+    Object? lockedUntil = freezed,
     Object? locked = null,
     Object? createdTime = null,
-    Object? payPass = null,
+    Object? maker = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -118,14 +118,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
+              as String?,
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       regIp: null == regIp
           ? _value.regIp
           : regIp // ignore: cast_nullable_to_non_nullable
@@ -174,10 +174,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.invitationCode
           : invitationCode // ignore: cast_nullable_to_non_nullable
               as String,
-      lockedUntil: null == lockedUntil
+      lockedUntil: freezed == lockedUntil
           ? _value.lockedUntil
           : lockedUntil // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       locked: null == locked
           ? _value.locked
           : locked // ignore: cast_nullable_to_non_nullable
@@ -186,9 +186,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      payPass: null == payPass
-          ? _value.payPass
-          : payPass // ignore: cast_nullable_to_non_nullable
+      maker: null == maker
+          ? _value.maker
+          : maker // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -204,8 +204,8 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
   $Res call(
       {int id,
       String username,
-      String email,
-      String phone,
+      String? email,
+      String? phone,
       String regIp,
       String regServerName,
       String regReferer,
@@ -218,10 +218,10 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       bool disabled,
       String type,
       String invitationCode,
-      String lockedUntil,
+      String? lockedUntil,
       bool locked,
       String createdTime,
-      bool payPass});
+      bool maker});
 }
 
 /// @nodoc
@@ -237,8 +237,8 @@ class __$$_UserModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? email = null,
-    Object? phone = null,
+    Object? email = freezed,
+    Object? phone = freezed,
     Object? regIp = null,
     Object? regServerName = null,
     Object? regReferer = null,
@@ -251,10 +251,10 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? disabled = null,
     Object? type = null,
     Object? invitationCode = null,
-    Object? lockedUntil = null,
+    Object? lockedUntil = freezed,
     Object? locked = null,
     Object? createdTime = null,
-    Object? payPass = null,
+    Object? maker = null,
   }) {
     return _then(_$_UserModel(
       id: null == id
@@ -265,14 +265,14 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
+              as String?,
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       regIp: null == regIp
           ? _value.regIp
           : regIp // ignore: cast_nullable_to_non_nullable
@@ -321,10 +321,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.invitationCode
           : invitationCode // ignore: cast_nullable_to_non_nullable
               as String,
-      lockedUntil: null == lockedUntil
+      lockedUntil: freezed == lockedUntil
           ? _value.lockedUntil
           : lockedUntil // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       locked: null == locked
           ? _value.locked
           : locked // ignore: cast_nullable_to_non_nullable
@@ -333,9 +333,9 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      payPass: null == payPass
-          ? _value.payPass
-          : payPass // ignore: cast_nullable_to_non_nullable
+      maker: null == maker
+          ? _value.maker
+          : maker // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -364,7 +364,7 @@ class _$_UserModel implements _UserModel {
       required this.lockedUntil,
       required this.locked,
       required this.createdTime,
-      required this.payPass});
+      required this.maker});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
@@ -374,9 +374,9 @@ class _$_UserModel implements _UserModel {
   @override
   final String username;
   @override
-  final String email;
+  final String? email;
   @override
-  final String phone;
+  final String? phone;
   @override
   final String regIp;
   @override
@@ -402,17 +402,17 @@ class _$_UserModel implements _UserModel {
   @override
   final String invitationCode;
   @override
-  final String lockedUntil;
+  final String? lockedUntil;
   @override
   final bool locked;
   @override
   final String createdTime;
   @override
-  final bool payPass;
+  final bool maker;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, email: $email, phone: $phone, regIp: $regIp, regServerName: $regServerName, regReferer: $regReferer, regDevice: $regDevice, emailValid: $emailValid, idValid: $idValid, phoneValid: $phoneValid, nickname: $nickname, avatar: $avatar, disabled: $disabled, type: $type, invitationCode: $invitationCode, lockedUntil: $lockedUntil, locked: $locked, createdTime: $createdTime, payPass: $payPass)';
+    return 'UserModel(id: $id, username: $username, email: $email, phone: $phone, regIp: $regIp, regServerName: $regServerName, regReferer: $regReferer, regDevice: $regDevice, emailValid: $emailValid, idValid: $idValid, phoneValid: $phoneValid, nickname: $nickname, avatar: $avatar, disabled: $disabled, type: $type, invitationCode: $invitationCode, lockedUntil: $lockedUntil, locked: $locked, createdTime: $createdTime, maker: $maker)';
   }
 
   @override
@@ -450,7 +450,7 @@ class _$_UserModel implements _UserModel {
             (identical(other.locked, locked) || other.locked == locked) &&
             (identical(other.createdTime, createdTime) ||
                 other.createdTime == createdTime) &&
-            (identical(other.payPass, payPass) || other.payPass == payPass));
+            (identical(other.maker, maker) || other.maker == maker));
   }
 
   @JsonKey(ignore: true)
@@ -476,7 +476,7 @@ class _$_UserModel implements _UserModel {
         lockedUntil,
         locked,
         createdTime,
-        payPass
+        maker
       ]);
 
   @JsonKey(ignore: true)
@@ -497,8 +497,8 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {required final int id,
       required final String username,
-      required final String email,
-      required final String phone,
+      required final String? email,
+      required final String? phone,
       required final String regIp,
       required final String regServerName,
       required final String regReferer,
@@ -511,10 +511,10 @@ abstract class _UserModel implements UserModel {
       required final bool disabled,
       required final String type,
       required final String invitationCode,
-      required final String lockedUntil,
+      required final String? lockedUntil,
       required final bool locked,
       required final String createdTime,
-      required final bool payPass}) = _$_UserModel;
+      required final bool maker}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -524,9 +524,9 @@ abstract class _UserModel implements UserModel {
   @override
   String get username;
   @override
-  String get email;
+  String? get email;
   @override
-  String get phone;
+  String? get phone;
   @override
   String get regIp;
   @override
@@ -552,13 +552,13 @@ abstract class _UserModel implements UserModel {
   @override
   String get invitationCode;
   @override
-  String get lockedUntil;
+  String? get lockedUntil;
   @override
   bool get locked;
   @override
   String get createdTime;
   @override
-  bool get payPass;
+  bool get maker;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

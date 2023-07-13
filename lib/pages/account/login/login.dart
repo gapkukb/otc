@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/pages/account/login/login_util.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/providers/user.provider.dart';
@@ -98,7 +99,7 @@ class _LoginState extends ConsumerState<Login>
                     fullWidth: true,
                     size: UiButtonSize.medium,
                     label: "登录",
-                    onPressed: register,
+                    onPressed: login,
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -129,24 +130,14 @@ class _LoginState extends ConsumerState<Login>
     );
   }
 
-  register() async {
-    var device = _showEmail ? CaptchaDeviceType.email : CaptchaDeviceType.phone;
-
+  login() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
-      // var code = await openCaptchaView(
-      //   context: context,
-      //   device: device,
-      //   service: CaptchaServiceType.register,
-      //   account: _formState['account'],
-      // );
-
-      await loginUtil(
-        username: _formState['username'],
-        password: _formState['password'],
-      );
-
+      await ref.read(userProvider.notifier).login(
+            username: _formState['username'],
+            password: _formState['password'],
+          );
+      GoRouter.of(navigatorKey.currentContext!).pop();
       GoRouter.of(navigatorKey.currentContext!).replace('/');
     }
   }

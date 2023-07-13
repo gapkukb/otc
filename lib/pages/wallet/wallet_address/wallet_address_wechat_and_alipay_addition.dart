@@ -45,9 +45,11 @@ class WalletAddressWechatAndAlipayAddition extends StatelessWidget {
           const SizedBox(height: 8),
           FormField(
             builder: (field) {
-              return const SizedBox(
+              return SizedBox(
                 width: 100,
-                child: UiFilePicker(),
+                child: UiFilePicker(
+                  onPicked: (file) {},
+                ),
               );
             },
             validator: (value) {},

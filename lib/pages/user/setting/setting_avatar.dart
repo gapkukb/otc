@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/router/modal_page.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
@@ -20,7 +21,9 @@ class _SettingAvatarState extends State<SettingAvatar> {
       children: [
         SizedBox(
           width: 100,
-          child: UiFilePicker(),
+          child: UiFilePicker(
+            onPicked: (file) {},
+          ),
         ),
       ],
     );

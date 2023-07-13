@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/pages/user/sidebar.data.dart';
+import 'package:otc/providers/auth.provider.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
 
 class LayoutProfile extends ConsumerStatefulWidget {
@@ -44,27 +47,24 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
             fixedSize: const Size.fromWidth(180.0),
           ),
           child: const Text("注销", style: Font.small),
-          onPressed: () {},
+          onPressed: () {
+            ref.read(userProvider.notifier).logout();
+            ref.read(authProvider.notifier).update((state) => false);
+          },
         )),
       builder: (context, controller, child) {
+        final avatar = ref.watch(userProvider.select((value) => value.avatar));
         return MaterialButton(
           height: 40,
           shape: const StadiumBorder(),
           child: Row(
             children: [
-              const SizedBox(
-                width: 32,
-                child: CircleAvatar(
-                  foregroundImage: AssetImage(
-                    'assets/images/efc12c8f9b0b13c844c7d6086dc4d1d5.jpg',
-                  ),
-                ),
-              ),
+              SizedBox(width: 32, child: Avatar(avatar: avatar)),
               const SizedBox(width: 8),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 60),
                 child: Text(
-                  widget.userName,
+                  ref.watch(userProvider.select((value) => value.nickname)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

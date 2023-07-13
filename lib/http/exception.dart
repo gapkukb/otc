@@ -102,7 +102,7 @@ class HttpException extends _Exception {
               case 400:
                 return HttpException(statusCode, "请求语法出错");
               case 401:
-                GoRouter.of(navigatorKey.currentContext!).push('/register');
+                GoRouter.of(navigatorKey.currentContext!).replace('/login');
                 return HttpException(statusCode, "请先登录账户");
               case 403:
                 return HttpException(statusCode, "您的权限不足，服务器拒绝执行");

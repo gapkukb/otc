@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/global/global.dart';
-import 'package:otc/models/http_response_model..t.dart';
 import 'package:otc/enums/http.datatype.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.keys.dart';
@@ -51,10 +50,7 @@ class Http {
       final opt = options ?? HttpOptions();
       opt.path = path;
       opt.method = method.name;
-      return Request(
-        options: opt,
-        dio: dio,
-      );
+      return Request(options: opt, dio: dio, model: data);
     };
   }
 }
@@ -62,10 +58,12 @@ class Http {
 class Request<T> {
   final HttpOptions _options;
   final Dio dio;
+  final ModelFactory<T>? model;
 
   const Request({
     required HttpOptions options,
     required this.dio,
+    required this.model,
   }) : _options = options;
 
   Future<T> call([
@@ -78,49 +76,59 @@ class Request<T> {
     if (opt.cancelable) {
       cancelToken = CancelToken();
     }
-
+    Map<String, dynamic> $data = {};
+    if (opt.data != null) {
+      $data.addAll(opt.data);
+    }
+    if (data != null) {
+      $data.addAll(data);
+    }
     return dio
-        .request<HttpResponseModel>(
-          replacePathParams(
-            opt.path,
-            opt.pathParams,
-          ),
-          cancelToken: cancelToken,
-          queryParameters: opt.queryParameters,
-          data: opt.data,
-          onReceiveProgress: opt.onReceiveProgress,
-          onSendProgress: opt.onSendProgress,
-          options: Options(
-            contentType: opt.contentType,
-            extra: {
-              ...opt.extra,
-              "_abort": () {
-                cancelToken?.cancel();
-                cancelToken = null;
-              },
-              "_options": InnerOptions(
-                cancelable: opt.cancelable,
-                dataType: opt.dataType,
-                repeatable: opt.repeatable,
-                retry: opt.retry,
-                silent: opt.silent,
-              )
-            },
-            followRedirects: opt.followRedirects,
-            headers: opt.headers,
-            listFormat: opt.listFormat,
-            maxRedirects: opt.maxRedirects,
-            method: opt.method,
-            persistentConnection: opt.persistentConnection,
-            receiveDataWhenStatusError: opt.receiveDataWhenStatusError,
-            receiveTimeout: opt.receiveTimeout,
-            requestEncoder: opt.requestEncoder,
-            responseDecoder: opt.responseDecoder,
-            responseType: opt.responseType,
-            sendTimeout: opt.sendTimeout,
-            validateStatus: opt.validateStatus,
-          ),
-        )
-        .then((response) => response.data!.data);
+        .request(
+      replacePathParams(
+        opt.path,
+        opt.pathParams,
+      ),
+      cancelToken: cancelToken,
+      queryParameters: opt.queryParameters,
+      data: $data,
+      onReceiveProgress: opt.onReceiveProgress,
+      onSendProgress: opt.onSendProgress,
+      options: Options(
+        contentType: opt.contentType,
+        extra: {
+          ...opt.extra,
+          "_abort": () {
+            cancelToken?.cancel();
+            cancelToken = null;
+          },
+          "_options": InnerOptions(
+            cancelable: opt.cancelable,
+            dataType: opt.dataType,
+            repeatable: opt.repeatable,
+            retry: opt.retry,
+            silent: opt.silent,
+            loading: opt.loading,
+          )
+        },
+        followRedirects: opt.followRedirects,
+        headers: opt.headers,
+        listFormat: opt.listFormat,
+        maxRedirects: opt.maxRedirects,
+        method: opt.method,
+        persistentConnection: opt.persistentConnection,
+        receiveDataWhenStatusError: opt.receiveDataWhenStatusError,
+        receiveTimeout: opt.receiveTimeout,
+        requestEncoder: opt.requestEncoder,
+        responseDecoder: opt.responseDecoder,
+        responseType: opt.responseType,
+        sendTimeout: opt.sendTimeout,
+        validateStatus: opt.validateStatus,
+      ),
+    )
+        .then((response) {
+      final resp = response.data!['data'];
+      return model == null ? resp : model!(resp);
+    });
   }
 }

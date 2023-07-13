@@ -4,7 +4,7 @@ import 'package:otc/router/router.keys.dart';
 
 CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
   return CustomTransitionPage(
-    barrierColor: null,
+    barrierColor: Colors.black38,
     barrierDismissible: barrierDismissible ?? false,
     fullscreenDialog: false,
     opaque: false,

@@ -7,7 +7,8 @@ class LogInterceptor extends Interceptor {
 
   @override
   void onRequest(options, handler) {
-    log.i(options);
+    log.i(options.data);
+    log.i(options.headers);
     super.onRequest(options, handler);
   }
 

@@ -85,24 +85,28 @@ class _AuthJuniorState extends State<AuthJunior> {
         ),
       ),
       const SizedBox(height: 16),
-      const Row(
+      Row(
         children: [
           Expanded(
             child: Column(
               children: [
-                Text("身份证正面（人像面）"),
-                SizedBox(height: 8),
-                UiFilePicker(),
+                const Text("身份证正面（人像面）"),
+                const SizedBox(height: 8),
+                UiFilePicker(
+                  onPicked: (file) {},
+                ),
               ],
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               children: [
-                Text("身份证正面（人像面）"),
-                SizedBox(height: 8),
-                UiFilePicker(),
+                const Text("身份证正面（人像面）"),
+                const SizedBox(height: 8),
+                UiFilePicker(
+                  onPicked: (file) {},
+                ),
               ],
             ),
           ),

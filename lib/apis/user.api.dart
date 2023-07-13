@@ -1,7 +1,12 @@
 part of apis;
 
 class _User {
-  final login = get("/auth/login");
+  final login = post(
+      "/auth/login",
+      null,
+      HttpOptions(
+        dataType: HttpDataType.form,
+      ));
   final logout = get("/");
   final register = post("/auth/register");
   final getUser = get("/customer", UserModel.fromJson);
@@ -19,10 +24,10 @@ class _User {
   final modifyAvatar = post("/customer/modify/avatar");
 
   /// 修改用户昵称
-  final modifyNicknam = post("/api/customer/modify/nickname");
+  final modifyNickname = post("/customer/modify/nickname");
 
   /// 申请成为maker
-  final applyMaker = get("/api/customer/maker/apply");
+  final applyMaker = get("/customer/maker/apply");
 
   /// 上传头像
   final uploadAvatar = get("/upload/avatar");

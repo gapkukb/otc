@@ -7,8 +7,8 @@ class UserModel with _$UserModel {
   const factory UserModel({
     required int id,
     required String username,
-    required String email,
-    required String phone,
+    required String? email,
+    required String? phone,
     required String regIp,
     required String regServerName,
     required String regReferer,
@@ -21,10 +21,10 @@ class UserModel with _$UserModel {
     required bool disabled,
     required String type,
     required String invitationCode,
-    required String lockedUntil,
+    required String? lockedUntil,
     required bool locked,
     required String createdTime,
-    required bool payPass,
+    required bool maker,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, Object?> json) =>

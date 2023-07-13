@@ -9,8 +9,8 @@ part of 'user.model.dart';
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       id: json['id'] as int,
       username: json['username'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
       regIp: json['regIp'] as String,
       regServerName: json['regServerName'] as String,
       regReferer: json['regReferer'] as String,
@@ -23,10 +23,10 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       disabled: json['disabled'] as bool,
       type: json['type'] as String,
       invitationCode: json['invitationCode'] as String,
-      lockedUntil: json['lockedUntil'] as String,
+      lockedUntil: json['lockedUntil'] as String?,
       locked: json['locked'] as bool,
       createdTime: json['createdTime'] as String,
-      payPass: json['payPass'] as bool,
+      maker: json['maker'] as bool,
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
@@ -50,5 +50,5 @@ Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
       'lockedUntil': instance.lockedUntil,
       'locked': instance.locked,
       'createdTime': instance.createdTime,
-      'payPass': instance.payPass,
+      'maker': instance.maker,
     };

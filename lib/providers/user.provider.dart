@@ -27,7 +27,7 @@ const faker = UserModel(
   lockedUntil: "",
   locked: false,
   createdTime: "",
-  payPass: false,
+  maker: false,
 );
 
 class UserNotifier extends StateNotifier<UserModel> {
@@ -46,24 +46,32 @@ class UserNotifier extends StateNotifier<UserModel> {
     required String username,
     required String password,
   }) async {
-    final token = await apis.user.login();
+    final token = await apis.user.login({
+      "username": username,
+      "password": password,
+    });
 
     global.setToken(token);
 
-    return await updateUser();
+    return await refreshUser();
   }
 
-  Future<UserModel> updateUser() async {
+  Future<UserModel> refreshUser() async {
     final user = await apis.user.getUser();
 
-    global.prefs.setString(global.keys.user, jsonEncode(user));
+    global.prefs.setString(global.keys.user, jsonEncode(user.toJson()));
 
     state = user;
     return user;
   }
 
+  modify(UserModel user) {
+    state = user;
+  }
+
   FutureOr<void> logout() {
     state = faker;
+    global.prefs.remove(global.keys.user);
     global.setToken(null);
   }
 

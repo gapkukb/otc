@@ -91,7 +91,7 @@ class HttpOptions extends RequestOptions implements InnerOptions {
     this.repeatable = false,
     this.dataType = HttpDataType.json,
     this.pathParams,
-    this.loading = false,
+    this.loading = true,
   });
 
   HttpOptions merge(HttpOptions? options) {
