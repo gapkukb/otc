@@ -12,20 +12,3 @@ CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
     child: child,
   );
 }
-
-GoRoute createModalPage({
-  required String name,
-  required String path,
-  Page<dynamic> Function(BuildContext, GoRouterState)? pageBuilder,
-  Widget? page,
-}) {
-  return GoRoute(
-    parentNavigatorKey: appLayoutKey,
-    name: name,
-    path: path,
-    pageBuilder: pageBuilder ??
-        (context, state) => modalPage(
-              page!,
-            ),
-  );
-}

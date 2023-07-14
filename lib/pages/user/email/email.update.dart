@@ -3,20 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/widgets/ui_text_field.dart';
+import 'package:otc/widgets/form/text_filed/text_field.dart';
 
-class UserEmailAddressNext extends StatefulWidget {
-  const UserEmailAddressNext({super.key});
+class UpdateEmail extends StatefulWidget {
+  const UpdateEmail({super.key});
 
   @override
-  State<UserEmailAddressNext> createState() => _UserEmailAddressNextState();
+  State<UpdateEmail> createState() => _UpdateEmailState();
 }
 
-class _UserEmailAddressNextState extends State<UserEmailAddressNext> {
-  final _controller = TextEditingController();
-
-  String uname = "abc";
-
+class _UpdateEmailState extends State<UpdateEmail> {
   @override
   Widget build(BuildContext context) {
     return ModalPageTemplate(
@@ -24,9 +20,7 @@ class _UserEmailAddressNextState extends State<UserEmailAddressNext> {
       nextText: "完成",
       onCompelete: () async {
         BotToast.showLoading(crossPage: false);
-        await Future.delayed(Duration(seconds: 2));
         context.pop();
-        context.go('/');
       },
       children: [
         const Text(
@@ -54,9 +48,7 @@ class _UserEmailAddressNextState extends State<UserEmailAddressNext> {
           ),
         ),
         const SizedBox(height: 24),
-        CodeField(
-          target: "123213",
-        ),
+        CodeField(target: "123213"),
       ],
     );
   }

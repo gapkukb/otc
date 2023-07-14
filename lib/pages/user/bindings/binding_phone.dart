@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/user/bindings/binding_phone_f2a.dart';
+import 'package:otc/pages/user/f2a/f2a.bind.dart';
 import 'package:otc/pages/user/bindings/binding_phone_update.dart';
 
 class BindingPhone extends StatefulWidget {
@@ -22,9 +22,9 @@ class _BindingPhoneState extends State<BindingPhone> {
   @override
   Widget build(BuildContext context) {
     return _type == 0
-        ? BindingPhoneF2A(
-            onCompelete: onCompelete,
-          )
+        ? F2ABind(
+            // onCompelete: onCompelete,
+            )
         : const BindingPhoneUpdate();
   }
 }

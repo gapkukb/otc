@@ -12,6 +12,7 @@ import 'package:otc/enums/http.datatype.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.keys.dart';
 import 'package:otc/utils/map.dart' as map;
+import 'dart:convert';
 
 part './cache.dart';
 part './data_type.dart';
@@ -131,6 +132,7 @@ class Request<T> {
     )
         .then((response) {
       final resp = response.data!['data'];
+      inspect(resp);
       return model == null ? resp : model!(resp);
     });
   }

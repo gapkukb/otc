@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:otc/global/global.dart';
-import 'package:otc/pages/advertise/advertise.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class CountdownButton extends StatefulWidget {
@@ -11,7 +12,7 @@ class CountdownButton extends StatefulWidget {
   final int duration;
   final bool disabled;
   final void Function()? onEnd;
-  final Future Function()? onPressed;
+  final FutureOr<void> Function()? onPressed;
   final CountdownTimerController? controller;
 
   const CountdownButton({
@@ -19,7 +20,7 @@ class CountdownButton extends StatefulWidget {
     this.beforeText = "获取验证码",
     this.endText = "重新获取",
     this.runingText,
-    this.duration = 5,
+    this.duration = 60,
     this.disabled = false,
     this.onEnd,
     this.onPressed,
@@ -102,4 +103,10 @@ class _CountdownButtonState extends State<CountdownButton> {
       global.prefs.setInt(global.keys.countdownTime, _endTime);
     });
   }
+}
+
+class CountdownButtonController extends ChangeNotifier {
+  start() {}
+  pause() {}
+  end() {}
 }

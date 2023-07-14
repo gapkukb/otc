@@ -1,10 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/pages/home/home.dart';
 import 'package:otc/pages/notice/notice_window.dart';
 import 'package:otc/pages/user/auth/auth.dart';
+import 'package:otc/pages/user/captcha/captcha.dart';
+import 'package:otc/pages/user/email/email.bind.dart';
+import 'package:otc/pages/user/email/email.update.dart';
+import 'package:otc/pages/user/f2a/f2a.bind.dart';
+import 'package:otc/pages/user/f2a/f2a.dart';
+import 'package:otc/pages/user/update_pwd/update_pwd.dart';
 import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
+import 'package:otc/pages/user/security/security.dart';
 import 'package:otc/pages/user/setting/setting.dart';
 import 'package:otc/pages/user/setting/setting_avatar.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
@@ -19,8 +28,8 @@ final List<RouteBase> routes = [
     builder: layout,
     routes: [
       GoRoute(
-        // name: RoutesName.home.name,
-        path: '/',
+        name: Routes.home,
+        path: '/home',
         builder: (context, state) => const Home(),
       ),
       ShellRoute(
@@ -28,19 +37,24 @@ final List<RouteBase> routes = [
         builder: userLayout,
         routes: [
           GoRoute(
-            // name: RoutesName.home.name,
-            path: '/user',
+            name: Routes.user,
+            path: Routes.user,
             builder: (context, state) => const UserHome(),
           ),
           GoRoute(
-            name: RouteName.setting,
-            path: '/setting',
+            name: Routes.setting,
+            path: Routes.setting,
             builder: (context, state) => const UserSetting(),
           ),
           GoRoute(
-            name: RouteName.auth,
-            path: '/auth',
+            name: Routes.auth,
+            path: Routes.auth,
             builder: (context, state) => const UserAuth(),
+          ),
+          GoRoute(
+            name: Routes.security,
+            path: Routes.security,
+            builder: (context, state) => const UserSecurity(),
           ),
         ],
       ),
@@ -49,29 +63,74 @@ final List<RouteBase> routes = [
   GoRoute(
     parentNavigatorKey: navigatorKey,
     path: '/notice_window',
-    pageBuilder: (context, state) => modalPage(
-      const NoticeWindow(),
-      true,
-    ),
+    pageBuilder: (context, state) => modalPage(const NoticeWindow(), true),
   ),
   GoRoute(
-    path: '/login',
+    name: Routes.login,
+    path: Routes.login,
     builder: (context, state) => const Login(),
   ),
   GoRoute(
     parentNavigatorKey: navigatorKey,
-    name: RouteName.settingNickname,
-    path: '/setting_nickname',
+    name: Routes.settingNickname,
+    path: Routes.settingNickname,
     pageBuilder: (context, state) => modalPage(
       const SettingNickname(),
     ),
   ),
   GoRoute(
     parentNavigatorKey: navigatorKey,
-    name: RouteName.settingAvatar,
-    path: '/setting_avatar',
+    name: Routes.settingAvatar,
+    path: Routes.settingAvatar,
     pageBuilder: (context, state) => modalPage(
       const SettingAvatar(),
     ),
   ),
+  GoRoute(
+    parentNavigatorKey: navigatorKey,
+    name: Routes.udpatePwd,
+    path: Routes.udpatePwd,
+    pageBuilder: (context, state) => modalPage(
+      const UpdatePwd(),
+    ),
+  ),
+  GoRoute(
+    parentNavigatorKey: navigatorKey,
+    name: Routes.captcha,
+    path: Routes.captcha,
+    pageBuilder: (context, state) => modalPage(
+      Captcha(
+        device: (state.extra as dynamic)['device'],
+        service: (state.extra as dynamic)['service'],
+        account: (state.extra as dynamic)['account'],
+        switchable: (state.extra as dynamic)['switchable'],
+      ),
+    ),
+  ),
+  ModalPage(
+    path: Routes.updateEmail,
+    page: const UpdateEmail(),
+  ),
+  ModalPage(
+    path: Routes.f2a,
+    withPage: (context, state) => F2A(
+      text: state.extra as String,
+    ),
+  )
 ];
+
+class ModalPage extends GoRoute {
+  final Widget? page;
+  final Widget Function(BuildContext, GoRouterState)? withPage;
+  ModalPage({
+    required super.path,
+    this.page,
+    this.withPage,
+  }) : super(
+          name: path,
+          parentNavigatorKey: navigatorKey,
+          pageBuilder: (context, state) => modalPage(
+            withPage?.call(context, state) ?? page!,
+          ),
+        );
+}

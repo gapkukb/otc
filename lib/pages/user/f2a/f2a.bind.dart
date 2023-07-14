@@ -5,29 +5,29 @@ import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/widgets/ui_text_field.dart';
 
-class BindingPhoneF2A extends StatefulWidget {
-  final Function() onCompelete;
-  const BindingPhoneF2A({
+class F2ABind extends StatefulWidget {
+  // final Function() onCompelete;
+  const F2ABind({
     super.key,
-    required this.onCompelete,
+    // required this.onCompelete,
   });
 
   @override
-  State<BindingPhoneF2A> createState() => _BindingPhoneF2AState();
+  State<F2ABind> createState() => _F2ABindState();
 }
 
-class _BindingPhoneF2AState extends State<BindingPhoneF2A> {
+class _F2ABindState extends State<F2ABind> {
   @override
   Widget build(BuildContext context) {
     return ModalPageTemplate(
-      legend: "绑定手机",
+      legend: "账户安全",
       title: "谷歌身份验证器",
       nextText: "下一步",
       onCompelete: () async {
         var cancel = BotToast.showLoading();
         await Future.delayed(const Duration(seconds: 1));
         cancel();
-        widget.onCompelete();
+        // widget.onCompelete();
       },
       children: [
         const UiTextField(

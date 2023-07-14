@@ -7,20 +7,24 @@ class LogInterceptor extends Interceptor {
 
   @override
   void onRequest(options, handler) {
-    log.i(options.data);
-    log.i(options.headers);
+    try {
+      log.d(jsonEncode(options));
+    } catch (e) {
+      log.d(options);
+    }
     super.onRequest(options, handler);
   }
 
   @override
   void onError(err, handler) {
-    log.e(err);
+    inspect(err);
+
     super.onError(err, handler);
   }
 
   @override
   void onResponse(response, handler) {
-    log.i(response);
+    log.i(response.data);
     super.onResponse(response, handler);
   }
 }

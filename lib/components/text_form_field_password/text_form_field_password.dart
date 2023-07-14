@@ -8,11 +8,13 @@ class TextFormFieldPassword extends StatefulWidget {
   final TextEditingController? controller;
   final String? name;
   final Map<String, dynamic>? formState;
+  final String labelText;
   const TextFormFieldPassword({
     super.key,
     this.formState,
     this.name,
     this.controller,
+    this.labelText = "密码",
   });
 
   @override
@@ -59,9 +61,10 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
       focusNode: focusNode,
       obscureText: true,
       maxLines: 1,
-      labelText: "密码",
-      name: "password",
+      labelText: widget.labelText,
+      name: widget.name ?? "password",
       formState: widget.formState,
+      controller: widget.controller,
       validator: (value) {
         final String val = value ?? "";
         bool step1 = true;

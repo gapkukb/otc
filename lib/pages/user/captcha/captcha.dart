@@ -1,14 +1,12 @@
-import 'dart:developer';
-
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
-import 'package:otc/components/countdown_button/countdown_button.dart';
+import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/widgets/ui_button.dart';
-import 'package:otc/widgets/ui_text_form_field.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/utils/string.dart';
 
 enum CaptchaDeviceType {
   phone("PHONE"),
@@ -31,7 +29,10 @@ enum CaptchaServiceType {
   delQrcode("del-qrcode"),
   boundEmail("bound-email"),
   boundPhone("bound-phone"),
-  register("register");
+  register("register"),
+
+  /// 客户端定义的验证渠道，用于兼容谷歌验证器
+  addF2A("addF2A");
 
   const CaptchaServiceType(this.value);
 
@@ -43,34 +44,35 @@ class Captcha extends StatefulWidget {
   final CaptchaServiceType service;
   final String? account;
   final bool autoStart;
+  final bool switchable;
 
   const Captcha({
     super.key,
     required this.device,
     required this.service,
-    this.account = "123132",
-    this.autoStart = true,
+    this.account,
+    this.autoStart = false,
+    this.switchable = true,
   });
 
   @override
   State<Captcha> createState() => _CaptchaState();
 }
 
-int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 3;
-
 class _CaptchaState extends State<Captcha> {
-  final _controller = TextEditingController();
-  final countdownTimerController = CountdownTimerController(
+  final textController = TextEditingController();
+  final controller = CountdownTimerController(
     endTime: DateTime.now().millisecondsSinceEpoch,
   );
 
   final int _length = 6;
-  String code = "";
+
   bool _isPhone = false;
 
   @override
   void initState() {
     _isPhone = widget.device == CaptchaDeviceType.phone;
+
     if (widget.autoStart) {
       send();
     }
@@ -81,159 +83,68 @@ class _CaptchaState extends State<Captcha> {
     return getType(_isPhone);
   }
 
+  String get device {
+    return _isPhone
+        ? CaptchaDeviceType.phone.value
+        : CaptchaDeviceType.email.value;
+  }
+
   getType(bool isphone) {
     return isphone ? '手机' : '邮箱';
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 400,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: const Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "账户安全",
-                      style: TextStyle(
-                        color: Color(0xff7C7C7C),
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    "$typeText验证",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Color(0xff0D163A),
-                    ),
-                  ),
-                  trailing: const Opacity(
-                    opacity: 0.2,
-                    child: Icon(
-                      Icons.mark_email_unread,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Divider(height: 1),
-                const SizedBox(height: 24),
-                Text(
-                  typeText,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Color(0xff667086),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "请输入您在${typeText}${maskingAccount}收到的6位验证码，验证码30分钟有效",
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xff667086),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                _buildTextField(),
-                _buildToggleButton(),
-                const SizedBox(height: 24),
-                _buildActions(),
-              ],
-            ),
+    return ModalPageTemplate(
+      nextText: "下一步",
+      title: "$typeText验证",
+      onCompelete: () {
+        if (textController.text.length != _length) {
+          Modal.showText(text: "请输入6位验证码");
+          return;
+        }
+        context.pop({
+          "device": device,
+          "code": textController.text,
+        });
+        Modal.showText(text: "谷歌验证器绑定成功");
+      },
+      children: [
+        Text(
+          typeText,
+          style: const TextStyle(
+            fontSize: 18,
+            color: Color(0xff667086),
           ),
         ),
-      ),
+        const SizedBox(height: 8),
+        Text(
+          "请输入您在$typeText$maskingAccount收到的6位验证码，验证码30分钟有效",
+          style: const TextStyle(
+            fontSize: 12,
+            color: Color(0xff667086),
+          ),
+        ),
+        const SizedBox(height: 24),
+        CodeField(
+          textController: textController,
+          onPressed: send,
+        ),
+        _buildToggleButton(),
+      ],
     );
   }
 
   // 脱敏
   String get maskingAccount {
-    final String text = widget.account ?? "";
-    if (text == "") return "";
     if (_isPhone) {
-      return text.replaceRange(
-        3,
-        text.length - 4,
-        List.generate(text.length - 7, (index) => "*").join(""),
-      );
+      return maskPhoneNumber(widget.account ?? global.user?.phone);
     }
-    var index = text.indexOf("@");
-    return text.replaceRange(
-      1,
-      index - 1,
-      List.generate(index - 1, (index) => "*").join(""),
-    );
-  }
-
-  _buildActions() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        UiButton(
-          label: "取消",
-          size: UiButtonSize.small,
-          variant: UiButtonVariant.text,
-          onPressed: () {
-            context.pop(null);
-          },
-        ),
-        UiButton(
-          label: "下一步",
-          size: UiButtonSize.small,
-          variant: UiButtonVariant.text,
-          onPressed: () {
-            if (_controller.text.length != _length) {
-              BotToast.showText(text: "请正确填写$_length数字验证码！");
-              return;
-            }
-            context.pop(_controller.text);
-          },
-        ),
-      ],
-    );
-  }
-
-  _buildTextField() {
-    return UiTextFormField(
-      controller: _controller,
-      keyboardType: const TextInputType.numberWithOptions(
-        decimal: false,
-      ),
-      maxLength: _length,
-      decoration: _inputDecoration(),
-      validator: (value) {
-        return value!.length == _length ? null : "必须是6位数字";
-      },
-    );
-  }
-
-  _inputDecoration() {
-    return InputDecoration(
-      label: Text("$typeText验证码"),
-      border: const OutlineInputBorder(),
-      suffixIcon: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: CountdownButton(
-          controller: countdownTimerController,
-          onPressed: send,
-        ),
-      ),
-    );
+    return maskEmail(widget.account ?? global.user?.email);
   }
 
   _buildToggleButton() {
-    if (widget.service == CaptchaServiceType.register) {
+    if (widget.service == CaptchaServiceType.register || !widget.switchable) {
       return const SizedBox.shrink();
     }
     return TextButton(
@@ -247,20 +158,22 @@ class _CaptchaState extends State<Captcha> {
   }
 
   Future send() async {
-    final Map<String, dynamic> payload = {
-      "device": _isPhone
-          ? CaptchaDeviceType.phone.value
-          : CaptchaDeviceType.email.value,
-      "session": widget.service.value,
-    };
-
-    if (widget.service == CaptchaServiceType.register) {
-      payload.addAll({
-        "account": widget.account!,
-      });
-      await apis.user.sendCaptchaWithLogout(payload);
+    if (widget.service == CaptchaServiceType.addF2A) {
+      await apis.user.applyF2A({"device": device});
     } else {
-      await apis.user.sendCaptcha(payload);
+      final Map<String, dynamic> payload = {
+        "device": device,
+        "session": widget.service.value,
+      };
+
+      if (widget.service == CaptchaServiceType.register) {
+        payload.addAll({
+          "account": widget.account!,
+        });
+        await apis.user.sendCaptchaWithLogout(payload);
+      } else {
+        await apis.user.sendCaptcha(payload);
+      }
     }
 
     Modal.showText(text: "验证码已发送,请注意查收");

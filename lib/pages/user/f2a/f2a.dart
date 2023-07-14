@@ -1,126 +1,77 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
-import 'package:otc/widgets/ui_text_field.dart';
+import 'package:otc/widgets/ui_text_form_field.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class UserF2a extends StatefulWidget {
-  const UserF2a({super.key});
+class F2A extends StatefulWidget {
+  final String text;
+  const F2A({
+    super.key,
+    required this.text,
+  });
 
   @override
-  State<UserF2a> createState() => _UserF2aState();
+  State<F2A> createState() => _F2AState();
 }
 
-class _UserF2aState extends State<UserF2a> {
-  String _text = "";
+class _F2AState extends State<F2A> {
   final _controller = TextEditingController();
   final int _length = 6;
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 460,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  title: Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "账户安全",
-                      style: TextStyle(
-                        color: Color(0xff7C7C7C),
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    "谷歌验证",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Color(0xff0D163A),
-                    ),
-                  ),
-                  trailing: Opacity(
-                    opacity: 0.2,
-                    child: Icon(
-                      Icons.security,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Divider(height: 1),
-                const SizedBox(height: 24),
-                const Text(
-                  "谷歌验证器是一款动态口令工具，工作原理类似短信动态验证。绑定后每30s生成一个动态验证码，验证码可用于提现时进行安全验证。",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xff667086),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _buildStep1(),
-                const SizedBox(height: 16),
-                _buildStep2(),
-                const SizedBox(height: 16),
-                _buildStep3(),
-                const SizedBox(height: 32),
-                _buildActions(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
   }
 
-  _buildActions() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+  @override
+  Widget build(BuildContext context) {
+    return ModalPageTemplate(
+      title: "谷歌验证",
+      onCompelete: () async {
+        if (_controller.text.length != _length) {
+          Modal.showText(text: "请输入$_length数字验证码");
+          return;
+        }
+        await apis.user.bindF2A({"value": _controller.text});
+
+        context.pop();
+      },
       children: [
-        TextButton(
-          child: Text("取消"),
-          onPressed: () {
-            context.pop();
-          },
+        const Text(
+          "谷歌验证器是一款动态口令工具，工作原理类似短信动态验证。绑定后每30s生成一个动态验证码，验证码可用于提现时进行安全验证。",
+          style: Font.miniGrey,
         ),
-        TextButton(
-          child: Text("提交"),
-          onPressed: () {
-            if (_controller.text.length != _length) {
-              BotToast.showText(text: "请正确填写$_length数字验证码！");
-            }
-          },
-        ),
+        const SizedBox(height: 16),
+        _buildStep1(),
+        const SizedBox(height: 16),
+        _buildStep2(),
+        const SizedBox(height: 16),
+        _buildStep3(),
       ],
     );
   }
 
   _buildStep3() {
     return Column(
-      // mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTitle("Step3: 输入谷歌验证器中6位数验证码"),
         const SizedBox(height: 8),
-        UiTextField(
+        UiTextFormField(
           autofocus: true,
           controller: _controller,
-          maxLength: 6,
+          maxLength: _length,
           keyboardType: const TextInputType.numberWithOptions(decimal: false),
-          decoration: const InputDecoration(
-            label: Text("请输入6位数验证码"),
+          decoration: InputDecoration(
+            label: Text("请输入$_length位验证码"),
           ),
         ),
       ],
@@ -141,7 +92,14 @@ class _UserF2aState extends State<UserF2a> {
               child: _buildStep1Item(
                 icon: Icons.apple,
                 title: "App Store",
-                onTap: () {},
+                onTap: () {
+                  launchUrl(
+                    Uri.parse(
+                      "https://apps.apple.com/us/app/google-authenticator/id388497605",
+                    ),
+                    mode: LaunchMode.inAppWebView,
+                  );
+                },
               ),
             ),
             const SizedBox(width: 8),
@@ -149,7 +107,14 @@ class _UserF2aState extends State<UserF2a> {
               child: _buildStep1Item(
                 icon: Icons.android,
                 title: "Google Play",
-                onTap: () {},
+                onTap: () {
+                  launchUrl(
+                    Uri.parse(
+                      "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2",
+                    ),
+                    mode: LaunchMode.inAppWebView,
+                  );
+                },
               ),
             )
           ],
@@ -164,21 +129,23 @@ class _UserF2aState extends State<UserF2a> {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildTitle("Step2: 在谷歌验证器中添加密钥并备份"),
+        const SizedBox(height: 8),
         const Text(
           "打开谷歌验证器，扫描下方二维码或手动输入下述秘钥添加验证令牌。",
-          style: TextStyle(fontSize: 12),
+          style: Font.miniGrey,
         ),
         const SizedBox(height: 8),
         Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             color: Colors.grey.shade300,
           ),
           child: Row(
             children: [
               QrImageView(
-                data: _text,
+                data:
+                    "otpauth://totp/maoerduo:${global.user!.username}?secret=${widget.text}",
                 version: QrVersions.auto,
                 size: 86,
                 padding: const EdgeInsets.all(2),
@@ -199,23 +166,17 @@ class _UserF2aState extends State<UserF2a> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.only(left: 16),
                         title: Text(
-                          _text,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey.shade700,
-                          ),
+                          widget.text,
+                          style: Font.medium,
                         ),
-                        trailing: UiClipboard(text: _text),
+                        trailing: UiClipboard(text: widget.text),
                       ),
                     ),
                     const Padding(
                       padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         "秘钥可用于找回谷歌验证器，请勿透露给他人并妥善备份保存",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 12,
-                        ),
+                        style: Font.miniGrey,
                       ),
                     ),
                   ],
@@ -238,7 +199,7 @@ class _UserF2aState extends State<UserF2a> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-      tileColor: Colors.grey.shade700,
+      tileColor: const Color(0xff67748E),
       textColor: Colors.white,
       iconColor: Colors.white,
       leading: Icon(
@@ -253,7 +214,7 @@ class _UserF2aState extends State<UserF2a> {
   _buildTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(fontSize: 18),
+      style: Font.mediumBold,
     );
   }
 }

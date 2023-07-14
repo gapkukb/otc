@@ -34,6 +34,7 @@ class UiButton extends StatelessWidget {
   final bool? iconOnRight;
   final EdgeInsets? padding;
   final TextStyle? labelStyle;
+  final double? minWidth;
 
   const UiButton({
     super.key,
@@ -51,6 +52,7 @@ class UiButton extends StatelessWidget {
     this.iconOnRight,
     this.padding,
     this.labelStyle,
+    this.minWidth,
   });
 
   @override
@@ -64,9 +66,7 @@ class UiButton extends StatelessWidget {
                 : null),
         minWidth: fullWidth
             ? double.infinity
-            : size == UiButtonSize.mini
-                ? 12
-                : null,
+            : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
         onPressed: disabled ? null : onPressed,
         height: _size[size],
         color: getbackgroundColor(themeColor),

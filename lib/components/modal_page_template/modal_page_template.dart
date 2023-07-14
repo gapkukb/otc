@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class ModalPageTemplate extends StatelessWidget {
   final String legend;
@@ -49,11 +50,7 @@ class ModalPageTemplate extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 24),
                       child: Text(
                         title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Color(0xff0D163A),
-                        ),
+                        style: Font.largeBold,
                       ),
                     ),
                     trailing: Opacity(
@@ -65,10 +62,7 @@ class ModalPageTemplate extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Divider(
-                    height: 0.1,
-                    thickness: 0.5,
-                  ),
+                  const Divider(height: 1),
                   const SizedBox(height: 24),
                   ...children,
                   const SizedBox(height: 24),
@@ -89,7 +83,6 @@ class ModalPageTemplate extends StatelessWidget {
         TextButton(
           child: const Text("取消"),
           onPressed: () {
-            // if (context.canPop()) context.pop();
             Navigator.of(context).maybePop();
           },
         ),

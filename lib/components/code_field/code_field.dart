@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:otc/widgets/ui_text_field.dart';
-import 'package:timer_count_down/timer_count_down.dart';
+import 'package:flutter_countdown_timer/index.dart';
+import 'package:otc/components/countdown_button/countdown_button.dart';
+import 'package:otc/widgets/ui_text_form_field.dart';
 
 enum CodeFieldType { phone, email, f2a }
 
@@ -9,14 +12,16 @@ class CodeField extends StatefulWidget {
   final String target;
   final int maxLength;
   final String? label;
-  late TextEditingController? controller;
+  final TextEditingController? textController;
+  final CountdownTimerController? controller;
 
-  final Function()? onCompelete;
+  final FutureOr Function()? onPressed;
 
-  CodeField({
+  const CodeField({
     super.key,
     this.maxLength = 6,
-    this.onCompelete,
+    this.onPressed,
+    this.textController,
     this.controller,
     this.type = CodeFieldType.phone,
     this.target = "",
@@ -46,7 +51,8 @@ class _CodeFieldState extends State<CodeField> {
 
   @override
   void initState() {
-    controller = widget.controller ?? TextEditingController();
+    controller = widget.textController ?? TextEditingController();
+
     super.initState();
   }
 
@@ -58,56 +64,17 @@ class _CodeFieldState extends State<CodeField> {
 
   @override
   Widget build(BuildContext context) {
-    return UiTextField(
+    return UiTextFormField(
       autofocus: true,
-      controller: widget.controller,
+      controller: widget.textController,
       maxLength: widget.maxLength,
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
       decoration: InputDecoration(
         label: Text(widget.label ?? "请输入${widget.maxLength.toString()}位数验证码"),
         border: const OutlineInputBorder(),
-        suffixIcon: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: MaterialButton(
-            minWidth: 102,
-            disabledColor: Colors.grey.shade500,
-            color: Colors.blue,
-            textColor: Colors.white,
-            onPressed: disabled
-                ? null
-                : () {
-                    setState(() {
-                      isRunning = true;
-                      isFirstTime = false;
-                    });
-                  },
-            child: Countdown(
-              key: ValueKey(isRunning),
-              seconds: 2,
-              build: (BuildContext context, double time) {
-                String text;
-
-                if (isRunning) {
-                  text = '剩余${time.toInt().toString()}秒';
-                } else if (isFirstTime) {
-                  text = "获取验证码";
-                } else {
-                  text = "重新获取";
-                }
-
-                return Text(
-                  text,
-                  style: const TextStyle(fontSize: 16),
-                );
-              },
-              onFinished: () {
-                setState(() {
-                  isRunning = false;
-                });
-                widget.onCompelete?.call();
-              },
-            ),
-          ),
+        suffixIcon: CountdownButton(
+          controller: widget.controller,
+          onPressed: widget.onPressed,
         ),
       ),
     );

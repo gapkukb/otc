@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+final _numberType = TextInputType.numberWithOptions();
+
 class UiTextFormField extends StatefulWidget {
   final String? initialValue;
   final FocusNode? focusNode;
@@ -181,7 +183,12 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       onFieldSubmitted: widget.onFieldSubmitted,
       onSaved: _onSave,
       validator: widget.validator,
-      inputFormatters: widget.inputFormatters,
+      inputFormatters: [
+        if (widget.keyboardType == TextInputType.number ||
+            widget.keyboardType == _numberType)
+          FilteringTextInputFormatter.digitsOnly,
+        if (widget.inputFormatters != null) ...widget.inputFormatters!
+      ],
       enabled: widget.enabled,
       cursorWidth: widget.cursorWidth,
       cursorHeight: widget.cursorHeight,

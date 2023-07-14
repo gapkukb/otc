@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/cell/cell.dart';
+import 'package:otc/http/http.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/route_name.dart';
 import 'package:otc/theme/text_theme.dart';
 
-class UserTopBlock extends ConsumerWidget {
+class UserTopBlock extends ConsumerStatefulWidget {
   const UserTopBlock({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<UserTopBlock> createState() => _UserTopBlockState();
+}
+
+class _UserTopBlockState extends ConsumerState<UserTopBlock> {
+  String latestLoginIp = "";
+  @override
+  void initState() {
+    super.initState();
+    apis.user.getUserLog(null, HttpOptions(pathParams: {"num": "1"})).then(
+          (value) => setState(
+            () => latestLoginIp = value,
+          ),
+        );
+  }
+
+  @override
+  Widget build(context) {
     final user = ref.read(userProvider);
     return Row(
       children: [
@@ -31,7 +49,7 @@ class UserTopBlock extends ConsumerWidget {
                   title: const Text("安全等级"),
                   trailing: const Icon(Icons.keyboard_arrow_right),
                   onTap: () {
-                    context.goNamed(RouteName.security);
+                    context.goNamed(Routes.security);
                   },
                 ),
                 const Divider(
@@ -70,7 +88,7 @@ class UserTopBlock extends ConsumerWidget {
               minVerticalPadding: 0,
               leading: Avatar(
                 avatar: user.avatar,
-                radius: 72,
+                radius: 72 / 2,
               ),
               title: Row(
                 children: [
@@ -92,7 +110,7 @@ class UserTopBlock extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              "上次登录时间\u0020\u0020\u0020\u0020IP: ",
+              "上次登录时间\u0020\u0020\u0020\u0020IP: $latestLoginIp",
               style: Font.smallGrey,
             ),
             const SizedBox(height: 16),

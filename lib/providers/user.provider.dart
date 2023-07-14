@@ -6,9 +6,8 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/user/user.model.dart';
 
-final cachedUser = global.prefs.getString(global.keys.user);
 const faker = UserModel(
-  id: "",
+  id: -1,
   username: "",
   email: "",
   phone: "",
@@ -28,15 +27,11 @@ const faker = UserModel(
   locked: false,
   createdTime: "",
   maker: false,
+  googleSecretValid: false,
 );
 
 class UserNotifier extends StateNotifier<UserModel> {
-  UserNotifier()
-      : super(
-          cachedUser == null
-              ? faker
-              : UserModel.fromJson(jsonDecode(cachedUser!)),
-        );
+  UserNotifier() : super(global.user ?? faker);
 
   bool get hasLoggedIn {
     return state.username != "";
@@ -52,16 +47,13 @@ class UserNotifier extends StateNotifier<UserModel> {
     });
 
     global.setToken(token);
-
     return await refreshUser();
   }
 
   Future<UserModel> refreshUser() async {
     final user = await apis.user.getUser();
-
-    global.prefs.setString(global.keys.user, jsonEncode(user.toJson()));
-
     state = user;
+    global.updateUser(user);
     return user;
   }
 
@@ -71,7 +63,7 @@ class UserNotifier extends StateNotifier<UserModel> {
 
   FutureOr<void> logout() {
     state = faker;
-    global.prefs.remove(global.keys.user);
+    global.updateUser(null);
     global.setToken(null);
   }
 
