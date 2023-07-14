@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/riverpod.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -40,7 +43,7 @@ class _F2AState extends State<F2A> {
           return;
         }
         await apis.user.bindF2A({"value": _controller.text});
-
+        context.read(userProvider.notifier).refreshUser();
         context.pop();
       },
       children: [

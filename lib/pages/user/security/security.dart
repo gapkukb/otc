@@ -90,7 +90,20 @@ class UserSecurity extends ConsumerWidget {
           label: user.emailValid ? "修改" : "绑定",
           onPressed: () async {
             if (user.emailValid) {
-              context.pushNamed(Routes.updateEmail);
+              final result = await openCaptchaView(
+                context: context,
+                device: CaptchaDeviceType.email,
+                service: CaptchaServiceType.boundEmail,
+                switchable: user.phoneValid && user.emailValid,
+              );
+
+              if (result != null) {
+                final String code = await apis.user.validateF2A({
+                  "device": result["device"],
+                  "captcha": result["code"],
+                });
+                await context.pushNamed(Routes.f2a, extra: code);
+              }
             } else {
               bindEmail(context, user);
             }
@@ -104,7 +117,7 @@ class UserSecurity extends ConsumerWidget {
         description: "用于登录、提现和修改安全设置",
         action: UiButton(
           variant: UiButtonVariant.text,
-          label: "绑定",
+          label: user.phoneValid ? "修改" : "绑定",
           onPressed: () {},
         ),
       ),

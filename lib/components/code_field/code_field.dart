@@ -12,6 +12,7 @@ class CodeField extends StatefulWidget {
   final String target;
   final int maxLength;
   final String? label;
+  final bool onlyNumber;
   final TextEditingController? textController;
   final CountdownTimerController? controller;
 
@@ -26,6 +27,7 @@ class CodeField extends StatefulWidget {
     this.type = CodeFieldType.phone,
     this.target = "",
     this.label,
+    this.onlyNumber = true,
   });
 
   @override
@@ -68,7 +70,9 @@ class _CodeFieldState extends State<CodeField> {
       autofocus: true,
       controller: widget.textController,
       maxLength: widget.maxLength,
-      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+      keyboardType: widget.onlyNumber
+          ? const TextInputType.numberWithOptions(decimal: false)
+          : null,
       decoration: InputDecoration(
         label: Text(widget.label ?? "请输入${widget.maxLength.toString()}位数验证码"),
         border: const OutlineInputBorder(),

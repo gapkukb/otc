@@ -129,6 +129,7 @@ class _CaptchaState extends State<Captcha> {
         CodeField(
           textController: textController,
           onPressed: send,
+          onlyNumber: widget.service != CaptchaServiceType.addF2A,
         ),
         _buildToggleButton(),
       ],
