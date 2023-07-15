@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/router/route_name.dart';
 
-Future<Map<String, String>?> openCaptchaView({
+Future<Map<String, String>?> openCaptchaWindow({
   required BuildContext context,
-  required CaptchaDeviceType device,
+  CaptchaDeviceType? preferredDevice,
   required CaptchaServiceType service,
   String? account,
   bool? switchable,
+  UserModel? user,
 }) {
   return context.pushNamed(
     Routes.captcha,
     extra: {
-      "device": device,
+      "preferredDevice": preferredDevice,
       "service": service,
       "account": account,
       "switchable": switchable,
+      "user": user ?? global.user,
     },
   );
 }

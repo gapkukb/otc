@@ -1,11 +1,11 @@
 part of captha;
 
 enum CaptchaDeviceType {
+  f2a("F2A", "谷歌身份验证器"),
   phone("PHONE", "手机"),
-  email("EMAIL", "邮箱"),
+  email("EMAIL", "邮箱");
 
   /// 客户端定义的验证渠道，用于兼容谷歌验证器
-  f2a("F2A", "谷歌身份验证器");
 
   const CaptchaDeviceType(this.value, this.chineseText);
 
@@ -40,19 +40,19 @@ enum CaptchaServiceType {
   final String value;
 
   FutureOr validate(
-    CaptchaDeviceType deviceType,
+    String device,
     String captcha,
   ) {
     switch (this) {
       case boundEmail:
       case boundPhone:
         return apis.user.validateBindDevice({
-          "device": deviceType.value,
+          "device": device,
           "captcha": captcha,
         });
       case addF2A:
         return apis.user.validateF2A({
-          "device": deviceType.value,
+          "device": device,
           "captcha": captcha,
         });
       // case CaptchaServiceType.editBankcard:
@@ -78,7 +78,38 @@ enum CaptchaServiceType {
       // case CaptchaServiceType.register:
       //   return apis.user.validateBindDevice;
       default:
-        throw Exception("未找到验证码校验函数");
+        return Future.value();
     }
+  }
+
+  // FutureOr getCode(
+  //   String device,
+  //   String captcha,
+  // ) {
+  //   switch (this) {
+  //     case addF2A:
+  //       return apis.user.applyF2A({"device": device});
+  //     case register:
+
+  //     default:
+  //       return Future.value();
+  //   }
+  // }
+}
+
+mixin CaptchaController {
+  TextEditingController _controller = TextEditingController();
+
+  final int _length = 6;
+
+  late CaptchaDeviceType _mode;
+
+  String get device {
+    return _mode.value;
+  }
+
+  paste() async {
+    final code = await FlutterClipboard.paste();
+    _controller.text = code;
   }
 }

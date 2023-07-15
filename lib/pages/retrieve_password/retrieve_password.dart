@@ -81,9 +81,9 @@ class RetrievePassword extends StatelessWidget {
                           size: UiButtonSize.medium,
                           onPressed: () async {
                             if (!_formKey.currentState!.validate()) return;
-                            await openCaptchaView(
+                            await openCaptchaWindow(
                                 context: context,
-                                device: CaptchaDeviceType.email,
+                                preferredDevice: CaptchaDeviceType.email,
                                 service: CaptchaServiceType.addAddressBook,
                                 account: "test@af.cn");
                           },

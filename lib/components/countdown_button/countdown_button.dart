@@ -12,7 +12,7 @@ class CountdownButton extends StatefulWidget {
   final int duration;
   final bool disabled;
   final void Function()? onEnd;
-  final FutureOr<void> Function()? onPressed;
+  final FutureOr<bool?> Function()? onPressed;
   final CountdownTimerController? controller;
 
   const CountdownButton({
@@ -91,8 +91,10 @@ class _CountdownButtonState extends State<CountdownButton> {
 
   _send() async {
     if (disabled) return;
-    await widget.onPressed?.call();
-    start();
+    // 明确返回false则不开始计时
+    if (await widget.onPressed?.call() == false) {
+      start();
+    }
   }
 
   start() {

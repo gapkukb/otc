@@ -142,8 +142,11 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
 
   @override
   void dispose() {
-    _controller.removeListener(_toogleClearButton);
-    _controller.dispose();
+    if (widget.controller == null) {
+      _controller.removeListener(_toogleClearButton);
+      _controller.dispose();
+    }
+
     super.dispose();
   }
 

@@ -8,7 +8,7 @@ import './routes.dart';
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.security,
+  initialLocation: Routes.home,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

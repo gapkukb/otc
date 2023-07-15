@@ -20,7 +20,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -28,8 +28,8 @@ mixin _$UserModel {
   String get regServerName => throw _privateConstructorUsedError;
   String get regReferer => throw _privateConstructorUsedError;
   String get regDevice => throw _privateConstructorUsedError;
-  bool get emailValid =>
-      throw _privateConstructorUsedError; // required bool googleSecretValid,
+  bool get emailValid => throw _privateConstructorUsedError;
+  bool get googleSecretValid => throw _privateConstructorUsedError;
   bool get idValid => throw _privateConstructorUsedError;
   bool get phoneValid => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
@@ -54,7 +54,7 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String username,
       String? email,
       String? phone,
@@ -63,6 +63,7 @@ abstract class $UserModelCopyWith<$Res> {
       String regReferer,
       String regDevice,
       bool emailValid,
+      bool googleSecretValid,
       bool idValid,
       bool phoneValid,
       String nickname,
@@ -98,6 +99,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? regReferer = null,
     Object? regDevice = null,
     Object? emailValid = null,
+    Object? googleSecretValid = null,
     Object? idValid = null,
     Object? phoneValid = null,
     Object? nickname = null,
@@ -114,7 +116,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -146,6 +148,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       emailValid: null == emailValid
           ? _value.emailValid
           : emailValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      googleSecretValid: null == googleSecretValid
+          ? _value.googleSecretValid
+          : googleSecretValid // ignore: cast_nullable_to_non_nullable
               as bool,
       idValid: null == idValid
           ? _value.idValid
@@ -203,7 +209,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String username,
       String? email,
       String? phone,
@@ -212,6 +218,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String regReferer,
       String regDevice,
       bool emailValid,
+      bool googleSecretValid,
       bool idValid,
       bool phoneValid,
       String nickname,
@@ -245,6 +252,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? regReferer = null,
     Object? regDevice = null,
     Object? emailValid = null,
+    Object? googleSecretValid = null,
     Object? idValid = null,
     Object? phoneValid = null,
     Object? nickname = null,
@@ -261,7 +269,7 @@ class __$$_UserModelCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -293,6 +301,10 @@ class __$$_UserModelCopyWithImpl<$Res>
       emailValid: null == emailValid
           ? _value.emailValid
           : emailValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      googleSecretValid: null == googleSecretValid
+          ? _value.googleSecretValid
+          : googleSecretValid // ignore: cast_nullable_to_non_nullable
               as bool,
       idValid: null == idValid
           ? _value.idValid
@@ -355,6 +367,7 @@ class _$_UserModel implements _UserModel {
       required this.regReferer,
       required this.regDevice,
       required this.emailValid,
+      required this.googleSecretValid,
       required this.idValid,
       required this.phoneValid,
       required this.nickname,
@@ -371,7 +384,7 @@ class _$_UserModel implements _UserModel {
       _$$_UserModelFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String username;
   @override
@@ -388,7 +401,8 @@ class _$_UserModel implements _UserModel {
   final String regDevice;
   @override
   final bool emailValid;
-// required bool googleSecretValid,
+  @override
+  final bool googleSecretValid;
   @override
   final bool idValid;
   @override
@@ -414,7 +428,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, email: $email, phone: $phone, regIp: $regIp, regServerName: $regServerName, regReferer: $regReferer, regDevice: $regDevice, emailValid: $emailValid, idValid: $idValid, phoneValid: $phoneValid, nickname: $nickname, avatar: $avatar, disabled: $disabled, type: $type, invitationCode: $invitationCode, lockedUntil: $lockedUntil, locked: $locked, createdTime: $createdTime, maker: $maker)';
+    return 'UserModel(id: $id, username: $username, email: $email, phone: $phone, regIp: $regIp, regServerName: $regServerName, regReferer: $regReferer, regDevice: $regDevice, emailValid: $emailValid, googleSecretValid: $googleSecretValid, idValid: $idValid, phoneValid: $phoneValid, nickname: $nickname, avatar: $avatar, disabled: $disabled, type: $type, invitationCode: $invitationCode, lockedUntil: $lockedUntil, locked: $locked, createdTime: $createdTime, maker: $maker)';
   }
 
   @override
@@ -436,6 +450,8 @@ class _$_UserModel implements _UserModel {
                 other.regDevice == regDevice) &&
             (identical(other.emailValid, emailValid) ||
                 other.emailValid == emailValid) &&
+            (identical(other.googleSecretValid, googleSecretValid) ||
+                other.googleSecretValid == googleSecretValid) &&
             (identical(other.idValid, idValid) || other.idValid == idValid) &&
             (identical(other.phoneValid, phoneValid) ||
                 other.phoneValid == phoneValid) &&
@@ -468,6 +484,7 @@ class _$_UserModel implements _UserModel {
         regReferer,
         regDevice,
         emailValid,
+        googleSecretValid,
         idValid,
         phoneValid,
         nickname,
@@ -497,7 +514,7 @@ class _$_UserModel implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {required final String id,
+      {required final int id,
       required final String username,
       required final String? email,
       required final String? phone,
@@ -506,6 +523,7 @@ abstract class _UserModel implements UserModel {
       required final String regReferer,
       required final String regDevice,
       required final bool emailValid,
+      required final bool googleSecretValid,
       required final bool idValid,
       required final bool phoneValid,
       required final String nickname,
@@ -522,7 +540,7 @@ abstract class _UserModel implements UserModel {
       _$_UserModel.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get username;
   @override
@@ -539,7 +557,9 @@ abstract class _UserModel implements UserModel {
   String get regDevice;
   @override
   bool get emailValid;
-  @override // required bool googleSecretValid,
+  @override
+  bool get googleSecretValid;
+  @override
   bool get idValid;
   @override
   bool get phoneValid;

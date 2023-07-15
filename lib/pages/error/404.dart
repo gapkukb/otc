@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/router/route_name.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -39,12 +40,25 @@ class _Page404State extends State<Page404> {
               style: Font.smallGrey,
             ),
             const SizedBox(height: 16),
-            UiButton(
-              iconData: Icons.home,
-              label: "回到首页",
-              onPressed: () {
-                context.go('/');
-              },
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                UiButton(
+                  iconData: Icons.keyboard_arrow_left_outlined,
+                  label: "返回",
+                  onPressed: () {
+                    if (context.canPop()) context.pop();
+                  },
+                ),
+                const SizedBox(width: 16),
+                UiButton(
+                  iconData: Icons.home,
+                  label: "回到首页",
+                  onPressed: () {
+                    context.goNamed(Routes.home);
+                  },
+                )
+              ],
             )
           ],
         ),

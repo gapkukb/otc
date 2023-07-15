@@ -8,6 +8,7 @@ import 'package:otc/global/global.dart';
 import 'package:otc/pages/account/login/login_util.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/router/route_name.dart';
 import 'package:otc/router/router.keys.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -115,7 +116,7 @@ class _LoginState extends ConsumerState<Login>
                       UiButton(
                         variant: UiButtonVariant.text,
                         onPressed: () {
-                          context.go("/retrieve_password");
+                          context.pushNamed(Routes.resetPwd);
                         },
                         label: "忘记密码",
                       ),

@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
 class Routes {
   static const register = '/register';
   static const login = '/login';
@@ -33,4 +30,6 @@ class Routes {
   static const captcha = "/captcha";
   static const f2a = "/f2a";
   static const updatePhone = "/update_phone";
+  static const updateFundsPwd = "/update_funds_pwd";
+  static const resetPwd = "/reset_pwd";
 }

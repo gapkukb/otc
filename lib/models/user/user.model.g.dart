@@ -7,7 +7,7 @@ part of 'user.model.dart';
 // **************************************************************************
 
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
       username: json['username'] as String,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
@@ -16,6 +16,7 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       regReferer: json['regReferer'] as String,
       regDevice: json['regDevice'] as String,
       emailValid: json['emailValid'] as bool,
+      googleSecretValid: json['googleSecretValid'] as bool,
       idValid: json['idValid'] as bool,
       phoneValid: json['phoneValid'] as bool,
       nickname: json['nickname'] as String,
@@ -40,6 +41,7 @@ Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
       'regReferer': instance.regReferer,
       'regDevice': instance.regDevice,
       'emailValid': instance.emailValid,
+      'googleSecretValid': instance.googleSecretValid,
       'idValid': instance.idValid,
       'phoneValid': instance.phoneValid,
       'nickname': instance.nickname,

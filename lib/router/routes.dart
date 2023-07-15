@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/pages/home/home.dart';
 import 'package:otc/pages/notice/notice_window.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
-import 'package:otc/pages/user/email/email.update.dart';
-import 'package:otc/pages/user/f2a/f2a.bind.dart';
 import 'package:otc/pages/user/f2a/f2a.dart';
+import 'package:otc/pages/user/reset.pwd/reset.pwd.dart';
+import 'package:otc/pages/user/update.email/update.email.dart';
+import 'package:otc/pages/user/update.funds.pwd/update.funds.pwd.dart';
 import 'package:otc/pages/user/update.phone/update.phone.dart';
-import 'package:otc/pages/user/update_pwd/update_pwd.dart';
+import 'package:otc/pages/user/update.pwd/update.pwd.dart';
 import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
 import 'package:otc/pages/user/security/security.dart';
@@ -100,10 +100,11 @@ final List<RouteBase> routes = [
     path: Routes.captcha,
     pageBuilder: (context, state) => modalPage(
       Captcha(
-        device: (state.extra as dynamic)['device'],
+        preferredDevice: (state.extra as dynamic)['preferredDevice'],
         service: (state.extra as dynamic)['service'],
         account: (state.extra as dynamic)['account'],
         switchable: (state.extra as dynamic)['switchable'],
+        user: (state.extra as dynamic)['user'],
       ),
     ),
   ),
@@ -120,6 +121,14 @@ final List<RouteBase> routes = [
   ModalPage(
     path: Routes.updatePhone,
     page: const UpdatePhone(),
+  ),
+  ModalPage(
+    path: Routes.updateFundsPwd,
+    page: const UpdateFundsPwd(),
+  ),
+  ModalPage(
+    path: Routes.resetPwd,
+    page: const ResetPwd(),
   ),
 ];
 

@@ -1,3 +1,5 @@
+library security;
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -15,6 +17,10 @@ import 'package:otc/utils/navigator.dart';
 import 'package:otc/utils/string.dart';
 import 'package:otc/widgets/ui_button.dart';
 
+part 'security.managment.dart';
+part 'security.item.dart';
+part 'security.authrization.dart';
+
 class UserSecurity extends ConsumerWidget {
   const UserSecurity({super.key});
 
@@ -26,185 +32,8 @@ class UserSecurity extends ConsumerWidget {
       child: Column(
         children: [
           const UserTopBlock(),
-          _buildAuthrization(context, user),
-          _buildSecurityManagement(context, user),
-        ],
-      ),
-    );
-  }
-
-  Panel _buildSecurityManagement(BuildContext context, UserModel user) {
-    final List<_Item> items = [
-      _Item(
-        typeId: 0,
-        name: "登录密码",
-        value: "",
-        description: "用于保护账户安全",
-        action: UiButton(
-          variant: UiButtonVariant.text,
-          size: UiButtonSize.mini,
-          label: "修改",
-          onPressed: () {
-            context.pushNamed(Routes.udpatePwd);
-          },
-        ),
-      ),
-      _Item(
-        typeId: 1,
-        name: "资金密码",
-        value: "未开启",
-        description: "用于保护账户安全",
-        action: UiButton(
-          variant: UiButtonVariant.text,
-          label: "绑定",
-          onPressed: () {},
-        ),
-      ),
-    ];
-    return Panel(
-      title: "安全管理",
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 2,
-          separatorBuilder: (context, index) => const SizedBox(height: 16),
-          itemBuilder: (context, index) {
-            return _buildAuthrizationItem(items[index]);
-          },
-        ),
-      ),
-    );
-  }
-
-  Panel _buildAuthrization(BuildContext context, UserModel user) {
-    final List<_Item> items = [
-      _Item(
-        typeId: 0,
-        name: "邮箱",
-        value: maskEmail(user.email),
-        description: "用于登录、提现和修改安全设置",
-        action: UiButton(
-          variant: UiButtonVariant.text,
-          label: user.emailValid ? "修改" : "绑定",
-          onPressed: () async {
-            if (user.emailValid) {
-              final result = await openCaptchaView(
-                context: context,
-                device: CaptchaDeviceType.email,
-                service: CaptchaServiceType.boundEmail,
-                switchable: user.phoneValid && user.emailValid,
-              );
-              if (result != null) {
-                final String code = await apis.user.validateF2A({
-                  "device": result["device"],
-                  "captcha": result["code"],
-                });
-                await context.pushNamed(Routes.f2a, extra: code);
-              }
-            } else {
-              final result = await openCaptchaView(
-                context: context,
-                device: CaptchaDeviceType.phone,
-                service: CaptchaServiceType.boundEmail,
-                switchable: false,
-              );
-              if (result != null) {
-                context.pushNamed(Routes.updateEmail);
-              }
-            }
-          },
-        ),
-      ),
-      _Item(
-        typeId: 1,
-        name: "手机",
-        value: maskPhoneNumber(user.phone),
-        description: "用于登录、提现和修改安全设置",
-        action: UiButton(
-          variant: UiButtonVariant.text,
-          label: user.phoneValid ? "修改" : "绑定",
-          onPressed: () async {
-            await context.pushNamed(Routes.updatePhone);
-            final result = await openCaptchaView(
-              context: context,
-              device: user.phoneValid
-                  ? CaptchaDeviceType.phone
-                  : CaptchaDeviceType.email,
-              service: CaptchaServiceType.boundPhone,
-              switchable: user.phoneValid && user.emailValid,
-            );
-
-            if (!user.phoneValid) {}
-          },
-        ),
-      ),
-      _Item(
-        typeId: 2,
-        name: "谷歌验证器",
-        value: "",
-        description: "用于登录、提现和修改安全设置",
-        action: UiButton(
-          variant: UiButtonVariant.text,
-          // label: user.googleSecretValid ? "修改" : "绑定",
-          label: "绑定",
-          onPressed: () async {
-            final result = await openCaptchaView(
-              context: context,
-              device: user.phoneValid
-                  ? CaptchaDeviceType.phone
-                  : CaptchaDeviceType.email,
-              service: CaptchaServiceType.addF2A,
-              switchable: user.phoneValid && user.emailValid,
-            );
-            if (result != null) {
-              final String code = await apis.user.validateF2A({
-                "device": result["device"],
-                "captcha": result["code"],
-              });
-              await context.pushNamed(Routes.f2a, extra: code);
-            }
-          },
-        ),
-      ),
-    ];
-    return Panel(
-      title: "身份验证",
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: items.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 16),
-          itemBuilder: (context, index) {
-            return _buildAuthrizationItem(items[index]);
-          },
-        ),
-      ),
-    );
-  }
-
-  ListTile _buildAuthrizationItem(_Item item) {
-    return ListTile(
-      tileColor: Colors.grey.shade100,
-      title: Text(item.name),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Text(
-          item.description,
-          style: Font.miniGrey,
-        ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(item.value ?? ""),
-          item.action,
+          SecurityAuthrization(user: user),
+          SecurityManagment(user: user),
         ],
       ),
     );
