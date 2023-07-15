@@ -11,12 +11,14 @@ class CodeField extends StatefulWidget {
   final CodeFieldType type;
   final String target;
   final int maxLength;
-  final String? label;
+  final String? labelText;
   final bool onlyNumber;
+  final bool autofocus;
+  final bool disabled;
   final TextEditingController? textController;
   final CountdownTimerController? controller;
 
-  final FutureOr Function()? onPressed;
+  final FutureOr<bool> Function()? onPressed;
 
   const CodeField({
     super.key,
@@ -26,8 +28,10 @@ class CodeField extends StatefulWidget {
     this.controller,
     this.type = CodeFieldType.phone,
     this.target = "",
-    this.label,
+    this.labelText,
     this.onlyNumber = true,
+    this.autofocus = true,
+    this.disabled = true,
   });
 
   @override
@@ -35,48 +39,21 @@ class CodeField extends StatefulWidget {
 }
 
 class _CodeFieldState extends State<CodeField> {
-  bool isRunning = false;
-  bool isFirstTime = true;
-  late TextEditingController controller;
-
-  get disabled {
-    return isRunning || (widget.target == "");
-  }
-
-  onEnd() {
-    if (mounted) {
-      setState(() {
-        isRunning = false;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    controller = widget.textController ?? TextEditingController();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return UiTextFormField(
-      autofocus: true,
+      autofocus: widget.autofocus,
       controller: widget.textController,
       maxLength: widget.maxLength,
       keyboardType: widget.onlyNumber
           ? const TextInputType.numberWithOptions(decimal: false)
           : null,
       decoration: InputDecoration(
-        label: Text(widget.label ?? "请输入${widget.maxLength.toString()}位数验证码"),
+        label:
+            Text(widget.labelText ?? "请输入${widget.maxLength.toString()}位数验证码"),
         border: const OutlineInputBorder(),
         suffixIcon: CountdownButton(
+          disabled: widget.disabled,
           controller: widget.controller,
           onPressed: widget.onPressed,
         ),

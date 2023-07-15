@@ -1,3 +1,8 @@
+library captha;
+
+import 'dart:async';
+
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:go_router/go_router.dart';
@@ -6,38 +11,12 @@ import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/models/user/user.model.dart';
 import 'package:otc/utils/string.dart';
+import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/widgets/ui_text_form_field.dart';
 
-enum CaptchaDeviceType {
-  phone("PHONE"),
-  email("EMAIL");
-
-  const CaptchaDeviceType(this.value);
-
-  final String value;
-}
-
-enum CaptchaServiceType {
-  addBankcard("add-bankcard"),
-  editBankcard("edit-bankcard"),
-  delBankcard("del-bankcard"),
-  addAddressBook("add-address-book"),
-  editAddressBook("edit-address-book"),
-  delAddressBook("del-address-book"),
-  addQrcode("add-qrcode"),
-  editQrcode("edit-qrcode"),
-  delQrcode("del-qrcode"),
-  boundEmail("bound-email"),
-  boundPhone("bound-phone"),
-  register("register"),
-
-  /// 客户端定义的验证渠道，用于兼容谷歌验证器
-  addF2A("addF2A");
-
-  const CaptchaServiceType(this.value);
-
-  final String value;
-}
+part 'captcha.controller.dart';
 
 class Captcha extends StatefulWidget {
   final CaptchaDeviceType device;
@@ -45,6 +24,7 @@ class Captcha extends StatefulWidget {
   final String? account;
   final bool autoStart;
   final bool switchable;
+  final String? legend;
 
   const Captcha({
     super.key,
@@ -53,6 +33,7 @@ class Captcha extends StatefulWidget {
     this.account,
     this.autoStart = false,
     this.switchable = true,
+    this.legend,
   });
 
   @override
@@ -60,58 +41,88 @@ class Captcha extends StatefulWidget {
 }
 
 class _CaptchaState extends State<Captcha> {
-  final textController = TextEditingController();
-  final controller = CountdownTimerController(
-    endTime: DateTime.now().millisecondsSinceEpoch,
-  );
+  TextEditingController textController = TextEditingController();
 
   final int _length = 6;
 
-  bool _isPhone = false;
+  late CaptchaDeviceType _mode;
 
   @override
   void initState() {
-    _isPhone = widget.device == CaptchaDeviceType.phone;
-
+    _mode = widget.device;
     if (widget.autoStart) {
       send();
     }
     super.initState();
   }
 
-  String get typeText {
-    return getType(_isPhone);
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   String get device {
-    return _isPhone
-        ? CaptchaDeviceType.phone.value
-        : CaptchaDeviceType.email.value;
+    return _mode.value;
   }
 
-  getType(bool isphone) {
-    return isphone ? '手机' : '邮箱';
+  String get description {
+    if (_mode == CaptchaDeviceType.f2a) {
+      return "请输入您的谷歌验证器6位数字验证码";
+    }
+    return "请输入您在${_mode.chineseText}$maskingAccount收到的6位验证码，验证码30分钟有效";
+  }
+
+  // 脱敏
+  String get maskingAccount {
+    if (_mode == CaptchaDeviceType.phone) {
+      return maskPhoneNumber(widget.account ?? global.user?.phone);
+    }
+    if (_mode == CaptchaDeviceType.email) {
+      return maskEmail(widget.account ?? global.user?.email);
+    }
+    return "";
+  }
+
+  List<Widget> get remainingModeWidget {
+    return CaptchaDeviceType.values
+        .where((mode) => mode != _mode && mode.isValid(global.user))
+        .map((mode) {
+      return UiButton.text(
+        size: UiButtonSize.mini,
+        onPressed: () {
+          setState(() {
+            _mode = mode;
+            textController = TextEditingController();
+          });
+        },
+        child: Text("切换${mode.chineseText}验证"),
+      );
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return ModalPageTemplate(
       nextText: "下一步",
-      title: "$typeText验证",
-      onCompelete: () {
-        if (textController.text.length != _length) {
+      title: widget.legend ?? "${_mode.chineseText}验证",
+      onCompelete: () async {
+        final code = textController.text;
+        if (code.length != _length) {
           Modal.showText(text: "请输入6位验证码");
           return;
         }
+
+        await widget.service.validate(widget.device, code);
+
         context.pop({
           "device": device,
-          "code": textController.text,
+          "code": code,
         });
-        Modal.showText(text: "谷歌验证器绑定成功");
       },
       children: [
         Text(
-          typeText,
+          _mode.chineseText,
           style: const TextStyle(
             fontSize: 18,
             color: Color(0xff667086),
@@ -119,46 +130,48 @@ class _CaptchaState extends State<Captcha> {
         ),
         const SizedBox(height: 8),
         Text(
-          "请输入您在$typeText$maskingAccount收到的6位验证码，验证码30分钟有效",
+          description,
           style: const TextStyle(
             fontSize: 12,
             color: Color(0xff667086),
           ),
         ),
         const SizedBox(height: 24),
-        CodeField(
-          textController: textController,
-          onPressed: send,
-          onlyNumber: widget.service != CaptchaServiceType.addF2A,
-        ),
-        _buildToggleButton(),
+        if (_mode == CaptchaDeviceType.f2a)
+          UiTextFormField(
+            autofocus: true,
+            labelText: "谷歌6位数字验证码",
+            controller: textController,
+            maxLength: 6,
+            keyboardType: const TextInputType.numberWithOptions(),
+            decoration: InputDecoration(
+              suffixIcon: UiButton(
+                variant: UiButtonVariant.text,
+                label: "粘贴",
+                onPressed: paste,
+              ),
+            ),
+          )
+        else
+          CodeField(
+            textController: textController,
+            onPressed: send,
+            onlyNumber: widget.service != CaptchaServiceType.addF2A,
+          ),
+        ...switcher,
       ],
     );
   }
 
-  // 脱敏
-  String get maskingAccount {
-    if (_isPhone) {
-      return maskPhoneNumber(widget.account ?? global.user?.phone);
-    }
-    return maskEmail(widget.account ?? global.user?.email);
-  }
-
-  _buildToggleButton() {
+  List<Widget> get switcher {
     if (widget.service == CaptchaServiceType.register || !widget.switchable) {
-      return const SizedBox.shrink();
+      return [const SizedBox.shrink()];
     }
-    return TextButton(
-      child: Text("切换${getType(!_isPhone)}验证"),
-      onPressed: () {
-        setState(() {
-          _isPhone = !_isPhone;
-        });
-      },
-    );
+
+    return remainingModeWidget;
   }
 
-  Future send() async {
+  Future<bool> send() async {
     if (widget.service == CaptchaServiceType.addF2A) {
       await apis.user.applyF2A({"device": device});
     } else {
@@ -176,7 +189,12 @@ class _CaptchaState extends State<Captcha> {
         await apis.user.sendCaptcha(payload);
       }
     }
-
     Modal.showText(text: "验证码已发送,请注意查收");
+    return true;
+  }
+
+  paste() async {
+    final code = await FlutterClipboard.paste();
+    textController.text = code;
   }
 }

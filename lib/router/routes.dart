@@ -6,10 +6,10 @@ import 'package:otc/pages/home/home.dart';
 import 'package:otc/pages/notice/notice_window.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
-import 'package:otc/pages/user/email/email.bind.dart';
 import 'package:otc/pages/user/email/email.update.dart';
 import 'package:otc/pages/user/f2a/f2a.bind.dart';
 import 'package:otc/pages/user/f2a/f2a.dart';
+import 'package:otc/pages/user/update.phone/update.phone.dart';
 import 'package:otc/pages/user/update_pwd/update_pwd.dart';
 import 'package:otc/pages/user/home/home.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
@@ -116,7 +116,11 @@ final List<RouteBase> routes = [
     withPage: (context, state) => F2A(
       text: state.extra as String,
     ),
-  )
+  ),
+  ModalPage(
+    path: Routes.updatePhone,
+    page: const UpdatePhone(),
+  ),
 ];
 
 class ModalPage extends GoRoute {

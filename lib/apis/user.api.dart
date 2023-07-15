@@ -55,6 +55,9 @@ class _User {
 
   /// 校验修改资金密码
   final updatePayPwd = post("/customer/safety/reset/pay-pwd");
+
+  /// 校验绑定验证码
+  final validateBindDevice = post("/customer/safety/valid/device");
 }
 
 final userApi = _User();

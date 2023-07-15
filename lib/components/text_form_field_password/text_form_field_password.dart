@@ -9,12 +9,14 @@ class TextFormFieldPassword extends StatefulWidget {
   final String? name;
   final Map<String, dynamic>? formState;
   final String labelText;
+  final bool autofocus;
   const TextFormFieldPassword({
     super.key,
     this.formState,
     this.name,
     this.controller,
     this.labelText = "密码",
+    this.autofocus = false,
   });
 
   @override
@@ -65,6 +67,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
       name: widget.name ?? "password",
       formState: widget.formState,
       controller: widget.controller,
+      autofocus: widget.autofocus,
       validator: (value) {
         final String val = value ?? "";
         bool step1 = true;

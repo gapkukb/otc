@@ -29,7 +29,7 @@ class _BindingPhoneUpdateState extends State<BindingPhoneUpdate> {
         ),
         const SizedBox(height: 24),
         CodeField(
-          label: "手机验证码",
+          labelText: "手机验证码",
         ),
       ],
     );

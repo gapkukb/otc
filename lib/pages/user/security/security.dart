@@ -1,12 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
-import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
-import 'package:otc/pages/user/email/email.bind.dart';
 import 'package:otc/pages/user/home/top_block.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/route_name.dart';
@@ -96,7 +96,6 @@ class UserSecurity extends ConsumerWidget {
                 service: CaptchaServiceType.boundEmail,
                 switchable: user.phoneValid && user.emailValid,
               );
-
               if (result != null) {
                 final String code = await apis.user.validateF2A({
                   "device": result["device"],
@@ -105,7 +104,15 @@ class UserSecurity extends ConsumerWidget {
                 await context.pushNamed(Routes.f2a, extra: code);
               }
             } else {
-              bindEmail(context, user);
+              final result = await openCaptchaView(
+                context: context,
+                device: CaptchaDeviceType.phone,
+                service: CaptchaServiceType.boundEmail,
+                switchable: false,
+              );
+              if (result != null) {
+                context.pushNamed(Routes.updateEmail);
+              }
             }
           },
         ),
@@ -118,7 +125,19 @@ class UserSecurity extends ConsumerWidget {
         action: UiButton(
           variant: UiButtonVariant.text,
           label: user.phoneValid ? "修改" : "绑定",
-          onPressed: () {},
+          onPressed: () async {
+            await context.pushNamed(Routes.updatePhone);
+            final result = await openCaptchaView(
+              context: context,
+              device: user.phoneValid
+                  ? CaptchaDeviceType.phone
+                  : CaptchaDeviceType.email,
+              service: CaptchaServiceType.boundPhone,
+              switchable: user.phoneValid && user.emailValid,
+            );
+
+            if (!user.phoneValid) {}
+          },
         ),
       ),
       _Item(
@@ -128,7 +147,8 @@ class UserSecurity extends ConsumerWidget {
         description: "用于登录、提现和修改安全设置",
         action: UiButton(
           variant: UiButtonVariant.text,
-          label: user.googleSecretValid ? "修改" : "绑定",
+          // label: user.googleSecretValid ? "修改" : "绑定",
+          label: "绑定",
           onPressed: () async {
             final result = await openCaptchaView(
               context: context,

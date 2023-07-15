@@ -11,12 +11,18 @@ import 'package:phone_numbers_parser/metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 class TextFormFieldPhone extends StatefulWidget {
+  final TextEditingController? controller;
   final Map<String, dynamic>? formState;
   final String name;
+  final String labelText;
+  final bool autofocus;
   const TextFormFieldPhone({
     super.key,
     this.name = "phone",
+    this.labelText = "手机号码",
+    this.autofocus = false,
     this.formState,
+    this.controller,
   });
 
   @override
@@ -35,11 +41,15 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
     return metadataExamplesByIsoCode[_isoCode]?.mobile ?? "";
   }
 
+  bool isValid = false;
+
   @override
   Widget build(BuildContext context) {
     return UiTextFormField(
+      controller: widget.controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
-      labelText: "手机号码",
+      labelText: widget.labelText,
+      autofocus: widget.autofocus,
       maxLength: 16,
       name: widget.name,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -87,8 +97,10 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
       validator: (value) {
         var ph = PhoneNumber(isoCode: _isoCode, nsn: value!);
         if (!ph.isValid(type: PhoneNumberType.mobile)) {
+          isValid = false;
           return "请输入正确的手机号码";
         }
+        isValid = true;
         return null;
       },
     );

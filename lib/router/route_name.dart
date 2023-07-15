@@ -32,4 +32,5 @@ class Routes {
   static const bindEmail = "/bind_Email";
   static const captcha = "/captcha";
   static const f2a = "/f2a";
+  static const updatePhone = "/update_phone";
 }

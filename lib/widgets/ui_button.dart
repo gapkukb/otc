@@ -40,10 +40,10 @@ class UiButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     this.disabled = false,
-    this.label,
-    this.child,
     this.size = UiButtonSize.small,
     this.fullWidth = false,
+    this.label,
+    this.child,
     this.shape,
     this.color,
     this.variant,
@@ -85,12 +85,9 @@ class UiButton extends StatelessWidget {
   }
 
   Color? getColor(Color themeColor) {
-    if (variant == UiButtonVariant.outline) {
-      return color;
-    }
-    if (variant == UiButtonVariant.text) {
-      return themeColor;
-    }
+    if (disabled) return Colors.grey;
+    if (variant == UiButtonVariant.outline) return color;
+    if (variant == UiButtonVariant.text) return themeColor;
     return color != Colors.white ? Colors.white : null;
   }
 
@@ -159,4 +156,22 @@ class UiButton extends StatelessWidget {
     UiButtonShape.circle: const CircleBorder(),
     UiButtonShape.square: const LinearBorder(),
   };
+  const UiButton.text({
+    super.key,
+    this.disabled = false,
+    this.fullWidth = false,
+    required this.onPressed,
+    this.size = UiButtonSize.small,
+    this.child,
+    this.color,
+    this.icon,
+    this.iconData,
+    this.iconOnRight,
+    this.label,
+    this.labelStyle,
+    this.minWidth,
+    this.padding,
+    this.shape,
+    this.variant = UiButtonVariant.text,
+  });
 }
