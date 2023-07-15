@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:otc/utils/responsive.dart';
 
 class Tip extends StatelessWidget {
-  String message;
-  double? iconSize;
-  Color? iconColor;
-  IconData? iconData;
-  TextStyle? style;
+  final String message;
+  final double? iconSize;
+  final Color? iconColor;
+  final IconData? iconData;
+  final TextStyle? style;
 
-  Tip({
+  const Tip({
     super.key,
     required this.message,
     this.style,

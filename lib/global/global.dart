@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:otc/apis/apis.dart';
-import 'package:otc/http/http.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otc/apis/apis.dart';
-import 'package:otc/components/tip/tip.dart';
-import 'package:otc/global/global.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class TextFormFieldPassword extends StatefulWidget {

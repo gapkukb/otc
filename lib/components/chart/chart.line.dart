@@ -1,7 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:otc/components/chart/chart.config.dart';
-import 'dart:math' as math;
 import 'chart.base.dart';
 
 class ChartLine extends ChartBase {

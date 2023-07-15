@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class TextFormFieldInviteCode extends UiTextFormField {

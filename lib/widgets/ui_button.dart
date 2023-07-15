@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otc/theme/padding.dart';
 
 enum UiButtonSize {
   mini,
@@ -60,10 +61,7 @@ class UiButton extends StatelessWidget {
     var themeColor = Theme.of(context).primaryColor;
     return Ink(
       child: MaterialButton(
-        padding: padding ??
-            (size == UiButtonSize.mini
-                ? const EdgeInsets.symmetric(horizontal: 4.0)
-                : null),
+        padding: padding ?? _pad[size],
         minWidth: fullWidth
             ? double.infinity
             : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
@@ -138,6 +136,12 @@ class UiButton extends StatelessWidget {
     return $text!;
   }
 
+  static final Map<UiButtonSize, EdgeInsets> _pad = {
+    UiButtonSize.mini: Pads.xAxisMini,
+    UiButtonSize.small: Pads.xAxisSm,
+    UiButtonSize.medium: Pads.xAxisMd,
+    UiButtonSize.large: Pads.xAxisLg,
+  };
   static final Map<UiButtonSize, double> _size = {
     UiButtonSize.mini: 24.0,
     UiButtonSize.small: 36.0,
