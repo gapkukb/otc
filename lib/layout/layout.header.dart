@@ -1,14 +1,10 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nil/nil.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
 import 'package:otc/providers/auth.provider.dart';
-import 'package:otc/providers/user.provider.dart';
-import 'package:otc/router/route_name.dart';
-import 'package:otc/router/router.keys.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';

@@ -14,28 +14,12 @@ class SecurityAuthrization extends StatelessWidget {
         action: UiButton.text(
           label: user.emailValid ? "修改" : "绑定",
           onPressed: () async {
-            if (user.emailValid) {
-              final result = await openCaptchaWindow(
-                context: context,
-                preferredDevice: CaptchaDeviceType.email,
-                service: CaptchaServiceType.boundEmail,
-              );
-              if (result != null) {
-                final String code = await apis.user.validateF2A({
-                  "device": result["device"],
-                  "captcha": result["code"],
-                });
-                await context.pushNamed(Routes.f2a, extra: code);
-              }
-            } else {
-              final result = await openCaptchaWindow(
-                context: context,
-                preferredDevice: CaptchaDeviceType.phone,
-                service: CaptchaServiceType.boundEmail,
-              );
-              if (result != null) {
-                context.pushNamed(Routes.updateEmail);
-              }
+            final result = await openCaptchaWindow(
+              context: context,
+              service: CaptchaServiceType.boundEmail,
+            );
+            if (result != null) {
+              await context.pushNamed(Routes.updatePhone);
             }
           },
         ),
@@ -48,17 +32,13 @@ class SecurityAuthrization extends StatelessWidget {
         action: UiButton.text(
           label: user.phoneValid ? "修改" : "绑定",
           onPressed: () async {
-            await context.pushNamed(Routes.updatePhone);
             final result = await openCaptchaWindow(
               context: context,
-              preferredDevice: user.phoneValid
-                  ? CaptchaDeviceType.phone
-                  : CaptchaDeviceType.email,
               service: CaptchaServiceType.boundPhone,
-              switchable: user.phoneValid && user.emailValid,
             );
-
-            if (!user.phoneValid) {}
+            if (result != null) {
+              await context.pushNamed(Routes.updatePhone);
+            }
           },
         ),
       ),

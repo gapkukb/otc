@@ -4,12 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
-import 'package:otc/global/global.dart';
-import 'package:otc/pages/account/login/login_util.dart';
-import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/router/route_name.dart';
-import 'package:otc/router/router.keys.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class Login extends ConsumerStatefulWidget {

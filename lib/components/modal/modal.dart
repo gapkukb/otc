@@ -4,7 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:bot_toast/src/toast_widget/animation.dart'
     show loadingAnimation;
 import 'package:flutter/material.dart';
-import 'package:otc/router/router.keys.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 

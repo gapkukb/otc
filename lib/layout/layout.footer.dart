@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/router/router.keys.dart';
+import 'package:otc/router/router.dart';
 import 'package:go_router/go_router.dart';
 
 class LayoutFooter extends StatelessWidget {

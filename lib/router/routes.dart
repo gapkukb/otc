@@ -1,26 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:otc/pages/account/login/login.dart';
-import 'package:otc/pages/home/home.dart';
-import 'package:otc/pages/notice/notice_window.dart';
-import 'package:otc/pages/user/auth/auth.dart';
-import 'package:otc/pages/user/captcha/captcha.dart';
-import 'package:otc/pages/user/f2a/f2a.dart';
-import 'package:otc/pages/user/reset.pwd/reset.pwd.dart';
-import 'package:otc/pages/user/update.email/update.email.dart';
-import 'package:otc/pages/user/update.funds.pwd/update.funds.pwd.dart';
-import 'package:otc/pages/user/update.phone/update.phone.dart';
-import 'package:otc/pages/user/update.pwd/update.pwd.dart';
-import 'package:otc/pages/user/home/home.dart';
-import 'package:otc/pages/user/layout/user_layout.dart';
-import 'package:otc/pages/user/security/security.dart';
-import 'package:otc/pages/user/setting/setting.dart';
-import 'package:otc/pages/user/setting/setting_avatar.dart';
-import 'package:otc/pages/user/setting/setting_nickname.dart';
-import 'package:otc/router/modal_page.dart';
-import 'package:otc/router/route_name.dart';
-import 'package:otc/router/router.keys.dart';
-import '../layout/layout.dart';
+part of router;
 
 final List<RouteBase> routes = [
   ShellRoute(
@@ -36,114 +14,81 @@ final List<RouteBase> routes = [
         navigatorKey: userLayoutKey,
         builder: userLayout,
         routes: [
-          GoRoute(
-            name: Routes.user,
+          AuthRoute(
             path: Routes.user,
-            builder: (context, state) => const UserHome(),
+            page: const UserHome(),
           ),
-          GoRoute(
-            name: Routes.setting,
+          AuthRoute(
             path: Routes.setting,
-            builder: (context, state) => const UserSetting(),
+            page: const UserSetting(),
           ),
-          GoRoute(
-            name: Routes.auth,
+          AuthRoute(
             path: Routes.auth,
-            builder: (context, state) => const UserAuth(),
+            page: const UserAuth(),
           ),
-          GoRoute(
-            name: Routes.security,
+          AuthRoute(
             path: Routes.security,
-            builder: (context, state) => const UserSecurity(),
+            page: const UserSecurity(),
+          ),
+          AuthRoute(
+            path: Routes.tasks,
+            page: const UserTasks(),
           ),
         ],
       ),
     ],
   ),
-  GoRoute(
-    parentNavigatorKey: navigatorKey,
+  ModalRoute(
     path: '/notice_window',
-    pageBuilder: (context, state) => modalPage(const NoticeWindow(), true),
+    transparent: true,
+    statePage: (context, state) => const NoticeWindow(),
   ),
-  GoRoute(
-    name: Routes.login,
+  ModalRoute(
     path: Routes.login,
-    builder: (context, state) => const Login(),
+    page: const Login(),
   ),
-  GoRoute(
-    parentNavigatorKey: navigatorKey,
-    name: Routes.settingNickname,
+  ModalRoute(
     path: Routes.settingNickname,
-    pageBuilder: (context, state) => modalPage(
-      const SettingNickname(),
-    ),
+    page: const SettingNickname(),
   ),
-  GoRoute(
-    parentNavigatorKey: navigatorKey,
-    name: Routes.settingAvatar,
+  ModalRoute(
     path: Routes.settingAvatar,
-    pageBuilder: (context, state) => modalPage(
-      const SettingAvatar(),
-    ),
+    page: const SettingAvatar(),
   ),
-  GoRoute(
-    parentNavigatorKey: navigatorKey,
-    name: Routes.udpatePwd,
+  ModalRoute(
     path: Routes.udpatePwd,
-    pageBuilder: (context, state) => modalPage(
-      const UpdatePwd(),
-    ),
+    page: const UpdatePwd(),
   ),
-  GoRoute(
-    parentNavigatorKey: navigatorKey,
-    name: Routes.captcha,
+  ModalRoute(
     path: Routes.captcha,
-    pageBuilder: (context, state) => modalPage(
-      Captcha(
-        preferredDevice: (state.extra as dynamic)['preferredDevice'],
-        service: (state.extra as dynamic)['service'],
-        account: (state.extra as dynamic)['account'],
-        switchable: (state.extra as dynamic)['switchable'],
-        user: (state.extra as dynamic)['user'],
-      ),
+    statePage: (context, state) => Captcha(
+      preferredDevice: (state.extra as dynamic)['preferredDevice'],
+      service: (state.extra as dynamic)['service'],
+      account: (state.extra as dynamic)['account'],
+      switchable: (state.extra as dynamic)['switchable'],
+      user: (state.extra as dynamic)['user'],
     ),
   ),
-  ModalPage(
+  ModalRoute(
     path: Routes.updateEmail,
     page: const UpdateEmail(),
   ),
-  ModalPage(
+  ModalRoute(
     path: Routes.f2a,
-    withPage: (context, state) => F2A(
+    statePage: (context, state) => F2A(
       text: state.extra as String,
     ),
   ),
-  ModalPage(
+  ModalRoute(
     path: Routes.updatePhone,
     page: const UpdatePhone(),
   ),
-  ModalPage(
+  ModalRoute(
     path: Routes.updateFundsPwd,
     page: const UpdateFundsPwd(),
   ),
-  ModalPage(
+  ModalRoute(
     path: Routes.resetPwd,
     page: const ResetPwd(),
   ),
 ];
-
-class ModalPage extends GoRoute {
-  final Widget? page;
-  final Widget Function(BuildContext, GoRouterState)? withPage;
-  ModalPage({
-    required super.path,
-    this.page,
-    this.withPage,
-  }) : super(
-          name: path,
-          parentNavigatorKey: navigatorKey,
-          pageBuilder: (context, state) => modalPage(
-            withPage?.call(context, state) ?? page!,
-          ),
-        );
-}

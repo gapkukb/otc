@@ -8,7 +8,7 @@ import 'package:otc/http/http.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/router/route_name.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 
 class UserTopBlock extends ConsumerStatefulWidget {

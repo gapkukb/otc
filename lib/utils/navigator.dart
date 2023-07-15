@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
-import 'package:otc/router/route_name.dart';
+import 'package:otc/router/router.dart';
 
 Future<Map<String, String>?> openCaptchaWindow({
   required BuildContext context,

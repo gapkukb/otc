@@ -6,7 +6,7 @@ import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_ax
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/models/currency.dart';
-import 'package:otc/router/router.keys.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';

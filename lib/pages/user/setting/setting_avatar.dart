@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
-import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/router/modal_page.dart';
-import 'package:otc/theme/padding.dart';
-import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 
 class SettingAvatar extends ConsumerWidget {

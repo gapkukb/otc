@@ -1,3 +1,5 @@
+part of router;
+
 class Routes {
   static const register = '/register';
   static const login = '/login';

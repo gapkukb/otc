@@ -14,7 +14,7 @@ import 'package:otc/utils/string.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
-part 'captcha.controller.dart';
+part 'captcha.helper.dart';
 
 class Captcha extends StatefulWidget {
   final CaptchaDeviceType? preferredDevice;

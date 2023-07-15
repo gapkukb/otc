@@ -7,7 +7,7 @@ import 'package:otc/global/global.dart';
 import 'package:otc/models/user/user.model.dart';
 
 const faker = UserModel(
-  id: 1,
+  id: "1",
   username: "",
   email: "",
   phone: "",
@@ -27,7 +27,7 @@ const faker = UserModel(
   locked: false,
   createdTime: "",
   maker: false,
-  googleSecretValid: false,
+  // googleSecretValid: false,
 );
 
 class UserNotifier extends StateNotifier<UserModel> {

@@ -11,7 +11,7 @@ import 'package:otc/models/user/user.model.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/pages/user/home/top_block.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/router/route_name.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/navigator.dart';
 import 'package:otc/utils/string.dart';
