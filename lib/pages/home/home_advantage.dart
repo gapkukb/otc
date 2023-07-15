@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 
 class HomeAdvantage extends StatelessWidget {
   const HomeAdvantage({super.key});
-  static const List<Map<String, String>> datalist = [
-    {
-      "imageName": "Frame 135.png",
-      "title": "易于使用",
-      "subTitle": "选择XXX，实现投资自由",
-    },
-    {
-      "imageName": "Frame 135 (1).png",
-      "title": "最高佣金",
-      "subTitle": "选择XXX，实现投资自由",
-    },
-    {
-      "imageName": "Frame 135 (2).png",
-      "title": "全天候客服",
-      "subTitle": "选择XXX，实现投资自由",
-    },
-    {
-      "imageName": "Frame 135 (3).png",
-      "title": "绝对安全",
-      "subTitle": "选择XXX，实现投资自由",
-    },
-  ];
+  List<Map<String, dynamic>> get datalist {
+    return [
+      {
+        "image": Assets.images.image9.provider(),
+        "title": "易于使用",
+        "subTitle": "选择XXX，实现投资自由",
+      },
+      {
+        "image": Assets.images.image6.provider(),
+        "title": "最高佣金",
+        "subTitle": "选择XXX，实现投资自由",
+      },
+      {
+        "image": Assets.images.image7.provider(),
+        "title": "全天候客服",
+        "subTitle": "选择XXX，实现投资自由",
+      },
+      {
+        "image": Assets.images.image8.provider(),
+        "title": "绝对安全",
+        "subTitle": "选择XXX，实现投资自由",
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +68,7 @@ class HomeAdvantage extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.scaleDown,
             alignment: Alignment.bottomCenter,
-            image: AssetImage(
-              "assets/images/${item['imageName']}",
-            ),
+            image: item['image'],
           ),
         ),
         padding: const EdgeInsets.symmetric(

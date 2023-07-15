@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/asstes/assets.gen.dart';
 
 class HomeCarousel extends StatelessWidget {
   const HomeCarousel({super.key});
+
+  List<Map<String, dynamic>> get items {
+    return [
+      {
+        "image": Assets.images.image1,
+      },
+      {
+        "image": Assets.images.image1,
+      },
+      {
+        "image": Assets.images.image1,
+      },
+      {
+        "image": Assets.images.image1,
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +33,14 @@ class HomeCarousel extends StatelessWidget {
         crossAxisSpacing: 16.0,
       ),
       itemBuilder: (context, index) {
+        final item = items[index];
         return GestureDetector(
           child: Container(
             decoration: BoxDecoration(
               color: Colors.amber,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Image.asset(
-              "assets/images/1.png",
-              fit: BoxFit.cover,
-            ),
+            child: item['image'].image(fit: BoxFit.cover),
           ),
           onTap: () {},
         );

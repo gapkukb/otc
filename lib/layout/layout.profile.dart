@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
-import 'package:otc/pages/user/sidebar.data.dart';
+import 'package:otc/pages/user/layout/user.nav.list.dart';
 import 'package:otc/providers/auth.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -28,18 +28,16 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
         alignment: Alignment.bottomRight,
       ),
 
-      menuChildren: userNavsList.map((item) {
+      menuChildren: UserNavList.values.map((item) {
         return MenuItemButton(
           style: MenuItemButton.styleFrom(
             fixedSize: const Size.fromWidth(180.0),
           ),
+          onPressed: item.go,
           child: Text(
-            item['label'],
+            item.label,
             style: Font.small,
           ),
-          onPressed: () {
-            context.go(item['path']);
-          },
         );
       }).toList()
         ..add(MenuItemButton(

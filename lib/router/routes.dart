@@ -34,6 +34,14 @@ final List<RouteBase> routes = [
             path: Routes.tasks,
             page: const UserTasks(),
           ),
+          AuthRoute(
+            path: Routes.c2c,
+            page: const UserC2C(),
+          ),
+          AuthRoute(
+            path: Routes.merchant,
+            page: const Merchant(),
+          ),
         ],
       ),
     ],

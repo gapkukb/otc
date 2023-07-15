@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_flex.dart';
 
-class UserAgent extends StatelessWidget {
-  const UserAgent({super.key});
+class Merchant extends StatelessWidget {
+  const Merchant({super.key});
 
-  static List<String> items = [
-    "• 完成手机号或邮箱绑定",
-    "• 账户余额不低于500 USDT",
-    "• 完成身份验证",
-    "• 绑定一张银行卡"
-  ];
+  List<String> get items {
+    return [
+      "• 完成手机号或邮箱绑定",
+      "• 账户余额不低于500 USDT",
+      "• 完成身份验证",
+      "• 绑定一张银行卡",
+    ];
+  }
 
-  static List<dynamic> futures = [
-    {
-      "title": "广告发布权限",
-      "desc": "广告方可以自由发布广告，买卖更灵活，更便捷。",
-      "image": "assets/images/1.png"
-    },
-    {
-      "title": "佣金收益",
-      "desc": "为了让商家更好的服务用户，每完成一笔星级订单，商家都会获得一次返佣奖励。",
-      "image": "assets/images/2.png"
-    },
-    {
-      "title": "一对一服务",
-      "desc": "我们针对商户提供一对一服务，提高交易效率。",
-      "image": "assets/images/3.png"
-    },
-  ];
+  List<_Item> get futures {
+    return [
+      _Item(
+        "广告发布权限",
+        "广告方可以自由发布广告，买卖更灵活，更便捷。",
+        Assets.images.image1.image(),
+      ),
+      _Item(
+        "佣金收益",
+        "为了让商家更好的服务用户，每完成一笔星级订单，商家都会获得一次返佣奖励。",
+        Assets.images.image2.image(),
+      ),
+      _Item(
+        "一对一服务",
+        "我们针对商户提供一对一服务，提高交易效率。",
+        Assets.images.image3.image(),
+      )
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +51,13 @@ class UserAgent extends StatelessWidget {
           const Text(
             "认证商户申请",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Font.x4largeBold,
           ),
           const SizedBox(height: 8),
           const Text(
             "成为Mybit认证商户，获得广告发布权限，享受更多交易特权",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey,
-            ),
+            style: Font.largeGrey,
           ),
           const SizedBox(height: 32),
           UiButton(
@@ -88,20 +89,17 @@ class UserAgent extends StatelessWidget {
           Panel(
             title: "申请条件",
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: Pads.md,
               child: Wrap(
                 children: items
                     .map(
                       (e) => FractionallySizedBox(
                         widthFactor: context.responsive(1, md: 0.5),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: Pads.xs,
                           child: Text(
                             e,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Font.mediumBold,
                           ),
                         ),
                       ),
@@ -111,28 +109,22 @@ class UserAgent extends StatelessWidget {
             ),
           ),
           UiFlex(
-            children: futures.map((e) {
+            children: futures.map((item) {
               return Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: Pads.lg,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(e['image']),
+                      item.image,
                       Text(
-                        e['title'],
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        item.title,
+                        style: Font.x2largeBold,
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        e['desc'],
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
+                        item.description,
+                        style: Font.miniGrey,
                       ),
                     ],
                   ),
@@ -144,4 +136,15 @@ class UserAgent extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Item {
+  const _Item(
+    this.title,
+    this.description,
+    this.image,
+  );
+  final String title;
+  final String description;
+  final Image image;
 }

@@ -13,7 +13,7 @@ class Routes {
   static const authPrimary = "/auth_primary";
   static const authJunior = "/auth_junior";
   static const authSenior = "/auth_senior";
-  static const authAgent = "/auth_agent";
+  static const merchant = "/merchant";
   static const setting = "/setting";
   static const settingNickname = "/setting_nickname";
   static const settingAvatar = "/setting_avatar";

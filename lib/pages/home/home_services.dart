@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/theme/text_theme.dart';
 
 class HomeServices extends StatefulWidget {
@@ -31,8 +30,7 @@ class _HomeServicesState extends State<HomeServices> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(child: collection()),
-            Image.asset(
-              "assets/images/image 5.png",
+            Assets.images.image11.image(
               cacheWidth: 505,
             )
           ],

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/pages/user/layout/user.nav.list.dart';
 import 'package:otc/pages/user/layout/user_appbar.dart';
 import 'package:otc/pages/user/layout/user_drawer.dart';
 import 'package:otc/pages/user/layout/user_bottom_narbar.dart';
@@ -76,10 +77,10 @@ class _SidebarMenuState extends State<SidebarMenu> {
     return SizedBox(
       width: 300,
       child: ListView.builder(
-        itemCount: items.length,
+        itemCount: UserNavList.values.length,
         itemBuilder: (context, index) {
-          final item = items[index];
-          final selected = currentPath == item['path'];
+          final item = UserNavList.values[index];
+          final selected = currentPath == item.pathname;
           final $style =
               !selected ? style : style!.copyWith(fontWeight: FontWeight.bold);
 
@@ -96,35 +97,17 @@ class _SidebarMenuState extends State<SidebarMenu> {
               color: Colors.black,
             ),
             title: Text(
-              item['label'],
+              item.label,
               style: $style,
             ),
             trailing: Text(
               "100+",
               style: $style,
             ),
-            onTap: item['onTap'] ??
-                () {
-                  if (item['pathname'] == null) {
-                    context.go(item['path']);
-                  } else {
-                    context.goNamed(item['pathname']);
-                  }
-                },
+            onTap: item.go,
           );
         },
       ),
     );
   }
-
-  static const List<Map<String, dynamic>> items = [
-    {"label": "总览", "path": "/user"},
-    {"label": "C2C用户中心", "path": "/c2c"},
-    {"label": "返佣", "path": "/rebate"},
-    {"label": "任务中心", "path": "/tasks"},
-    {"label": "账户安全", "path": "/security"},
-    {"label": "身份认证", "path": "/auth"},
-    {"label": "做市商认证", "path": "/auth_agent"},
-    {"label": "设置", "path": "/setting"},
-  ];
 }

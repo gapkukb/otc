@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/utils/responsive.dart';
@@ -15,7 +16,7 @@ class HomeTop extends ConsumerWidget {
     if (context.md) {
       return Column(
         children: [
-          Image.asset("assets/images/top-banner.png"),
+          Assets.images.topBanner.image(),
           const SizedBox(height: 32),
           _buildText(context, user)
         ],
@@ -26,9 +27,9 @@ class HomeTop extends ConsumerWidget {
       height: 344,
       margin: const EdgeInsets.symmetric(vertical: 48),
       alignment: Alignment.centerLeft,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/top-banner.png"),
+          image: Assets.images.topBanner.provider(),
           fit: BoxFit.fitHeight,
           alignment: Alignment.centerRight,
         ),
