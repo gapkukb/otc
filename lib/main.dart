@@ -37,7 +37,7 @@ class _AppState extends ConsumerState<App> {
   void initState() {
     super.initState();
 
-    ref.read(userProvider.notifier).refreshUser();
+    ref.read(userProvider.notifier).updateUser();
     theme.addListener(themeHandle);
   }
 

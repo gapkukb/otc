@@ -37,7 +37,7 @@ class _SettingNicknameState extends ConsumerState<SettingNickname> {
       icon: Icons.edit_outlined,
       onCompelete: () async {
         await apis.user.modifyNickname({"value": controller.text});
-        ref.read(userProvider.notifier).refreshUser();
+        ref.read(userProvider.notifier).updateUser();
         if (context.mounted) context.pop();
         Modal.showText(text: "更新成功");
       },

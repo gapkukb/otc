@@ -9,10 +9,12 @@ class _User {
       ));
   final logout = get("/");
   final register = post("/auth/register");
-  final getUser = get("/customer", UserModel.fromJson);
+
+  /// 获取用户基本信息
+  final getUserBase = get("/customer", UserBaseModel.fromJson);
 
   /// 获取用户详细信息
-  final getUserDetail = get("/customer/detail");
+  final getUser = get("/customer/detail", UserModel.fromJson);
 
   /// 未登录时获取验证码
   final sendCaptchaWithLogout = post("/captcha/no-login/send");

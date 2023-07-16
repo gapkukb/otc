@@ -25,7 +25,7 @@ class SettingAvatar extends ConsumerWidget {
               // final cancel = Modal.showLoading("正在上传中...请勿关闭页面");
               final url = await apis.app.uploadImage({"file": source});
               await apis.user.modifyAvatar({"value": url});
-              ref.read(userProvider.notifier).refreshUser();
+              ref.read(userProvider.notifier).updateUser();
               if (context.mounted) context.pop();
               // cancel();
             },

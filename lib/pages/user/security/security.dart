@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/models/user/user.model.dart';
+import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/pages/user/home/top_block.dart';
 import 'package:otc/providers/user.provider.dart';
@@ -26,7 +27,7 @@ class UserSecurity extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(userBaseProvider);
 
     return SingleChildScrollView(
       child: Column(

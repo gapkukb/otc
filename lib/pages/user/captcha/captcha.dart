@@ -10,6 +10,7 @@ import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/models/user/user.model.dart';
+import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/utils/string.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
@@ -23,7 +24,7 @@ class Captcha extends StatefulWidget {
   final bool? autoStart;
   final bool? switchable;
   final String? legend;
-  final UserModel? user;
+  final UserBaseModel? user;
 
   const Captcha({
     super.key,

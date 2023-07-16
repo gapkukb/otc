@@ -1,7 +1,7 @@
 part of security;
 
 class SecurityAuthrization extends StatelessWidget {
-  final UserModel user;
+  final UserBaseModel user;
   const SecurityAuthrization({super.key, required this.user});
 
   _item(BuildContext context) {

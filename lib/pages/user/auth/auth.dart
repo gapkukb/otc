@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/pages/user/auth/auth_profile.dart';
-import 'package:otc/providers/kyc.provider.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/router/router.dart';
+import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 
 class UserAuth extends ConsumerStatefulWidget {
@@ -77,8 +76,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
   }
 
   Card _buildBasement() {
-    final user = ref.read(userProvider);
-    final kyc = ref.watch(kycProvider);
+    final user = ref.read(userBaseProvider);
 
     return Card(
       margin: EdgeInsets.zero,
@@ -106,11 +104,11 @@ class _UserAuthState extends ConsumerState<UserAuth> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  _buildKycStatus(
-                    kyc.lv3Status == KycStatus.pass,
-                    kyc.lv3Status == KycStatus.pass,
-                    kyc.lv3Status == KycStatus.pass,
-                  ),
+                  // _buildKycStatus(
+                  //   kyc.lv3Status == KycStatus.pass,
+                  //   kyc.lv3Status == KycStatus.pass,
+                  //   kyc.lv3Status == KycStatus.pass,
+                  // ),
                 ],
               ),
             ),
@@ -137,8 +135,8 @@ class _UserAuthState extends ConsumerState<UserAuth> {
   }
 
   _buildItem() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+    return const Padding(
+      padding: Pads.topXs,
       child: Row(
         children: [Text("数字货币充值限额"), Spacer(), Text("无限额")],
       ),

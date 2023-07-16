@@ -15,7 +15,7 @@ class _Global {
   late final SharedPreferences prefs;
   late final BaseDeviceInfo deviceInfo;
   late String? authorization;
-  late UserModel? user;
+  late UserModel user;
 
   final keys = _Keys();
   final regexp = _Regexp();
@@ -26,7 +26,7 @@ class _Global {
     Logger.level = Level.debug;
     authorization = prefs.getString(keys.authorization);
     final $user = prefs.getString(keys.user);
-    user = $user == null ? null : UserModel.fromJson(jsonDecode($user));
+    user = $user == null ? fakerUser() : UserModel.fromJson(jsonDecode($user));
   }
 
   setToken(String? newToken) {
@@ -48,13 +48,9 @@ class _Global {
     );
   }
 
-  updateUser(UserModel? $user) {
+  updateUser(UserModel $user) {
     user = $user;
-    if ($user == null) {
-      prefs.remove(keys.user);
-    } else {
-      prefs.setString(keys.user, jsonEncode(user!.toJson()));
-    }
+    prefs.setString(keys.user, jsonEncode(user.toJson()));
   }
 }
 

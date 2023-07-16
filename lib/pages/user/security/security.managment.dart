@@ -1,7 +1,7 @@
 part of security;
 
 class SecurityManagment extends StatelessWidget {
-  final UserModel user;
+  final UserBaseModel user;
   const SecurityManagment({super.key, required this.user});
 
   List<_Item> _items(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/pages/user/layout/user.nav.list.dart';
-import 'package:otc/providers/auth.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
 
@@ -50,18 +49,18 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
           },
         )),
       builder: (context, controller, child) {
-        final avatar = ref.watch(userProvider.select((value) => value.avatar));
+        final userBase = ref.watch(userBaseProvider);
         return MaterialButton(
           height: 40,
           shape: const StadiumBorder(),
           child: Row(
             children: [
-              SizedBox(width: 32, child: Avatar(avatar: avatar)),
+              SizedBox(width: 32, child: Avatar(avatar: userBase.avatar)),
               const SizedBox(width: 8),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 60),
                 child: Text(
-                  ref.watch(userProvider.select((value) => value.nickname)),
+                  ref.watch(userProvider.select((value) => userBase.nickname)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

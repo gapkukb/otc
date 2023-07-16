@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/avatar/avatar.dart';
-import 'package:otc/components/cell/cell.dart';
 import 'package:otc/http/http.dart';
 import 'package:otc/models/user/user.model.dart';
+import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
@@ -32,7 +32,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
 
   @override
   Widget build(context) {
-    final user = ref.read(userProvider);
+    final user = ref.read(userBaseProvider);
     return Row(
       children: [
         Expanded(
@@ -71,7 +71,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
     );
   }
 
-  Card _buildBaseInfo(UserModel user) {
+  Card _buildBaseInfo(UserBaseModel user) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(

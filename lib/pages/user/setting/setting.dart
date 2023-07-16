@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
-import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
-import 'package:otc/pages/user/setting/update_currency.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
 
@@ -63,9 +61,12 @@ class _UserSettingState extends ConsumerState<UserSetting> {
   }
 
   _buildNickName() {
+    final nickName =
+        ref.watch(userBaseProvider.select((value) => value.nickname));
+
     return _buildItem(title: "昵称", subtitle: "为您的个人资料设置自定义昵称。", trailing: [
       Text(
-        ref.watch(userProvider.select((value) => value.nickname)),
+        nickName,
         style: Font.small,
       ),
       TextButton(
@@ -79,7 +80,9 @@ class _UserSettingState extends ConsumerState<UserSetting> {
 
   _buildAvatar() {
     return _buildItem(title: "头像", subtitle: "请选择一个头像以个性化您的帐户。", trailing: [
-      Avatar(avatar: ref.watch(userProvider.select((value) => value.avatar))),
+      Avatar(
+        avatar: ref.watch(userBaseProvider.select((value) => value.avatar)),
+      ),
       TextButton(
         child: const Text("修改"),
         onPressed: () {

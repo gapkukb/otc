@@ -8,14 +8,8 @@ class KycModel with _$KycModel {
     required String username,
     required String reference,
     required String identity,
+    required String status,
     required bool used,
-    required String idFrontPicture,
-    required String idBackPicture,
-    required String idHoldPicture,
-    required String idHoldVideo,
-    required KycStatus lv1Status,
-    required KycStatus lv2Status,
-    required KycStatus lv3Status,
   }) = _KycModel;
 
   factory KycModel.fromJson(Map<String, Object?> json) =>

@@ -12,7 +12,7 @@ enum CaptchaDeviceType {
   final String value;
   final String chineseText;
 
-  isValid(UserModel? user) {
+  isValid(UserBaseModel? user) {
     if (user == null) return false;
     if (this == email) return user.emailValid;
     if (this == phone) return user.phoneValid;

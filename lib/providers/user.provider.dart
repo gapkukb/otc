@@ -1,41 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/user/user.model.dart';
 
-const faker = UserModel(
-  id: "1",
-  username: "",
-  email: "",
-  phone: "",
-  regIp: "",
-  regServerName: "",
-  regReferer: "",
-  regDevice: "",
-  emailValid: false,
-  idValid: false,
-  phoneValid: false,
-  nickname: "",
-  avatar: "",
-  disabled: false,
-  type: "",
-  invitationCode: "",
-  lockedUntil: "",
-  locked: false,
-  createdTime: "",
-  maker: false,
-  // googleSecretValid: false,
-);
-
 class UserNotifier extends StateNotifier<UserModel> {
-  UserNotifier() : super(global.user ?? faker);
-
-  bool get hasLoggedIn {
-    return state.username != "";
-  }
+  UserNotifier() : super(global.user);
 
   Future<UserModel> login({
     required String username,
@@ -47,10 +17,10 @@ class UserNotifier extends StateNotifier<UserModel> {
     });
 
     global.setToken(token);
-    return await refreshUser();
+    return await updateUser();
   }
 
-  Future<UserModel> refreshUser() async {
+  Future<UserModel> updateUser() async {
     final user = await apis.user.getUser();
     state = user;
     global.updateUser(user);
@@ -62,16 +32,33 @@ class UserNotifier extends StateNotifier<UserModel> {
   }
 
   FutureOr<void> logout() {
-    state = faker;
-    global.updateUser(null);
+    state = fakerUser();
+    global.updateUser(state);
     global.setToken(null);
   }
 
   void updateNickName(String nickname) {
-    state = state.copyWith(nickname: nickname);
+    final newBase = state.base.copyWith(nickname: nickname);
+    state = state.copyWith(base: newBase);
   }
 }
 
 final userProvider = StateNotifierProvider<UserNotifier, UserModel>((ref) {
   return UserNotifier();
+});
+
+final userBaseProvider = Provider(
+  (ref) => ref.watch(userProvider.select((value) => value.base)),
+);
+
+final kycProvider = Provider(
+  (ref) => ref.watch(userProvider.select((value) => value.kyc)),
+);
+
+final userStatsProvider = Provider(
+  (ref) => ref.watch(userProvider.select((value) => value.stats)),
+);
+
+final authProvider = StateProvider<bool>((ref) {
+  return global.authorization != null;
 });

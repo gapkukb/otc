@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
@@ -43,7 +42,7 @@ class _F2AState extends State<F2A> {
           return;
         }
         await apis.user.bindF2A({"value": _controller.text});
-        context.read(userProvider.notifier).refreshUser();
+        context.read(userProvider.notifier).updateUser();
         context.pop();
       },
       children: [
@@ -148,7 +147,7 @@ class _F2AState extends State<F2A> {
             children: [
               QrImageView(
                 data:
-                    "otpauth://totp/maoerduo:${global.user!.username}?secret=${widget.text}",
+                    "otpauth://totp/maoerduo:${global.user!.base.username}?secret=${widget.text}",
                 version: QrVersions.auto,
                 size: 86,
                 padding: const EdgeInsets.all(2),
