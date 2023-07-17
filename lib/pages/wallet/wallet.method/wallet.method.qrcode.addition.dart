@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/wallet/wallet.method/wallet.method.addition.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 
-class WalletAddressWechatAndAlipayAddition extends StatelessWidget {
+class WalletMethodQRcodeAddition extends StatelessWidget {
   final AddType addType;
   final _formKey = GlobalKey<FormState>();
 
-  WalletAddressWechatAndAlipayAddition({
+  WalletMethodQRcodeAddition({
     super.key,
     required this.addType,
   });

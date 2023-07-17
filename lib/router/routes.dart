@@ -88,7 +88,7 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.walletMethod,
-            page: const WalletHome(),
+            page: const WalletMethod(),
           ),
           // AuthRoute(
           //   path: Routes.wallet,
@@ -174,5 +174,9 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.resetPwd,
     page: const ResetPwd(),
+  ),
+  ModalRoute(
+    path: Routes.walletMethodBankAddition,
+    page: const WalletMethodBankAddition(),
   ),
 ];

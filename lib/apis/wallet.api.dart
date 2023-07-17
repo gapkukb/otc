@@ -18,6 +18,14 @@ class _Wallet {
 
   /// 站内转账记录
   final transferRecords = get("/customer/wallet/transfer/records");
+
+  /// 查询用户所有银行卡
+  final getAllBankCards = get<List<Map<String, Object>>>(
+    "/customer/bankcard/list",
+  );
+
+  /// 查询用户所有二维码
+  final getAllQRcode = post<List<Map<String, Object>>>("/customer/qrcode/list");
 }
 
 final walletApi = _Wallet();

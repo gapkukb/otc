@@ -21,8 +21,8 @@ class Routes {
   static const wallet = "/wallet";
   static const walletMethodBanks = "/wallet_method_banks";
   static const walletMethod = "/wallet_method";
-  static const walletMethodAddition = "/wallet_method_addition";
-  static const walletMethodAdditionDc = "/wallet_method_addition_dc";
+  static const walletMethodBankAddition = "/wallet_method_bank_addition";
+  static const walletMethodAddressAddition = "/wallet_method_address_addition";
   static const walletFunds = "/wallet_funds";
   static const walletSpot = "/wallet_spot";
   static const walletFutures = "/wallet_futures";

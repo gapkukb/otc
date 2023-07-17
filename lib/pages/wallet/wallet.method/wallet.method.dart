@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.dc.dart';
-import 'package:otc/pages/wallet/wallet.method/wallet.method.legal_tender.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.legal.dart';
 
-class WalletAddress extends StatelessWidget {
-  const WalletAddress({super.key});
+class WalletMethod extends StatelessWidget {
+  const WalletMethod({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const DefaultTabController(
       length: 2,
-      initialIndex: 1,
+      initialIndex: 0,
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +21,6 @@ class WalletAddress extends StatelessWidget {
               ],
               labelColor: Colors.black,
               isScrollable: true,
-              padding: EdgeInsets.only(left: 16.0),
               dividerColor: Colors.transparent,
               physics: NeverScrollableScrollPhysics(),
             ),
@@ -32,7 +31,7 @@ class WalletAddress extends StatelessWidget {
               child: TabBarView(
                 // physics: NeverScrollableScrollPhysics(),
                 children: [
-                  WalletAddressLegalTender(),
+                  WalletMethodLegal(),
                   WalletAddressMng(),
                 ],
               ),

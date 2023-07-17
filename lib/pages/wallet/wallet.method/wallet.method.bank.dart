@@ -1,17 +1,32 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
+import 'package:otc/constants/banks.dart';
+import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
-class WalletAddressBank extends StatefulWidget {
-  const WalletAddressBank({super.key});
+class WalletMethodBank extends StatefulWidget {
+  const WalletMethodBank({super.key});
 
   @override
-  State<WalletAddressBank> createState() => _WalletAddressBankState();
+  State<WalletMethodBank> createState() => _WalletMethodBankState();
 }
 
-class _WalletAddressBankState extends State<WalletAddressBank> {
+class _WalletMethodBankState extends State<WalletMethodBank> {
+  List<WalletBankModel> items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    apis.wallet.getAllBankCards().then((value) {
+      setState(() {
+        items = value.map((e) => WalletBankModel.fromJson(e)).toList();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DataTable2(
@@ -20,7 +35,6 @@ class _WalletAddressBankState extends State<WalletAddressBank> {
       dividerThickness: 0.01,
       headingTextStyle: const TextStyle(color: Colors.grey),
       columns: const [
-        DataColumn2(label: Text("选择"), fixedWidth: 48),
         DataColumn2(label: Text("姓名")),
         DataColumn2(label: Text("银行卡号")),
         DataColumn2(label: Text("银行名称")),
@@ -32,21 +46,13 @@ class _WalletAddressBankState extends State<WalletAddressBank> {
             ),
             fixedWidth: 120),
       ],
-      rows: List.generate(
-        100,
-        (index) => DataRow(
+      rows: items.map((item) {
+        return DataRow(
           cells: [
-            DataCell(SizedBox(
-              width: 24,
-              child: Checkbox(
-                value: true,
-                onChanged: (value) {},
-              ),
-            )),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
+            DataCell(Text(item.name)),
+            DataCell(Text(item.cardNumber)),
+            DataCell(Text(item.bank)),
+            DataCell(Text(item.bankBranch)),
             DataCell(
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -72,9 +78,12 @@ class _WalletAddressBankState extends State<WalletAddressBank> {
               ),
             ),
           ],
-        ),
-      ).toList(),
-      empty: const UiEmptyView(),
+        );
+      }).toList(),
+      empty: const UiEmptyView(
+        title: "未找到银行卡收款地址",
+        subtitle: "点击右上角\"收款方式\"添加银行卡",
+      ),
     );
   }
 }
