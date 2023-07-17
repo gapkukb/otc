@@ -3,6 +3,7 @@ part of router;
 final navigatorKey = GlobalKey<NavigatorState>();
 final appLayoutKey = GlobalKey<NavigatorState>();
 final userLayoutKey = GlobalKey<NavigatorState>();
+final orderLayoutKey = GlobalKey<NavigatorState>();
 
 CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
   return CustomTransitionPage(
@@ -43,7 +44,7 @@ class AuthRoute extends GoRoute {
     required super.path,
     required this.page,
   }) : super(
-          name: path,
+          name: path.substring(1),
           builder: (context, state) => page,
         );
 }

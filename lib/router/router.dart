@@ -7,6 +7,13 @@ import 'package:otc/pages/error/404.dart';
 import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/pages/home/home.dart';
 import 'package:otc/pages/notice/notice_window.dart';
+import 'package:otc/pages/order/done.future.order/done.future.order.dart';
+import 'package:otc/pages/order/done.spot.order/done.spot.order.dart';
+import 'package:otc/pages/order/history.future.order/history.future.order.dart';
+import 'package:otc/pages/order/history.spot.order/history.spot.order.dart';
+import 'package:otc/pages/order/order_c2c/order_c2c.dart';
+import 'package:otc/pages/order/pending.future.order/pending.future.order.dart';
+import 'package:otc/pages/order/pending.spot.order/pending.spot.order.dart';
 import 'package:otc/pages/user/merchant/merchant.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
@@ -24,6 +31,7 @@ import 'package:otc/pages/user/security/security.dart';
 import 'package:otc/pages/user/setting/setting.dart';
 import 'package:otc/pages/user/setting/setting_avatar.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
+import 'package:otc/pages/order/layout/layout.dart';
 import '../layout/layout.dart';
 
 part 'router.name.dart';
@@ -33,7 +41,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.home,
+  initialLocation: Routes.order,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

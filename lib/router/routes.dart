@@ -44,6 +44,40 @@ final List<RouteBase> routes = [
           ),
         ],
       ),
+      ShellRoute(
+        navigatorKey: orderLayoutKey,
+        builder: orderLayout,
+        routes: [
+          AuthRoute(
+            path: Routes.order,
+            page: const OrderC2c(),
+          ),
+          AuthRoute(
+            path: Routes.pendingSpotOrder,
+            page: const PendingSpotOrder(),
+          ),
+          AuthRoute(
+            path: Routes.historySpotOrder,
+            page: const HistorySpotOrder(),
+          ),
+          AuthRoute(
+            path: Routes.doneSpotOrder,
+            page: const DoneSpotOrder(),
+          ),
+          AuthRoute(
+            path: Routes.pendingFutureOrder,
+            page: const PendingFutureOrder(),
+          ),
+          AuthRoute(
+            path: Routes.historyFutureOrder,
+            page: const HistoryFutureOrder(),
+          ),
+          AuthRoute(
+            path: Routes.doneFutureOrder,
+            page: const DoneFutureOrder(),
+          ),
+        ],
+      ),
     ],
   ),
   ModalRoute(

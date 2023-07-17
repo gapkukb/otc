@@ -24,16 +24,16 @@ mixin _$UserStatsModel {
   String get username => throw _privateConstructorUsedError;
 
   ///	Maker总次数
-  int get makerTimes => throw _privateConstructorUsedError;
+  String get makerTimes => throw _privateConstructorUsedError;
 
   ///	Taker总次数
-  int get takerTimes => throw _privateConstructorUsedError;
+  String get takerTimes => throw _privateConstructorUsedError;
 
   ///	Maker成单总次数
-  int get makerSuccessTotal => throw _privateConstructorUsedError;
+  String get makerSuccessTotal => throw _privateConstructorUsedError;
 
   ///	Taker成单总次数
-  int get takerSuccessTotal => throw _privateConstructorUsedError;
+  String get takerSuccessTotal => throw _privateConstructorUsedError;
 
   ///	总佣金
   num get commissionTotal => throw _privateConstructorUsedError;
@@ -42,10 +42,10 @@ mixin _$UserStatsModel {
   num get makerCommissionTotal => throw _privateConstructorUsedError;
 
   ///	登录次数
-  int get loginTimes => throw _privateConstructorUsedError;
+  String get loginTimes => throw _privateConstructorUsedError;
 
   ///	成功登录次数
-  int get loginSuccessTimes => throw _privateConstructorUsedError;
+  String get loginSuccessTimes => throw _privateConstructorUsedError;
 
   ///	最后登录时间
   String get lastLoggedTime => throw _privateConstructorUsedError;
@@ -67,14 +67,14 @@ abstract class $UserStatsModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String username,
-      int makerTimes,
-      int takerTimes,
-      int makerSuccessTotal,
-      int takerSuccessTotal,
+      String makerTimes,
+      String takerTimes,
+      String makerSuccessTotal,
+      String takerSuccessTotal,
       num commissionTotal,
       num makerCommissionTotal,
-      int loginTimes,
-      int loginSuccessTimes,
+      String loginTimes,
+      String loginSuccessTimes,
       String lastLoggedTime,
       String lastLoggedIp});
 }
@@ -112,19 +112,19 @@ class _$UserStatsModelCopyWithImpl<$Res, $Val extends UserStatsModel>
       makerTimes: null == makerTimes
           ? _value.makerTimes
           : makerTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       takerTimes: null == takerTimes
           ? _value.takerTimes
           : takerTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       makerSuccessTotal: null == makerSuccessTotal
           ? _value.makerSuccessTotal
           : makerSuccessTotal // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       takerSuccessTotal: null == takerSuccessTotal
           ? _value.takerSuccessTotal
           : takerSuccessTotal // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       commissionTotal: null == commissionTotal
           ? _value.commissionTotal
           : commissionTotal // ignore: cast_nullable_to_non_nullable
@@ -136,11 +136,11 @@ class _$UserStatsModelCopyWithImpl<$Res, $Val extends UserStatsModel>
       loginTimes: null == loginTimes
           ? _value.loginTimes
           : loginTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       loginSuccessTimes: null == loginSuccessTimes
           ? _value.loginSuccessTimes
           : loginSuccessTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       lastLoggedTime: null == lastLoggedTime
           ? _value.lastLoggedTime
           : lastLoggedTime // ignore: cast_nullable_to_non_nullable
@@ -163,14 +163,14 @@ abstract class _$$_UserStatsModelCopyWith<$Res>
   @useResult
   $Res call(
       {String username,
-      int makerTimes,
-      int takerTimes,
-      int makerSuccessTotal,
-      int takerSuccessTotal,
+      String makerTimes,
+      String takerTimes,
+      String makerSuccessTotal,
+      String takerSuccessTotal,
       num commissionTotal,
       num makerCommissionTotal,
-      int loginTimes,
-      int loginSuccessTimes,
+      String loginTimes,
+      String loginSuccessTimes,
       String lastLoggedTime,
       String lastLoggedIp});
 }
@@ -206,19 +206,19 @@ class __$$_UserStatsModelCopyWithImpl<$Res>
       makerTimes: null == makerTimes
           ? _value.makerTimes
           : makerTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       takerTimes: null == takerTimes
           ? _value.takerTimes
           : takerTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       makerSuccessTotal: null == makerSuccessTotal
           ? _value.makerSuccessTotal
           : makerSuccessTotal // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       takerSuccessTotal: null == takerSuccessTotal
           ? _value.takerSuccessTotal
           : takerSuccessTotal // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       commissionTotal: null == commissionTotal
           ? _value.commissionTotal
           : commissionTotal // ignore: cast_nullable_to_non_nullable
@@ -230,11 +230,11 @@ class __$$_UserStatsModelCopyWithImpl<$Res>
       loginTimes: null == loginTimes
           ? _value.loginTimes
           : loginTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       loginSuccessTimes: null == loginSuccessTimes
           ? _value.loginSuccessTimes
           : loginSuccessTimes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       lastLoggedTime: null == lastLoggedTime
           ? _value.lastLoggedTime
           : lastLoggedTime // ignore: cast_nullable_to_non_nullable
@@ -272,19 +272,19 @@ class _$_UserStatsModel implements _UserStatsModel {
 
   ///	Maker总次数
   @override
-  final int makerTimes;
+  final String makerTimes;
 
   ///	Taker总次数
   @override
-  final int takerTimes;
+  final String takerTimes;
 
   ///	Maker成单总次数
   @override
-  final int makerSuccessTotal;
+  final String makerSuccessTotal;
 
   ///	Taker成单总次数
   @override
-  final int takerSuccessTotal;
+  final String takerSuccessTotal;
 
   ///	总佣金
   @override
@@ -296,11 +296,11 @@ class _$_UserStatsModel implements _UserStatsModel {
 
   ///	登录次数
   @override
-  final int loginTimes;
+  final String loginTimes;
 
   ///	成功登录次数
   @override
-  final int loginSuccessTimes;
+  final String loginSuccessTimes;
 
   ///	最后登录时间
   @override
@@ -377,14 +377,14 @@ class _$_UserStatsModel implements _UserStatsModel {
 abstract class _UserStatsModel implements UserStatsModel {
   const factory _UserStatsModel(
       {required final String username,
-      required final int makerTimes,
-      required final int takerTimes,
-      required final int makerSuccessTotal,
-      required final int takerSuccessTotal,
+      required final String makerTimes,
+      required final String takerTimes,
+      required final String makerSuccessTotal,
+      required final String takerSuccessTotal,
       required final num commissionTotal,
       required final num makerCommissionTotal,
-      required final int loginTimes,
-      required final int loginSuccessTimes,
+      required final String loginTimes,
+      required final String loginSuccessTimes,
       required final String lastLoggedTime,
       required final String lastLoggedIp}) = _$_UserStatsModel;
 
@@ -398,19 +398,19 @@ abstract class _UserStatsModel implements UserStatsModel {
   @override
 
   ///	Maker总次数
-  int get makerTimes;
+  String get makerTimes;
   @override
 
   ///	Taker总次数
-  int get takerTimes;
+  String get takerTimes;
   @override
 
   ///	Maker成单总次数
-  int get makerSuccessTotal;
+  String get makerSuccessTotal;
   @override
 
   ///	Taker成单总次数
-  int get takerSuccessTotal;
+  String get takerSuccessTotal;
   @override
 
   ///	总佣金
@@ -422,11 +422,11 @@ abstract class _UserStatsModel implements UserStatsModel {
   @override
 
   ///	登录次数
-  int get loginTimes;
+  String get loginTimes;
   @override
 
   ///	成功登录次数
-  int get loginSuccessTimes;
+  String get loginSuccessTimes;
   @override
 
   ///	最后登录时间

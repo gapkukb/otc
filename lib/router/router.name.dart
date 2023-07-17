@@ -34,4 +34,12 @@ class Routes {
   static const updatePhone = "/update_phone";
   static const updateFundsPwd = "/update_funds_pwd";
   static const resetPwd = "/reset_pwd";
+  // 订单
+  static const order = "/order";
+  static const pendingSpotOrder = "/pending_spot_order";
+  static const historySpotOrder = "/history_spot_order";
+  static const doneSpotOrder = "/done_spot_order";
+  static const pendingFutureOrder = "/pending_future_order";
+  static const historyFutureOrder = "/history_future_order";
+  static const doneFutureOrder = "/done_future_order";
 }

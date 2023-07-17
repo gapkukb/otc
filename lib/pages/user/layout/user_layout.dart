@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/pages/user/layout/user.nav.list.dart';
 import 'package:otc/pages/user/layout/user_appbar.dart';
 import 'package:otc/pages/user/layout/user_drawer.dart';
 import 'package:otc/pages/user/layout/user_bottom_narbar.dart';
-import 'package:otc/router/router.dart';
 import 'package:otc/utils/responsive.dart';
 
 ShellRouteBuilder userLayout = (context, state, child) {

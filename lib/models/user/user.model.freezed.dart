@@ -24,7 +24,7 @@ mixin _$UserModel {
   UserBaseModel get base => throw _privateConstructorUsedError;
   @JsonKey(name: "data")
   UserStatsModel get stats => throw _privateConstructorUsedError;
-  KycModel get kyc => throw _privateConstructorUsedError;
+  KycModel? get kyc => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,11 +40,11 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "customer") UserBaseModel base,
       @JsonKey(name: "data") UserStatsModel stats,
-      KycModel kyc});
+      KycModel? kyc});
 
   $UserBaseModelCopyWith<$Res> get base;
   $UserStatsModelCopyWith<$Res> get stats;
-  $KycModelCopyWith<$Res> get kyc;
+  $KycModelCopyWith<$Res>? get kyc;
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? base = null,
     Object? stats = null,
-    Object? kyc = null,
+    Object? kyc = freezed,
   }) {
     return _then(_value.copyWith(
       base: null == base
@@ -73,10 +73,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.stats
           : stats // ignore: cast_nullable_to_non_nullable
               as UserStatsModel,
-      kyc: null == kyc
+      kyc: freezed == kyc
           ? _value.kyc
           : kyc // ignore: cast_nullable_to_non_nullable
-              as KycModel,
+              as KycModel?,
     ) as $Val);
   }
 
@@ -98,8 +98,12 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $KycModelCopyWith<$Res> get kyc {
-    return $KycModelCopyWith<$Res>(_value.kyc, (value) {
+  $KycModelCopyWith<$Res>? get kyc {
+    if (_value.kyc == null) {
+      return null;
+    }
+
+    return $KycModelCopyWith<$Res>(_value.kyc!, (value) {
       return _then(_value.copyWith(kyc: value) as $Val);
     });
   }
@@ -115,14 +119,14 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "customer") UserBaseModel base,
       @JsonKey(name: "data") UserStatsModel stats,
-      KycModel kyc});
+      KycModel? kyc});
 
   @override
   $UserBaseModelCopyWith<$Res> get base;
   @override
   $UserStatsModelCopyWith<$Res> get stats;
   @override
-  $KycModelCopyWith<$Res> get kyc;
+  $KycModelCopyWith<$Res>? get kyc;
 }
 
 /// @nodoc
@@ -138,7 +142,7 @@ class __$$_UserModelCopyWithImpl<$Res>
   $Res call({
     Object? base = null,
     Object? stats = null,
-    Object? kyc = null,
+    Object? kyc = freezed,
   }) {
     return _then(_$_UserModel(
       base: null == base
@@ -149,10 +153,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.stats
           : stats // ignore: cast_nullable_to_non_nullable
               as UserStatsModel,
-      kyc: null == kyc
+      kyc: freezed == kyc
           ? _value.kyc
           : kyc // ignore: cast_nullable_to_non_nullable
-              as KycModel,
+              as KycModel?,
     ));
   }
 }
@@ -175,7 +179,7 @@ class _$_UserModel implements _UserModel {
   @JsonKey(name: "data")
   final UserStatsModel stats;
   @override
-  final KycModel kyc;
+  final KycModel? kyc;
 
   @override
   String toString() {
@@ -214,7 +218,7 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {@JsonKey(name: "customer") required final UserBaseModel base,
       @JsonKey(name: "data") required final UserStatsModel stats,
-      required final KycModel kyc}) = _$_UserModel;
+      required final KycModel? kyc}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -226,7 +230,7 @@ abstract class _UserModel implements UserModel {
   @JsonKey(name: "data")
   UserStatsModel get stats;
   @override
-  KycModel get kyc;
+  KycModel? get kyc;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

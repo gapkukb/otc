@@ -9,7 +9,9 @@ part of 'user.model.dart';
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       base: UserBaseModel.fromJson(json['customer'] as Map<String, dynamic>),
       stats: UserStatsModel.fromJson(json['data'] as Map<String, dynamic>),
-      kyc: KycModel.fromJson(json['kyc'] as Map<String, dynamic>),
+      kyc: json['kyc'] == null
+          ? null
+          : KycModel.fromJson(json['kyc'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>

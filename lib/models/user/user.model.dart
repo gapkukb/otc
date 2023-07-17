@@ -10,7 +10,7 @@ class UserModel with _$UserModel {
   const factory UserModel({
     @JsonKey(name: "customer") required UserBaseModel base,
     @JsonKey(name: "data") required UserStatsModel stats,
-    required KycModel kyc,
+    required KycModel? kyc,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, Object?> json) =>
@@ -43,14 +43,14 @@ UserModel fakerUser() {
     ),
     stats: UserStatsModel(
       username: "",
-      makerTimes: 0,
-      takerTimes: 0,
-      makerSuccessTotal: 0,
-      takerSuccessTotal: 0,
+      makerTimes: "0",
+      takerTimes: "0",
+      makerSuccessTotal: "0",
+      takerSuccessTotal: "0",
       commissionTotal: 0,
       makerCommissionTotal: 0,
-      loginTimes: 0,
-      loginSuccessTimes: 0,
+      loginTimes: "0",
+      loginSuccessTimes: "0",
       lastLoggedTime: "",
       lastLoggedIp: "",
     ),

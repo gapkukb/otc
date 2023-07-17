@@ -7,11 +7,6 @@ ShellRouteBuilder layout = (context, state, child) {
     appBar: LayoutHeader(
       appBar: AppBar(),
     ),
-    body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: child,
-      ),
-    ),
+    body: child,
   );
 };
