@@ -2,18 +2,19 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
-class OrderC2cPending extends StatefulWidget {
-  const OrderC2cPending({super.key});
+class AllC2cOrder extends StatefulWidget {
+  const AllC2cOrder({super.key});
 
   @override
-  State<OrderC2cPending> createState() => _OrderC2cPendingState();
+  State<AllC2cOrder> createState() => _AllC2cOrderState();
 }
 
-class _OrderC2cPendingState extends State<OrderC2cPending> {
+class _AllC2cOrderState extends State<AllC2cOrder> {
   @override
   Widget build(BuildContext context) {
     return DataTable2(
-      columns: [
+      columnSpacing: 4,
+      columns: const [
         DataColumn2(label: Text("订单号")),
         DataColumn2(label: Text("订单类型")),
         DataColumn2(label: Text("币种")),

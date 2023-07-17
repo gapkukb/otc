@@ -11,7 +11,7 @@ import 'package:otc/pages/order/done.future.order/done.future.order.dart';
 import 'package:otc/pages/order/done.spot.order/done.spot.order.dart';
 import 'package:otc/pages/order/history.future.order/history.future.order.dart';
 import 'package:otc/pages/order/history.spot.order/history.spot.order.dart';
-import 'package:otc/pages/order/order_c2c/order_c2c.dart';
+import 'package:otc/pages/order/c2c.order/c2c.order.dart';
 import 'package:otc/pages/order/pending.future.order/pending.future.order.dart';
 import 'package:otc/pages/order/pending.spot.order/pending.spot.order.dart';
 import 'package:otc/pages/user/merchant/merchant.dart';

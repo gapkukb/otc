@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/order/order_c2c/order_c2c_all.dart';
-import 'package:otc/pages/order/order_c2c/order_c2c_pending.dart';
+import 'package:otc/pages/order/c2c.order/all.c2c.order.dart';
+import 'package:otc/pages/order/c2c.order/pending.c2c.order.dart';
 
 class OrderC2c extends StatefulWidget {
   const OrderC2c({super.key});
@@ -13,16 +13,13 @@ class _OrderC2cState extends State<OrderC2c> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
       body: DefaultTabController(
         initialIndex: 1,
         length: 2,
         child: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
+            return const [
               SliverToBoxAdapter(
                 child: TabBar(
                   isScrollable: true,
@@ -52,10 +49,10 @@ class _OrderC2cState extends State<OrderC2c> {
               ),
             ];
           },
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              OrderC2cPending(),
-              OrderC2cAll(),
+              PendingC2cOrder(),
+              AllC2cOrder(),
             ],
           ),
         ),
