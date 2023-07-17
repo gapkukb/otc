@@ -73,6 +73,7 @@ class Request<T> {
     Map<String, dynamic>? data,
     HttpOptions? options,
   ]) {
+    print(data);
     final opt = _options.merge(options);
     CancelToken? cancelToken;
 
@@ -86,6 +87,8 @@ class Request<T> {
     if (data != null) {
       $data.addAll(data);
     }
+    print('+++++++++++++++++++++++');
+    print($data);
 
     return dio
         .request(

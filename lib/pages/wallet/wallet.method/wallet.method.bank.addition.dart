@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -43,7 +45,11 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
         onCompelete: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            await apis.wallet.addBankCard(_formState);
+
+            await apis.wallet.addBankCard({
+              "account": _formState['cardNumber'],
+              ..._formState,
+            });
             context.pop(true);
           }
         },
@@ -52,8 +58,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
             formState: _formState,
             name: "name",
             decoration: const InputDecoration(
-              label: Text("姓名"),
-            ),
+                label: Text("姓名"), hintText: "请输入银行卡户主姓名"),
             validator: (value) {
               return value!.trim().isNotEmpty ? null : "姓名不能为空";
             },
@@ -66,6 +71,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               label: Text("银行卡号"),
+              hintText: "请输入银行账号/卡号",
             ),
             validator: (value) {
               return value!.trim().isNotEmpty ? null : "银行卡号不能为空";
@@ -73,6 +79,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
           ),
           const SizedBox(height: 16),
           Dropdown(
+            formState: _formState,
             name: "bank",
             labelText: "开户银行",
             searchHintText: "请输入银行名称或银行代码",
@@ -82,9 +89,22 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
                   (e) => DropdownItem(
                     title: e.chinese,
                     trailing: e.name,
+                    value: e.name,
                   ),
                 )
                 .toList(),
+          ),
+          const SizedBox(height: 16),
+          UiTextFormField(
+            name: "title",
+            formState: _formState,
+            decoration: const InputDecoration(
+              label: Text("备注"),
+              hintText: "添加备注方便您更容易甄别银行卡信息",
+            ),
+            validator: (value) {
+              return value!.trim().isNotEmpty ? null : "银行卡号不能为空";
+            },
           ),
           const SizedBox(height: 16),
           UiTextFormField(

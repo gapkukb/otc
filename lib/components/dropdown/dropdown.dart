@@ -21,7 +21,7 @@ class DropdownItem {
 }
 
 class Dropdown extends DropdownSearch<DropdownItem> {
-  final Map<String, dynamic>? formStore;
+  final Map<String, dynamic>? formState;
   final String name;
   final bool showSearchBox;
   final String? searchHintText;
@@ -43,7 +43,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     super.selectedItem,
     super.validator,
     required this.name,
-    this.formStore,
+    this.formState,
     this.showSearchBox = true,
     this.searchHintText,
     this.labelText,
@@ -52,7 +52,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
           items: data,
           onSaved: (now) {
             final $value = now?.value ?? now?.title;
-            formStore?.update(name, (val) => val, ifAbsent: $value);
+            formState?.update(name, (val) => val, ifAbsent: () => $value);
           },
           popupProps: PopupProps.dialog(
             itemBuilder: (context, item, isSelected) {
