@@ -57,11 +57,7 @@ ShellRouteBuilder orderLayout = (context, state, child) {
         ],
       ),
       Expanded(
-        child: Container(
-          color: Colors.purple.withAlpha(7),
-          padding: const EdgeInsets.all(32.0),
-          child: SelectionArea(child: child),
-        ),
+        child: child,
       ),
     ],
   );
