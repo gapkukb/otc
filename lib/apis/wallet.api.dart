@@ -24,6 +24,18 @@ class _Wallet {
     "/customer/bankcard/list",
   );
 
+  /// 添加银行卡
+  final addBankCard = post("/customer/bankcard/add");
+
+  /// 删除银行卡
+  final deleteBankCard = post("/customer/bankcard/delete");
+
+  /// 更新银行卡
+  final updateBankCard = post("/customer/bankcard/edit");
+
+  /// 设置默认银行卡
+  final setDefaultBankCard = post("/customer/bankcard/set-default");
+
   /// 查询用户所有二维码
   final getAllQRcode = post<List<Map<String, Object>>>("/customer/qrcode/list");
 }
