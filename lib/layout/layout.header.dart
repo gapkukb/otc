@@ -152,7 +152,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
         IconButton(
           icon: const Icon(Icons.credit_card_outlined),
           onPressed: () {
-            _router.go('/login');
+            _router.go(Routes.wallet);
           },
         ),
         IconButton(

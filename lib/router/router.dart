@@ -32,6 +32,8 @@ import 'package:otc/pages/user/setting/setting.dart';
 import 'package:otc/pages/user/setting/setting_avatar.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
 import 'package:otc/pages/order/layout/layout.dart';
+import 'package:otc/pages/wallet/layout/layout.dart';
+import 'package:otc/pages/wallet/wallet.home/wallet.home.dart';
 import '../layout/layout.dart';
 
 part 'router.name.dart';

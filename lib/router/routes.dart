@@ -78,6 +78,48 @@ final List<RouteBase> routes = [
           ),
         ],
       ),
+      ShellRoute(
+        navigatorKey: walletLayoutKey,
+        builder: walletLayout,
+        routes: [
+          AuthRoute(
+            path: Routes.wallet,
+            page: const WalletHome(),
+          ),
+          AuthRoute(
+            path: Routes.walletMethod,
+            page: const WalletHome(),
+          ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+          // AuthRoute(
+          //   path: Routes.wallet,
+          //   page: const HomeWallet(),
+          // ),
+        ],
+      ),
     ],
   ),
   ModalRoute(

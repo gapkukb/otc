@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.addition.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 
 class WalletAddressWechatAndAlipayAddition extends StatelessWidget {

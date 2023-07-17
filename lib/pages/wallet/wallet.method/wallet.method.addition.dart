@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_addition_bank.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_wechat_and_alipay_addition.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.addition.bank.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.addition.wechat_and_alipay.dart';
 
 enum AddType {
   bank,
@@ -49,7 +49,7 @@ class WalletAddressAddition extends StatelessWidget {
 
   _buildForm() {
     if (addType == AddType.bank) {
-      return WalletAddressAdditionBank();
+      return BankAdditionAddressWallet();
     }
 
     if (addType == AddType.alipay) {

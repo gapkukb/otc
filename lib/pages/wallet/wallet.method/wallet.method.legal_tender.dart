@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_webchat_and_alipay.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_bank.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.addition.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.webchat_and_alipay.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.bank.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 class WalletAddressLegalTender extends StatefulWidget {

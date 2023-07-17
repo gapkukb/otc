@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_dc.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_legal_tender.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.dc.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.legal_tender.dart';
 
 class WalletAddress extends StatelessWidget {
   const WalletAddress({super.key});

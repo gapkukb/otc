@@ -17,15 +17,17 @@ class Routes {
   static const setting = "/setting";
   static const settingNickname = "/setting_nickname";
   static const settingAvatar = "/setting_avatar";
+  // 钱包
   static const wallet = "/wallet";
-  static const walletBanks = "/wallet_banks";
-  static const walletAddress = "/wallet_address";
-  static const walletAddition = "/wallet_addition";
-  static const walletAdditionDc = "/wallet_addition_dc";
+  static const walletMethodBanks = "/wallet_method_banks";
+  static const walletMethod = "/wallet_method";
+  static const walletMethodAddition = "/wallet_method_addition";
+  static const walletMethodAdditionDc = "/wallet_method_addition_dc";
   static const walletFunds = "/wallet_funds";
   static const walletSpot = "/wallet_spot";
   static const walletFutures = "/wallet_futures";
   static const walletHistory = "/wallet_history";
+
   static const udpatePwd = "/update_pwd";
   static const updateEmail = "/update_email";
   static const bindEmail = "/bind_Email";

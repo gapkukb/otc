@@ -1,7 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/pages/wallet/wallet_address/wallet_address_addition.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.addition.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 import 'package:qr_flutter/qr_flutter.dart';

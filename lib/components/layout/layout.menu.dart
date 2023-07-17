@@ -6,11 +6,13 @@ import 'package:otc/theme/padding.dart';
 class SidebarMenu extends StatefulWidget {
   final double width;
   final List<Widget> items;
+  final String? title;
 
   const SidebarMenu({
     super.key,
     this.width = 336,
     this.items = const [],
+    this.title,
   });
 
   @override

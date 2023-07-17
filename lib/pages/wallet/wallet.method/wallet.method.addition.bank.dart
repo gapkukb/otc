@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class WalletAddressAdditionBank extends StatelessWidget {
+class BankAdditionAddressWallet extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  WalletAddressAdditionBank({
+  BankAdditionAddressWallet({
     super.key,
   });
 

@@ -20,7 +20,7 @@ class UserModel with _$UserModel {
 UserModel fakerUser() {
   return const UserModel(
     base: UserBaseModel(
-      id: "",
+      id: 0,
       username: "",
       email: "",
       phone: "",
@@ -35,6 +35,7 @@ UserModel fakerUser() {
       avatar: "",
       disabled: false,
       type: "",
+      googleSecretValid: false,
       invitationCode: "",
       lockedUntil: "",
       locked: false,
