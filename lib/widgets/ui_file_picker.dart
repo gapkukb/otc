@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,10 @@ import 'package:photo_view/photo_view.dart';
 class UiFilePickerController extends ChangeNotifier {}
 
 class UiFilePicker extends StatefulWidget {
-  final Function(File file) onPicked;
+  final Function(File? file) onChange;
   const UiFilePicker({
     super.key,
-    required this.onPicked,
+    required this.onChange,
   });
 
   @override
@@ -30,18 +31,14 @@ class _UiFilePickerState extends State<UiFilePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: 1,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: DottedBorder(
-          dashPattern: const [4],
-          strokeWidth: 0.3,
-          strokeCap: StrokeCap.round,
-          child: Container(
-            child: file == null ? _buildEmpty() : _buildImageView(),
-          ),
-        ),
+    return DottedBorder(
+      dashPattern: const [4],
+      strokeWidth: 0.3,
+      strokeCap: StrokeCap.round,
+      child: SizedBox(
+        width: 100,
+        height: 100,
+        child: file == null ? _buildEmpty() : _buildImageView(),
       ),
     );
   }
@@ -67,7 +64,7 @@ class _UiFilePickerState extends State<UiFilePicker> {
           if (result != null) {
             setState(() {
               file = File(result.path);
-              widget.onPicked(file!);
+              widget.onChange(file!);
             });
           }
         },
@@ -81,6 +78,7 @@ class _UiFilePickerState extends State<UiFilePicker> {
       onOk: () {
         setState(() {
           file = null;
+          widget.onChange(null);
         });
       },
     );
@@ -123,7 +121,7 @@ class _UiFilePickerState extends State<UiFilePicker> {
   _buildEmpty() {
     return Container(
       constraints: const BoxConstraints.expand(),
-      child: InkWell(
+      child: GestureDetector(
         onTap: _pick,
         child: const Icon(
           Icons.add,

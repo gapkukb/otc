@@ -20,8 +20,7 @@ UserBaseModel _$UserBaseModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserBaseModel {
-// required String id,
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError; // required int id,
   String get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -56,7 +55,7 @@ abstract class $UserBaseModelCopyWith<$Res> {
       _$UserBaseModelCopyWithImpl<$Res, UserBaseModel>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String username,
       String? email,
       String? phone,
@@ -118,7 +117,7 @@ class _$UserBaseModelCopyWithImpl<$Res, $Val extends UserBaseModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -212,7 +211,7 @@ abstract class _$$_UserBaseModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String username,
       String? email,
       String? phone,
@@ -272,7 +271,7 @@ class __$$_UserBaseModelCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -386,9 +385,9 @@ class _$_UserBaseModel implements _UserBaseModel {
   factory _$_UserBaseModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserBaseModelFromJson(json);
 
-// required String id,
   @override
-  final int id;
+  final String id;
+// required int id,
   @override
   final String username;
   @override
@@ -518,7 +517,7 @@ class _$_UserBaseModel implements _UserBaseModel {
 
 abstract class _UserBaseModel implements UserBaseModel {
   const factory _UserBaseModel(
-      {required final int id,
+      {required final String id,
       required final String username,
       required final String? email,
       required final String? phone,
@@ -543,9 +542,9 @@ abstract class _UserBaseModel implements UserBaseModel {
   factory _UserBaseModel.fromJson(Map<String, dynamic> json) =
       _$_UserBaseModel.fromJson;
 
-  @override // required String id,
-  int get id;
   @override
+  String get id;
+  @override // required int id,
   String get username;
   @override
   String? get email;

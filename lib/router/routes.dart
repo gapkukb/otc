@@ -179,4 +179,10 @@ final List<RouteBase> routes = [
     path: Routes.walletMethodBankAddition,
     page: const WalletMethodBankAddition(),
   ),
+  ModalRoute(
+    path: Routes.walletMethodQRcodeAddition,
+    statePage: (context, state) => WalletMethodQRcodeAddition(
+      addType: (state.extra as dynamic)['addType'],
+    ),
+  ),
 ];

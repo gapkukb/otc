@@ -20,8 +20,8 @@ class SettingAvatar extends ConsumerWidget {
         SizedBox(
           width: 100,
           child: UiFilePicker(
-            onPicked: (file) async {
-              final source = await MultipartFile.fromFile(file.path);
+            onChange: (file) async {
+              final source = await MultipartFile.fromFile(file!.path);
               // final cancel = Modal.showLoading("正在上传中...请勿关闭页面");
               final url = await apis.app.uploadImage({"file": source});
               await apis.user.modifyAvatar({"value": url});

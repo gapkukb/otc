@@ -5,7 +5,8 @@ class ModalPageTemplate extends StatelessWidget {
   final String legend;
   final String title;
   final String nextText;
-  final IconData icon;
+  final IconData iconData;
+  final Widget? icon;
   final List<Widget> children;
   final void Function() onCompelete;
 
@@ -13,10 +14,11 @@ class ModalPageTemplate extends StatelessWidget {
     super.key,
     this.legend = "账户安全",
     this.nextText = "确定",
-    this.icon = Icons.security,
+    this.iconData = Icons.security,
     required this.title,
     required this.onCompelete,
     required this.children,
+    this.icon,
   });
 
   @override
@@ -54,10 +56,11 @@ class ModalPageTemplate extends StatelessWidget {
                     ),
                     trailing: Opacity(
                       opacity: 0.2,
-                      child: Icon(
-                        icon,
-                        size: 40,
-                      ),
+                      child: icon ??
+                          Icon(
+                            iconData,
+                            size: 40,
+                          ),
                     ),
                   ),
                   const SizedBox(height: 8),

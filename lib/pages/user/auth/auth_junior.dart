@@ -93,7 +93,7 @@ class _AuthJuniorState extends State<AuthJunior> {
                 const Text("身份证正面（人像面）"),
                 const SizedBox(height: 8),
                 UiFilePicker(
-                  onPicked: (file) {},
+                  onChange: (file) {},
                 ),
               ],
             ),
@@ -105,7 +105,7 @@ class _AuthJuniorState extends State<AuthJunior> {
                 const Text("身份证正面（人像面）"),
                 const SizedBox(height: 8),
                 UiFilePicker(
-                  onPicked: (file) {},
+                  onChange: (file) {},
                 ),
               ],
             ),

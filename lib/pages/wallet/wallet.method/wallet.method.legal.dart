@@ -26,10 +26,22 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
     {
       "label": "支付宝",
       "path": AddType.alipay,
+      "action": () {
+        GoRouter.of(navigatorKey.currentContext!).pushNamed(
+          Routes.walletMethodQRcodeAddition,
+          extra: {'addType': AddType.alipay},
+        );
+      }
     },
     {
       "label": "微信",
       "path": AddType.wechat,
+      "action": () {
+        GoRouter.of(navigatorKey.currentContext!).pushNamed(
+          Routes.walletMethodQRcodeAddition,
+          extra: {'addType': AddType.wechat},
+        );
+      }
     },
   ];
 

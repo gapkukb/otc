@@ -39,7 +39,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
     return Form(
       key: _formKey,
       child: ModalPageTemplate(
-        icon: Icons.credit_card_outlined,
+        iconData: Icons.credit_card_outlined,
         legend: "新增收款方式",
         title: "添加银行卡",
         onCompelete: () async {

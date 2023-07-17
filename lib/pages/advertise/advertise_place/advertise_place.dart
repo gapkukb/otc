@@ -37,7 +37,7 @@ class _AdvertisePlaceState extends State<AdvertisePlace> {
     return ModalPageTemplate(
       legend: "发布新广告",
       title: "出售",
-      icon: Icons.currency_exchange,
+      iconData: Icons.currency_exchange,
       nextText: "发布",
       onCompelete: () {},
       children: _buildNext(),

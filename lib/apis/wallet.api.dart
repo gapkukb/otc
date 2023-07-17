@@ -38,6 +38,9 @@ class _Wallet {
 
   /// 查询用户所有二维码
   final getAllQRcode = post<List<Map<String, Object>>>("/customer/qrcode/list");
+
+  /// 新增二维码
+  final addQRcode = post<List<Map<String, Object>>>("/customer/qrcode/add");
 }
 
 final walletApi = _Wallet();

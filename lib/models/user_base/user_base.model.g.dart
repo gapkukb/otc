@@ -8,7 +8,7 @@ part of 'user_base.model.dart';
 
 _$_UserBaseModel _$$_UserBaseModelFromJson(Map<String, dynamic> json) =>
     _$_UserBaseModel(
-      id: json['id'] as int,
+      id: json['id'] as String,
       username: json['username'] as String,
       email: json['email'] as String?,
       phone: json['phone'] as String?,

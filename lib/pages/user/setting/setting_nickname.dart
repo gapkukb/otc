@@ -34,7 +34,7 @@ class _SettingNicknameState extends ConsumerState<SettingNickname> {
     return ModalPageTemplate(
       legend: "个人资料",
       title: "修改昵称",
-      icon: Icons.edit_outlined,
+      iconData: Icons.edit_outlined,
       onCompelete: () async {
         await apis.user.modifyNickname({"value": controller.text});
         ref.read(userProvider.notifier).updateUser();

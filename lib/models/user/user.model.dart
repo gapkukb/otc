@@ -20,7 +20,7 @@ class UserModel with _$UserModel {
 UserModel fakerUser() {
   return const UserModel(
     base: UserBaseModel(
-      id: 0,
+      id: "0",
       username: "",
       email: "",
       phone: "",
