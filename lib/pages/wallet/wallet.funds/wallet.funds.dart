@@ -6,6 +6,7 @@ import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_ax
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/models/currency.dart';
+import 'package:otc/pages/async_builder/async_builder.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/utils/responsive.dart';
@@ -274,39 +275,44 @@ class _WalletFundsState extends State<WalletFunds> {
       };
     }
 
-    return DataTable(
-      columnSpacing: 8,
-      horizontalMargin: 8,
-      dividerThickness: 0.01,
-      headingTextStyle: const TextStyle(color: Colors.grey),
-      columns: const [
-        DataColumn2(label: Text("币种"), fixedWidth: 48),
-        DataColumn2(label: Text("全部")),
-        DataColumn2(label: Text("可用")),
-        DataColumn2(label: Text("冻结")),
-        DataColumn2(
-          label: Text(
-            "  操作",
-          ),
-          fixedWidth: 120,
-        ),
-      ],
-      rows: currencyCollection.map((currency) {
-        return DataRow(
-          cells: [
-            DataCell(
-              UiChip(
-                icon: Icons.abc,
-                text: currency.name,
+    return AsyncBuilder(
+      future: () => Future.delayed(Duration(seconds: 30)),
+      builder: (context, data) {
+        return DataTable(
+          columnSpacing: 8,
+          horizontalMargin: 8,
+          dividerThickness: 0.01,
+          headingTextStyle: const TextStyle(color: Colors.grey),
+          columns: const [
+            DataColumn2(label: Text("币种"), fixedWidth: 48),
+            DataColumn2(label: Text("全部")),
+            DataColumn2(label: Text("可用")),
+            DataColumn2(label: Text("冻结")),
+            DataColumn2(
+              label: Text(
+                "  操作",
               ),
+              fixedWidth: 120,
             ),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(action(currency.name)),
           ],
+          rows: currencyCollection.map((currency) {
+            return DataRow(
+              cells: [
+                DataCell(
+                  UiChip(
+                    icon: Icons.abc,
+                    text: currency.name,
+                  ),
+                ),
+                DataCell(Text("是狗鸡啊")),
+                DataCell(Text("是狗鸡啊")),
+                DataCell(Text("是狗鸡啊")),
+                DataCell(action(currency.name)),
+              ],
+            );
+          }).toList(),
         );
-      }).toList(),
+      },
     );
   }
 }

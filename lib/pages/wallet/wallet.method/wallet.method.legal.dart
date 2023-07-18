@@ -17,8 +17,8 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
     {
       "label": "银行卡",
       "path": AddType.bank,
-      "action": () {
-        GoRouter.of(navigatorKey.currentContext!).pushNamed(
+      "action": (BuildContext context) {
+        context.pushNamed(
           Routes.walletMethodBankAddition,
         );
       }
@@ -26,8 +26,8 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
     {
       "label": "支付宝",
       "path": AddType.alipay,
-      "action": () {
-        GoRouter.of(navigatorKey.currentContext!).pushNamed(
+      "action": (BuildContext context) {
+        context.pushNamed(
           Routes.walletMethodQRcodeAddition,
           extra: {'addType': AddType.alipay},
         );
@@ -36,8 +36,8 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
     {
       "label": "微信",
       "path": AddType.wechat,
-      "action": () {
-        GoRouter.of(navigatorKey.currentContext!).pushNamed(
+      "action": (BuildContext context) {
+        context.pushNamed(
           Routes.walletMethodQRcodeAddition,
           extra: {'addType': AddType.wechat},
         );
@@ -88,7 +88,12 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
                         menuChildren: items
                             .map(
                               (e) => MenuItemButton(
-                                onPressed: e['action'],
+                                onPressed: verify(
+                                  context,
+                                  () {
+                                    e['action'](context);
+                                  },
+                                ),
                                 child: Text(
                                   e['label'],
                                 ),

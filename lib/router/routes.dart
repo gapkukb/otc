@@ -90,10 +90,10 @@ final List<RouteBase> routes = [
             path: Routes.walletMethod,
             page: const WalletMethod(),
           ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
+          AuthRoute(
+            path: Routes.walletFunds,
+            page: const WalletFunds(),
+          ),
           // AuthRoute(
           //   path: Routes.wallet,
           //   page: const HomeWallet(),
@@ -188,5 +188,13 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.walletMethodCryptoAddition,
     page: const ModelMethodCryptoAddtion(),
+  ),
+  ModalRoute(
+    path: Routes.recharge,
+    page: const Recharge(),
+  ),
+  ModalRoute(
+    path: Routes.withdrawal,
+    page: const Withdrawal(),
   ),
 ];

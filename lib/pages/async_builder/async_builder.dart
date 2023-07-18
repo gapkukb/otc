@@ -5,7 +5,7 @@ import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
 class AsyncBuilder<T> extends StatefulWidget {
-  final Container Function(BuildContext context, T data) builder;
+  final Widget Function(BuildContext context, T data) builder;
   final Future<T> Function() future;
   final bool showLoadingView;
   final bool showErrorView;
@@ -41,8 +41,11 @@ class _AsyncBuilderState<T> extends State<AsyncBuilder<T>> {
           case ConnectionState.active:
             return widget.showLoadingView
                 ? widget.loadingView ??
-                    const Center(
-                      child: CircularProgressIndicator.adaptive(),
+                    const SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
                     )
                 : const Nil();
           case ConnectionState.none:

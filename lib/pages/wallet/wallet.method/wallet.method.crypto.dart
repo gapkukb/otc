@@ -32,6 +32,14 @@ class _WalletMethodCryptoState extends State<WalletMethodCrypto> {
     // });
   }
 
+  edit(BuildContext context, dynamic item) {}
+  delete(BuildContext context, dynamic item) {
+    Modal.confirm(
+      content: "确认要删除改收款地址吗",
+      onOk: () {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -94,18 +102,17 @@ class _WalletMethodCryptoState extends State<WalletMethodCrypto> {
                                 variant: UiButtonVariant.text,
                                 size: UiButtonSize.mini,
                                 label: "查看",
-                                onPressed: () {},
+                                onPressed: verify(context, () {
+                                  edit(context, item);
+                                }),
                               ),
                               UiButton(
                                 variant: UiButtonVariant.text,
                                 size: UiButtonSize.mini,
                                 label: "删除",
-                                onPressed: () {
-                                  Modal.confirm(
-                                    content: "确认要删除改收款地址吗",
-                                    onOk: () {},
-                                  );
-                                },
+                                onPressed: verify(context, () {
+                                  edit(context, item);
+                                }),
                               ),
                             ],
                           ),

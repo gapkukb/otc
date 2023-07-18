@@ -1,8 +1,13 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
-import 'package:nil/nil.dart';
+
+enum DropdownType {
+  menu,
+  dialog,
+  bottomSheet,
+  modalBottomSheet,
+}
 
 class DropdownItem {
   final String title;
@@ -42,7 +47,8 @@ class Dropdown extends DropdownSearch<DropdownItem> {
   final String? labelText;
   final List<DropdownItem> data;
   final Widget? title;
-
+  final DropdownType type;
+  final InputDecoration inputDecoration;
   Dropdown({
     super.key,
     super.asyncItems,
@@ -59,18 +65,26 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     super.validator,
     required this.name,
     this.formState,
-    this.showSearchBox = true,
+    this.showSearchBox = false,
     this.searchHintText,
     this.labelText,
     this.title,
     this.data = const [],
+    this.type = DropdownType.menu,
+    this.inputDecoration = const InputDecoration(),
   }) : super(
           items: data,
           onSaved: (now) {
             final $value = now?.value ?? now?.title;
             formState?.update(name, (val) => val, ifAbsent: () => $value);
           },
-          popupProps: PopupProps.dialog(
+          popupProps: (type == DropdownType.menu
+              ? PopupProps.menu
+              : type == DropdownType.dialog
+                  ? PopupProps.dialog
+                  : type == DropdownType.bottomSheet
+                      ? PopupProps.bottomSheet
+                      : PopupProps.modalBottomSheet)(
             fit: FlexFit.loose,
             title: title,
             itemBuilder: (context, item, isSelected) {
@@ -128,7 +142,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
             return item.title;
           },
           dropdownDecoratorProps: DropDownDecoratorProps(
-            dropdownSearchDecoration: InputDecoration(
+            dropdownSearchDecoration: inputDecoration.copyWith(
               border: const OutlineInputBorder(),
               labelText: labelText,
             ),

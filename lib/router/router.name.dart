@@ -28,6 +28,8 @@ class Routes {
   static const walletSpot = "/wallet_spot";
   static const walletFutures = "/wallet_futures";
   static const walletHistory = "/wallet_history";
+  static const recharge = "/recharge";
+  static const withdrawal = "/withdrawal";
 
   static const udpatePwd = "/update_pwd";
   static const updateEmail = "/update_email";

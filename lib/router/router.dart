@@ -32,12 +32,15 @@ import 'package:otc/pages/user/setting/setting.dart';
 import 'package:otc/pages/user/setting/setting_avatar.dart';
 import 'package:otc/pages/user/setting/setting_nickname.dart';
 import 'package:otc/pages/order/layout/layout.dart';
+import 'package:otc/pages/wallet/recharge/recharge.dart';
+import 'package:otc/pages/wallet/wallet.funds/wallet.funds.dart';
 import 'package:otc/pages/wallet/wallet.layout/wallet.layout.dart';
 import 'package:otc/pages/wallet/wallet.home/wallet.home.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.bank.addition.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.crypto.addition.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.qrcode.addition.dart';
+import 'package:otc/pages/wallet/withdrawal/withdrawal.dart';
 
 import '../layout/layout.dart';
 
@@ -48,7 +51,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.walletMethod,
+  initialLocation: Routes.recharge,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {
