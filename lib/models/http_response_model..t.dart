@@ -1,15 +1,15 @@
-class HttpResponseModel {
+class HttpResponseModel<T> {
   String? whether;
   int? code;
   String? message;
-  dynamic data;
+  T data;
   bool? success;
 
   HttpResponseModel({
     this.whether,
     this.code,
     this.message,
-    this.data,
+    required this.data,
     this.success,
   });
 
@@ -18,7 +18,7 @@ class HttpResponseModel {
       whether: json['whether'] as String?,
       code: json['code'] as int?,
       message: json['message'] as String?,
-      data: json['data'] as dynamic,
+      data: json['data'] as T,
       success: json['success'] as bool?,
     );
   }

@@ -23,6 +23,7 @@ class Routes {
   static const walletMethod = "/wallet_method";
   static const walletMethodBankAddition = "/wallet_method_bank_addition";
   static const walletMethodQRcodeAddition = "/wallet_method_QRcode_addition";
+  static const walletMethodCryptoAddition = "/wallet_method_crypto_addition";
   static const walletFunds = "/wallet_funds";
   static const walletSpot = "/wallet_spot";
   static const walletFutures = "/wallet_futures";

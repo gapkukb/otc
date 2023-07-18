@@ -36,6 +36,7 @@ import 'package:otc/pages/wallet/wallet.layout/wallet.layout.dart';
 import 'package:otc/pages/wallet/wallet.home/wallet.home.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.bank.addition.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.crypto.addition.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.qrcode.addition.dart';
 
 import '../layout/layout.dart';

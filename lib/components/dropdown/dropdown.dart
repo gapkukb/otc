@@ -6,10 +6,17 @@ import 'package:nil/nil.dart';
 
 class DropdownItem {
   final String title;
+  final TextStyle? titleStyle;
+  final Widget? titleWidget;
   final dynamic value;
   final String? trailing;
+  final TextStyle? trailingStyle;
+  final Widget? trailingWidget;
   final dynamic extra;
   final String? subtitle;
+  final TextStyle? subtitleStyle;
+  final Widget? subtitleWidget;
+  final bool? disabled;
 
   DropdownItem({
     required this.title,
@@ -17,6 +24,13 @@ class DropdownItem {
     this.trailing,
     this.extra,
     this.subtitle,
+    this.titleWidget,
+    this.trailingWidget,
+    this.subtitleWidget,
+    this.disabled,
+    this.titleStyle,
+    this.trailingStyle,
+    this.subtitleStyle,
   });
 }
 
@@ -27,6 +41,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
   final String? searchHintText;
   final String? labelText;
   final List<DropdownItem> data;
+  final Widget? title;
 
   Dropdown({
     super.key,
@@ -47,6 +62,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     this.showSearchBox = true,
     this.searchHintText,
     this.labelText,
+    this.title,
     this.data = const [],
   }) : super(
           items: data,
@@ -55,11 +71,26 @@ class Dropdown extends DropdownSearch<DropdownItem> {
             formState?.update(name, (val) => val, ifAbsent: () => $value);
           },
           popupProps: PopupProps.dialog(
+            fit: FlexFit.loose,
+            title: title,
             itemBuilder: (context, item, isSelected) {
+              Widget? gen(Widget? widget, String? text, TextStyle? style) {
+                if (widget != null) return widget;
+                if (text != null) {
+                  return Text(
+                    text,
+                    style: style,
+                  );
+                }
+                return null;
+              }
+
               return ListTile(
-                title: Text(item.title),
-                trailing: item.trailing == null ? null : Text(item.trailing!),
-                subtitle: item.subtitle == null ? null : Text(item.subtitle!),
+                title: gen(item.titleWidget, item.title, item.titleStyle),
+                trailing:
+                    gen(item.trailingWidget, item.trailing, item.trailingStyle),
+                subtitle:
+                    gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
               );
             },
             emptyBuilder: (context, searchEntry) {

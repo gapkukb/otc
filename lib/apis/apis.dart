@@ -7,7 +7,7 @@ import 'package:otc/models/user_base/user_base.model.dart';
 import '../http/http.dart';
 import '../models/user/user.model.dart';
 import '../models/otc/otc.model.dart';
-import '../models/wallet.bank/wallet.bank.model.dart';
+import '../models/address/address.model.dart';
 import '../enums/http.datatype.dart';
 part 'app.api.dart';
 part 'user.api.dart';

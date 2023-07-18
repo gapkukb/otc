@@ -185,4 +185,8 @@ final List<RouteBase> routes = [
       addType: (state.extra as dynamic)['addType'],
     ),
   ),
+  ModalRoute(
+    path: Routes.walletMethodCryptoAddition,
+    page: const ModelMethodCryptoAddtion(),
+  ),
 ];

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otc/pages/wallet/wallet.method/wallet.method.dc.dart';
+import 'package:otc/pages/wallet/wallet.method/wallet.method.crypto.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.legal.dart';
 
 class WalletMethod extends StatelessWidget {
@@ -32,7 +32,7 @@ class WalletMethod extends StatelessWidget {
                 // physics: NeverScrollableScrollPhysics(),
                 children: [
                   WalletMethodLegal(),
-                  WalletAddressMng(),
+                  WalletMethodCrypto(),
                 ],
               ),
             )

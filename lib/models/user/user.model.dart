@@ -59,8 +59,16 @@ UserModel fakerUser() {
       username: "",
       reference: "",
       identity: "",
-      status: "",
+      name: "",
+      age: 0,
       used: false,
+      idFrontPicture: "",
+      idBackPicture: "",
+      idHoldPicture: "",
+      idHoldVideo: "",
+      lv1Status: KycStatus.reject,
+      lv2Status: KycStatus.reject,
+      lv3Status: KycStatus.reject,
     ),
   );
 }

@@ -20,7 +20,7 @@ class _Wallet {
   final transferRecords = get("/customer/wallet/transfer/records");
 
   /// 查询用户所有银行卡
-  final getAllBankCards = get<List<Map<String, Object>>>(
+  final getAllBankCards = get<List<dynamic>>(
     "/customer/bankcard/list",
   );
 
@@ -37,10 +37,25 @@ class _Wallet {
   final setDefaultBankCard = post("/customer/bankcard/set-default");
 
   /// 查询用户所有二维码
-  final getAllQRcode = post<List<Map<String, Object>>>("/customer/qrcode/list");
+  final getAllQRcode =
+      post<List<Map<String, dynamic>>>("/customer/qrcode/list");
 
   /// 新增二维码
-  final addQRcode = post<List<Map<String, Object>>>("/customer/qrcode/add");
+  final addQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/add");
+
+  /// 查询用户所有地址簿
+  final getAddressBook = get<List<dynamic>>("/customer/address-book/list");
+
+  // /// 查询用户所有地址簿
+  // final updateAddress =
+  //     get<List<Map<String, Object>>>("/customer/address-book/edit");
+
+  /// 查询用户所有地址簿
+  final addAddress = post("/customer/address-book/add");
+
+  // /// 查询用户所有地址簿
+  // final deleteAddress =
+  //     get<List<Map<String, Object>>>("/customer/address-book/delete");
 }
 
 final walletApi = _Wallet();
