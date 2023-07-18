@@ -8,7 +8,7 @@ class LogInterceptor extends Interceptor {
   @override
   void onRequest(options, handler) {
     try {
-      log.d(jsonEncode(options));
+      // log.d(jsonEncode(options));
     } catch (e) {
       log.d(options);
     }

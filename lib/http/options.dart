@@ -6,49 +6,49 @@ noop() {}
 
 class InnerOptions {
   /// 静默模式，http拦截器不抛出任何信息，完全由业务控制
-  final bool silent;
+  final bool? silent;
 
   /// 请求超时重试次数，0表示不重试
-  final int retry;
+  final int? retry;
 
   /// 请求是否可取消
-  final bool cancelable;
+  final bool? cancelable;
 
   /// 是否允许重复请求,只保留最近的请求，优先级高于cancelable
-  final bool repeatable;
+  final bool? repeatable;
 
   /// 传递到服务器的数据类型
   final HttpDataType? dataType;
 
   /// 是否开启loading
-  final bool loading;
+  final bool? loading;
 
   const InnerOptions({
-    this.silent = false,
-    this.retry = 0,
-    this.cancelable = true,
-    this.repeatable = false,
-    this.dataType = HttpDataType.json,
-    this.loading = false,
+    this.silent,
+    this.retry,
+    this.cancelable,
+    this.repeatable,
+    this.dataType,
+    this.loading,
   });
 }
 
 class HttpOptions extends RequestOptions implements InnerOptions {
   /// 静默模式，http拦截器不抛出任何信息，完全由业务控制
   @override
-  final bool silent;
+  final bool? silent;
 
   /// 请求超时重试次数，0表示不重试
   @override
-  final int retry;
+  final int? retry;
 
   /// 请求是否可取消
   @override
-  final bool cancelable;
+  final bool? cancelable;
 
   /// 是否允许重复请求,只保留最近的请求，优先级高于cancelable
   @override
-  final bool repeatable;
+  final bool? repeatable;
 
   /// 传递到服务器的数据类型
   @override
@@ -56,7 +56,7 @@ class HttpOptions extends RequestOptions implements InnerOptions {
 
   /// 是否开启loading
   @override
-  final bool loading;
+  final bool? loading;
 
   final Map<String, String>? pathParams;
 
@@ -85,13 +85,13 @@ class HttpOptions extends RequestOptions implements InnerOptions {
     super.path,
     super.queryParameters,
     super.sourceStackTrace,
-    this.silent = false,
-    this.retry = 0,
-    this.cancelable = true,
-    this.repeatable = false,
-    this.dataType = HttpDataType.json,
+    this.silent,
+    this.retry,
+    this.cancelable,
+    this.repeatable,
+    this.dataType,
     this.pathParams,
-    this.loading = true,
+    this.loading,
   });
 
   HttpOptions merge(HttpOptions? options) {

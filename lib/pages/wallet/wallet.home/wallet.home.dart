@@ -90,8 +90,6 @@ class _WalletHomeState extends State<WalletHome> {
         (element) => element['currency'] == FiatCurrencies.USD.name,
       );
 
-      inspect(result);
-
       if (result != null) {
         statics[0]['value'] = result['balance'];
         statics[1]['value'] = result['canUsd'];

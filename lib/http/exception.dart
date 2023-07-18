@@ -125,7 +125,10 @@ class HttpException extends _Exception {
           }
         }
       default:
-        return HttpException(ClientErrorCode.unknown, e.message ?? "未知错误");
+        return HttpException(
+          ClientErrorCode.unknown,
+          e.message ?? e.error.toString(),
+        );
     }
   }
 }

@@ -1,13 +1,9 @@
-import 'dart:developer';
-
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/upload/upload.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
 import 'package:otc/theme/text_theme.dart';
-import 'package:otc/widgets/ui_file_picker.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -28,6 +24,7 @@ class _WalletMethodQRcodeAdditionState
     extends State<WalletMethodQRcodeAddition> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formState = {};
+  final controller = UploadController();
 
   String get addTypeText {
     return widget.addType.chinese;
@@ -43,10 +40,14 @@ class _WalletMethodQRcodeAdditionState
         iconData: widget.addType == AddType.alipay
             ? FontAwesomeIcons.alipay
             : FontAwesomeIcons.weixin,
-        onCompelete: () {
+        onCompelete: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            apis.wallet.addQRcode({"paymentMethod": addTypeText});
+            await controller.upload();
+            await apis.wallet.addQRcode({
+              "paymentMethod": addTypeText,
+              // "url":
+            });
           }
         },
         children: [
@@ -75,7 +76,12 @@ class _WalletMethodQRcodeAdditionState
           const SizedBox(height: 16),
           const Text("收款二维码（选填）"),
           // const SizedBox(height: 16),
-          Upload(),
+          Upload(
+            controller: controller,
+            validator: (files) {
+              return files == null ? "请上传图片" : null;
+            },
+          ),
           const SizedBox(height: 16),
           const Text(
             "温馨提示：当您出售数字货币时，您选择的收款方式将向买方展示，请确认信息填写准确无误。",
@@ -86,10 +92,3 @@ class _WalletMethodQRcodeAdditionState
     );
   }
 }
-
-// SizedBox(
-//                 width: 100,
-//                 child: UiFilePicker(
-//                   onPicked: (file) {},
-//                 ),
-//               );

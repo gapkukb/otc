@@ -7,29 +7,29 @@ class LoadingInterceptor extends Interceptor {
 
   @override
   void onRequest(options, handler) {
-    if ((options.extra['_options'] as InnerOptions).loading) {
-      if (loadingCounter++ == 0) {
-        close = Modal.showLoading();
-      }
+    final opt = (options.extra['_options'] as InnerOptions);
+    if (opt.loading == true && loadingCounter++ == 0) {
+      close = Modal.showLoading();
     }
-
     super.onRequest(options, handler);
   }
 
   @override
   void onError(err, handler) {
-    if (--loadingCounter == 0) {
-      close();
-    }
-
+    off(err);
     super.onError(err, handler);
   }
 
   @override
   void onResponse(response, handler) {
-    if (--loadingCounter == 0) {
+    off(response);
+    super.onResponse(response, handler);
+  }
+
+  off(dynamic result) {
+    final opt = (result.requestOptions.extra['_options'] as InnerOptions);
+    if (opt.loading == true && --loadingCounter == 0) {
       close();
     }
-    super.onResponse(response, handler);
   }
 }

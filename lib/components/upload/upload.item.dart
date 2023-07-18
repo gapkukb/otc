@@ -11,11 +11,13 @@ class StateFile {
   final File file;
   final UploadingState state;
   final String url;
+  final Future Function() upload;
 
   StateFile({
     required this.file,
     required this.state,
     required this.url,
+    required this.upload,
   });
 }
 
@@ -33,34 +35,9 @@ class UploadItem extends StatefulWidget {
 }
 
 class _UploadItemState extends State<UploadItem> {
-  double process = 0.5;
+  double process = 0;
   UploadingState state = UploadingState.idle;
   File? file;
-
-  final errorView = Positioned(
-    right: 0,
-    left: 0,
-    top: 0,
-    bottom: 0,
-    child: GestureDetector(
-      onTap: () {},
-      child: Container(
-        color: Colors.black38,
-        child: const Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Icon(Icons.error_outline, color: Colors.white),
-            Text(
-              "上传失败\n点击重试",
-              style: TextStyle(color: Colors.white, fontSize: 12),
-            )
-          ],
-        ),
-      ),
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -72,17 +49,20 @@ class _UploadItemState extends State<UploadItem> {
         child: Stack(
           children: [
             Material(
-              color: Colors.amber,
+              // color: Colors.amber,
               child: UiFilePicker(
-                onChange: (file) {
-                  if (file == null) {
+                onChange: (newFile) {
+                  if (newFile == null) {
                     widget.onChange?.call(null);
+                    file = null;
                   } else {
+                    file = newFile;
                     widget.onChange?.call(
                       StateFile(
-                        file: file,
+                        file: newFile,
                         state: state,
                         url: "",
+                        upload: upload,
                       ),
                     );
                   }
@@ -90,65 +70,116 @@ class _UploadItemState extends State<UploadItem> {
               ),
             ),
             if (state != UploadingState.idle)
-              state == UploadingState.uploading
-                  ? UploadItemUploading(process: process)
-                  : errorView
+              UploadItemOverlay(
+                process: process,
+                state: state,
+              )
           ],
         ),
       ),
     );
   }
 
-  upload() async {
+  preupload() {}
+
+  Future<String> upload() async {
     try {
-      final source = await MultipartFile.fromFile(file!.path);
-      final url = await apis.app.uploadImage({"file": source});
+      final stream = await MultipartFile.fromFile(file!.path);
+      final String url = await apis.app.uploadImage(
+        {"file": stream},
+        HttpOptions(
+          onSendProgress: (count, total) {
+            setState(() {
+              process = count / total;
+              state = UploadingState.uploading;
+            });
+          },
+        ),
+      );
       setState(() {
-        state = UploadingState.uploading;
-        // widget.onChange?.call(url);
+        state = UploadingState.done;
       });
+      return url;
     } catch (e) {
       setState(() {
-        state = UploadingState.error;
-        // widget.onChange?.call(e);
+        state = UploadingState.uploading;
       });
+      return Future.error(e);
     }
   }
+
+  pause() {}
+
+  cancel() {}
 }
 
-class UploadItemUploading extends StatelessWidget {
+class UploadItemOverlay extends StatelessWidget {
   final double process;
-  const UploadItemUploading({
+  final UploadingState state;
+  const UploadItemOverlay({
     super.key,
     required this.process,
+    required this.state,
   });
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Positioned(
+    return Positioned(
+      right: 0,
+      left: 0,
+      top: 0,
+      bottom: 0,
+      child: IgnorePointer(
+        ignoring: state != UploadingState.uploading,
         child: Container(
           color: Colors.black45,
-          child: Stack(
-            children: [
-              Center(
-                child: CircularProgressIndicator(
-                  value: process,
-                  backgroundColor: Colors.white,
-                  strokeWidth: 2,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-                ),
-              ),
-              Center(
-                child: Text(
-                  "${(process * 100).toInt()}%",
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              ),
-            ],
+          child: DefaultTextStyle(
+            style: const TextStyle(fontSize: 12, color: Colors.white),
+            child: state == UploadingState.uploading
+                ? uploadingView()
+                : state == UploadingState.error
+                    ? errorView()
+                    : doneView(),
           ),
         ),
       ),
+    );
+  }
+
+  uploadingView() {
+    return Stack(
+      children: [
+        Center(
+          child: CircularProgressIndicator(
+            value: process > 0 ? process : null,
+            backgroundColor: Colors.white,
+            strokeWidth: 2,
+            color: Colors.white,
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+          ),
+        ),
+        Center(
+          child: Text("${(process * 100).toInt()}%"),
+        ),
+      ],
+    );
+  }
+
+  errorView() {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Icon(Icons.error_outline, color: Colors.white),
+        Text("上传失败\n点击重试")
+      ],
+    );
+  }
+
+  doneView() {
+    return const Center(
+      child: Text("上传完成"),
     );
   }
 }

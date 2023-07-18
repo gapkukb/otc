@@ -195,7 +195,6 @@ class _RegisterState extends State<Register>
         "device": device.value,
         ..._formState,
       };
-      inspect(payload);
       await apis.user.register(payload);
 
       await loginUtil(

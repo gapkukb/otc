@@ -2,18 +2,22 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otc/components/modal/modal.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:photo_view/photo_view.dart';
 
 class UiFilePickerController extends ChangeNotifier {}
 
 class UiFilePicker extends StatefulWidget {
   final Function(File? file) onChange;
+  final String? title;
+  final Widget? titleWidget;
   const UiFilePicker({
     super.key,
     required this.onChange,
+    this.title,
+    this.titleWidget,
   });
 
   @override
@@ -84,47 +88,29 @@ class _UiFilePickerState extends State<UiFilePicker> {
     );
   }
 
-  _crop() async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-      cropStyle: CropStyle.circle,
-      sourcePath: file!.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: Colors.deepOrange,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
-          dimmedLayerColor: Colors.black,
-        ),
-        IOSUiSettings(
-          title: 'Cropper',
-        ),
-        WebUiSettings(
-          context: context,
-        ),
-      ],
-    );
-
-    setState(() {
-      file = File(croppedFile!.path);
-    });
-  }
-
   _buildEmpty() {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      child: GestureDetector(
-        onTap: _pick,
-        child: const Icon(
-          Icons.add,
+    return GestureDetector(
+      onTap: _pick,
+      child: Container(
+        color: Colors.transparent,
+        child: Column(
+          // mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.add,
+              size: 40,
+              color: Colors.grey,
+            ),
+            if (widget.titleWidget != null)
+              widget.titleWidget!
+            else if (widget.title != null)
+              Text(
+                widget.title!,
+                style: Font.smallGrey,
+              )
+          ],
         ),
       ),
     );
@@ -136,62 +122,32 @@ class _UiFilePickerState extends State<UiFilePicker> {
       fit: StackFit.expand,
       children: [
         GestureDetector(
-          child: Image(
-            image: FileImage(file!),
-            fit: BoxFit.cover,
+          child: Container(
+            color: Colors.black38,
+            child: Image(
+              image: FileImage(file!),
+              fit: BoxFit.contain,
+            ),
           ),
           onTap: () {
             showDialog(
               context: context,
               builder: (context) {
-                return Stack(
-                  key: ValueKey(file!.path),
-                  fit: StackFit.expand,
-                  children: [
-                    PhotoView(
-                      imageProvider: FileImage(file!),
-                      wantKeepAlive: false,
-                    ),
-                    Positioned(
-                      left: 16,
-                      right: 16,
-                      bottom: 16,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MaterialButton(
-                            minWidth: 0,
-                            visualDensity: VisualDensity.compact,
-                            color: Colors.redAccent,
-                            textColor: Colors.white,
-                            onPressed: _crop,
-                            child: const Text("编辑"),
-                          ),
-                          MaterialButton(
-                            minWidth: 0,
-                            visualDensity: VisualDensity.compact,
-                            color: Colors.blueAccent,
-                            textColor: Colors.white,
-                            onPressed: _crop,
-                            child: const Text("使用"),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                return PhotoView(
+                  imageProvider: FileImage(file!),
+                  wantKeepAlive: false,
                 );
               },
             );
           },
         ),
         Positioned(
-          right: 0,
-          top: 0,
+          right: -10,
+          top: -10,
           child: IconButton(
             icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
+              Icons.cancel_rounded,
+              color: Colors.white,
             ),
             onPressed: _delete,
           ),

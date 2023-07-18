@@ -12,7 +12,6 @@ import 'package:otc/enums/http.datatype.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/map.dart' as map;
-import 'dart:convert';
 
 part './cache.dart';
 part './data_type.dart';
@@ -73,11 +72,10 @@ class Request<T> {
     Map<String, dynamic>? data,
     HttpOptions? options,
   ]) {
-    print(data);
     final opt = _options.merge(options);
     CancelToken? cancelToken;
 
-    if (opt.cancelable) {
+    if (opt.cancelable == true) {
       cancelToken = CancelToken();
     }
     Map<String, dynamic> $data = {};
@@ -87,8 +85,6 @@ class Request<T> {
     if (data != null) {
       $data.addAll(data);
     }
-    print('+++++++++++++++++++++++');
-    print($data);
 
     return dio
         .request(
@@ -135,7 +131,6 @@ class Request<T> {
     )
         .then((response) {
       final resp = response.data!['data'];
-      inspect(resp);
       return model == null ? resp : model!(resp);
     });
   }
