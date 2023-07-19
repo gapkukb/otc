@@ -25,7 +25,7 @@ class _UpdateFundsPwdState extends State<UpdateFundsPwd> {
       key: _formKey,
       child: ModalPageTemplate(
         title: "重置资金密码",
-        onCompelete: () {
+        onCompelete: (_) {
           if (_formKey.currentState!.validate()) {
             //....
           }

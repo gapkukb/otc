@@ -17,7 +17,7 @@ class _BindingPhoneVerificationState extends State<BindingPhoneVerification> {
       legend: "绑定手机",
       title: "手机验证",
       nextText: "下一步",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: [
         const UiTextField(
           keyboardType: TextInputType.numberWithOptions(decimal: false),

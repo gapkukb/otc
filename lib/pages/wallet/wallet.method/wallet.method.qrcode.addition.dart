@@ -40,7 +40,7 @@ class _WalletMethodQRcodeAdditionState
         iconData: widget.addType == AddType.alipay
             ? FontAwesomeIcons.alipay
             : FontAwesomeIcons.weixin,
-        onCompelete: () async {
+        onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
             await controller.upload();

@@ -18,7 +18,7 @@ class _UpdateEmailState extends State<UpdateEmail> {
     return ModalPageTemplate(
       title: "修改邮箱",
       nextText: "完成",
-      onCompelete: () async {
+      onCompelete: (_) async {
         BotToast.showLoading(crossPage: false);
         context.pop();
       },

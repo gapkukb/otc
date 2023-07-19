@@ -67,19 +67,19 @@ class Merchant extends StatelessWidget {
               Modal.confirm(
                 title: "商户申请",
                 content: "您的账户余额不足500 USDT，请先充值。",
-                okText: "充币",
+                okButtonText: "充币",
                 onOk: () {},
               );
               Modal.confirm(
                 title: "商户申请",
                 content: "您未完成身份认证，请先认证",
-                okText: "去认证",
+                okButtonText: "去认证",
                 onOk: () {},
               );
               Modal.confirm(
                 title: "商户申请",
                 content: "请至少先绑定一张银行卡，银行卡户主姓名必须和身份证一致。",
-                okText: "去绑卡",
+                okButtonText: "去绑卡",
                 onOk: () {},
               );
               // context.go('/agent_apply');

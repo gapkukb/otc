@@ -9,7 +9,7 @@ class UpdateCurrency extends StatelessWidget {
     return ModalPageTemplate(
       legend: "个人资料",
       title: "货币单位",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: [
         SwitchListTile.adaptive(
           dense: true,

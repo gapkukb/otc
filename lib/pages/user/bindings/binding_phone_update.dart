@@ -16,7 +16,7 @@ class _BindingPhoneUpdateState extends State<BindingPhoneUpdate> {
     return ModalPageTemplate(
       legend: "绑定手机",
       title: "修改手机",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: [
         const UiTextField(
           keyboardType: TextInputType.numberWithOptions(decimal: false),

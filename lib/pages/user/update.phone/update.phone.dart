@@ -50,7 +50,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
   Widget build(BuildContext context) {
     return ModalPageTemplate(
       title: "修改手机",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: [
         Form(
           key: _formKey,

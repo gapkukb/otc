@@ -39,9 +39,9 @@ class _AuthJuniorState extends State<AuthJunior> {
       legend: "身份认证",
       title: "中级身份认证",
       nextText: "继续",
-      onCompelete: () {
+      onCompelete: (_) {
         Modal.show(
-          okText: "完成",
+          okButtonText: "完成",
           title: "您的个人信息上传成功",
           content: "平台会在48小时内审核完毕！",
           onOk: () {

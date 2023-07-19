@@ -39,7 +39,7 @@ class _AdvertisePlaceState extends State<AdvertisePlace> {
       title: "出售",
       iconData: Icons.currency_exchange,
       nextText: "发布",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: _buildNext(),
     );
   }

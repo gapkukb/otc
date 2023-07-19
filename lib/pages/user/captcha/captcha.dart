@@ -112,7 +112,7 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
     return ModalPageTemplate(
       nextText: "下一步",
       title: widget.legend ?? "${_mode.chineseText}验证",
-      onCompelete: () async {
+      onCompelete: (_) async {
         final code = _controller.text;
         if (code.length != _length) {
           Modal.showText(text: "请输入6位验证码");

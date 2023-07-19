@@ -42,7 +42,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
         iconData: Icons.credit_card_outlined,
         legend: "新增收款方式",
         title: "添加银行卡",
-        onCompelete: () async {
+        onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
 

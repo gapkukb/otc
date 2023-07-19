@@ -36,7 +36,7 @@ class _AuthPrimaryState extends State<AuthPrimary> {
     return ModalPageTemplate(
       legend: "身份认证",
       title: "初级认证",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: [
         UiTextField(
           autofocus: true,

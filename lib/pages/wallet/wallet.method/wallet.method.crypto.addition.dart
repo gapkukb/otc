@@ -68,7 +68,7 @@ class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
         iconData: Icons.credit_card_outlined,
         legend: "提币地址管理",
         title: "添加钱包地址",
-        onCompelete: () async {
+        onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
             inspect(formState);

@@ -57,7 +57,7 @@ class _ResetPwdState extends State<ResetPwd>
       child: ModalPageTemplate(
         title: "重置登录密码",
         nextText: "下一步",
-        onCompelete: () async {
+        onCompelete: (_) async {
           if (isNext) {
           } else {
             await validate();

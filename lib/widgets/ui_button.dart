@@ -144,15 +144,15 @@ class UiButton extends StatelessWidget {
   };
   static final Map<UiButtonSize, double> _size = {
     UiButtonSize.mini: 24.0,
-    UiButtonSize.small: 36.0,
-    UiButtonSize.medium: 48.0,
-    UiButtonSize.large: 56.0,
+    UiButtonSize.small: 32.0,
+    UiButtonSize.medium: 40.0,
+    UiButtonSize.large: 48.0,
   };
   static final Map<UiButtonSize, double> _fontSize = {
     UiButtonSize.mini: 12.0,
     UiButtonSize.small: 14.0,
-    UiButtonSize.medium: 16.0,
-    UiButtonSize.large: 18.0,
+    UiButtonSize.medium: 14.0,
+    UiButtonSize.large: 16.0,
   };
 
   static final Map<UiButtonShape, ShapeBorder> _shape = {
@@ -165,7 +165,7 @@ class UiButton extends StatelessWidget {
     this.disabled = false,
     this.fullWidth = false,
     required this.onPressed,
-    this.size = UiButtonSize.small,
+    this.size = UiButtonSize.medium,
     this.child,
     this.color,
     this.icon,

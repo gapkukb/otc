@@ -23,12 +23,6 @@ class UiEmptyView extends StatelessWidget {
     this.icon,
   });
 
-  static const _titleStyle = TextStyle(
-    fontSize: 16,
-    // fontWeight: FontWeight.bold,
-    color: Colors.black,
-  );
-
   @override
   Widget build(BuildContext context) {
     var flag = actions != null && actions!.isNotEmpty;
@@ -50,6 +44,7 @@ class UiEmptyView extends StatelessWidget {
           titleWidget ??
               Text(
                 title ?? "暂无数据",
+                textAlign: TextAlign.center,
                 style: titleStyle ?? Font.medium,
               ),
           if (subtitleWidget == null && subtitle != null)
@@ -57,6 +52,7 @@ class UiEmptyView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 subtitle!,
+                textAlign: TextAlign.center,
                 style: Font.miniGrey,
               ),
             )

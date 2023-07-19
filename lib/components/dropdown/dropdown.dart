@@ -2,6 +2,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
+export 'package:dropdown_search/dropdown_search.dart' show PopupProps;
+
 enum DropdownType {
   menu,
   dialog,
@@ -103,10 +105,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
               Widget? gen(Widget? widget, String? text, TextStyle? style) {
                 if (widget != null) return widget;
                 if (text != null) {
-                  return Text(
-                    text,
-                    style: style,
-                  );
+                  return Text(text, style: style);
                 }
                 return null;
               }

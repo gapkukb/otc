@@ -35,7 +35,7 @@ class _SettingNicknameState extends ConsumerState<SettingNickname> {
       legend: "个人资料",
       title: "修改昵称",
       iconData: Icons.edit_outlined,
-      onCompelete: () async {
+      onCompelete: (_) async {
         await apis.user.modifyNickname({"value": controller.text});
         ref.read(userProvider.notifier).updateUser();
         if (context.mounted) context.pop();

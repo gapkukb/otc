@@ -15,7 +15,7 @@ class SettingAvatar extends ConsumerWidget {
     return ModalPageTemplate(
       legend: "个人资料",
       title: "修改头像",
-      onCompelete: () {},
+      onCompelete: (_) {},
       children: [
         SizedBox(
           width: 100,

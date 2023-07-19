@@ -36,7 +36,7 @@ class _UpdatePwdState extends State<UpdatePwd> {
   Widget build(BuildContext context) {
     return ModalPageTemplate(
       title: "修改登录密码",
-      onCompelete: () async {
+      onCompelete: (_) async {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
           await apis.user.updatePwd(_formState);

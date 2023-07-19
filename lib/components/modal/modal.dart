@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 part './modal_bottom_sheet_item.dart';
 
@@ -53,49 +54,54 @@ class Modal {
   static const showWidget = BotToast.showWidget;
 
   static CancelFunc alert({
-    String okText = "确定",
+    String okButtonText = "确定",
     String title = "温馨提示",
     String content = "",
     bool asyncClose = false,
+    Widget? widget,
     Function()? onOk,
-    Function()? onDecline,
   }) {
     return Modal.show(
-      okText: okText,
+      okButtonText: okButtonText,
       title: title,
       content: content,
       asyncClose: asyncClose,
       onOk: onOk,
-      onDecline: onDecline,
+      widget: widget,
     );
   }
 
   static CancelFunc confirm({
-    String okText = "确定",
+    String okButtonText = "确定",
     String cancelText = "取消",
     String title = "温馨提示",
     String content = "",
+    Widget? widget,
     bool asyncClose = false,
     Function()? onOk,
     Function()? onDecline,
   }) {
     return Modal.show(
-      okText: okText,
-      cancelText: cancelText,
+      okButtonText: okButtonText,
+      cancelButtonText: cancelText,
       title: title,
       content: content,
       asyncClose: asyncClose,
       onOk: onOk,
       onDecline: onDecline,
+      widget: widget,
     );
   }
 
   static CancelFunc show({
-    String okText = "确定",
-    String? cancelText,
+    String okButtonText = "确定",
+    String? cancelButtonText,
     String title = "温馨提示",
     String content = "",
+    Widget? widget,
     bool asyncClose = false,
+    UiButtonVariant? okButtonVariant,
+    UiButtonVariant? cancelButtonVariant,
     Function()? onOk,
     Function()? onDecline,
   }) {
@@ -108,18 +114,21 @@ class Modal {
       clickClose: true,
       toastBuilder: (cancelFunc) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           actionsPadding: const EdgeInsets.all(8),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(4),
+              Radius.circular(16),
             ),
           ),
           title: Text(title),
-          content: Text(content),
+          content: widget ?? Text(content),
           actions: <Widget>[
-            if (cancelText != null)
-              OutlinedButton(
-                child: Text(cancelText),
+            if (cancelButtonText != null)
+              UiButton(
+                variant: cancelButtonVariant ?? UiButtonVariant.text,
+                label: cancelButtonText,
+                minWidth: 60,
                 onPressed: () {
                   if (asyncClose == false) {
                     cancelFunc();
@@ -127,12 +136,10 @@ class Modal {
                   }
                 },
               ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(okText),
+            UiButton(
+              variant: okButtonVariant ?? UiButtonVariant.text,
+              label: okButtonText,
+              minWidth: 60,
               onPressed: () {
                 if (asyncClose == false) {
                   cancelFunc();

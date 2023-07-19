@@ -27,7 +27,7 @@ bool ifNotKYC1(int kyc) {
     Modal.confirm(
       title: "交易资格",
       content: "您必须完成至少初级KYC认证才能开启该功能。",
-      okText: "去认证",
+      okButtonText: "去认证",
       onOk: () {
         GoRouter.of(navigatorKey.currentContext!).go('/topup');
       },

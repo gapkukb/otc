@@ -8,7 +8,7 @@ class ModalPageTemplate extends StatelessWidget {
   final IconData iconData;
   final Widget? icon;
   final List<Widget> children;
-  final void Function() onCompelete;
+  final void Function(BuildContext context) onCompelete;
 
   const ModalPageTemplate({
     super.key,
@@ -89,7 +89,7 @@ class ModalPageTemplate extends StatelessWidget {
           },
         ),
         TextButton(
-          onPressed: onCompelete,
+          onPressed: () => onCompelete(context),
           child: Text(nextText),
         ),
       ],

@@ -6,9 +6,11 @@ import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/wallet_address.input/wallet_address.input.dart';
 import 'package:otc/pages/wallet/recharge/recharge.stepper.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.counter.dart';
+import 'package:otc/pages/wallet/withdrawal/withdrawal.order.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -104,6 +106,8 @@ class _WithdrawalState extends State<Withdrawal>
           ),
           const WithdrawalCounter(),
           AddressSelector(name: ""),
+
+          WithdrawalOrder(),
         ],
       ),
     );

@@ -36,7 +36,7 @@ class _F2AState extends State<F2A> {
   Widget build(BuildContext context) {
     return ModalPageTemplate(
       title: "谷歌验证",
-      onCompelete: () async {
+      onCompelete: (_) async {
         if (_controller.text.length != _length) {
           Modal.showText(text: "请输入$_length数字验证码");
           return;

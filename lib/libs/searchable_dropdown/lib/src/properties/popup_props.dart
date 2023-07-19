@@ -240,6 +240,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     super.mode = Mode.MENU,
     super.fit = FlexFit.tight,
     super.title,
+    super.footnote,
     super.isFilterOnline,
     super.itemBuilder,
     super.disabledItemFn,
@@ -271,6 +272,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
   const PopupPropsMultiSelection.menu({
     super.title,
     super.fit = FlexFit.tight,
+    super.footnote,
     super.showSearchBox = false,
     super.searchFieldProps = const TextFieldProps(),
     super.menuProps = const MenuProps(),
@@ -299,6 +301,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
   const PopupPropsMultiSelection.dialog({
     super.title,
     super.fit = FlexFit.tight,
+    super.footnote,
     super.showSearchBox = false,
     super.searchFieldProps = const TextFieldProps(),
     super.scrollbarProps = const ScrollbarProps(),
@@ -331,6 +334,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
   const PopupPropsMultiSelection.bottomSheet({
     super.title,
     super.fit = FlexFit.tight,
+    super.footnote,
     super.showSearchBox = false,
     super.searchFieldProps = const TextFieldProps(),
     super.listViewProps = const ListViewProps(),
@@ -358,6 +362,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
 
   const PopupPropsMultiSelection.modalBottomSheet({
     super.title,
+    super.footnote,
     super.isFilterOnline,
     super.fit = FlexFit.tight,
     super.itemBuilder,
@@ -388,6 +393,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
       : this._(
           title: popupProps.title,
           fit: popupProps.fit,
+          footnote: popupProps.footnote,
           favoriteItemProps: popupProps.favoriteItemProps,
           disabledItemFn: popupProps.disabledItemFn,
           emptyBuilder: popupProps.emptyBuilder,
