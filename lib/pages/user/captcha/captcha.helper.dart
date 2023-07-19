@@ -33,7 +33,10 @@ enum CaptchaServiceType {
   boundEmail("bound-email"),
   boundPhone("bound-phone"),
   register("register"),
-  addF2A("addF2A");
+  // 客户端自定义类型 - 添加谷歌验证器
+  addF2A("addF2A"),
+  // 客户端自定义类型 - 验证资金密码
+  funds("funds");
 
   const CaptchaServiceType(this.value);
 

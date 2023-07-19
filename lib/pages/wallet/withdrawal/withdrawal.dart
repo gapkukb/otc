@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/components/address_selector/address_selector.dart';
 import 'package:otc/components/blockchain_selector/blockchain_selector.dart';
 import 'package:otc/components/cell/cell.dart';
@@ -8,9 +9,12 @@ import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/wallet_address.input/wallet_address.input.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/pages/wallet/recharge/recharge.stepper.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.counter.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.order.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -34,6 +38,16 @@ class _WithdrawalState extends State<Withdrawal>
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
+    //用户未完成身份认证，进入该页面，会出现弹框提示。
+    if (global.user.kyc?.lv1Status != KycStatus.pass) {
+      Modal.confirm(
+        content: "您必须完成初级身份认证或以上才可以使用提币功能",
+        okButtonText: "去认证",
+        onOk: () {
+          GoRouter.of(navigatorKey.currentContext!).go("/");
+        },
+      );
+    }
     super.initState();
   }
 
@@ -104,9 +118,9 @@ class _WithdrawalState extends State<Withdrawal>
               ],
             ),
           ),
-          const WithdrawalCounter(),
-          AddressSelector(name: ""),
-
+          WithdrawalCounter(
+            onSubmit: () {},
+          ),
           WithdrawalOrder(),
         ],
       ),

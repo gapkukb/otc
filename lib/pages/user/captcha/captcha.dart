@@ -24,7 +24,7 @@ class Captcha extends StatefulWidget {
   final bool? autoStart;
   final bool? switchable;
   final String? legend;
-  final UserBaseModel? user;
+  final UserModel? user;
 
   const Captcha({
     super.key,
@@ -62,7 +62,7 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
   List<CaptchaDeviceType> get supportedModes {
     if (widget.user == null) return [_mode];
     return CaptchaDeviceType.values
-        .where((mode) => mode.isValid(widget.user))
+        .where((mode) => mode.isValid(widget.user?.base))
         .toList();
   }
 
@@ -82,10 +82,10 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
   // 脱敏
   String get maskingAccount {
     if (_mode == CaptchaDeviceType.phone) {
-      return maskPhoneNumber(widget.account ?? widget.user?.phone);
+      return maskPhoneNumber(widget.account ?? widget.user?.base.phone);
     }
     if (_mode == CaptchaDeviceType.email) {
-      return maskEmail(widget.account ?? widget.user?.email);
+      return maskEmail(widget.account ?? widget.user?.base.email);
     }
     return "";
   }
@@ -127,26 +127,40 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
         });
       },
       children: [
-        Text(
-          _mode.chineseText,
-          style: const TextStyle(
-            fontSize: 18,
-            color: Color(0xff667086),
+        if (widget.service == CaptchaServiceType.funds)
+          UiTextFormField(
+            name: "funds",
+            autofocus: true,
+            labelText: "资金密码为6位数字",
+            maxLength: 6,
+            keyboardType: const TextInputType.numberWithOptions(),
+          )
+        else
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _mode.chineseText,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Color(0xff667086),
+                ),
+              ),
+              Text(
+                description,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xff667086),
+                ),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          description,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color(0xff667086),
-          ),
-        ),
         const SizedBox(height: 24),
         if (_mode == CaptchaDeviceType.f2a)
           UiTextFormField(
-            autofocus: true,
-            labelText: "谷歌6位数字验证码",
+            autofocus: widget.service != CaptchaServiceType.funds,
+            labelText: "谷歌验证码为6位数字",
             controller: _controller,
             maxLength: 6,
             keyboardType: const TextInputType.numberWithOptions(),

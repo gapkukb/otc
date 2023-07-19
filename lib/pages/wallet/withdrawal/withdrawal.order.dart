@@ -1,12 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/mix_text/mix_text.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/navigator.dart';
 
 class WithdrawalOrder extends StatefulWidget {
   const WithdrawalOrder({super.key});
@@ -21,32 +24,18 @@ class _WithdrawalOrderState extends State<WithdrawalOrder> {
     return ModalPageTemplate(
       legend: "提币",
       title: "确认订单",
-      onCompelete: (context) {
-        // Modal.confirm(
-        //   content: "您必须开启资金密码后才可以使用提币功能。",
-        //   okText: "去开启",
-        //   onOk: () {},
-        // );
-        // Modal.alert(
-        //   title: "提币提醒",
-        //   content:
-        //       "您的每日提币额度为2000.00 USDT\n当前可提币额度为0.00 USDT\n您可以升级更高级的身份认证来提升提币额度\n请明日再试",
-        //   okButtonText: "知道了",
-        // );
+      onCompelete: (context) async {
+        // 提币异常3 - 没有开启资金密码时
         Modal.confirm(
-          title: "提币提醒",
-          widget: Text.rich(
-            TextSpan(
-              text: "您将在 179:03 后开启提币功能。\n如有疑问，",
-              children: [
-                TextSpan(
-                  text: "请联系客服",
-                  recognizer: TapGestureRecognizer()..onTap = () {},
-                )
-              ],
-            ),
-          ),
-          okButtonText: "知道了",
+          content: "您必须开启资金密码后才可以使用提币功能。",
+          okButtonText: "去开启",
+          onOk: () {},
+        );
+
+        await openCaptchaWindow(
+          legend: "安全验证",
+          context: context,
+          service: CaptchaServiceType.funds,
         );
       },
       children: [

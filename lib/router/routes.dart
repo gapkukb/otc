@@ -151,6 +151,8 @@ final List<RouteBase> routes = [
       account: (state.extra as dynamic)['account'],
       switchable: (state.extra as dynamic)['switchable'],
       user: (state.extra as dynamic)['user'],
+      autoStart: (state.extra as dynamic)['autoStart'],
+      legend: (state.extra as dynamic)['legend'],
     ),
   ),
   ModalRoute(
