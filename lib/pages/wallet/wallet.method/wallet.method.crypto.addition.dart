@@ -1,13 +1,11 @@
 import 'dart:developer';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
-import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/enums/blockchain.dart';
-import 'package:otc/enums/currency.dart';
+import 'package:otc/constants/blockchain.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 

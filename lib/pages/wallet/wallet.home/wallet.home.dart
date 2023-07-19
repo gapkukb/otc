@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/tip/tip.dart';
-import 'package:otc/enums/currency.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/widgets/ui_button.dart';

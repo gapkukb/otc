@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:otc/enums/blockchain.dart';
-import 'package:otc/enums/currency.dart';
+import 'package:otc/constants/blockchain.dart';
+import 'package:otc/constants/currency.dart';
 part 'address.model.freezed.dart';
 part 'address.model.g.dart';
 
