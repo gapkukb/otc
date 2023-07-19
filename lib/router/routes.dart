@@ -94,30 +94,10 @@ final List<RouteBase> routes = [
             path: Routes.walletFunds,
             page: const WalletFunds(),
           ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
-          // AuthRoute(
-          //   path: Routes.wallet,
-          //   page: const HomeWallet(),
-          // ),
+          AuthRoute(
+            path: Routes.transfer,
+            page: const Transfer(),
+          ),
         ],
       ),
     ],

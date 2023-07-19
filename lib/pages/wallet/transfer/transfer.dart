@@ -7,20 +7,21 @@ import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/wallet_address.input/wallet_address.input.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
-import 'package:otc/pages/wallet/withdrawal/withdrawal.counter.dart';
-import 'package:otc/pages/wallet/withdrawal/withdrawal.order.dart';
+import 'package:otc/pages/wallet/transfer/transfer.counter.dart';
+import 'package:otc/pages/wallet/transfer/transfer.order.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/widgets/ui_text_form_field.dart';
 
-class Withdrawal extends StatefulWidget {
-  const Withdrawal({super.key});
+class Transfer extends StatefulWidget {
+  const Transfer({super.key});
 
   @override
-  State<Withdrawal> createState() => _WithdrawalState();
+  State<Transfer> createState() => _TransferState();
 }
 
-class _WithdrawalState extends State<Withdrawal>
+class _TransferState extends State<Transfer>
     with SingleTickerProviderStateMixin {
   late final TabController controller;
 
@@ -37,6 +38,9 @@ class _WithdrawalState extends State<Withdrawal>
         onOk: () {
           navigatorKey.currentContext!.go("/");
         },
+        onDecline: () {
+          Navigator.of(context).maybePop();
+        },
       );
     }
     super.initState();
@@ -52,7 +56,7 @@ class _WithdrawalState extends State<Withdrawal>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('数字货币提币'),
+        title: const Text('平台转账'),
       ),
       body: ListView(
         children: [
@@ -61,58 +65,36 @@ class _WithdrawalState extends State<Withdrawal>
             name: "currency",
             formState: formState,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TabBar(
-                controller: controller,
-                isScrollable: true,
-                physics: const NeverScrollableScrollPhysics(),
-                dividerColor: Colors.transparent,
-                tabs: const [
-                  Tab(text: "使用新地址"),
-                  Tab(text: "提币地址簿"),
+          const Gap.medium(),
+          UiTextFormField(
+            labelText: "好友ID",
+            formState: formState,
+          ),
+          UiTextFormField(
+            labelText: "转账数量",
+            formState: formState,
+            decoration: InputDecoration(
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  UiButton.text(
+                    minWidth: 50,
+                    size: UiButtonSize.small,
+                    onPressed: () {},
+                    label: "全部",
+                  ),
+                  Text("USDT"),
+                  const Gap.small(horizition: true),
                 ],
               ),
-              UiButton.text(
-                onPressed: () {},
-                label: "地址管理",
-              )
-            ],
-          ),
-          // controller.index==0?
-          const Divider(thickness: 1, height: 1),
-          const Gap.medium(),
-          WalletAddressInput(
-            name: "currency",
-            formState: formState,
-          ),
-          const Gap.medium(),
-          BlockchainSelector(
-            name: "currency",
-            formState: formState,
-          ),
-          const Gap.medium(),
-          ListTile(
-            title: Text.rich(TextSpan(text: "提币数量", children: [
-              TextSpan(text: "0.00USDT可用"),
-            ])),
-            subtitle: Text(
-              "123123213.00",
-              style: Font.x2largeBold,
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextButton(onPressed: () {}, child: const Text("全部")),
-                const Text("USDT")
-              ],
+
+              // suffixText: "USDT",
             ),
           ),
-          WithdrawalCounter(
+          TransferCounter(
             onSubmit: () {},
           ),
-          WithdrawalOrder(),
+          TransferOrder(),
         ],
       ),
     );
