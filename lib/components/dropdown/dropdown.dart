@@ -21,6 +21,7 @@ class DropdownItem {
   final String? subtitle;
   final TextStyle? subtitleStyle;
   final Widget? subtitleWidget;
+  final Widget? leading;
   final bool? disabled;
 
   DropdownItem({
@@ -36,6 +37,7 @@ class DropdownItem {
     this.titleStyle,
     this.trailingStyle,
     this.subtitleStyle,
+    this.leading,
   });
 }
 
@@ -49,6 +51,11 @@ class Dropdown extends DropdownSearch<DropdownItem> {
   final Widget? title;
   final DropdownType type;
   final InputDecoration inputDecoration;
+  final Widget? prefixIcon;
+  final Widget Function(BuildContext context, DropdownItem item, Widget widget)?
+      itemBuilder;
+  final PopupProps? props;
+
   Dropdown({
     super.key,
     super.asyncItems,
@@ -56,7 +63,6 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     super.clearButtonProps,
     super.compareFn,
     super.dropdownBuilder,
-    // super.dropdownButtonProps,
     super.enabled,
     super.filterFn,
     super.onBeforeChange,
@@ -72,6 +78,11 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     this.data = const [],
     this.type = DropdownType.menu,
     this.inputDecoration = const InputDecoration(),
+    this.prefixIcon,
+    this.itemBuilder,
+    super.dropdownButtonProps,
+    super.onChanged,
+    this.props,
   }) : super(
           items: data,
           onSaved: (now) {
@@ -87,7 +98,8 @@ class Dropdown extends DropdownSearch<DropdownItem> {
                       : PopupProps.modalBottomSheet)(
             fit: FlexFit.loose,
             title: title,
-            itemBuilder: (context, item, isSelected) {
+            footnote: props?.footnote,
+            itemBuilder: (context, item, isSelected, disabled) {
               Widget? gen(Widget? widget, String? text, TextStyle? style) {
                 if (widget != null) return widget;
                 if (text != null) {
@@ -99,44 +111,56 @@ class Dropdown extends DropdownSearch<DropdownItem> {
                 return null;
               }
 
-              return ListTile(
+              final widget = ListTile(
+                tileColor: disabled ? Colors.grey.shade100 : null,
+                leading: item.leading,
                 title: gen(item.titleWidget, item.title, item.titleStyle),
                 trailing:
                     gen(item.trailingWidget, item.trailing, item.trailingStyle),
                 subtitle:
                     gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
               );
+
+              return itemBuilder == null
+                  ? widget
+                  : itemBuilder(context, item, widget);
             },
-            emptyBuilder: (context, searchEntry) {
-              return const UiEmptyView(
-                title: "未匹配到结果",
-                subtitle: "换个关键词试试吧",
-              );
-            },
-            errorBuilder: (context, searchEntry, exception) {
-              return const UiEmptyView(
-                title: "出错了",
-                subtitle: "网络故障，请稍后再试",
-              );
-            },
-            containerBuilder: (context, popupWidget) => Material(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.white,
-              child: popupWidget,
-            ),
+
+            emptyBuilder: props?.emptyBuilder ??
+                (context, searchEntry) {
+                  return const UiEmptyView(
+                    title: "未匹配到结果",
+                    subtitle: "换个关键词试试吧",
+                  );
+                },
+            errorBuilder: props?.errorBuilder ??
+                (context, searchEntry, exception) {
+                  return const UiEmptyView(
+                    title: "出错了",
+                    subtitle: "网络故障，请稍后再试",
+                  );
+                },
+            containerBuilder: props?.containerBuilder ??
+                (context, popupWidget) => Material(
+                      borderRadius: BorderRadius.circular(4),
+                      color: Colors.white,
+                      child: popupWidget,
+                    ),
             // dialogProps: DialogProps(),
-            searchFieldProps: TextFieldProps(
-              decoration: InputDecoration(
-                hintText: searchHintText,
-                isDense: true,
-                prefixIcon: const Icon(
-                  Icons.search,
+            searchFieldProps: props?.searchFieldProps ??
+                TextFieldProps(
+                  decoration: InputDecoration(
+                    hintText: searchHintText,
+                    isDense: true,
+                    prefixIcon: const Icon(
+                      Icons.search,
+                    ),
+                  ),
                 ),
-              ),
-            ),
             // showSelectedItems: true,
-            showSearchBox: showSearchBox,
-            searchDelay: const Duration(microseconds: 0),
+            showSearchBox: props?.showSearchBox ?? showSearchBox,
+            searchDelay: props?.searchDelay ?? const Duration(microseconds: 0),
+            disabledItemFn: props?.disabledItemFn,
           ),
           itemAsString: (item) {
             return item.title;
@@ -145,6 +169,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
             dropdownSearchDecoration: inputDecoration.copyWith(
               border: const OutlineInputBorder(),
               labelText: labelText,
+              prefixIcon: prefixIcon,
             ),
             baseStyle: const TextStyle(fontSize: 16),
           ),

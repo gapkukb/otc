@@ -16,17 +16,17 @@ enum Cryptocurrency {
 }
 
 enum Coin {
-  USDT(name: "USDT", enable: false),
+  USDT(name: "USDT", enable: true),
+  ETH(name: "ETH", enable: true),
+  TRX(name: "TRX", enable: true),
+  BNB(name: "BNB", enable: true),
   BTC(name: "BTC", enable: false),
-  ETH(name: "ETH", enable: false),
   USDC(name: "USDC", enable: false),
-  BNB(name: "BNB", enable: false),
   XRP(name: "XRP", enable: false),
   ADA(name: "ADA", enable: false),
   DOGE(name: "DOGE", enable: false),
   SOL(name: "SOL", enable: false),
   MATIC(name: "MATI", enable: false),
-  TRX(name: "TRX", enable: false),
   LTC(name: "LTC", enable: false),
   DOT(name: "DOT", enable: false),
   AVAX(name: "AVAX", enable: false),
@@ -48,7 +48,7 @@ enum Coin {
     return SvgPicture.asset(iconPath);
   }
 
-  static get enabled {
-    return values.where((element) => element.enable);
+  static List<Coin> get enabled {
+    return values.where((element) => element.enable).toList();
   }
 }

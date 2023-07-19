@@ -1,12 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:otc/components/address_selector/address_selector.dart';
+import 'package:otc/components/blockchain_selector/blockchain_selector.dart';
 import 'package:otc/components/cell/cell.dart';
+import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/wallet_address.input/wallet_address.input.dart';
 import 'package:otc/pages/wallet/recharge/recharge.stepper.dart';
+import 'package:otc/pages/wallet/withdrawal/withdrawal.counter.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -18,15 +23,23 @@ class Withdrawal extends StatefulWidget {
   State<Withdrawal> createState() => _WithdrawalState();
 }
 
-class _WithdrawalState extends State<Withdrawal> {
-  final _linker = LayerLink();
+class _WithdrawalState extends State<Withdrawal>
+    with SingleTickerProviderStateMixin {
+  late final TabController controller;
 
-  List<Map<String, dynamic>> items = [
-    {"name": "最小充币数量", "value": "0.00000001 USDT"},
-    {"name": "平均到达时间", "value": "≈ 5 分钟"},
-    {"name": "预计到账", "value": "6次网络确认"},
-    {"name": "预计解锁", "value": "6次网络确认"},
-  ];
+  final Map<String, dynamic> formState = {};
+
+  @override
+  void initState() {
+    controller = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,197 +47,65 @@ class _WithdrawalState extends State<Withdrawal> {
       appBar: AppBar(
         title: const Text('数字货币提币'),
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          overlayEntry?.remove();
-          overlayEntry = null;
-        },
-        child: ListView(
-          children: [
-            Container(
-              color: Colors.grey.shade100,
-              padding: Pads.sm,
-              child: const RechargeStepper(
-                steps: [
-                  RechargeStep(
-                    title: "复制充币地址",
-                    subtitle: "选择您要充值的币种及其区块网络，并在本页面复制充值地址",
-                  ),
-                  RechargeStep(
-                    title: "发起提币",
-                    subtitle: "在对方平台发起提币。",
-                  ),
-                  RechargeStep(
-                    title: "网络确认",
-                    subtitle: "等待区块网络确认您的转账。",
-                  ),
-                  RechargeStep(
-                    title: "充币成功",
-                    subtitle: "区块确认完成后，XXXX将为您上账。",
-                  ),
+      body: ListView(
+        children: [
+          const SizedBox(height: 36),
+          CurrencySelector(
+            name: "currency",
+            formState: formState,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TabBar(
+                controller: controller,
+                isScrollable: true,
+                physics: const NeverScrollableScrollPhysics(),
+                dividerColor: Colors.transparent,
+                tabs: const [
+                  Tab(text: "使用新地址"),
+                  Tab(text: "提币地址簿"),
                 ],
               ),
+              UiButton.text(
+                onPressed: () {},
+                label: "地址管理",
+              )
+            ],
+          ),
+          // controller.index==0?
+          const Divider(thickness: 1, height: 1),
+          const Gap.medium(),
+          WalletAddressInput(
+            name: "currency",
+            formState: formState,
+          ),
+          const Gap.medium(),
+          BlockchainSelector(
+            name: "currency",
+            formState: formState,
+          ),
+          const Gap.medium(),
+          ListTile(
+            title: Text.rich(TextSpan(text: "提币数量", children: [
+              TextSpan(text: "0.00USDT可用"),
+            ])),
+            subtitle: Text(
+              "123123213.00",
+              style: Font.x2largeBold,
             ),
-            const SizedBox(height: 32),
-            Dropdown(
-              name: "",
-              labelText: "币种选择",
-              type: DropdownType.menu,
-              data: [
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-              ],
-              dropdownBuilder: (context, selectedItem) {
-                return UiChip(icon: Icons.abc, text: "USDT");
-              },
-            ),
-            const SizedBox(height: 24),
-            Dropdown(
-              name: "",
-              labelText: "币种选择",
-              type: DropdownType.menu,
-              data: [
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-                DropdownItem(title: "title"),
-              ],
-              dropdownBuilder: (context, selectedItem) {
-                return UiChip(icon: Icons.abc, text: "USDT");
-              },
-            ),
-            const SizedBox(height: 24),
-            ListTile(
-              tileColor: Colors.grey.shade100,
-              title: const Text(
-                "地址：",
-                style: Font.mediumBold,
-              ),
-              subtitle: UiClipboard(
-                text: "0x4e2b74082e7d92f268af688fd6b939cc7b57d428",
-                child: Text("0x4e2b74082e7d92f268af688fd6b939cc7b57d428"),
-                iconSize: 18,
-              ),
-              trailing: CompositedTransformTarget(
-                link: _linker,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    createOverlay();
-                  },
-                  child: QrImageView(
-                    data: "data",
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: Pads.sm,
-              child: DefaultTextStyle(
-                style: Font.smallGrey,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: items.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-                    crossAxisCount: 2,
-                    height: 40,
-                  ),
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(item['name']),
-                        Text(item['value']),
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Text.rich(TextSpan(
-              text: "▪此地址只可接收 ",
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                TextSpan(
-                  text: "USDT",
-                  style: TextStyle(color: Colors.red),
-                )
+                TextButton(onPressed: () {}, child: const Text("全部")),
+                const Text("USDT")
               ],
-            )),
-            const Text.rich(TextSpan(
-              text: "▪请再次确认您选择的主网络是 ",
-              children: [
-                TextSpan(
-                  text: "BNB Smart Chain (BEP20)",
-                  style: TextStyle(color: Colors.red),
-                )
-              ],
-            ))
-          ],
-        ),
-      ),
-    );
-  }
-
-  OverlayEntry? overlayEntry;
-  createOverlay() {
-    if (overlayEntry != null) {
-      overlayEntry!.remove();
-      overlayEntry = null;
-      return;
-    }
-    overlayEntry = OverlayEntry(
-      builder: (BuildContext context) {
-        return UnconstrainedBox(
-          child: CompositedTransformFollower(
-            link: _linker,
-            showWhenUnlinked: false,
-            targetAnchor: Alignment.centerLeft,
-            followerAnchor: Alignment.centerRight,
-            child: SizedBox(
-              width: 312,
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: Pads.sm,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("扫二维码"),
-                      const Text(
-                        "▪此地址只可接收USDT",
-                        style: Font.smallGrey,
-                      ),
-                      const Text(
-                        "▪请再次确认您选择的主网络是BNB Smart Chain (BEP20)",
-                        style: Font.smallGrey,
-                      ),
-                      QrImageView(
-                        data: "data",
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
           ),
-        );
-      },
+          const WithdrawalCounter(),
+          AddressSelector(name: ""),
+        ],
+      ),
     );
-
-    // Add the OverlayEntry to the Overlay.
-    Overlay.of(context, debugRequiredFor: widget).insert(overlayEntry!);
   }
 }

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class UiChip extends StatelessWidget {
-  IconData icon;
-  String text;
-  TextStyle? textStyle;
-  bool? iconOnRight;
-  double? iconSize;
-  double spacing;
+  final IconData? icon;
+  final Widget? iconWidget;
+  final String text;
+  final TextStyle? textStyle;
+  final bool? iconOnRight;
+  final double? iconSize;
+  final double spacing;
 
-  UiChip({
+  const UiChip({
     super.key,
-    required this.icon,
+    this.icon,
     required this.text,
     this.textStyle,
     this.iconOnRight,
     this.iconSize,
     this.spacing = 8,
+    this.iconWidget,
   });
 
   @override
@@ -24,10 +26,11 @@ class UiChip extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       textDirection: iconOnRight == true ? TextDirection.rtl : null,
       children: [
-        Icon(
-          icon,
-          size: iconSize,
-        ),
+        iconWidget ??
+            Icon(
+              icon,
+              size: iconSize,
+            ),
         SizedBox(width: spacing),
         Text(
           text,

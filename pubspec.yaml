@@ -52,7 +52,12 @@ dependencies:
   file_picker: ^5.3.2
   photo_view: ^0.14.0
   image_picker: ^0.8.9
-  dropdown_search: ^5.0.6
+  # 官方 dropdownBuilder 属性中的seletcedItem为空时，必须返回widget导致ui问题。
+  # see https://github.com/salim-lachdhaf/searchable_dropdown/pull/578
+  # 等待官方合并pr后，切换回pub.dev版本
+  dropdown_search:
+    path: lib/libs/searchable_dropdown
+
   image_cropper: ^5.0.0
   video_player: ^2.6.1
   data_table_2: ^2.5.3

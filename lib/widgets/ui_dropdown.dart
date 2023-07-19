@@ -48,7 +48,7 @@ class UiDropdown extends DropdownSearch<UiDropdownItem> {
             ),
           ),
           popupProps: PopupProps.menu(
-            itemBuilder: (context, item, isSelected) {
+            itemBuilder: (context, item, isSelected, disabeld) {
               return Text(item.name);
             },
           ),
