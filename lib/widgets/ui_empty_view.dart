@@ -39,7 +39,7 @@ class UiEmptyView extends StatelessWidget {
                 height: 134,
               ),
           const SizedBox(
-            height: 40,
+            height: 24,
           ),
           titleWidget ??
               Text(
@@ -60,7 +60,7 @@ class UiEmptyView extends StatelessWidget {
             subtitleWidget!,
           if (flag)
             const SizedBox(
-              height: 40,
+              height: 24,
             ),
           if (flag)
             Row(

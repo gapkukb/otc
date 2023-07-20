@@ -14,12 +14,12 @@ class AsyncBuilder<T> extends StatefulWidget {
 
   const AsyncBuilder({
     super.key,
-    required this.builder,
     required this.future,
     this.showErrorView = true,
     this.showLoadingView = true,
     this.errorView,
     this.loadingView,
+    required this.builder,
   });
 
   @override
@@ -59,7 +59,8 @@ class _AsyncBuilderState<T> extends State<AsyncBuilder<T>> {
                       size: 108,
                       color: Colors.red,
                     ),
-                    title: "网络连接失败",
+                    title: "数据获取失败",
+                    subtitle: "网络连接不稳定或服务器错误，请稍后再试",
                     actions: [
                       UiButton(
                         label: "点击重试",

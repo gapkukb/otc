@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:otc/components/chart/chart.bar.dart';
 import 'package:otc/components/chart/chart.config.dart';
-import 'package:otc/pages/agent_mng/dashboard/dashboard_24_amount.dart';
-import 'package:otc/pages/agent_mng/dashboard/dashboard_24_counter.dart';
-import 'package:otc/pages/agent_mng/dashboard/dashboard_overview.dart';
+import 'package:otc/pages/agent_system/dashboard/dashboard_24_amount.dart';
+import 'package:otc/pages/agent_system/dashboard/dashboard_24_counter.dart';
+import 'package:otc/pages/agent_system/dashboard/dashboard_overview.dart';
 
 class AgentSystemDashboard extends StatefulWidget {
   const AgentSystemDashboard({super.key});

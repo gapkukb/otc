@@ -3,7 +3,7 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
-import 'package:otc/pages/agent_mng/agent_setting/agent_setting.slider.dart';
+import 'package:otc/pages/agent_system/agent_setting/agent_setting.slider.dart';
 import 'package:otc/pages/async_builder/async_builder.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';

@@ -43,11 +43,11 @@ import 'package:otc/pages/wallet/wallet.method/wallet.method.bank.addition.dart'
 import 'package:otc/pages/wallet/wallet.method/wallet.method.crypto.addition.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.qrcode.addition.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.dart';
-import 'package:otc/pages/agent_mng/layout/layout.dart';
-import 'package:otc/pages/agent_mng/dashboard/dashboard.dart';
-import 'package:otc/pages/agent_mng/agent_setting/agent_setting.dart';
-import 'package:otc/pages/agent_mng/rebase_details/rebase_details.dart';
-import 'package:otc/pages/agent_mng/agent_system_Hierarchy/agent_system_Hierarchy.dart';
+import 'package:otc/pages/agent_system/layout/layout.dart';
+import 'package:otc/pages/agent_system/dashboard/dashboard.dart';
+import 'package:otc/pages/agent_system/agent_setting/agent_setting.dart';
+import 'package:otc/pages/agent_system/rebase_details/rebase_details.dart';
+import 'package:otc/pages/agent_system/agent_system_Hierarchy/agent_system_Hierarchy.dart';
 
 import '../layout/layout.dart';
 
