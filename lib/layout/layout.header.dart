@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/layout/layout.logo.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
 import 'package:otc/providers/auth.provider.dart';
@@ -90,10 +92,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
 
     return AppBar(
       primary: false,
-      leading: Padding(
-        padding: Pads.leftLg,
-        child: Image.asset("assets/images/logo.png"),
-      ),
+      leading: const LayoutLogo(),
       leadingWidth: 80,
       automaticallyImplyLeading: false,
       shadowColor: Colors.grey.shade100,

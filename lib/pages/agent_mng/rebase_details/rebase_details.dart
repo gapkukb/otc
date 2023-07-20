@@ -2,14 +2,14 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
 
-class RebaseDetails extends StatefulWidget {
-  const RebaseDetails({super.key});
+class AgentSystemIncome extends StatefulWidget {
+  const AgentSystemIncome({super.key});
 
   @override
-  State<RebaseDetails> createState() => _RebaseDetailsState();
+  State<AgentSystemIncome> createState() => _AgentSystemIncomeState();
 }
 
-class _RebaseDetailsState extends State<RebaseDetails> {
+class _AgentSystemIncomeState extends State<AgentSystemIncome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

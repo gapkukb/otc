@@ -104,6 +104,28 @@ final List<RouteBase> routes = [
           ),
         ],
       ),
+      ShellRoute(
+        navigatorKey: agentSystemKey,
+        builder: agentSystemLayout,
+        routes: [
+          AuthRoute(
+            path: Routes.agentSystemDashboard,
+            page: const AgentSystemDashboard(),
+          ),
+          AuthRoute(
+            path: Routes.agentSystemIncome,
+            page: const AgentSystemIncome(),
+          ),
+          AuthRoute(
+            path: Routes.agentSystemSetting,
+            page: const AgentSystemSetting(),
+          ),
+          AuthRoute(
+            path: Routes.agentSystemHierarchy,
+            page: const AgentSystemHierarchy(),
+          ),
+        ],
+      ),
     ],
   ),
   ModalRoute(

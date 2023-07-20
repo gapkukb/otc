@@ -34,7 +34,7 @@ UserModel fakerUser() {
       nickname: "",
       avatar: "",
       disabled: false,
-      type: "",
+      type: "GENERAL",
       googleSecretValid: false,
       invitationCode: "",
       lockedUntil: "",

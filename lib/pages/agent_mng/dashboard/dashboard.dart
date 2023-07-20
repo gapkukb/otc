@@ -7,14 +7,14 @@ import 'package:otc/pages/agent_mng/dashboard/dashboard_24_amount.dart';
 import 'package:otc/pages/agent_mng/dashboard/dashboard_24_counter.dart';
 import 'package:otc/pages/agent_mng/dashboard/dashboard_overview.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class AgentSystemDashboard extends StatefulWidget {
+  const AgentSystemDashboard({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<AgentSystemDashboard> createState() => _AgentSystemDashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _AgentSystemDashboardState extends State<AgentSystemDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

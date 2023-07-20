@@ -48,4 +48,10 @@ class Routes {
   static const pendingFutureOrder = "/pending_future_order";
   static const historyFutureOrder = "/history_future_order";
   static const doneFutureOrder = "/done_future_order";
+
+  // 代理系统
+  static const agentSystemDashboard = "/agent_system_dashboard";
+  static const agentSystemIncome = "/agent_system_income";
+  static const agentSystemHierarchy = "/agent_system_hierarchy";
+  static const agentSystemSetting = "/agent_system_setting";
 }
