@@ -92,7 +92,7 @@ class _CountdownButtonState extends State<CountdownButton> {
   _send() async {
     if (disabled) return;
     // 明确返回false则不开始计时
-    if (await widget.onPressed?.call() == false) {
+    if (await widget.onPressed?.call() != false) {
       start();
     }
   }

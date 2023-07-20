@@ -9,16 +9,16 @@ class UserStatsModel with _$UserStatsModel {
     required String username,
 
     ///	Maker总次数
-    required String makerTimes,
+    required int makerTimes,
 
     ///	Taker总次数
-    required String takerTimes,
+    required int takerTimes,
 
     ///	Maker成单总次数
-    required String makerSuccessTotal,
+    required int makerSuccessTotal,
 
     ///	Taker成单总次数
-    required String takerSuccessTotal,
+    required int takerSuccessTotal,
 
     ///	总佣金
     required num commissionTotal,
@@ -27,10 +27,10 @@ class UserStatsModel with _$UserStatsModel {
     required num makerCommissionTotal,
 
     ///	登录次数
-    required String loginTimes,
+    required int loginTimes,
 
     ///	成功登录次数
-    required String loginSuccessTimes,
+    required int loginSuccessTimes,
 
     ///	最后登录时间
     required String lastLoggedTime,

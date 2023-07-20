@@ -78,6 +78,7 @@ class Modal {
     String content = "",
     Widget? widget,
     bool asyncClose = false,
+    bool? clickClose,
     Function()? onOk,
     Function()? onDecline,
   }) {
@@ -90,6 +91,7 @@ class Modal {
       onOk: onOk,
       onDecline: onDecline,
       widget: widget,
+      clickClose: clickClose,
     );
   }
 
@@ -100,6 +102,7 @@ class Modal {
     String content = "",
     Widget? widget,
     bool asyncClose = false,
+    bool? clickClose,
     UiButtonVariant? okButtonVariant,
     UiButtonVariant? cancelButtonVariant,
     Function()? onOk,
@@ -111,7 +114,7 @@ class Modal {
       backgroundColor: Colors.black45,
       crossPage: false,
       allowClick: false,
-      clickClose: true,
+      clickClose: clickClose ?? true,
       toastBuilder: (cancelFunc) {
         return AlertDialog(
           backgroundColor: Colors.white,

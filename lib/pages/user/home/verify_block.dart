@@ -30,13 +30,16 @@ class VerifyBlock extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Tip(message: "阿西吧"),
+                  GestureDetector(
+                    child: const Icon(Icons.help, color: Colors.white),
+                    onTap: () {},
+                  )
                 ],
               ),
               subtitle: const Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: Text(
-                  "通过认证，得更高交易额度",
+                  "通过认证，获得更高交易额度",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

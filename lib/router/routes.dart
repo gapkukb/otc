@@ -42,6 +42,10 @@ final List<RouteBase> routes = [
             path: Routes.merchant,
             page: const Merchant(),
           ),
+          AuthRoute(
+            path: Routes.rebate,
+            page: const UserRebate(),
+          ),
         ],
       ),
       ShellRoute(

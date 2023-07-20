@@ -19,6 +19,7 @@ class _UpdatePwdState extends State<UpdatePwd> {
   final Map<String, dynamic> _formState = {};
   final _formKey = GlobalKey<FormState>();
   late TextEditingController controller;
+  late TextEditingController rawcontroller;
 
   @override
   void initState() {

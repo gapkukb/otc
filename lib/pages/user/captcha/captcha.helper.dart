@@ -32,6 +32,7 @@ enum CaptchaServiceType {
   delQrcode("del-qrcode"),
   boundEmail("bound-email"),
   boundPhone("bound-phone"),
+  boundFunds("bound-funds"),
   register("register"),
   // 客户端自定义类型 - 添加谷歌验证器
   addF2A("addF2A"),
@@ -58,8 +59,10 @@ enum CaptchaServiceType {
           "device": device,
           "captcha": captcha,
         });
-      // case CaptchaServiceType.editBankcard:
-      //   return apis.user.validateBindDevice;
+      case CaptchaServiceType.boundFunds:
+        return apis.user.updatePayPwd({
+          "device": device,
+        });
       // case CaptchaServiceType.delBankcard:
       //   return apis.user.validateBindDevice;
       // case CaptchaServiceType.addAddressBook:

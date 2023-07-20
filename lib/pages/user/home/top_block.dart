@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/http/http.dart';
-import 'package:otc/models/user/user.model.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
+import 'package:otc/models/user_stats/user_stats.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
@@ -19,24 +19,29 @@ class UserTopBlock extends ConsumerStatefulWidget {
 }
 
 class _UserTopBlockState extends ConsumerState<UserTopBlock> {
-  String latestLoginIp = "";
   @override
   void initState() {
     super.initState();
-    apis.user.getUserLog(null, HttpOptions(pathParams: {"num": "1"})).then(
-          (value) => setState(
-            () => latestLoginIp = value,
-          ),
-        );
   }
 
   @override
   Widget build(context) {
     final user = ref.read(userBaseProvider);
+    final lastLoggedIp =
+        ref.read(userStatsProvider.select((value) => value.lastLoggedIp));
+
+    final securities = <bool>[
+      user.emailValid,
+      user.phoneValid,
+      user.googleSecretValid
+    ];
+    final securityLevel =
+        securities.where((element) => element).length / securities.length * 100;
+
     return Row(
       children: [
         Expanded(
-          child: _buildBaseInfo(user),
+          child: _buildBaseInfo(user, lastLoggedIp),
         ),
         SizedBox(
           width: 300,
@@ -58,8 +63,8 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                 Expanded(
                   child: Center(
                     child: Indicator(
-                      value: 50,
-                      secondarColor: Colors.blue.shade200,
+                      value: securityLevel,
+                      secondarColor: Colors.blue.shade100,
                     ),
                   ),
                 ),
@@ -71,7 +76,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
     );
   }
 
-  Card _buildBaseInfo(UserBaseModel user) {
+  Card _buildBaseInfo(UserBaseModel user, String lastLoggedIp) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -110,7 +115,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
             ),
             const SizedBox(height: 24),
             Text(
-              "上次登录时间\u0020\u0020\u0020\u0020IP: $latestLoginIp",
+              "上次登录时间\u0020\u0020\u0020\u0020IP: $lastLoggedIp",
               style: Font.smallGrey,
             ),
             const SizedBox(height: 16),

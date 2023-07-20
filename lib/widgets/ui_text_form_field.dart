@@ -60,7 +60,7 @@ class UiTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final String? labelText;
   final String? name;
-  final Map<String, dynamic>? formState;
+  final Map<dynamic, dynamic>? formState;
 
   const UiTextFormField({
     super.key,

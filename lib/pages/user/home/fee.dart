@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otc/components/mix_text/mix_text.dart';
 import 'package:otc/utils/responsive.dart';
 
 class Fee extends StatefulWidget {
@@ -17,12 +18,12 @@ class _FeeState extends State<Fee> {
         {
           "name": "挂单",
           "value": "0.07500%",
-          "origin": "0.07500%",
+          "origin": " 0.10000%",
         },
         {
-          "name": "挂单",
+          "name": "吃单",
           "value": "0.07500%",
-          "origin": "0.07500%",
+          "origin": " 0.10000%",
         },
       ]
     },
@@ -32,11 +33,11 @@ class _FeeState extends State<Fee> {
       "children": [
         {
           "name": "挂单",
-          "value": "0.07500%",
+          "value": "0.02000%",
         },
         {
           "name": "挂单",
-          "value": "0.07500%",
+          "value": "0.04000%",
         },
       ]
     }
@@ -142,23 +143,12 @@ class _FeeState extends State<Fee> {
               ),
             ),
           ),
-          Text.rich(
-            TextSpan(
-              text: "${data["value"]}",
-              children: data["origin"] == null
-                  ? null
-                  : [
-                      const TextSpan(
-                        text: " / ",
-                      ),
-                      TextSpan(
-                        text: data["value"],
-                        style: const TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 10,
-                        ),
-                      )
-                    ],
+          MixText(
+            child: data["value"] + (data["origin"] == null ? "" : "/"),
+            small: data["origin"],
+            smallStyle: const TextStyle(
+              decoration: TextDecoration.lineThrough,
+              fontSize: 10,
             ),
           ),
         ],

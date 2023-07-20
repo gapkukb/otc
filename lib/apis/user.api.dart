@@ -38,7 +38,7 @@ class _User {
   final getOtcConfig = get("/otc/config", OtcModel.fromJson);
 
   /// 查询最后N条登录记录
-  final getUserLog = get("/customer/login-log/last/{num}");
+  final getUserLog = post("/customer/login-log/last");
 
   /// 修改登录密码
   final updatePwd = post("/customer/safety/reset/login-pwd");
@@ -58,8 +58,11 @@ class _User {
   /// 校验修改资金密码
   final updatePayPwd = post("/customer/safety/reset/pay-pwd");
 
-  /// 校验绑定验证码
+  /// 校验绑定设备(邮箱，手机)
   final validateBindDevice = post("/customer/safety/valid/device");
+
+  /// 申请绑定设备(邮箱，手机)
+  final bindDevice = post("/customer/safety/bound/device");
 }
 
 final userApi = _User();

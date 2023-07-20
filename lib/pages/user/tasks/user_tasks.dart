@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/utils/responsive.dart';
@@ -15,11 +16,16 @@ class UserTasks extends StatefulWidget {
 class _UserTasksState extends State<UserTasks>
     with SingleTickerProviderStateMixin {
   late final TabController controller;
-  bool _isEmpty = false;
+  bool _isEmpty = true;
 
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
+    controller.addListener(() {
+      setState(() {
+        _isEmpty = controller.index == 0;
+      });
+    });
     super.initState();
   }
 
@@ -80,6 +86,44 @@ class _UserTasksState extends State<UserTasks>
   }
 
   Padding _buildTab() {
+    const List<_Task> tasks = [
+      _Task(
+          amount: 500,
+          deadtime: "2023-05-03 01:24(UTC+8)到期",
+          status: "已过期",
+          title: "可兑换500 USDT 灵活适用基金代金券！",
+          type: "手续费减免"),
+      _Task(
+          amount: 50,
+          deadtime: "2023-05-03 01:24(UTC+8)到期",
+          status: "已过期",
+          title: "可兑换您的 500 USDT 储蓄试用基金代金券！",
+          type: "手续费减免"),
+      _Task(
+          amount: 100,
+          deadtime: "2023-05-03 01:24(UTC+8)到期",
+          status: "已过期",
+          title: "可兑换您的 100 USDT 合约试用代金券！",
+          type: "手续费减免"),
+      _Task(
+          amount: 10,
+          deadtime: "2023-05-03 01:24(UTC+8)到期",
+          status: "已过期",
+          title: "完成账户验证并获得 10 USDT 现金返还！",
+          type: "手续费减免"),
+      _Task(
+          amount: 10,
+          deadtime: "2023-05-03 01:24(UTC+8)到期",
+          status: "已过期",
+          title: "完成做市商验证并获得 10 USDT 现金返还！",
+          type: "手续费减免"),
+      _Task(
+          amount: 5,
+          deadtime: "2023-05-03 01:24(UTC+8)到期",
+          status: "已过期",
+          title: "完成星级订单获得 5 USDT 现金返还！",
+          type: "手续费减免"),
+    ];
     return Padding(
       padding: EdgeInsets.all(
         context.responsive(8, lg: 32),
@@ -90,7 +134,7 @@ class _UserTasksState extends State<UserTasks>
               subtitle: "定期查看任务中心，不错过任何活动！",
             )
           : GridView.builder(
-              itemCount: 10,
+              itemCount: tasks.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate:
@@ -101,13 +145,13 @@ class _UserTasksState extends State<UserTasks>
                 mainAxisSpacing: 16,
               ),
               itemBuilder: (context, index) {
-                return _buildTaskCard();
+                return _buildTaskCard(tasks[index]);
               },
             ),
     );
   }
 
-  ClipRRect _buildTaskCard() {
+  ClipRRect _buildTaskCard(_Task item) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Row(
@@ -119,27 +163,29 @@ class _UserTasksState extends State<UserTasks>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "500",
-                  style: TextStyle(
-                    fontSize: 48,
-                    color: Colors.white,
-                    height: 1,
+                FittedBox(
+                  child: Text(
+                    item.amount.toInt().toString(),
+                    style: const TextStyle(
+                      fontSize: 48,
+                      color: Colors.white,
+                      height: 1,
+                    ),
                   ),
                 ),
-                Text(
+                const Text(
                   "USDT",
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
                 Text(
-                  "手续费减免",
-                  style: TextStyle(
+                  item.type,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Colors.white,
                   ),
@@ -156,21 +202,21 @@ class _UserTasksState extends State<UserTasks>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "可兑换500 USDT 灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！灵活适用基金代金券！",
-                    style: TextStyle(fontSize: 16, height: 1),
+                    item.title,
+                    style: const TextStyle(fontSize: 16, height: 1),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "2023-05-03 01:24(UTC+8)到期",
-                    style: TextStyle(
+                    item.deadtime,
+                    style: const TextStyle(
                       fontSize: 12,
                     ),
                   ),
                   // Spacer(),
                   ElevatedButton(
                     onPressed: null,
-                    child: Text("已过期"),
+                    child: Text(item.status),
                   ),
                 ],
               ),
@@ -188,8 +234,8 @@ class _UserTasksState extends State<UserTasks>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: Colors.deepPurpleAccent,
-          image: const DecorationImage(
-              image: AssetImage("assets/images/06.png"),
+          image: DecorationImage(
+              image: Assets.images.image4.provider(),
               alignment: Alignment.centerRight),
         ),
         child: const Column(
@@ -219,4 +265,20 @@ class _UserTasksState extends State<UserTasks>
       ),
     );
   }
+}
+
+class _Task {
+  final String type;
+  final double amount;
+  final String title;
+  final String deadtime;
+  final String status;
+
+  const _Task({
+    required this.type,
+    required this.amount,
+    required this.title,
+    required this.deadtime,
+    required this.status,
+  });
 }

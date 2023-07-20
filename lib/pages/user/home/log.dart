@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/panel/panel.dart';
-import 'package:otc/http/http.dart';
 import 'package:otc/models/log/log.model.dart';
 
 class Log extends StatefulWidget {
@@ -20,7 +16,7 @@ class _LogState extends State<Log> {
   void initState() {
     super.initState();
 
-    apis.user.getUserLog(null, HttpOptions(pathParams: {"num": "3"})).then(
+    apis.user.getUserLog({"last": 4}).then(
       (response) {
         setState(() {
           logs = List.from(response)

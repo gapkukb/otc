@@ -9,14 +9,14 @@ part of 'user_stats.model.dart';
 _$_UserStatsModel _$$_UserStatsModelFromJson(Map<String, dynamic> json) =>
     _$_UserStatsModel(
       username: json['username'] as String,
-      makerTimes: json['makerTimes'] as String,
-      takerTimes: json['takerTimes'] as String,
-      makerSuccessTotal: json['makerSuccessTotal'] as String,
-      takerSuccessTotal: json['takerSuccessTotal'] as String,
+      makerTimes: json['makerTimes'] as int,
+      takerTimes: json['takerTimes'] as int,
+      makerSuccessTotal: json['makerSuccessTotal'] as int,
+      takerSuccessTotal: json['takerSuccessTotal'] as int,
       commissionTotal: json['commissionTotal'] as num,
       makerCommissionTotal: json['makerCommissionTotal'] as num,
-      loginTimes: json['loginTimes'] as String,
-      loginSuccessTimes: json['loginSuccessTimes'] as String,
+      loginTimes: json['loginTimes'] as int,
+      loginSuccessTimes: json['loginSuccessTimes'] as int,
       lastLoggedTime: json['lastLoggedTime'] as String,
       lastLoggedIp: json['lastLoggedIp'] as String,
     );

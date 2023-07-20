@@ -1974,10 +1974,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/image_1.png
   AssetGenImage get image1 => const AssetGenImage('assets/images/image_1.png');
 
-  /// File path: assets/images/image_10.png
-  AssetGenImage get image10 =>
-      const AssetGenImage('assets/images/image_10.png');
-
   /// File path: assets/images/image_11.png
   AssetGenImage get image11 =>
       const AssetGenImage('assets/images/image_11.png');
@@ -2037,7 +2033,6 @@ class $AssetsImagesGen {
         waveHeader,
         empty,
         image1,
-        image10,
         image11,
         image2,
         image3,

@@ -26,6 +26,7 @@ import 'package:otc/pages/user/update.funds.pwd/update.funds.pwd.dart';
 import 'package:otc/pages/user/update.phone/update.phone.dart';
 import 'package:otc/pages/user/update.pwd/update.pwd.dart';
 import 'package:otc/pages/user/home/home.dart';
+import 'package:otc/pages/user/rebate/rebate.dart';
 import 'package:otc/pages/user/layout/user_layout.dart';
 import 'package:otc/pages/user/security/security.dart';
 import 'package:otc/pages/user/setting/setting.dart';
@@ -52,7 +53,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.transfer,
+  initialLocation: Routes.security,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

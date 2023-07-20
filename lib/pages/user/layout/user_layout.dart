@@ -1,110 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/pages/user/layout/user.nav.list.dart';
-import 'package:otc/pages/user/layout/user_appbar.dart';
-import 'package:otc/pages/user/layout/user_drawer.dart';
-import 'package:otc/pages/user/layout/user_bottom_narbar.dart';
-import 'package:otc/utils/responsive.dart';
+import 'package:otc/components/layout/layout.menu.dart';
+import 'package:otc/components/layout/layout.menu.item.dart';
+import 'package:otc/components/layout/layout.menu.sub.dart';
+import 'package:otc/router/router.dart';
 
 ShellRouteBuilder userLayout = (context, state, child) {
-  GlobalKey<_SidebarMenuState> _key = GlobalKey();
-
-  return context.responsive(
-    Scaffold(
-      drawer: const Drawer(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(0),
-            bottomRight: Radius.circular(0),
-          ),
-        ),
-        child: UserDrawer(),
-      ),
-      appBar: userAppBar(),
-      body: SafeArea(
-        child: context.responsive(
-          child,
-          lg: SelectionArea(child: child),
-        ),
-      ),
-      bottomNavigationBar: context.responsive(
-        const UserBottomNarbar(),
-        lg: const SizedBox.shrink(),
-      ),
-    ),
-    lg: Scaffold(
-      drawerEnableOpenDragGesture: false,
-      body: Builder(
-        builder: (ctx) {
-          return Row(
-            children: [
-              SidebarMenu(
-                key: _key,
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.purple.withAlpha(7),
-                  padding: const EdgeInsets.all(32.0),
-                  child: SelectionArea(child: child),
-                ),
+  return Material(
+    color: const Color(0xffF8F9FA),
+    child: Row(
+      children: [
+        const Card(
+          child: SidebarMenu(
+            items: [
+              LayoutMenuSub(
+                title: "钱包",
+                underline: false,
+                items: [
+                  LayoutMenuItem(
+                    name: "C2C用户中心",
+                    path: Routes.c2c,
+                  ),
+                  LayoutMenuItem(
+                    name: "返佣",
+                    path: Routes.rebate,
+                  ),
+                  LayoutMenuItem(
+                    name: "任务中心",
+                    path: Routes.tasks,
+                  ),
+                  LayoutMenuItem(
+                    name: "账户安全",
+                    path: Routes.security,
+                  ),
+                  LayoutMenuItem(
+                    name: "身份认证",
+                    path: Routes.auth,
+                  ),
+                  LayoutMenuItem(
+                    name: "做市商认证",
+                    path: Routes.merchant,
+                  ),
+                  LayoutMenuItem(
+                    name: "设置",
+                    path: Routes.setting,
+                  ),
+                ],
               ),
             ],
-          );
-        },
-      ),
+          ),
+        ),
+        Expanded(
+          child: child,
+        ),
+      ],
     ),
   );
 };
-
-class SidebarMenu extends StatefulWidget {
-  double width = 336;
-
-  SidebarMenu({super.key});
-
-  @override
-  State<SidebarMenu> createState() => _SidebarMenuState();
-}
-
-class _SidebarMenuState extends State<SidebarMenu> {
-  @override
-  Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme.titleSmall;
-    final currentPath = GoRouter.of(context).location;
-
-    return SizedBox(
-      width: 300,
-      child: ListView.builder(
-        itemCount: UserNavList.values.length,
-        itemBuilder: (context, index) {
-          final item = UserNavList.values[index];
-          final selected = currentPath == item.pathname;
-          final $style =
-              !selected ? style : style!.copyWith(fontWeight: FontWeight.bold);
-
-          return ListTile(
-            enableFeedback: true,
-            enabled: true,
-            // tileColor: Colors.deepPurple.shade100,
-            selectedTileColor: Colors.deepPurple.shade100,
-            selected: selected,
-            shape: const StadiumBorder(),
-            leading: const Icon(
-              Icons.fiber_manual_record,
-              size: 18,
-              color: Colors.black,
-            ),
-            title: Text(
-              item.label,
-              style: $style,
-            ),
-            trailing: Text(
-              "100+",
-              style: $style,
-            ),
-            onTap: item.go,
-          );
-        },
-      ),
-    );
-  }
-}

@@ -27,6 +27,7 @@ class UserBaseModel with _$UserBaseModel {
     required bool locked,
     required String createdTime,
     required bool? maker,
+    required bool hasPaymentPassword,
   }) = _UserBaseModel;
 
   factory UserBaseModel.fromJson(Map<String, Object?> json) =>

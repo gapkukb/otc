@@ -128,12 +128,12 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
       },
       children: [
         if (widget.service == CaptchaServiceType.funds)
-          UiTextFormField(
+          const UiTextFormField(
             name: "funds",
             autofocus: true,
             labelText: "资金密码为6位数字",
             maxLength: 6,
-            keyboardType: const TextInputType.numberWithOptions(),
+            keyboardType: TextInputType.numberWithOptions(),
           )
         else
           Column(

@@ -3,13 +3,13 @@ import 'package:otc/theme/text_theme.dart';
 
 class MixText extends StatelessWidget {
   final String child;
-  final String small;
+  final String? small;
   final TextStyle? style;
   final TextStyle smallStyle;
   const MixText({
     super.key,
     required this.child,
-    required this.small,
+    this.small,
     this.style,
     this.smallStyle = Font.mini,
   });

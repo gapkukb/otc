@@ -24,12 +24,11 @@ class SecurityManagment extends StatelessWidget {
         value: "未开启",
         description: "用于保护账户安全",
         action: UiButton.text(
-          // label: user.emailValid ? "修改" : "开启",
-          label: "开启",
+          label: user.hasPaymentPassword ? "修改" : "开启",
           onPressed: () async {
             final result = await openCaptchaWindow(
               context: context,
-              service: CaptchaServiceType.boundEmail,
+              service: CaptchaServiceType.boundFunds,
             );
             context.pushNamed(Routes.updateFundsPwd);
           },

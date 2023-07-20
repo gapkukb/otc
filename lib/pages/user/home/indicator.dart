@@ -188,7 +188,7 @@ class Painter extends CustomPainter {
             color: color,
             fontSize: 14,
           ),
-          text: "\n中",
+          text: "\n${value > 66 ? "高" : value > 33 ? "中" : "低"}",
         ),
       ],
     );

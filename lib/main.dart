@@ -8,6 +8,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/theme.dart';
 
@@ -38,6 +39,7 @@ class _AppState extends ConsumerState<App> {
     super.initState();
 
     ref.read(userProvider.notifier).updateUser();
+    ref.read(walletProvider.notifier).updateWallet();
     theme.addListener(themeHandle);
   }
 

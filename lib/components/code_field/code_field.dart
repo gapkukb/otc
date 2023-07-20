@@ -19,9 +19,10 @@ class CodeField extends StatefulWidget {
   final bool disabled;
   final TextEditingController? textController;
   final CountdownTimerController? controller;
-
+  final String? name;
+  final Map<String, dynamic>? formState;
   final FutureOr<bool?> Function()? onPressed;
-
+  final String? Function(String?)? validator;
   const CodeField({
     super.key,
     this.maxLength = 6,
@@ -34,6 +35,9 @@ class CodeField extends StatefulWidget {
     this.onlyNumber = true,
     this.autofocus = true,
     this.disabled = true,
+    this.formState,
+    this.name,
+    this.validator,
   });
 
   @override
@@ -67,6 +71,9 @@ class _CodeFieldState extends State<CodeField> {
       autofocus: widget.autofocus,
       controller: widget.textController,
       maxLength: widget.maxLength,
+      name: widget.name,
+      formState: widget.formState,
+      validator: widget.validator,
       keyboardType: widget.onlyNumber
           ? const TextInputType.numberWithOptions(decimal: false)
           : null,

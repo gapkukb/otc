@@ -14,13 +14,7 @@ class SecurityAuthrization extends StatelessWidget {
         action: UiButton.text(
           label: user.emailValid ? "修改" : "绑定",
           onPressed: () async {
-            final result = await openCaptchaWindow(
-              context: context,
-              service: CaptchaServiceType.boundEmail,
-            );
-            if (result != null) {
-              await context.pushNamed(Routes.updatePhone);
-            }
+            await context.pushNamed(Routes.updateEmail);
           },
         ),
       ),
@@ -48,8 +42,7 @@ class SecurityAuthrization extends StatelessWidget {
         value: "",
         description: "用于登录、提现和修改安全设置",
         action: UiButton.text(
-          // label: user.googleSecretValid ? "修改" : "绑定",
-          label: "绑定",
+          label: user.googleSecretValid ? "修改" : "绑定",
           onPressed: () async {
             final result = await openCaptchaWindow(
               context: context,
