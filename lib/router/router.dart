@@ -46,7 +46,7 @@ import 'package:otc/pages/wallet/withdrawal/withdrawal.dart';
 import 'package:otc/pages/agent_system/layout/layout.dart';
 import 'package:otc/pages/agent_system/dashboard/dashboard.dart';
 import 'package:otc/pages/agent_system/agent_setting/agent_setting.dart';
-import 'package:otc/pages/agent_system/rebase_details/rebase_details.dart';
+import 'package:otc/pages/agent_system/income/income.dart';
 import 'package:otc/pages/agent_system/agent_system_Hierarchy/agent_system_Hierarchy.dart';
 
 import '../layout/layout.dart';
@@ -58,7 +58,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.agentSystemSetting,
+  initialLocation: Routes.agentSystemIncome,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

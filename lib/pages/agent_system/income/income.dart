@@ -1,6 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AgentSystemIncome extends StatefulWidget {
   const AgentSystemIncome({super.key});
@@ -14,7 +16,49 @@ class _AgentSystemIncomeState extends State<AgentSystemIncome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: Row(
+          children: [
+            PopupMenuButton(
+              position: PopupMenuPosition.under,
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    enabled: false,
+                    child: SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: SfDateRangePicker(),
+                    ),
+                  )
+                ];
+              },
+            ),
+            PopupMenuButton(
+              position: PopupMenuPosition.under,
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    child: Text(""),
+                  )
+                ];
+              },
+            ),
+            FilledButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return SizedBox(
+                        width: 300,
+                        height: 300,
+                        child: SfDateRangePicker(),
+                      );
+                    },
+                  );
+                },
+                child: Text("data"))
+          ],
+        ),
       ),
       body: Container(
         child: DataTable2(
@@ -33,7 +77,7 @@ class _AgentSystemIncomeState extends State<AgentSystemIncome> {
             DataColumn2(label: Text("佣金数量")),
           ],
           rows: List.generate(
-            100,
+            10,
             (index) => DataRow(
               cells: List.generate(
                 9,
