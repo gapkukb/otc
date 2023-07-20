@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 enum PaymentChannel {
-  bank(type: 0, name: "银行借记卡"),
-  wechat(type: 1, name: "微信"),
-  alpay(type: 2, name: "支付宝");
+  bankCard(type: 0, text: "银行借记卡"),
+  wechat(type: 1, text: "微信"),
+  alipay(type: 2, text: "支付宝");
 
   const PaymentChannel({
     required this.type,
-    required this.name,
+    required this.text,
   });
 
   final int type;
-  final String name;
+  final String text;
 
   Widget get widget {
     return Chip(
       labelPadding: EdgeInsets.zero,
       labelStyle: const TextStyle(fontSize: 12),
-      label: Text(name),
+      label: Text(text),
       avatar: Icon(
         Icons.fiber_manual_record,
         size: 10,
@@ -27,7 +27,7 @@ enum PaymentChannel {
   }
 
   Color get color {
-    return type == PaymentChannel.bank.type
+    return type == PaymentChannel.bankCard.type
         ? Colors.orange
         : type == PaymentChannel.wechat.type
             ? Colors.green
@@ -35,10 +35,10 @@ enum PaymentChannel {
   }
 
   static PaymentChannel fromType(int type) {
-    return type == PaymentChannel.bank.type
-        ? PaymentChannel.bank
+    return type == PaymentChannel.bankCard.type
+        ? PaymentChannel.bankCard
         : type == PaymentChannel.wechat.type
             ? PaymentChannel.wechat
-            : PaymentChannel.bank;
+            : PaymentChannel.bankCard;
   }
 }
