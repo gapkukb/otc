@@ -105,7 +105,7 @@ final List<RouteBase> routes = [
         ],
       ),
       ShellRoute(
-        navigatorKey: agentSystemKey,
+        navigatorKey: agentLayoutKey,
         builder: agentSystemLayout,
         routes: [
           AuthRoute(
@@ -150,17 +150,19 @@ final List<RouteBase> routes = [
     page: const UpdatePwd(),
   ),
   ModalRoute(
-    path: Routes.captcha,
-    statePage: (context, state) => Captcha(
-      preferredDevice: (state.extra as dynamic)['preferredDevice'],
-      service: (state.extra as dynamic)['service'],
-      account: (state.extra as dynamic)['account'],
-      switchable: (state.extra as dynamic)['switchable'],
-      user: (state.extra as dynamic)['user'],
-      autoStart: (state.extra as dynamic)['autoStart'],
-      legend: (state.extra as dynamic)['legend'],
-    ),
-  ),
+      path: Routes.captcha,
+      statePage: (context, state) {
+        final CaptchaWindowOptions option = state.extra as dynamic;
+        return Captcha(
+          preferredDevice: option.preferredDevice,
+          service: option.service,
+          account: option.account,
+          switchable: option.switchable,
+          user: option.user ?? global.user,
+          autoStart: option.autoStart,
+          legend: option.legend,
+        );
+      }),
   ModalRoute(
     path: Routes.updateEmail,
     page: const UpdateEmail(),

@@ -30,10 +30,12 @@ enum CaptchaServiceType {
   addQrcode("add-qrcode"),
   editQrcode("edit-qrcode"),
   delQrcode("del-qrcode"),
-  boundEmail("bound-email"),
-  boundPhone("bound-phone"),
-  boundFunds("bound-funds"),
   register("register"),
+  boundDevice("bound-device"),
+  boundPhone("bound-phone"),
+  applyGoogleAuth("apply-google-auth"),
+  boundFunds("bound-funds"),
+  forget("forget"),
   // 客户端自定义类型 - 添加谷歌验证器
   addF2A("addF2A"),
   // 客户端自定义类型 - 验证资金密码
@@ -48,7 +50,7 @@ enum CaptchaServiceType {
     String captcha,
   ) {
     switch (this) {
-      case boundEmail:
+      case boundDevice:
       case boundPhone:
         return apis.user.validateBindDevice({
           "device": device,

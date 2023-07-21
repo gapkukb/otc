@@ -27,6 +27,7 @@ class _Global {
     prefs = await SharedPreferences.getInstance();
     Logger.level = Level.debug;
     authorization = prefs.getString(keys.authorization);
+    print(authorization);
     if (authorization != null) {
       try {
         final $user = prefs.getString(keys.user);

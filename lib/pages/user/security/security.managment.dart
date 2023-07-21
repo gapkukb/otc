@@ -26,10 +26,10 @@ class SecurityManagment extends StatelessWidget {
         action: UiButton.text(
           label: user.hasPaymentPassword ? "修改" : "开启",
           onPressed: () async {
-            final result = await openCaptchaWindow(
+            final result = await openCaptchaWindow(CaptchaWindowOptions(
               context: context,
               service: CaptchaServiceType.boundFunds,
-            );
+            ));
             context.pushNamed(Routes.updateFundsPwd);
           },
         ),

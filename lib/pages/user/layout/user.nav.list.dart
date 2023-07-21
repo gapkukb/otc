@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/router/router.dart';
 
@@ -17,6 +16,6 @@ enum UserNavList {
   final String pathname;
 
   go() {
-    GoRouter.of(navigatorKey.currentContext!).goNamed(pathname);
+    GoRouter.of(navigatorKey.currentContext!).go(pathname);
   }
 }

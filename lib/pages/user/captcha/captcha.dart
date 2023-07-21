@@ -19,7 +19,7 @@ part 'captcha.helper.dart';
 
 class Captcha extends StatefulWidget {
   final CaptchaDeviceType? preferredDevice;
-  final CaptchaServiceType service;
+  final CaptchaServiceType? service;
   final String? account;
   final bool? autoStart;
   final bool? switchable;
@@ -119,7 +119,7 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
           return;
         }
 
-        await widget.service.validate(device, code);
+        await widget.service?.validate(device, code);
 
         context.pop({
           "device": device,
@@ -198,7 +198,7 @@ class _CaptchaState extends State<Captcha> with CaptchaController {
     } else {
       final Map<String, dynamic> payload = {
         "device": device,
-        "session": widget.service.value,
+        "session": widget.service?.value,
       };
 
       if (widget.service == CaptchaServiceType.register) {

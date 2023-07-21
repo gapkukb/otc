@@ -43,10 +43,10 @@ void Function() verify(BuildContext context, Function then) {
       );
       return;
     }
-    await openCaptchaWindow(
+    await openCaptchaWindow(CaptchaWindowOptions(
       context: context,
       service: CaptchaServiceType.addAddressBook,
-    );
+    ));
 
     then();
   };

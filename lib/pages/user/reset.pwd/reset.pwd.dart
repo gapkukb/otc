@@ -99,14 +99,14 @@ class _ResetPwdState extends State<ResetPwd>
   validate() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final result = await openCaptchaWindow(
+    final result = await openCaptchaWindow(CaptchaWindowOptions(
       context: context,
       service: CaptchaServiceType.addAddressBook,
       account: (_controller.index == 0 ? _phoneController : _emailController)
           .text
           .trim(),
       preferredDevice: items[_controller.index],
-    );
+    ));
     if (result != null) {
       setState(() {
         isNext = true;

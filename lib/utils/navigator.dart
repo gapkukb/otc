@@ -8,26 +8,39 @@ import 'package:otc/router/router.dart';
 export 'package:otc/pages/user/captcha/captcha.dart'
     show CaptchaDeviceType, CaptchaServiceType, CaptchaController;
 
-Future<Map<String, String>?> openCaptchaWindow({
-  required BuildContext context,
-  CaptchaDeviceType? preferredDevice,
-  required CaptchaServiceType service,
-  String? account,
-  bool? switchable,
-  UserModel? user,
-  bool? autoStart,
-  String? legend,
-}) {
-  return context.pushNamed(
+Future<Map<String, String>?> openCaptchaWindow(CaptchaWindowOptions option) {
+  return (option.context ?? navigatorKey.currentContext!).pushNamed(
     Routes.captcha,
     extra: {
-      "preferredDevice": preferredDevice,
-      "service": service,
-      "account": account,
-      "switchable": switchable,
-      "autoStart": autoStart,
-      "legend": legend,
-      "user": user ?? global.user,
+      "preferredDevice": option.preferredDevice,
+      "service": option.service,
+      "account": option.account,
+      "switchable": option.switchable,
+      "autoStart": option.autoStart,
+      "legend": option.legend,
+      "user": option.user ?? global.user,
     },
   );
+}
+
+class CaptchaWindowOptions {
+  final BuildContext? context;
+  final CaptchaDeviceType? preferredDevice;
+  final CaptchaServiceType? service;
+  final String? account;
+  final bool? switchable;
+  final UserModel? user;
+  final bool? autoStart;
+  final String? legend;
+
+  CaptchaWindowOptions({
+    this.context,
+    this.preferredDevice,
+    this.service,
+    this.account,
+    this.switchable,
+    this.user,
+    this.autoStart,
+    this.legend,
+  });
 }

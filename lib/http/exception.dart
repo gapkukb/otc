@@ -21,7 +21,8 @@ class ExceptionInterceptor extends InterceptorsWrapper {
     } else {
       final err = DioException(
         requestOptions: response.requestOptions,
-        error: BizException(response.data['code'], response.data['message']),
+        error: BizException.create(
+            response.data['code'], response.data['message']),
         message: null,
         response: response,
         // ignore: invalid_use_of_internal_member
@@ -120,8 +121,9 @@ class HttpException extends _Exception {
                   e.response?.statusMessage ?? '网络错误-$statusCode',
                 );
             }
-          } on Exception catch (_) {
-            return HttpException(ClientErrorCode.unknown, '未知错误');
+          } on Exception catch (e) {
+            return HttpException(
+                ClientErrorCode.unknown, '${e.toString()}-未知错误');
           }
         }
       default:
@@ -139,17 +141,15 @@ class BizException extends _Exception {
     super.message,
   ]);
 
-  factory BizException.create(DioException e) {
-    return BizException(e.response?.data['code'], e.message!);
-    // switch (e.type) {
-    //   case DioExceptionType.connectionTimeout:
-    //     return BizException(bizErrorCode, "服务器连接超时");
-    //   case DioExceptionType.sendTimeout:
-    //     return BizException(bizErrorCode, "发送请求超时");
-    //   case DioExceptionType.receiveTimeout:
-    //     return BizException(bizErrorCode, "服务器响应超时");
-    //   default:
-    //     return BizException(e.response?.data['code'], e.message!);
-    // }
+  factory BizException.create(
+    int code,
+    String? message,
+  ) {
+    switch (code) {
+      /// 验证码已过期
+      case 2001002:
+      default:
+        return BizException(code, message);
+    }
   }
 }

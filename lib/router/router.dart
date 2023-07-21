@@ -3,6 +3,7 @@ library router;
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/pages/error/404.dart';
 import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/pages/home/home.dart';
@@ -48,6 +49,7 @@ import 'package:otc/pages/agent_system/dashboard/dashboard.dart';
 import 'package:otc/pages/agent_system/agent_setting/agent_setting.dart';
 import 'package:otc/pages/agent_system/income/income.dart';
 import 'package:otc/pages/agent_system/agent_system_Hierarchy/agent_system_Hierarchy.dart';
+import 'package:otc/utils/navigator.dart';
 
 import '../layout/layout.dart';
 
