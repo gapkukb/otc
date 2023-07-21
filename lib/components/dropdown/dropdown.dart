@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
 export 'package:dropdown_search/dropdown_search.dart' show PopupProps;
@@ -82,7 +83,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     this.inputDecoration = const InputDecoration(),
     this.prefixIcon,
     this.itemBuilder,
-    super.dropdownButtonProps,
+    // super.dropdownButtonProps,
     super.onChanged,
     this.props,
   }) : super(
@@ -164,13 +165,17 @@ class Dropdown extends DropdownSearch<DropdownItem> {
           itemAsString: (item) {
             return item.title;
           },
+          dropdownButtonProps: const DropdownButtonProps(
+            icon: Icon(Icons.keyboard_arrow_down_outlined),
+          ),
           dropdownDecoratorProps: DropDownDecoratorProps(
             dropdownSearchDecoration: inputDecoration.copyWith(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               border: const OutlineInputBorder(),
               labelText: labelText,
               prefixIcon: prefixIcon,
             ),
-            baseStyle: const TextStyle(fontSize: 16),
+            baseStyle: Font.medium,
           ),
         );
 }

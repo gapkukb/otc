@@ -1,8 +1,9 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/components/currency_selector/currency_selector.dart';
+import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AgentSystemIncome extends StatefulWidget {
   const AgentSystemIncome({super.key});
@@ -15,49 +16,60 @@ class _AgentSystemIncomeState extends State<AgentSystemIncome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            PopupMenuButton(
-              position: PopupMenuPosition.under,
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    enabled: false,
-                    child: SizedBox(
-                      width: 300,
-                      height: 300,
-                      child: SfDateRangePicker(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: AppBar(
+          clipBehavior: Clip.none,
+          title: UnconstrainedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 24),
+              child: Form(
+                child: Wrap(
+                  spacing: 16,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      height: 56,
+                      child: CurrencySelector(name: "name"),
                     ),
-                  )
-                ];
-              },
+                    SizedBox(
+                      width: 150,
+                      height: 56,
+                      child: Dropdown(
+                        labelText: "交易类型",
+                        name: "",
+                        data: [
+                          DropdownItem(title: "购买", value: 0),
+                          DropdownItem(title: "出售", value: 1),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      height: 56,
+                      child: Dropdown(
+                        labelText: "交易方式",
+                        name: "",
+                        data: PaymentChannel.values.map((channel) {
+                          return DropdownItem(title: channel.text, value: 0);
+                        }).toList(),
+                      ),
+                    ),
+                    DatePicker(
+                      labelText: "开始日期",
+                      maxDate: DateTime.now(),
+                      minDate: DateTime(1970),
+                    ),
+                    DatePicker(
+                      labelText: "结束日期",
+                      maxDate: DateTime.now(),
+                      minDate: DateTime(1970),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            PopupMenuButton(
-              position: PopupMenuPosition.under,
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    child: Text(""),
-                  )
-                ];
-              },
-            ),
-            FilledButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return SizedBox(
-                        width: 300,
-                        height: 300,
-                        child: SfDateRangePicker(),
-                      );
-                    },
-                  );
-                },
-                child: Text("data"))
-          ],
+          ),
         ),
       ),
       body: Container(

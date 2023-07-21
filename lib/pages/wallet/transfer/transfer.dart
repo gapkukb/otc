@@ -71,7 +71,7 @@ class _TransferState extends State<Transfer>
             formState: formState,
           ),
           AmountInput(
-            coin: Coin.USDT,
+            coin: Coins.USDT,
             controller: TextEditingController(),
           ),
           TransferCounter(

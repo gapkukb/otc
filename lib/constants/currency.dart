@@ -12,7 +12,7 @@ enum Cryptocurrency {
   ETH,
 }
 
-enum Coin {
+enum Coins {
   USDT(name: "USDT", enable: true),
   ETH(name: "ETH", enable: true),
   TRX(name: "TRX", enable: true),
@@ -29,7 +29,7 @@ enum Coin {
   AVAX(name: "AVAX", enable: false),
   DAI(name: "DAI", enable: false);
 
-  const Coin({
+  const Coins({
     required this.name,
     required this.enable,
   });
@@ -45,7 +45,7 @@ enum Coin {
     return SvgPicture.asset(iconPath);
   }
 
-  static List<Coin> get enabled {
+  static List<Coins> get enabled {
     return values.where((element) => element.enable).toList();
   }
 }

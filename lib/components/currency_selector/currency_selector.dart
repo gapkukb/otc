@@ -17,13 +17,17 @@ class CurrencySelector extends Dropdown {
             return UiChip(
               text: selectedItem.title,
               iconWidget: selectedItem.leading,
+              spacing: 16,
             );
           },
-          data: Coin.enabled.map((item) {
+          data: Coins.enabled.map((item) {
             return DropdownItem(
               leading: SvgPicture.asset(
                 item.iconPath,
                 width: 24,
+                fit: BoxFit.cover,
+                allowDrawingOutsideViewBox: true,
+                clipBehavior: Clip.none,
               ),
               title: item.name,
             );

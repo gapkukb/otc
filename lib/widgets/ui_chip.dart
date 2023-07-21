@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class UiChip extends StatelessWidget {
   final IconData? icon;
@@ -24,6 +25,7 @@ class UiChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       textDirection: iconOnRight == true ? TextDirection.rtl : null,
       children: [
         iconWidget ??
@@ -34,7 +36,7 @@ class UiChip extends StatelessWidget {
         SizedBox(width: spacing),
         Text(
           text,
-          style: textStyle,
+          style: textStyle ?? Font.medium,
         ),
       ],
     );
