@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
+import 'package:otc/pages/ad/layout/layout.dart';
 import 'package:otc/pages/error/404.dart';
 import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/pages/home/home.dart';
@@ -60,7 +62,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.agentIncome,
+  initialLocation: Routes.AdBuying,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

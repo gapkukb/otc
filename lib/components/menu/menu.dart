@@ -20,22 +20,24 @@ class Menu extends PopupMenuButton {
     super.onCanceled,
     super.onOpened,
     super.onSelected,
-    super.padding,
     super.position = PopupMenuPosition.under,
     super.shadowColor,
     super.shape,
     super.splashRadius,
-    super.surfaceTintColor,
+    super.surfaceTintColor = Colors.white,
     super.tooltip,
     required this.text,
     required this.items,
   }) : super(
+            padding: EdgeInsets.zero,
             child: SizedBox(
               height: 56,
               child: Padding(
                 padding: Pads.xAxisSm,
                 child: UiChip(
                   text: text,
+                  textStyle: Font.small,
+                  iconSize: 18,
                   icon: Icons.keyboard_arrow_down_outlined,
                   iconOnRight: true,
                 ),
@@ -44,6 +46,7 @@ class Menu extends PopupMenuButton {
             itemBuilder: (_) {
               return items.map((item) {
                 return PopupMenuItem(
+                  value: item.value,
                   child: item,
                 );
               }).toList();
@@ -54,19 +57,25 @@ class MenuItem extends StatelessWidget {
   final String title;
   final String? subtitle;
   final IconData? icon;
+  final Widget? trailing;
+  final bool? showArrow;
+  final Object? value;
 
   const MenuItem({
     super.key,
     required this.title,
     this.subtitle,
     this.icon,
+    this.trailing,
+    this.showArrow,
+    this.value,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(vertical: -4),
+      visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
       leading: icon == null
           ? null
           : Material(
@@ -87,6 +96,9 @@ class MenuItem extends StatelessWidget {
               subtitle!,
               style: Font.miniGrey,
             ),
+      trailing: showArrow == true
+          ? const Icon(Icons.keyboard_arrow_right_outlined)
+          : trailing,
     );
   }
 }

@@ -54,4 +54,9 @@ class Routes {
   static const agentIncome = "/agent_system_income";
   static const agentHierarchy = "/agent_system_hierarchy";
   static const agentSetting = "/agent_system_setting";
+
+  // 广告
+  static const AdBuying = "/advertise_buying";
+  static const AdSelling = "/advertise_selling";
+  static const AdOwner = "/advertise_my";
 }

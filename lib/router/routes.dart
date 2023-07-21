@@ -126,6 +126,24 @@ final List<RouteBase> routes = [
           ),
         ],
       ),
+      ShellRoute(
+        navigatorKey: advertiseLayoutKey,
+        builder: advertiseLayout,
+        routes: [
+          AuthRoute(
+            path: Routes.AdBuying,
+            page: const AdvertiseBuying(),
+          ),
+          AuthRoute(
+            path: Routes.AdSelling,
+            page: const AgentIncome(),
+          ),
+          AuthRoute(
+            path: Routes.AdOwner,
+            page: const AgentSetting(),
+          ),
+        ],
+      ),
     ],
   ),
   ModalRoute(
