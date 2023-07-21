@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/components/menu/menu.dart';
 import 'package:otc/layout/layout.logo.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
@@ -22,60 +23,63 @@ final List<_MenuDatas> _menus = [
       _MenuData(
         title: "买币",
         subTitle: "支持当地银行和数字钱包充值",
+        icon: Icons.wallet_outlined,
         onPressed: () {},
       ),
       _MenuData(
         title: "卖币",
         subTitle: "以当地货币收款",
+        icon: Icons.credit_card_rounded,
         onPressed: () {},
       ),
       _MenuData(
         title: "我的广告",
         subTitle: "在此管理广告",
+        icon: Icons.ads_click_outlined,
         onPressed: () {},
       ),
     ],
   ),
-  _MenuDatas(
-    title: "行情",
-    children: [
-      _MenuData(
-        title: "买币",
-        subTitle: "支持当地银行和数字钱包充值",
-        onPressed: () {},
-      ),
-      _MenuData(
-        title: "卖币",
-        subTitle: "以当地货币收款",
-        onPressed: () {},
-      ),
-      _MenuData(
-        title: "我的广告",
-        subTitle: "在此管理广告",
-        onPressed: () {},
-      ),
-    ],
-  ),
-  _MenuDatas(
-    title: "交易",
-    children: [
-      _MenuData(
-        title: "买币",
-        subTitle: "支持当地银行和数字钱包充值",
-        onPressed: () {},
-      ),
-      _MenuData(
-        title: "卖币",
-        subTitle: "以当地货币收款",
-        onPressed: () {},
-      ),
-      _MenuData(
-        title: "我的广告",
-        subTitle: "在此管理广告",
-        onPressed: () {},
-      ),
-    ],
-  ),
+  // _MenuDatas(
+  //   title: "行情",
+  //   children: [
+  //     _MenuData(
+  //       title: "买币",
+  //       subTitle: "支持当地银行和数字钱包充值",
+  //       onPressed: () {},
+  //     ),
+  //     _MenuData(
+  //       title: "卖币",
+  //       subTitle: "以当地货币收款",
+  //       onPressed: () {},
+  //     ),
+  //     _MenuData(
+  //       title: "我的广告",
+  //       subTitle: "在此管理广告",
+  //       onPressed: () {},
+  //     ),
+  //   ],
+  // ),
+  // _MenuDatas(
+  //   title: "交易",
+  //   children: [
+  //     _MenuData(
+  //       title: "买币",
+  //       subTitle: "支持当地银行和数字钱包充值",
+  //       onPressed: () {},
+  //     ),
+  //     _MenuData(
+  //       title: "卖币",
+  //       subTitle: "以当地货币收款",
+  //       onPressed: () {},
+  //     ),
+  //     _MenuData(
+  //       title: "我的广告",
+  //       subTitle: "在此管理广告",
+  //       onPressed: () {},
+  //     ),
+  //   ],
+  // ),
 ];
 
 class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
@@ -102,40 +106,64 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 1,
       title: Row(
         children: [
-          MenuBar(
-            style: MenuStyle(
-              backgroundColor: _color,
-              padding: MaterialStateProperty.resolveWith(
-                (states) => EdgeInsets.zero,
+          Menu(
+            text: "买/卖数字货币",
+            items: [
+              MenuItem(
+                title: "title",
+                subtitle: "item.subTitle",
+                icon: Icons.credit_card_outlined,
               ),
-              elevation: MaterialStateProperty.resolveWith((states) => 0),
-            ),
-            children: _menus.map(
-              (menu) {
-                return _SubMenu(
-                  menuChildren: menu.children
-                      .map(
-                        (item) => _MenuItem(
-                          title: item.title,
-                          subTitle: item.subTitle,
-                          onPressed: () {
-                            _router.go('/login');
-                          },
-                        ),
-                      )
-                      .toList(),
-                  child: UiChip(
-                    iconOnRight: true,
-                    icon: Icons.keyboard_arrow_down_outlined,
-                    iconSize: 20,
-                    spacing: 2,
-                    text: menu.title,
-                    textStyle: Font.small,
-                  ),
-                );
-              },
-            ).toList(),
-          ),
+              MenuItem(
+                title: "title",
+                subtitle: "item.subTitle",
+                icon: Icons.credit_card_outlined,
+              ),
+              MenuItem(
+                title: "title",
+                subtitle: "item.subTitle",
+                icon: Icons.credit_card_outlined,
+              ),
+            ],
+            surfaceTintColor: Colors.white,
+            padding: EdgeInsets.zero,
+          )
+
+          // MenuBar(
+          //   style: MenuStyle(
+          //     backgroundColor: _color,
+          //     padding: MaterialStateProperty.resolveWith(
+          //       (states) => EdgeInsets.zero,
+          //     ),
+          //     elevation: MaterialStateProperty.resolveWith((states) => 0),
+          //   ),
+          //   children: _menus.map(
+          //     (menu) {
+          //       return _SubMenu(
+          //         menuChildren: menu.children
+          //             .map(
+          //               (item) => _MenuItem(
+          //                 title: item.title,
+          //                 subTitle: item.subTitle,
+          //                 icon: item.icon,
+          //                 onPressed: () {
+          //                   _router.go('/login');
+          //                 },
+          //               ),
+          //             )
+          //             .toList(),
+          //         child: UiChip(
+          //           iconOnRight: true,
+          //           icon: Icons.keyboard_arrow_down_outlined,
+          //           iconSize: 20,
+          //           spacing: 2,
+          //           text: menu.title,
+          //           textStyle: Font.small,
+          //         ),
+          //       );
+          //     },
+          //   ).toList(),
+          // ),
         ],
       ),
       actions: _buildActions(isAuthed),
@@ -204,11 +232,21 @@ class _SubMenu extends SubmenuButton {
 class _MenuItem extends MenuItemButton {
   final String title;
   final String subTitle;
+  final IconData icon;
   _MenuItem({
     required this.title,
     required this.subTitle,
+    required this.icon,
     super.onPressed,
   }) : super(
+          leadingIcon: Material(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(4),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(icon),
+            ),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,11 +268,13 @@ class _MenuItem extends MenuItemButton {
 class _MenuData {
   final String title;
   final String subTitle;
+  final IconData icon;
   final VoidCallback onPressed;
 
   const _MenuData({
     required this.title,
     required this.subTitle,
+    required this.icon,
     required this.onPressed,
   });
 }
