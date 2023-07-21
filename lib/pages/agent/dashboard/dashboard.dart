@@ -3,18 +3,18 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:otc/components/chart/chart.bar.dart';
 import 'package:otc/components/chart/chart.config.dart';
-import 'package:otc/pages/agent_system/dashboard/dashboard_24_amount.dart';
-import 'package:otc/pages/agent_system/dashboard/dashboard_24_counter.dart';
-import 'package:otc/pages/agent_system/dashboard/dashboard_overview.dart';
+import 'package:otc/pages/agent/dashboard/dashboard_24_amount.dart';
+import 'package:otc/pages/agent/dashboard/dashboard_24_counter.dart';
+import 'package:otc/pages/agent/dashboard/dashboard_overview.dart';
 
-class AgentSystemDashboard extends StatefulWidget {
-  const AgentSystemDashboard({super.key});
+class AgentDashboard extends StatefulWidget {
+  const AgentDashboard({super.key});
 
   @override
-  State<AgentSystemDashboard> createState() => _AgentSystemDashboardState();
+  State<AgentDashboard> createState() => _AgentDashboardState();
 }
 
-class _AgentSystemDashboardState extends State<AgentSystemDashboard> {
+class _AgentDashboardState extends State<AgentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

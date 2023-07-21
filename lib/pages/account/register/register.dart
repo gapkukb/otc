@@ -182,13 +182,13 @@ class _RegisterState extends State<Register>
 
       _formKey.currentState!.save();
 
-      var code = await openCaptchaWindow(
+      var code = await openCaptchaWindow(CaptchaWindowOptions(
         context: context,
         preferredDevice: device,
         service: CaptchaServiceType.register,
         account: _formState['account'],
         switchable: false,
-      );
+      ));
 
       var payload = {
         "captcha": code,

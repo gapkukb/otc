@@ -16,7 +16,7 @@ class UserNotifier extends StateNotifier<UserModel> {
       "password": password,
     });
 
-    global.setToken(token);
+    global.updateAuthorization(token);
     return await updateUser();
   }
 
@@ -34,7 +34,7 @@ class UserNotifier extends StateNotifier<UserModel> {
   FutureOr<void> logout() {
     state = fakerUser();
     global.updateUser(state);
-    global.setToken(null);
+    global.updateAuthorization(null);
   }
 
   void updateNickName(String nickname) {

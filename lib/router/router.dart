@@ -44,11 +44,11 @@ import 'package:otc/pages/wallet/wallet.method/wallet.method.bank.addition.dart'
 import 'package:otc/pages/wallet/wallet.method/wallet.method.crypto.addition.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.qrcode.addition.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.dart';
-import 'package:otc/pages/agent_system/layout/layout.dart';
-import 'package:otc/pages/agent_system/dashboard/dashboard.dart';
-import 'package:otc/pages/agent_system/agent_setting/agent_setting.dart';
-import 'package:otc/pages/agent_system/income/income.dart';
-import 'package:otc/pages/agent_system/agent_system_Hierarchy/agent_system_Hierarchy.dart';
+import 'package:otc/pages/agent/layout/layout.dart';
+import 'package:otc/pages/agent/dashboard/dashboard.dart';
+import 'package:otc/pages/agent/agent_setting/agent_setting.dart';
+import 'package:otc/pages/agent/income/income.dart';
+import 'package:otc/pages/agent/agent_system_Hierarchy/agent_system_Hierarchy.dart';
 import 'package:otc/utils/navigator.dart';
 
 import '../layout/layout.dart';
@@ -60,7 +60,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.agentSystemIncome,
+  initialLocation: Routes.agentIncome,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

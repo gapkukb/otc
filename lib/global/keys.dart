@@ -6,4 +6,6 @@ class _Keys {
   final String countdownTime = "countdown_time";
   final String authorization = "Authorization";
   final String user = "user";
+  final String token = "Token";
+  final String username = "username";
 }

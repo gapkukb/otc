@@ -55,6 +55,18 @@ class Http {
       return Request(options: opt, dio: dio, model: data);
     };
   }
+
+  updateHeader(String key, dynamic value) {
+    if (value == null) {
+      dio.options.headers.remove(key);
+    } else {
+      dio.options.headers.update(
+        key,
+        (_) => value,
+        ifAbsent: () => value,
+      );
+    }
+  }
 }
 
 class Request<T> {

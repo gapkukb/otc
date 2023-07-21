@@ -50,8 +50,8 @@ class Routes {
   static const doneFutureOrder = "/done_future_order";
 
   // 代理系统
-  static const agentSystemDashboard = "/agent_system_dashboard";
-  static const agentSystemIncome = "/agent_system_income";
-  static const agentSystemHierarchy = "/agent_system_hierarchy";
-  static const agentSystemSetting = "/agent_system_setting";
+  static const agentDashboard = "/agent_system_dashboard";
+  static const agentIncome = "/agent_system_income";
+  static const agentHierarchy = "/agent_system_hierarchy";
+  static const agentSetting = "/agent_system_setting";
 }

@@ -5,14 +5,14 @@ import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
 
-class AgentSystemIncome extends StatefulWidget {
-  const AgentSystemIncome({super.key});
+class AgentIncome extends StatefulWidget {
+  const AgentIncome({super.key});
 
   @override
-  State<AgentSystemIncome> createState() => _AgentSystemIncomeState();
+  State<AgentIncome> createState() => _AgentIncomeState();
 }
 
-class _AgentSystemIncomeState extends State<AgentSystemIncome> {
+class _AgentIncomeState extends State<AgentIncome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

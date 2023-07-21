@@ -26,8 +26,7 @@ class LayoutLogo extends StatelessWidget {
             duration: const Duration(seconds: 5),
           ),
           (instance) {
-            instance.onLongPress =
-                () => context.go(Routes.agentSystemDashboard);
+            instance.onLongPress = () => context.go(Routes.agentDashboard);
           },
         ),
       },

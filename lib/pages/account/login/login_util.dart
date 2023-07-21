@@ -10,5 +10,5 @@ loginUtil({
     "password": password,
   });
 
-  await global.setToken(token);
+  await global.updateAuthorization(token);
 }

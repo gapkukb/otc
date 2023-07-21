@@ -5,14 +5,14 @@ import 'package:otc/pages/async_builder/async_builder.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
-class AgentSystemHierarchy extends StatefulWidget {
-  const AgentSystemHierarchy({super.key});
+class AgentHierarchy extends StatefulWidget {
+  const AgentHierarchy({super.key});
 
   @override
-  State<AgentSystemHierarchy> createState() => _AgentSystemHierarchyState();
+  State<AgentHierarchy> createState() => _AgentHierarchyState();
 }
 
-class _AgentSystemHierarchyState extends State<AgentSystemHierarchy> {
+class _AgentHierarchyState extends State<AgentHierarchy> {
   final GlobalKey _menuKey = GlobalKey();
   @override
   Widget build(BuildContext context) {

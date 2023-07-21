@@ -106,23 +106,23 @@ final List<RouteBase> routes = [
       ),
       ShellRoute(
         navigatorKey: agentLayoutKey,
-        builder: agentSystemLayout,
+        builder: agentLayout,
         routes: [
           AuthRoute(
-            path: Routes.agentSystemDashboard,
-            page: const AgentSystemDashboard(),
+            path: Routes.agentDashboard,
+            page: const AgentDashboard(),
           ),
           AuthRoute(
-            path: Routes.agentSystemIncome,
-            page: const AgentSystemIncome(),
+            path: Routes.agentIncome,
+            page: const AgentIncome(),
           ),
           AuthRoute(
-            path: Routes.agentSystemSetting,
-            page: const AgentSystemSetting(),
+            path: Routes.agentSetting,
+            page: const AgentSetting(),
           ),
           AuthRoute(
-            path: Routes.agentSystemHierarchy,
-            page: const AgentSystemHierarchy(),
+            path: Routes.agentHierarchy,
+            page: const AgentHierarchy(),
           ),
         ],
       ),
