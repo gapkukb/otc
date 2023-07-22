@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:otc/asstes/assets.gen.dart';
-import 'package:otc/widgets/ui_chip.dart';
 
 class Logo extends StatelessWidget {
   final bool? withLogoText;
