@@ -47,7 +47,8 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
           child: const Text("注销", style: Font.small),
           onPressed: () {
             ref.read(userProvider.notifier).logout();
-            context.go(Routes.home);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(Routes.home, (route) => false);
           },
         )),
       builder: (context, controller, child) {

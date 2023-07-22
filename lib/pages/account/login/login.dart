@@ -135,7 +135,7 @@ class _LoginState extends ConsumerState<Login>
             password: _formState['password'],
           );
       if (mounted) Navigator.of(context).maybePop();
-      context.go(Routes.home);
+      context.pushReplacementNamed(Routes.home);
     }
   }
 }

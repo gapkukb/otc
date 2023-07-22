@@ -2010,8 +2010,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/image_9.png
   AssetGenImage get image9 => const AssetGenImage('assets/images/image_9.png');
 
+  /// File path: assets/images/logo-2.svg
+  SvgGenImage get logo2 => const SvgGenImage('assets/images/logo-2.svg');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
+  /// File path: assets/images/logo_1.svg
+  SvgGenImage get logo1 => const SvgGenImage('assets/images/logo_1.svg');
 
   /// File path: assets/images/notice_empty.svg
   SvgGenImage get noticeEmpty =>
@@ -2044,7 +2050,9 @@ class $AssetsImagesGen {
         image7,
         image8,
         image9,
+        logo2,
         logo,
+        logo1,
         noticeEmpty,
         rebate,
         register,

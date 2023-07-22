@@ -7,7 +7,7 @@ final List<RouteBase> routes = [
     routes: [
       GoRoute(
         name: Routes.home,
-        path: '/home',
+        path: Routes.home,
         builder: (context, state) => const Home(),
       ),
       ShellRoute(
