@@ -170,15 +170,15 @@ final List<RouteBase> routes = [
   ModalRoute(
       path: Routes.captcha,
       statePage: (context, state) {
-        final CaptchaWindowOptions option = state.extra as dynamic;
+        final CaptchaWindowOptions? option = state.extra as dynamic;
         return Captcha(
-          preferredDevice: option.preferredDevice,
-          service: option.service,
-          account: option.account,
-          switchable: option.switchable,
-          user: option.user ?? global.user,
-          autoStart: option.autoStart,
-          legend: option.legend,
+          preferredDevice: option?.preferredDevice,
+          session: option?.service,
+          account: option?.account,
+          switchable: option?.switchable,
+          user: option?.user ?? global.user,
+          autoStart: option?.autoStart,
+          legend: option?.legend,
         );
       }),
   ModalRoute(

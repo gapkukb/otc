@@ -45,7 +45,7 @@ void Function() verify(BuildContext context, Function then) {
     }
     await openCaptchaWindow(CaptchaWindowOptions(
       context: context,
-      service: CaptchaServiceType.addAddressBook,
+      service: CaptchaSession.addAddressBook,
     ));
 
     then();

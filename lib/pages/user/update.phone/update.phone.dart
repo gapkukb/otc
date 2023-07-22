@@ -56,7 +56,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
             _formKey.currentState!.save();
             await apis.user.validateBindDevice({
               ..._formState,
-              "device": CaptchaDeviceType.phone.value,
+              "device": CaptchaDevice.phone.value,
             });
             ProviderContainer().read(userProvider.notifier).updateUser();
             context.pop();
@@ -90,8 +90,10 @@ class _UpdatePhoneState extends State<UpdatePhone> {
             },
             onPressed: () async {
               try {
-                await apis.user.bindDevice({
-                  "device": CaptchaDeviceType.phone.value,
+                await apis.user.sendCaptchaWithLogout({
+                  "session": CaptchaSession.boundDevice.value,
+                  "username": global.user.base.username,
+                  "device": CaptchaDevice.phone.value,
                   "account": controller.text,
                 });
                 return true;

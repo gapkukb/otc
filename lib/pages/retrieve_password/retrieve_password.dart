@@ -83,8 +83,8 @@ class RetrievePassword extends StatelessWidget {
                             if (!_formKey.currentState!.validate()) return;
                             await openCaptchaWindow(CaptchaWindowOptions(
                               context: context,
-                              preferredDevice: CaptchaDeviceType.email,
-                              service: CaptchaServiceType.addAddressBook,
+                              preferredDevice: CaptchaDevice.email,
+                              service: CaptchaSession.addAddressBook,
                               account: "test@af.cn",
                             ));
                           },

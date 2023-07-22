@@ -63,7 +63,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                 Expanded(
                   child: Center(
                     child: Indicator(
-                      value: 36,
+                      value: securityLevel,
                     ),
                   ),
                 ),

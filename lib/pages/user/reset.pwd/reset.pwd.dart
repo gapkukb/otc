@@ -44,10 +44,9 @@ class _ResetPwdState extends State<ResetPwd>
     super.dispose();
   }
 
-  static List<CaptchaDeviceType> items = CaptchaDeviceType.values
+  static List<CaptchaDevice> items = CaptchaDevice.values
       .where((element) =>
-          element == CaptchaDeviceType.phone ||
-          element == CaptchaDeviceType.email)
+          element == CaptchaDevice.phone || element == CaptchaDevice.email)
       .toList();
 
   @override
@@ -80,7 +79,7 @@ class _ResetPwdState extends State<ResetPwd>
                     controller: _controller,
                     children: items.map((item) {
                       return Center(
-                        child: item == CaptchaDeviceType.phone
+                        child: item == CaptchaDevice.phone
                             ? TextFormFieldPhone(
                                 controller: _phoneController,
                               )
@@ -101,7 +100,7 @@ class _ResetPwdState extends State<ResetPwd>
 
     final result = await openCaptchaWindow(CaptchaWindowOptions(
       context: context,
-      service: CaptchaServiceType.addAddressBook,
+      service: CaptchaSession.addAddressBook,
       account: (_controller.index == 0 ? _phoneController : _emailController)
           .text
           .trim(),

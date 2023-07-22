@@ -16,7 +16,6 @@ class ExceptionInterceptor extends InterceptorsWrapper {
   onResponse(response, handler) {
     if (response.data['success']) {
       super.onResponse(response, handler);
-
       global.logger.i(response);
     } else {
       final err = DioException(
@@ -26,7 +25,7 @@ class ExceptionInterceptor extends InterceptorsWrapper {
         message: null,
         response: response,
         // ignore: invalid_use_of_internal_member
-        stackTrace: StackTrace.current,
+        // stackTrace: StackTrace.current,
         type: DioExceptionType.badResponse,
       );
 
@@ -145,11 +144,14 @@ class BizException extends _Exception {
     int code,
     String? message,
   ) {
-    switch (code) {
-      /// 验证码已过期
-      case 2001002:
-      default:
-        return BizException(code, message);
+    if (code == 2001002) {
+      /// 验证码已过期,为了不干扰其他组件，这里延迟调用
+      (() async {
+        await Future.delayed(Duration(milliseconds: 1));
+        navigatorKey.currentContext!.push(Routes.captcha);
+      })();
+      message = "您的身份认证已过期，请重新认证";
     }
+    return BizException(code, message);
   }
 }

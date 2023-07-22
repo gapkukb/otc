@@ -6,7 +6,7 @@ import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/router/router.dart';
 
 export 'package:otc/pages/user/captcha/captcha.dart'
-    show CaptchaDeviceType, CaptchaServiceType, CaptchaController;
+    show CaptchaDevice, CaptchaSession, CaptchaController;
 
 Future<Map<String, String>?> openCaptchaWindow(CaptchaWindowOptions option) {
   return (option.context ?? navigatorKey.currentContext!).pushNamed(
@@ -25,8 +25,8 @@ Future<Map<String, String>?> openCaptchaWindow(CaptchaWindowOptions option) {
 
 class CaptchaWindowOptions {
   final BuildContext? context;
-  final CaptchaDeviceType? preferredDevice;
-  final CaptchaServiceType? service;
+  final CaptchaDevice? preferredDevice;
+  final CaptchaSession? service;
   final String? account;
   final bool? switchable;
   final UserModel? user;

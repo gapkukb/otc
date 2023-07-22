@@ -172,7 +172,7 @@ class _RegisterState extends State<Register>
   }
 
   register() async {
-    var device = _showEmail ? CaptchaDeviceType.email : CaptchaDeviceType.phone;
+    var device = _showEmail ? CaptchaDevice.email : CaptchaDevice.phone;
 
     if (_formKey.currentState!.validate()) {
       if (!_agreement) {
@@ -185,7 +185,7 @@ class _RegisterState extends State<Register>
       var code = await openCaptchaWindow(CaptchaWindowOptions(
         context: context,
         preferredDevice: device,
-        service: CaptchaServiceType.register,
+        service: CaptchaSession.register,
         account: _formState['account'],
         switchable: false,
       ));

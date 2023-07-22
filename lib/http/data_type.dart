@@ -7,7 +7,6 @@ class DataTypeInterceptor extends InterceptorsWrapper {
         HttpDataType.form) {
       options.data = FormData.fromMap(options.data);
     }
-
     super.onRequest(options, handler);
   }
 }

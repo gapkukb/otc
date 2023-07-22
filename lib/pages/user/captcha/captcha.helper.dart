@@ -1,13 +1,13 @@
 part of captha;
 
-enum CaptchaDeviceType {
+enum CaptchaDevice {
   f2a("F2A", "谷歌身份验证器"),
   phone("PHONE", "手机"),
   email("EMAIL", "邮箱");
 
   /// 客户端定义的验证渠道，用于兼容谷歌验证器
 
-  const CaptchaDeviceType(this.value, this.chineseText);
+  const CaptchaDevice(this.value, this.chineseText);
 
   final String value;
   final String chineseText;
@@ -20,7 +20,7 @@ enum CaptchaDeviceType {
   }
 }
 
-enum CaptchaServiceType {
+enum CaptchaSession {
   addBankcard("add-bankcard"),
   editBankcard("edit-bankcard"),
   delBankcard("del-bankcard"),
@@ -39,14 +39,15 @@ enum CaptchaServiceType {
   // 客户端自定义类型 - 添加谷歌验证器
   addF2A("addF2A"),
   // 客户端自定义类型 - 验证资金密码
-  funds("funds");
+  funds("funds"),
+  normal("default");
 
-  const CaptchaServiceType(this.value);
+  const CaptchaSession(this.value);
 
   final String value;
 
   FutureOr validate(
-    String device,
+    CaptchaDevice device,
     String captcha,
   ) {
     switch (this) {
@@ -61,7 +62,7 @@ enum CaptchaServiceType {
           "device": device,
           "captcha": captcha,
         });
-      case CaptchaServiceType.boundFunds:
+      case CaptchaSession.boundFunds:
         return apis.user.updatePayPwd({
           "device": device,
         });
@@ -86,7 +87,18 @@ enum CaptchaServiceType {
       // case CaptchaServiceType.register:
       //   return apis.user.validateBindDevice;
       default:
-        return Future.value();
+        if (device == CaptchaDevice.f2a) {
+          // 谷歌验证器需要特殊处理
+          return apis.security.validateF2A({
+            "session": value,
+            "authCode": captcha,
+          });
+        }
+        return apis.security.validateCaptcha({
+          "session": value,
+          "device": device.value,
+          "captcha": captcha,
+        });
     }
   }
 
@@ -103,21 +115,4 @@ enum CaptchaServiceType {
   //       return Future.value();
   //   }
   // }
-}
-
-mixin CaptchaController {
-  TextEditingController _controller = TextEditingController();
-
-  final int _length = 6;
-
-  late CaptchaDeviceType _mode;
-
-  String get device {
-    return _mode.value;
-  }
-
-  paste() async {
-    final code = await FlutterClipboard.paste();
-    _controller.text = code;
-  }
 }

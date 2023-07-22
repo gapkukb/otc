@@ -26,13 +26,7 @@ class SecurityAuthrization extends StatelessWidget {
         action: UiButton.text(
           label: user.phoneValid ? "修改" : "绑定",
           onPressed: () async {
-            final result = await openCaptchaWindow(CaptchaWindowOptions(
-              context: context,
-              service: CaptchaServiceType.boundPhone,
-            ));
-            if (result != null) {
-              await context.pushNamed(Routes.updatePhone);
-            }
+            await context.pushNamed(Routes.updatePhone);
           },
         ),
       ),
@@ -44,21 +38,9 @@ class SecurityAuthrization extends StatelessWidget {
         action: UiButton.text(
           label: user.googleSecretValid ? "修改" : "绑定",
           onPressed: () async {
-            final result = await openCaptchaWindow(CaptchaWindowOptions(
-              context: context,
-              preferredDevice: user.phoneValid
-                  ? CaptchaDeviceType.phone
-                  : CaptchaDeviceType.email,
-              service: CaptchaServiceType.addF2A,
-              switchable: user.phoneValid && user.emailValid,
-            ));
-            if (result != null) {
-              final String code = await apis.user.validateF2A({
-                "device": result["device"],
-                "captcha": result["code"],
-              });
-              await context.pushNamed(Routes.f2a, extra: code);
-            }
+            final String code = await apis.user.applyF2A();
+            print(code);
+            await context.pushNamed(Routes.f2a, extra: code);
           },
         ),
       ),

@@ -1,6 +1,7 @@
 library globals;
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,7 @@ class _Global {
   late String? authorization;
 
   /// 是否已验证是本人
-  late String? token;
+  late String? captchaToken;
   UserModel user = fakerUser();
 
   final keys = _Keys();
@@ -38,7 +39,8 @@ class _Global {
       SharedPreferences.setPrefix(username);
     }
     authorization = prefs.getString(keys.authorization);
-    token = prefs.getString(keys.token);
+    captchaToken = prefs.getString(keys.captchaToken);
+    updateCaptchaToken(captchaToken);
 
     if (authorization != null) {
       try {
@@ -65,11 +67,12 @@ class _Global {
     http.updateHeader(key, newValue);
   }
 
-  updateToken(String? newValue) {
+  updateCaptchaToken(String? newValue) {
     // token 是用于免验证
-    final key = global.keys.token;
-    global.token = newValue;
+    final key = keys.captchaToken;
+    global.captchaToken = newValue;
     http.updateHeader(key, newValue);
+    inspect(http.dio.options.headers);
     if (newValue == null) {
       prefs.remove(key);
     } else {

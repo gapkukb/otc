@@ -17,7 +17,7 @@ class _User {
   final getUser = get("/customer/detail", UserModel.fromJson);
 
   /// 未登录时获取验证码
-  final sendCaptchaWithLogout = post("/captcha/no-login/send");
+  final sendCaptchaWithLogout = post("/captcha/open/send");
 
   /// 已登录时获取验证码
   final sendCaptcha = post("/captcha/send");

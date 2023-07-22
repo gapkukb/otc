@@ -83,7 +83,7 @@ class Request<T> {
   Future<T> call([
     Map<String, dynamic>? data,
     HttpOptions? options,
-  ]) {
+  ]) async {
     final opt = _options.merge(options);
     CancelToken? cancelToken;
 
@@ -98,8 +98,7 @@ class Request<T> {
       $data.addAll(data);
     }
 
-    return dio
-        .request(
+    final response = await dio.request(
       replacePathParams(
         opt.path,
         opt.pathParams,
@@ -140,10 +139,8 @@ class Request<T> {
         sendTimeout: opt.sendTimeout,
         validateStatus: opt.validateStatus,
       ),
-    )
-        .then((response) {
-      final resp = response.data!['data'];
-      return model == null ? resp : model!(resp);
-    });
+    );
+    final resp = response.data!['data'];
+    return model == null ? resp : model!(resp);
   }
 }

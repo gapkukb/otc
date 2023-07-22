@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class UpdateFundsPwd extends StatefulWidget {
@@ -22,21 +24,27 @@ class _UpdateFundsPwdState extends State<UpdateFundsPwd> {
     _controller.dispose();
   }
 
+  String get actionType {
+    return global.user.base.hasPaymentPassword ? "重置" : "开启";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: ModalPageTemplate(
-        title: "重置资金密码",
+        title: "$actionType资金密码",
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
-            await apis.user.authPayPwd(_formState);
-            Modal.showText(text: "修改资金密码成功");
+            _formKey.currentState!.save();
+            await apis.user.updatePayPwd(_formState);
+            Modal.showText(text: "$actionType资金密码成功");
+            context.pop();
           }
         },
         children: [
           UiTextFormField(
-            name: "pwd",
+            name: "newPwd",
             formState: _formState,
             obscureText: true,
             autofocus: true,
@@ -51,7 +59,6 @@ class _UpdateFundsPwdState extends State<UpdateFundsPwd> {
           ),
           const SizedBox(height: 24),
           UiTextFormField(
-            formState: _formState,
             obscureText: true,
             labelText: "请再次输入资金密码",
             maxLength: 6,

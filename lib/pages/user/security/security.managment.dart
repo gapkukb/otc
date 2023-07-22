@@ -21,16 +21,13 @@ class SecurityManagment extends StatelessWidget {
       _Item(
         typeId: 1,
         name: "资金密码",
-        value: "未开启",
+        value: "",
         description: "用于保护账户安全",
         action: UiButton.text(
           label: user.hasPaymentPassword ? "修改" : "开启",
           onPressed: () async {
-            final result = await openCaptchaWindow(CaptchaWindowOptions(
-              context: context,
-              service: CaptchaServiceType.boundFunds,
-            ));
-            context.pushNamed(Routes.updateFundsPwd);
+            await context.pushNamed(Routes.updateFundsPwd);
+            ProviderContainer().read(userProvider.notifier).updateUser();
           },
         ),
       ),
