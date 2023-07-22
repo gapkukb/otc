@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
@@ -22,7 +23,10 @@ void main() async {
   ]);
   usePathUrlStrategy();
   runApp(
-    const ProviderScope(child: App()),
+    ProviderScope(
+      child: App(),
+      parent: provider,
+    ),
   );
 }
 
@@ -37,9 +41,11 @@ class _AppState extends ConsumerState<App> {
   @override
   void initState() {
     super.initState();
-
-    ref.read(userProvider.notifier).updateUser();
-    ref.read(walletProvider.notifier).updateWallet();
+    final authed = ref.read(authProvider);
+    if (authed) {
+      ref.read(userProvider.notifier).updateUser();
+      ref.read(walletProvider.notifier).updateWallet();
+    }
     theme.addListener(themeHandle);
   }
 

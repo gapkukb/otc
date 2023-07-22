@@ -156,11 +156,11 @@ final List<RouteBase> routes = [
     page: const Login(),
   ),
   ModalRoute(
-    path: Routes.settingNickname,
-    page: const SettingNickname(),
+    path: Routes.updateNickname,
+    page: const UpdateNickname(),
   ),
   ModalRoute(
-    path: Routes.settingAvatar,
+    path: Routes.updateAvatar,
     page: const SettingAvatar(),
   ),
   ModalRoute(

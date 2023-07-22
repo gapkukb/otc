@@ -59,19 +59,17 @@ class UiButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeColor = Theme.of(context).primaryColor;
-    return Ink(
-      child: MaterialButton(
-        padding: padding ?? _pad[size],
-        minWidth: fullWidth
-            ? double.infinity
-            : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
-        onPressed: disabled ? null : onPressed,
-        height: _size[size],
-        color: getbackgroundColor(themeColor),
-        textColor: getColor(themeColor),
-        shape: _buildShape(themeColor),
-        child: _buildChild(),
-      ),
+    return MaterialButton(
+      padding: padding ?? _pad[size],
+      minWidth: fullWidth
+          ? double.infinity
+          : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
+      onPressed: disabled ? null : onPressed,
+      height: _size[size],
+      color: getbackgroundColor(themeColor),
+      textColor: getColor(themeColor),
+      shape: _buildShape(themeColor),
+      child: _buildChild(),
     );
   }
 

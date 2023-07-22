@@ -5,10 +5,9 @@ import 'package:otc/components/menu/menu.dart';
 import 'package:otc/layout/layout.logo.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
-import 'package:otc/providers/auth.provider.dart';
 import 'package:otc/router/router.dart';
-import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/providers/user.provider.dart';
 
 final _color = MaterialStateColor.resolveWith((states) => Colors.transparent);
 final _router = GoRouter.of(navigatorKey.currentContext!);
@@ -24,7 +23,6 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(context, ref) {
     final isAuthed = ref.watch(authProvider);
-
     return AppBar(
       primary: false,
       leading: const LayoutLogo(),
@@ -103,85 +101,8 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
         onPressed: () {
           _router.go('/register');
         },
-      )
+      ),
+      const SizedBox(width: 32),
     ];
   }
-}
-
-class _SubMenu extends SubmenuButton {
-  _SubMenu({
-    required super.menuChildren,
-    required super.child,
-  }) : super(
-          menuStyle: MenuStyle(
-            shadowColor:
-                MaterialStateColor.resolveWith((states) => Colors.grey),
-            backgroundColor:
-                MaterialStateColor.resolveWith((states) => Colors.white),
-            surfaceTintColor: _color,
-            elevation: MaterialStateProperty.resolveWith(
-              (states) => 10,
-            ),
-          ),
-        );
-}
-
-class _MenuItem extends MenuItemButton {
-  final String title;
-  final String subTitle;
-  final IconData icon;
-  _MenuItem({
-    required this.title,
-    required this.subTitle,
-    required this.icon,
-    super.onPressed,
-  }) : super(
-          leadingIcon: Material(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(4),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Icon(icon),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Font.small,
-              ),
-              Text(
-                subTitle,
-                style: Font.miniGrey,
-              ),
-            ],
-          ),
-        );
-}
-
-class _MenuData {
-  final String title;
-  final String subTitle;
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  const _MenuData({
-    required this.title,
-    required this.subTitle,
-    required this.icon,
-    required this.onPressed,
-  });
-}
-
-class _MenuDatas {
-  final String title;
-  final List<_MenuData> children;
-
-  const _MenuDatas({
-    required this.title,
-    required this.children,
-  });
 }

@@ -15,8 +15,8 @@ class Routes {
   static const authSenior = "/auth_senior";
   static const merchant = "/merchant";
   static const setting = "/setting";
-  static const settingNickname = "/setting_nickname";
-  static const settingAvatar = "/setting_avatar";
+  static const updateNickname = "/update_nickname";
+  static const updateAvatar = "/update_avatar";
   // 钱包
   static const wallet = "/wallet";
   static const walletMethodBanks = "/wallet_method_banks";

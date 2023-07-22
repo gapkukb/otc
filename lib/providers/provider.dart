@@ -1,4 +1,3 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-// final appProvider
+final provider = ProviderContainer();

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/pages/user/layout/user.nav.list.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 
 class LayoutProfile extends ConsumerStatefulWidget {
@@ -45,7 +47,7 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
           child: const Text("注销", style: Font.small),
           onPressed: () {
             ref.read(userProvider.notifier).logout();
-            ref.read(authProvider.notifier).update((state) => false);
+            context.go(Routes.home);
           },
         )),
       builder: (context, controller, child) {

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/apis/apis.dart';
 import 'package:otc/components/avatar/avatar.dart';
-import 'package:otc/http/http.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
-import 'package:otc/models/user_stats/user_stats.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
@@ -103,7 +100,9 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                   IconButton(
                     icon: const Icon(Icons.settings_outlined),
                     iconSize: 18,
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go(Routes.setting);
+                    },
                   )
                 ],
               ),

@@ -4,22 +4,23 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/widgets/ui_text_field.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
-class SettingNickname extends ConsumerStatefulWidget {
-  const SettingNickname({super.key});
+class UpdateNickname extends ConsumerStatefulWidget {
+  const UpdateNickname({super.key});
 
   @override
-  ConsumerState<SettingNickname> createState() => _SettingNicknameState();
+  ConsumerState<UpdateNickname> createState() => _SettingNicknameState();
 }
 
-class _SettingNicknameState extends ConsumerState<SettingNickname> {
+class _SettingNicknameState extends ConsumerState<UpdateNickname> {
   late final TextEditingController controller;
   @override
   void initState() {
     controller = TextEditingController();
+    controller.text = global.user.base.nickname;
     super.initState();
   }
 
@@ -34,7 +35,7 @@ class _SettingNicknameState extends ConsumerState<SettingNickname> {
     return ModalPageTemplate(
       legend: "个人资料",
       title: "修改昵称",
-      iconData: Icons.edit_outlined,
+      iconData: Icons.badge_outlined,
       onCompelete: (_) async {
         await apis.user.modifyNickname({"value": controller.text});
         ref.read(userProvider.notifier).updateUser();
@@ -47,6 +48,7 @@ class _SettingNicknameState extends ConsumerState<SettingNickname> {
           autofocus: true,
           labelText: "昵称",
           maxLength: 20,
+          // initialValue: global.user.base.nickname,
           decoration: const InputDecoration(
             hintText: "昵称长度不能超过20个字符",
             border: UnderlineInputBorder(),

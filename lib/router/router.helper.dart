@@ -39,6 +39,11 @@ class ModalRoute extends GoRoute {
         );
 }
 
+FutureOr<String?> redirect(BuildContext ontext, GoRouterState state) {
+  if (global.authorization == null) return Routes.home;
+  return null;
+}
+
 class AuthRoute extends GoRoute {
   final Widget page;
 
@@ -49,5 +54,6 @@ class AuthRoute extends GoRoute {
   }) : super(
           name: path.substring(1),
           builder: (context, state) => page,
+          redirect: redirect,
         );
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/user/user.model.dart';
+import 'package:otc/providers/provider.dart';
 
 class UserNotifier extends StateNotifier<UserModel> {
   UserNotifier() : super(global.user);
@@ -24,6 +25,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     final user = await apis.user.getUser();
     state = user;
     global.updateUser(user);
+    provider.read(authProvider.notifier).state = true;
     return user;
   }
 
@@ -35,6 +37,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     state = fakerUser();
     global.updateUser(state);
     global.updateAuthorization(null);
+    provider.read(authProvider.notifier).state = false;
   }
 
   void updateNickName(String nickname) {

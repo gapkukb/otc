@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -46,15 +47,15 @@ class HomeTop extends ConsumerWidget {
         md: CrossAxisAlignment.start,
       ),
       children: [
-        Text(
+        const Text(
           "开启加密货币之旅",
-          style: Theme.of(context).textTheme.displayLarge,
+          style: Font.x5largeBold,
         ),
         const SizedBox(
           height: 8,
         ),
         Text(
-          "在Mybit您可以安全便捷，口手续费买卖数字货币。",
+          "参与做市商扶持计划，可获得xx%成交额返佣",
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 24),
