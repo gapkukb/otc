@@ -100,7 +100,11 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.transfer,
-            page: const Transfer(),
+            page: const WalletTransfer(),
+          ),
+          AuthRoute(
+            path: Routes.walletHistory,
+            page: const WalletHistory(),
           ),
         ],
       ),

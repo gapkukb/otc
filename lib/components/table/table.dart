@@ -21,7 +21,7 @@ class DataGrid<T> extends StatefulWidget {
   final Fetcher<T> fetcher;
   final Function(T row)? buildRow;
   final int pageSize;
-  final Widget Function(DataGridCell<dynamic>)? buildCell;
+  final Widget Function(DataGridCell<dynamic> cell)? buildCell;
   final Alignment? alignment;
 
   const DataGrid({
@@ -121,7 +121,7 @@ class _DataGridState<T> extends State<DataGrid> {
                                       alignment: widget.alignment ??
                                           column.alignment ??
                                           Alignment.centerLeft,
-                                      child: Text(column.labelText),
+                                      child: Text(column.title),
                                     )
                                   : column.label,
                             ),
@@ -213,13 +213,8 @@ class DataGridDataSource<T> extends DataGridSource {
 
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row
-            .getCells()
-            .map(
-              buildCell ?? _defaultBuildCell,
-            )
-            .toList());
+    final mapper = buildCell ?? _defaultBuildCell;
+    return DataGridRowAdapter(cells: row.getCells().map(mapper).toList());
   }
 
   @override
@@ -240,7 +235,7 @@ class DataGridDataSource<T> extends DataGridSource {
 class DataGridColumn<T> extends GridColumn {
   final Object Function(T row) getValue;
   final Alignment? alignment;
-  final String labelText;
+  final String title;
   DataGridColumn({
     required super.columnName,
     super.label = nil,
@@ -258,7 +253,7 @@ class DataGridColumn<T> extends GridColumn {
     super.visible,
     super.width,
     this.alignment,
-    this.labelText = "",
+    this.title = "",
     required this.getValue,
   });
 }

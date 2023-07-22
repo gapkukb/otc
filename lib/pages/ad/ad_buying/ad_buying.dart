@@ -35,22 +35,22 @@ class _AdvertiseBuyingState extends State<AdvertiseBuying> {
         columns: [
           DataGridColumn(
             columnName: 'id',
-            labelText: "ID",
+            title: "ID",
             getValue: (row) => row.id,
           ),
           DataGridColumn(
             columnName: 'name',
-            labelText: "Name",
+            title: "Name",
             getValue: (row) => row.name,
           ),
           DataGridColumn(
             columnName: 'designation',
-            labelText: "Designation",
+            title: "Designation",
             getValue: (row) => row.designation,
           ),
           DataGridColumn(
             columnName: 'salary',
-            labelText: "Salary",
+            title: "Salary",
             getValue: (row) => row.salary,
           ),
         ],

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +5,7 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/tip/tip.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -160,7 +159,7 @@ class _WalletHomeState extends State<WalletHome> {
         trailing: TextButton(
           child: const Text("充值提现记录"),
           onPressed: () {
-            context.go('/wallet_history');
+            context.go(Routes.walletHistory);
           },
         ),
       ),

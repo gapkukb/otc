@@ -1,38 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/components/table/table.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history_filter.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
-
-List<Map<String, dynamic>> rows = [
-  {
-    "dateTime": "2022-04-04 13:23:39",
-    "type": 0,
-    "currencyType": "USDT",
-    "amount": 323443.23,
-    "address": "0x246....5DAA",
-    "Txid": "0x1ea....705b",
-    "status": 0,
-  },
-  {
-    "dateTime": "2022-04-04 13:23:39",
-    "type": 0,
-    "currencyType": "USDT",
-    "amount": 323443.23,
-    "address": "0x246....5DAA",
-    "Txid": "0x1ea....705b",
-    "status": 0,
-  },
-  {
-    "dateTime": "2022-04-04 13:23:39",
-    "type": 0,
-    "currencyType": "USDT",
-    "amount": 323443.23,
-    "address": "0x246....5DAA",
-    "Txid": "0x1ea....705b",
-    "status": 0,
-  }
-];
 
 class WalletHistoryBlockchain extends StatelessWidget {
   const WalletHistoryBlockchain({super.key});
@@ -45,57 +17,90 @@ class WalletHistoryBlockchain extends StatelessWidget {
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: DataTable2(
-              dividerThickness: 0.01,
-              headingTextStyle:
-                  const TextStyle(fontSize: 12, color: Colors.grey),
-              dataTextStyle: const TextStyle(
-                fontSize: 14,
-                color: Color(0xff67748E),
-              ),
-              columnSpacing: 4,
-              columns: const [
-                DataColumn2(label: Text("时间"), fixedWidth: 140),
-                DataColumn2(label: Text("类型"), fixedWidth: 60),
-                DataColumn2(label: Text("资产"), fixedWidth: 60),
-                DataColumn2(label: Text("数量")),
-                DataColumn2(label: Text("地址")),
-                DataColumn2(label: Text("Txid")),
-                DataColumn2(label: Text("状态"), fixedWidth: 60),
+            child: DataGrid<_Mock>(
+              fetcher: (pageNo, pageSize) async {
+                await Future.delayed(const Duration(seconds: 3));
+                return List.generate(
+                    10,
+                    (index) => _Mock(
+                        Txid: "Txid",
+                        address: "address",
+                        amount: "amount",
+                        currencyType: "currencyType",
+                        dateTime: "dateTime",
+                        status: "status",
+                        type: "type"));
+              },
+              columns: [
+                DataGridColumn(
+                  columnName: "time",
+                  title: "时间",
+                  getValue: (row) => row.dateTime,
+                ),
+                DataGridColumn(
+                  columnName: "time",
+                  title: "类型",
+                  getValue: (row) => row.type,
+                ),
+                DataGridColumn(
+                  columnName: "time",
+                  title: "资产",
+                  getValue: (row) => row.currencyType,
+                ),
+                DataGridColumn(
+                  columnName: "time",
+                  title: "数量",
+                  getValue: (row) => row.amount,
+                ),
+                DataGridColumn(
+                  columnName: "address",
+                  title: "地址",
+                  getValue: (row) => row.address,
+                ),
+                DataGridColumn(
+                  columnName: "time",
+                  title: "Txid",
+                  getValue: (row) => row.Txid,
+                ),
+                DataGridColumn(
+                  columnName: "time",
+                  title: "状态",
+                  getValue: (row) => row.status,
+                ),
               ],
-              rows: rows
-                  .map(
-                    (e) => DataRow(
-                      cells: [
-                        DataCell(Text(e['dateTime'])),
-                        DataCell(Text(e['type'].toString())),
-                        DataCell(Text(e['currencyType'])),
-                        DataCell(Text((e['amount'] as num).decimalize())),
-                        DataCell(UiClipboard(
-                          text: e['address'],
-                          iconSize: 12,
-                          child: Text(
-                            e['address'],
-                            maxLines: 1,
-                          ),
-                        )),
-                        DataCell(UiClipboard(
-                          text: e['Txid'],
-                          iconSize: 12,
-                          child: Text(
-                            e['Txid'],
-                            maxLines: 1,
-                          ),
-                        )),
-                        DataCell(Text(e['status'].toString())),
-                      ],
-                    ),
-                  )
-                  .toList(),
+              buildCell: (cell) {
+                return Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    cell.value.toString(),
+                    style: Font.large,
+                  ),
+                );
+              },
             ),
           ),
         )
       ],
     );
   }
+}
+
+class _Mock {
+  String dateTime;
+  String type;
+  String currencyType;
+  String amount;
+  String address;
+  String Txid;
+  String status;
+
+  _Mock({
+    required this.dateTime,
+    required this.type,
+    required this.currencyType,
+    required this.amount,
+    required this.address,
+    required this.Txid,
+    required this.status,
+  });
 }
