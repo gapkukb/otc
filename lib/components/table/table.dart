@@ -1,172 +1,249 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nil/nil.dart';
+import 'package:otc/widgets/ui_empty_view.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 export 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+
+typedef Fetcher<T> = Future<List<T>> Function(
+  int pageNo,
+  int pageSize,
+);
 
 extension CopyWith on GridColumn {
   GridColumncopyWith(GridColumn column) {}
 }
 
-class DataGrid extends StatefulWidget {
-  final List<DataGridColumn> columns;
+class DataGrid<T> extends StatefulWidget {
+  final List<DataGridColumn<T>> columns;
+  final Fetcher<T> fetcher;
+  final Function(T row)? buildRow;
+  final int pageSize;
+  final Widget Function(DataGridCell<dynamic>)? buildCell;
+  final Alignment? alignment;
 
   const DataGrid({
     super.key,
     required this.columns,
+    required this.fetcher,
+    this.buildRow,
+    this.pageSize = 20,
+    this.buildCell,
+    this.alignment,
   });
 
   @override
-  State<DataGrid> createState() => _DataGridState();
+  State<DataGrid> createState() => _DataGridState<T>();
 }
 
-class _DataGridState extends State<DataGrid> {
-  bool showLoading = true;
-  List<Employee> employees = <Employee>[];
+class _DataGridState<T> extends State<DataGrid> {
+  bool showLoading = false;
+  bool isEmtpy = false;
+  double pageCount = 1;
 
-  late EmployeeDataSource employeeDataSource;
+  late DataGridDataSource<T> dataGridDataSource;
 
   @override
   void initState() {
     super.initState();
-    employees = getEmployees();
-    employeeDataSource = EmployeeDataSource(employees: employees);
+    dataGridDataSource = DataGridDataSource(
+      pageSize: widget.pageSize,
+      buildCell: widget.buildCell,
+      columns: widget.columns as List<DataGridColumn<T>>,
+      alignment: alignment,
+      fetcher: (pageNo, pageSize) {
+        setState(() {
+          showLoading = true;
+          isEmtpy = false;
+        });
+        return widget.fetcher(pageNo, pageSize).then((value) {
+          isEmtpy = value.isEmpty;
+          return value as List<T>;
+        }).whenComplete(
+          () => setState(() {
+            showLoading = false;
+            pageCount = 10.0;
+          }),
+        );
+      },
+    );
   }
 
-  List<Employee> getEmployees() {
-    return [
-      Employee(10001, 'James', 'Project Lead', 20000),
-      Employee(10002, 'Kathryn', 'Manager', 30000),
-      Employee(10003, 'Lara', 'Developer', 15000),
-      Employee(10004, 'Michael', 'Designer', 15000),
-      Employee(10005, 'Martin', 'Developer', 15000),
-      Employee(10006, 'Newberry', 'Developer', 15000),
-      Employee(10007, 'Balnc', 'Developer', 15000),
-      Employee(10008, 'Perry', 'Developer', 15000),
-      Employee(10009, 'Gable', 'Developer', 15000),
-      Employee(10010, 'Grimes', 'Developer', 15000)
-    ];
+  Alignment get alignment {
+    return widget.alignment ?? Alignment.centerLeft;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Stack(
-            children: [
-              SfDataGrid(
-                source: employeeDataSource,
-                allowPullToRefresh: true,
-                columns: widget.columns
-                    .map(
-                      (column) => GridColumn(
-                        columnName: column.columnName,
-                        allowEditing: column.allowEditing,
-                        allowFiltering: column.allowFiltering,
-                        allowSorting: column.allowSorting,
-                        autoFitPadding: column.autoFitPadding,
-                        columnWidthMode: column.columnWidthMode,
-                        filterIconPadding: column.filterIconPadding,
-                        filterIconPosition: column.filterIconPosition,
-                        filterPopupMenuOptions: column.filterPopupMenuOptions,
-                        maximumWidth: column.maximumWidth,
-                        minimumWidth: column.minimumWidth,
-                        sortIconPosition: column.sortIconPosition,
-                        visible: column.visible,
-                        width: column.width,
-                        label: column.label is Nil
-                            ? Align(
-                                alignment: column.alignment,
-                                child: Text(column.labelText),
-                              )
-                            : column.label,
-                      ),
-                    )
-                    .toList(),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0,
-                child: Container(
-                  color: Colors.white38,
-                  // width: constraint.maxWidth,
-                  // height: constraint.maxHeight,
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(
-                    strokeWidth: 3,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  SfDataGridTheme(
+                    data: SfDataGridThemeData(
+                        // gridLineColor: Colors.transparent,
+                        ),
+                    child: SfDataGrid(
+                      columnWidthMode: ColumnWidthMode.fill,
+                      gridLinesVisibility: GridLinesVisibility.none,
+                      headerGridLinesVisibility: GridLinesVisibility.none,
+                      horizontalScrollPhysics:
+                          const NeverScrollableScrollPhysics(),
+                      source: dataGridDataSource,
+                      allowPullToRefresh: true,
+                      footer: isEmtpy ? const UiEmptyView() : null,
+                      footerHeight: constraints.maxHeight - 160,
+                      columns: widget.columns
+                          .map(
+                            (column) => GridColumn(
+                              columnName: column.columnName,
+                              allowEditing: column.allowEditing,
+                              allowFiltering: column.allowFiltering,
+                              allowSorting: column.allowSorting,
+                              autoFitPadding: column.autoFitPadding,
+                              columnWidthMode: column.columnWidthMode,
+                              filterIconPadding: column.filterIconPadding,
+                              filterIconPosition: column.filterIconPosition,
+                              filterPopupMenuOptions:
+                                  column.filterPopupMenuOptions,
+                              maximumWidth: column.maximumWidth,
+                              minimumWidth: column.minimumWidth,
+                              sortIconPosition: column.sortIconPosition,
+                              visible: column.visible,
+                              width: column.width,
+                              label: column.label is Nil
+                                  ? Align(
+                                      alignment: widget.alignment ??
+                                          column.alignment ??
+                                          Alignment.centerLeft,
+                                      child: Text(column.labelText),
+                                    )
+                                  : column.label,
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
+                  if (showLoading)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        color: Colors.white38,
+                        // width: constraint.maxWidth,
+                        // height: constraint.maxHeight,
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 3,
+                        ),
+                      ),
+                    ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
+            ),
+            SfDataPager(
+              pageCount: pageCount,
+              direction: Axis.horizontal,
+              delegate: dataGridDataSource,
+              visibleItemsCount: 10,
+            )
+          ],
+        );
+      },
     );
   }
 }
 
-class Employee {
-  Employee(this.id, this.name, this.designation, this.salary);
-  final int id;
-  final String name;
-  final String designation;
-  final int salary;
-}
+class DataGridDataSource<T> extends DataGridSource {
+  final int pageSize;
+  final Fetcher<T> fetcher;
+  final Widget Function(DataGridCell<dynamic>)? buildCell;
+  final List<DataGridColumn<T>> columns;
+  final Alignment alignment;
 
-class EmployeeDataSource extends DataGridSource {
-  EmployeeDataSource({
-    required List<Employee> employees,
+  int index = 1;
+  DataGridDataSource({
+    required this.pageSize,
+    required this.fetcher,
+    required this.columns,
+    this.buildCell,
+    required this.alignment,
   }) {
-    _employees = employees
-        .map(
-          (e) => DataGridRow(
-            cells: [
-              DataGridCell(
-                columnName: 'id222333',
-                value: e.id,
-              ),
-              DataGridCell(columnName: 'name', value: e.name),
-              DataGridCell(columnName: 'designation', value: e.designation),
-              DataGridCell(columnName: 'salary', value: e.salary),
-            ],
-          ),
-        )
-        .toList();
+    handlePageChange(0, 1);
   }
 
-  List<DataGridRow> _employees = [];
+  List<T> _db = [];
 
   @override
-  List<DataGridRow> get rows => _employees;
+  List<DataGridRow> get rows {
+    final List<DataGridRow> rows = [];
+
+    for (var row in _db) {
+      final List<DataGridCell> cells = [];
+
+      for (var column in columns) {
+        final cell = DataGridCell(
+          columnName: column.columnName,
+          value: column.getValue(row),
+        );
+
+        cells.add(cell);
+      }
+
+      rows.add(DataGridRow(cells: cells));
+    }
+
+    return rows;
+  }
+
+  Widget _defaultBuildCell(cell) {
+    return Align(
+      alignment: alignment,
+      child: Text(cell.value.toString()),
+    );
+    // return Align(alignment: row.);
+  }
 
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
-        cells: row.getCells().map(
-      (cell) {
-        return Text(cell.value.toString());
-      },
-    ).toList());
+        cells: row
+            .getCells()
+            .map(
+              buildCell ?? _defaultBuildCell,
+            )
+            .toList());
   }
 
   @override
   Future<void> handleRefresh() async {
-    await Future.delayed(Duration(seconds: 5));
-
+    handlePageChange(index - 1, index);
     notifyListeners();
+  }
+
+  @override
+  Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
+    index = newPageIndex;
+    _db = await fetcher(newPageIndex, pageSize);
+    notifyListeners();
+    return true;
   }
 }
 
-class DataGridColumn extends GridColumn {
-  final String key;
-  final Alignment alignment;
+class DataGridColumn<T> extends GridColumn {
+  final Object Function(T row) getValue;
+  final Alignment? alignment;
   final String labelText;
   DataGridColumn({
     required super.columnName,
     super.label = nil,
-    required this.key,
     super.allowEditing,
     super.allowFiltering,
     super.allowSorting,
@@ -180,7 +257,8 @@ class DataGridColumn extends GridColumn {
     super.sortIconPosition,
     super.visible,
     super.width,
-    this.alignment = Alignment.center,
+    this.alignment,
     this.labelText = "",
+    required this.getValue,
   });
 }
