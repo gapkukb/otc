@@ -33,7 +33,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
     final securities = <bool>[
       user.emailValid,
       user.phoneValid,
-      user.googleSecretValid
+      user.googleSecretValid,
     ];
     final securityLevel =
         securities.where((element) => element).length / securities.length * 100;
@@ -63,8 +63,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                 Expanded(
                   child: Center(
                     child: Indicator(
-                      value: securityLevel,
-                      secondarColor: Colors.blue.shade100,
+                      value: 36,
                     ),
                   ),
                 ),

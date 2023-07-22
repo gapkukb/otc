@@ -4,8 +4,9 @@ import 'dart:math' as math;
 class Indicator extends StatefulWidget {
   double value;
   Size size;
-  Color color;
-  Color secondarColor;
+  Color safeColor;
+  Color dangerColor;
+  Color warningColor;
   double lineWidth;
   double lineHeight;
   int scaleCount;
@@ -20,8 +21,9 @@ class Indicator extends StatefulWidget {
     super.key,
     this.value = 0,
     this.size = const Size(108, 108),
-    this.color = Colors.blue,
-    this.secondarColor = Colors.blueGrey,
+    this.safeColor = Colors.blue,
+    this.dangerColor = Colors.red,
+    this.warningColor = Colors.orange,
     this.lineHeight = 10,
     this.lineWidth = 2,
     this.scaleCount = 60,
@@ -45,12 +47,21 @@ class _IndicatorState extends State<Indicator> {
     super.initState();
     // 缓存所有点位
     _createPoints();
+    _init();
+  }
 
+  _init() {
     painter = Paint()
       ..isAntiAlias = true
       ..style = PaintingStyle.stroke
       ..strokeWidth = widget.lineWidth
-      ..color = widget.color;
+      ..color = current.color;
+  }
+
+  @override
+  void didUpdateWidget(covariant Indicator oldWidget) {
+    _init();
+    super.didUpdateWidget(oldWidget);
   }
 
   static double _getX(double radius, double offset, double angle) {
@@ -68,7 +79,7 @@ class _IndicatorState extends State<Indicator> {
     var count = widget.scaleCount;
     var eachAngle = 360.0 / count;
 
-    for (double i = 0; i < count; i++) {
+    for (double i = 0; i <= count; i++) {
       var angle = i * eachAngle;
 
       _points.add(
@@ -81,6 +92,16 @@ class _IndicatorState extends State<Indicator> {
     }
   }
 
+  _Level get current {
+    if (widget.value > 66.667) {
+      return _Level(widget.safeColor, "高");
+    }
+    if (widget.value > 33.334) {
+      return _Level(widget.warningColor, "中");
+    }
+    return _Level(widget.dangerColor, "低");
+  }
+
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
@@ -89,8 +110,7 @@ class _IndicatorState extends State<Indicator> {
         painter: Painter(
           points: _points,
           value: widget.value,
-          color: widget.color,
-          secondarColor: widget.secondarColor,
+          level: current,
           renderText: widget.renderText,
           painter: painter,
           max: widget.max,
@@ -103,14 +123,13 @@ class _IndicatorState extends State<Indicator> {
 }
 
 class Painter extends CustomPainter {
-  double value;
-  List<Offset> points;
-  Color color;
-  Color secondarColor;
-  Paint painter;
-  double max;
-  double lineWidth;
-  double lineHeight;
+  final double value;
+  final List<Offset> points;
+  final _Level level;
+  final Paint painter;
+  final double max;
+  final double lineWidth;
+  final double lineHeight;
 
   Function(
     Canvas canvas,
@@ -120,8 +139,7 @@ class Painter extends CustomPainter {
   Painter({
     required this.points,
     required this.value,
-    required this.color,
-    required this.secondarColor,
+    required this.level,
     required this.renderText,
     required this.painter,
     required this.max,
@@ -135,49 +153,55 @@ class Painter extends CustomPainter {
     _paintText(canvas, size, value);
   }
 
+  get secondarColor {
+    return level.color.withOpacity(0.2);
+  }
+
   _paintScales(Canvas canvas, Size size) {
     var n = points.length;
     var precent = math.min(value / max, 1);
     var isHighlight = false;
-    late Offset point;
+    Offset? point;
     late Offset p1;
     late Offset p2;
 
     for (int i = 0, j = 0; i < n; i += 2, j++) {
-      isHighlight = (i / n) > precent && painter.color != secondarColor;
+      isHighlight = (i / (n - 2)) >= precent && painter.color != secondarColor;
       p1 = points[i];
       p2 = points[i + 1];
 
       if (isHighlight) {
         painter.color = secondarColor;
-        point = p2 + Offset(lineHeight / 2, lineHeight / 2);
-      } else {}
+        point = Offset((p1.dx + p2.dx) / 2, (p1.dy + p2.dy) / 2);
+      }
       canvas.drawLine(p1, p2, painter);
     }
-    canvas.save();
-    canvas.drawCircle(
-      point,
-      8,
-      painter
-        ..color = color
-        ..strokeWidth = 10,
-    );
+    if (point != null) {
+      canvas.save();
+      canvas.drawCircle(
+        point,
+        8,
+        painter
+          ..color = level.color
+          ..strokeWidth = 10,
+      );
 
-    canvas.drawCircle(
-      point,
-      4,
-      painter
-        ..style = PaintingStyle.fill
-        ..color = Colors.white,
-    );
+      canvas.drawCircle(
+        point,
+        4,
+        painter
+          ..style = PaintingStyle.fill
+          ..color = Colors.white,
+      );
 
-    canvas.restore();
+      canvas.restore();
+    }
   }
 
   _paintText(Canvas canvas, Size size, double value) {
     TextSpan span = TextSpan(
       style: TextStyle(
-        color: color,
+        color: level.color,
         fontSize: 28,
         height: 1,
       ),
@@ -185,10 +209,10 @@ class Painter extends CustomPainter {
       children: [
         TextSpan(
           style: TextStyle(
-            color: color,
+            color: level.color,
             fontSize: 14,
           ),
-          text: "\n${value > 66 ? "高" : value > 33 ? "中" : "低"}",
+          text: "\n${level.text}",
         ),
       ],
     );
@@ -211,4 +235,11 @@ class Painter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
+}
+
+class _Level {
+  final Color color;
+  final String text;
+
+  _Level(this.color, this.text);
 }
