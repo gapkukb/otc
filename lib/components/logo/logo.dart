@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otc/asstes/assets.gen.dart';
+import 'package:otc/components/gap/gap.dart';
 
 class Logo extends StatelessWidget {
   final bool? withLogoText;
@@ -17,6 +18,7 @@ class Logo extends StatelessWidget {
     return SizedBox.fromSize(
       size: Size.fromHeight(size ?? 56),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Assets.images.logo1.svg(
             colorFilter: ColorFilter.mode(
@@ -24,10 +26,12 @@ class Logo extends StatelessWidget {
               BlendMode.srcIn,
             ),
           ),
+          if (withLogoText == true) const Gap.small(horizition: true),
           if (withLogoText == true)
             Assets.images.logo2.svg(
-              colorFilter:
-                  const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withAlpha(170), BlendMode.srcIn),
             )
         ],
       ),

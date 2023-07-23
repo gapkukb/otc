@@ -1,22 +1,30 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
+import 'package:otc/components/logo/logo.dart';
 
 class LayoutLogo extends StatelessWidget {
   const LayoutLogo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final logo = Padding(
+    const logo = Padding(
       padding: Pads.leftLg,
-      child: Assets.images.logo.image(),
+      child: Logo(),
     );
 
-    if (global.user.base.type == "GENERAL") return logo;
+    if (global.user.base.type == "GENERAL") {
+      return GestureDetector(
+        child: logo,
+        onTap: () {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(Routes.home, (route) => false);
+        },
+      );
+    }
     return RawGestureDetector(
       gestures: {
         LongPressGestureRecognizer:

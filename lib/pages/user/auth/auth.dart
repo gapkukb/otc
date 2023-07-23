@@ -1,12 +1,17 @@
+library auth;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
+import 'package:otc/components/cell/cell.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/pages/user/auth/auth_profile.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+
+part './auth.helper.dart';
 
 class UserAuth extends ConsumerStatefulWidget {
   const UserAuth({super.key});
@@ -55,12 +60,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(child: _buildBasement()),
-              const AuthProfile(),
-            ],
-          ),
+          _buildBasement(),
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -77,6 +77,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
 
   Card _buildBasement() {
     final user = ref.read(userBaseProvider);
+    final kyc = ref.read(kycProvider);
 
     return Card(
       margin: EdgeInsets.zero,
@@ -86,7 +87,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              width: 216,
+              width: 140,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -104,14 +105,15 @@ class _UserAuthState extends ConsumerState<UserAuth> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // _buildKycStatus(
-                  //   kyc.lv3Status == KycStatus.pass,
-                  //   kyc.lv3Status == KycStatus.pass,
-                  //   kyc.lv3Status == KycStatus.pass,
-                  // ),
+                  _buildKycStatus(
+                    kyc?.lv1Status == KycStatus.pass,
+                    kyc?.lv2Status == KycStatus.pass,
+                    kyc?.lv3Status == KycStatus.pass,
+                  ),
                 ],
               ),
             ),
+            const SizedBox(width: 32),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,10 +123,10 @@ class _UserAuthState extends ConsumerState<UserAuth> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
-                  _buildItem(),
-                  _buildItem(),
-                  _buildItem(),
-                  _buildItem(),
+                  _buildItem("数字货币充值限额", "无限额", true),
+                  _buildItem("数字货币提币限额", "0 USDT 每日"),
+                  _buildItem("法币充值&提现限额", "0 USDT 每日"),
+                  _buildItem("C2C交易限额", "无限额", true),
                 ],
               ),
             ),
@@ -134,12 +136,12 @@ class _UserAuthState extends ConsumerState<UserAuth> {
     );
   }
 
-  _buildItem() {
-    return const Padding(
-      padding: Pads.topXs,
-      child: Row(
-        children: [Text("数字货币充值限额"), Spacer(), Text("无限额")],
-      ),
+  _buildItem(String label, String value, [bool? style]) {
+    return Cell(
+      height: 30,
+      titleText: label,
+      trailingText: value,
+      trailingTextStyle: style == true ? Font.smallGrey : null,
     );
   }
 

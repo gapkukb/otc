@@ -26,7 +26,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       primary: false,
       leading: const LayoutLogo(),
-      leadingWidth: 80,
+      leadingWidth: 270,
       automaticallyImplyLeading: false,
       shadowColor: Colors.grey.shade100,
       // forceMaterialTransparency: true,
