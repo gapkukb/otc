@@ -1,5 +1,6 @@
 library http;
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -8,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/models/http_response_model..t.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/map.dart' as map;
@@ -47,7 +49,7 @@ class Http {
       ..add(LoadingInterceptor());
   }
 
-  post<T>(String path, [ModelFactory<T>? model, HttpOptions? outerOptions]) {
+  _base<T>(String path, [ModelFactory<T>? model, HttpOptions? outerOptions]) {
     return ([Map<String, dynamic>? data, HttpOptions? innerOptions]) {
       final cancelable = innerOptions?.cancelable ?? outerOptions?.cancelable == true;
 
@@ -77,7 +79,7 @@ class Http {
         headers: innerOptions?.headers ?? outerOptions?.headers,
         listFormat: innerOptions?.listFormat ?? outerOptions?.listFormat,
         maxRedirects: innerOptions?.maxRedirects ?? outerOptions?.maxRedirects,
-        method: innerOptions?.method ?? outerOptions?.method,
+        method: "post" ?? innerOptions?.method ?? outerOptions?.method,
         persistentConnection: innerOptions?.persistentConnection ?? outerOptions?.persistentConnection,
         receiveDataWhenStatusError: innerOptions?.receiveDataWhenStatusError ?? outerOptions?.receiveDataWhenStatusError,
         receiveTimeout: innerOptions?.receiveTimeout ?? outerOptions?.receiveTimeout,
@@ -87,13 +89,23 @@ class Http {
         sendTimeout: innerOptions?.sendTimeout ?? outerOptions?.sendTimeout,
         validateStatus: innerOptions?.validateStatus ?? outerOptions?.validateStatus,
       );
-      return dio.request<T>(
+
+      return dio.request<Map<String, dynamic>>(
         cancelToken: cancelToken,
         path,
         data: data,
         options: options,
+        onReceiveProgress: innerOptions?.onReceiveProgress ?? outerOptions?.onReceiveProgress,
+        onSendProgress: innerOptions?.onSendProgress ?? outerOptions?.onSendProgress,
       );
     };
+  }
+
+  List<T> Function([Map<String, dynamic>? data, HttpOptions? innerOptions]) post<T>(String path, [ModelFactory<T>? model, HttpOptions? outerOptions]) {
+    return _base(path, model, outerOptions)().then((value) {
+      final data = value.data!["data"];
+      return List.castFrom<dynamic, T>(data);
+    });
   }
 
   Request<T> Function<T>(String, [ModelFactory<T>?, HttpOptions?]) createMethod(
@@ -194,4 +206,8 @@ class Request<T> {
     final resp = response.data!['data'];
     return model == null ? resp : model!(resp);
   }
+}
+
+extension Typing<T> on List<T> {
+  Type get genericType => T;
 }

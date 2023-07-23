@@ -9,7 +9,7 @@ class _AppApi {
     ),
   );
 
-  final upload = http.post<List<String>>(
+  final upload = http.post<String>(
     "/file/upload/image",
     null,
     HttpOptions(
