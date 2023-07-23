@@ -2,8 +2,6 @@
 
 part of http;
 
-noop() {}
-
 class InnerOptions {
   /// 静默模式，http拦截器不抛出任何信息，完全由业务控制
   final bool? silent;
@@ -116,10 +114,8 @@ class HttpOptions extends RequestOptions implements InnerOptions {
         listFormat: options.listFormat ?? listFormat,
         maxRedirects: options.maxRedirects ?? maxRedirects,
         method: options.method ?? method,
-        persistentConnection:
-            options.persistentConnection ?? persistentConnection,
-        receiveDataWhenStatusError:
-            options.receiveDataWhenStatusError ?? receiveDataWhenStatusError,
+        persistentConnection: options.persistentConnection ?? persistentConnection,
+        receiveDataWhenStatusError: options.receiveDataWhenStatusError ?? receiveDataWhenStatusError,
         receiveTimeout: options.receiveTimeout ?? receiveTimeout,
         requestEncoder: options.requestEncoder ?? requestEncoder,
         responseDecoder: options.responseDecoder ?? responseDecoder,

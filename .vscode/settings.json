@@ -1,5 +1,7 @@
 {
+  "dart.lineLength": 200,
   "[dart]": {
+    "editor.rulers": [200],
     "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.tabSize": 2,
     "editor.insertSpaces": true,

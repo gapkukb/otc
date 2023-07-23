@@ -33,6 +33,8 @@ enum Method {
   update,
 }
 
+noop() {}
+
 class Http {
   late final Dio dio;
 
@@ -43,6 +45,55 @@ class Http {
       ..add(ExceptionInterceptor())
       ..add(DataTypeInterceptor())
       ..add(LoadingInterceptor());
+  }
+
+  post<T>(String path, [ModelFactory<T>? model, HttpOptions? outerOptions]) {
+    return ([Map<String, dynamic>? data, HttpOptions? innerOptions]) {
+      final cancelable = innerOptions?.cancelable ?? outerOptions?.cancelable == true;
+
+      CancelToken? cancelToken = cancelable ? CancelToken() : null;
+
+      final options = Options(
+        contentType: innerOptions?.contentType ?? outerOptions?.contentType,
+        extra: {
+          if (outerOptions != null) ...outerOptions.extra,
+          if (innerOptions != null) ...innerOptions.extra,
+          "_abort": cancelToken == null
+              ? noop
+              : () {
+                  cancelToken?.cancel();
+                  cancelToken = null;
+                },
+          "_options": InnerOptions(
+            cancelable: innerOptions?.cancelable ?? outerOptions?.cancelable,
+            dataType: innerOptions?.dataType ?? outerOptions?.dataType,
+            repeatable: innerOptions?.repeatable ?? outerOptions?.repeatable,
+            retry: innerOptions?.retry ?? outerOptions?.retry,
+            silent: innerOptions?.silent ?? outerOptions?.silent,
+            loading: innerOptions?.loading ?? outerOptions?.loading,
+          )
+        },
+        followRedirects: innerOptions?.followRedirects ?? outerOptions?.followRedirects,
+        headers: innerOptions?.headers ?? outerOptions?.headers,
+        listFormat: innerOptions?.listFormat ?? outerOptions?.listFormat,
+        maxRedirects: innerOptions?.maxRedirects ?? outerOptions?.maxRedirects,
+        method: innerOptions?.method ?? outerOptions?.method,
+        persistentConnection: innerOptions?.persistentConnection ?? outerOptions?.persistentConnection,
+        receiveDataWhenStatusError: innerOptions?.receiveDataWhenStatusError ?? outerOptions?.receiveDataWhenStatusError,
+        receiveTimeout: innerOptions?.receiveTimeout ?? outerOptions?.receiveTimeout,
+        requestEncoder: innerOptions?.requestEncoder ?? outerOptions?.requestEncoder,
+        responseDecoder: innerOptions?.responseDecoder ?? outerOptions?.responseDecoder,
+        responseType: innerOptions?.responseType ?? outerOptions?.responseType,
+        sendTimeout: innerOptions?.sendTimeout ?? outerOptions?.sendTimeout,
+        validateStatus: innerOptions?.validateStatus ?? outerOptions?.validateStatus,
+      );
+      return dio.request<T>(
+        cancelToken: cancelToken,
+        path,
+        data: data,
+        options: options,
+      );
+    };
   }
 
   Request<T> Function<T>(String, [ModelFactory<T>?, HttpOptions?]) createMethod(
@@ -129,7 +180,7 @@ class Request<T> {
         headers: opt.headers,
         listFormat: opt.listFormat,
         maxRedirects: opt.maxRedirects,
-        method: opt.method,
+        method: _options.method,
         persistentConnection: opt.persistentConnection,
         receiveDataWhenStatusError: opt.receiveDataWhenStatusError,
         receiveTimeout: opt.receiveTimeout,

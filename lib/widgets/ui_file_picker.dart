@@ -1,10 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/theme/text_theme.dart';
 import 'package:photo_view/photo_view.dart';
 
 class UiFilePickerController extends ChangeNotifier {}
@@ -13,11 +11,13 @@ class UiFilePicker extends StatefulWidget {
   final Function(File? file) onChange;
   final String? title;
   final Widget? titleWidget;
+  final double? size;
   const UiFilePicker({
     super.key,
     required this.onChange,
     this.title,
     this.titleWidget,
+    this.size,
   });
 
   @override
@@ -35,15 +35,25 @@ class _UiFilePickerState extends State<UiFilePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return DottedBorder(
-      dashPattern: const [4],
-      strokeWidth: 0.3,
-      strokeCap: StrokeCap.round,
-      child: SizedBox(
-        width: 100,
-        height: 100,
-        child: file == null ? _buildEmpty() : _buildImageView(),
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.title != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(widget.title!),
+          ),
+        DottedBorder(
+          dashPattern: const [4],
+          strokeWidth: 0.3,
+          strokeCap: StrokeCap.round,
+          child: SizedBox(
+            width: widget.size,
+            height: widget.size,
+            child: file == null ? _buildEmpty() : _buildImageView(),
+          ),
+        )
+      ],
     );
   }
 
@@ -93,24 +103,10 @@ class _UiFilePickerState extends State<UiFilePicker> {
       onTap: _pick,
       child: Container(
         color: Colors.transparent,
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.add,
-              size: 40,
-              color: Colors.grey,
-            ),
-            if (widget.titleWidget != null)
-              widget.titleWidget!
-            else if (widget.title != null)
-              Text(
-                widget.title!,
-                style: Font.smallGrey,
-              )
-          ],
+        child: const Icon(
+          Icons.add,
+          size: 40,
+          color: Colors.grey,
         ),
       ),
     );

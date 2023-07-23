@@ -27,6 +27,7 @@ class Upload extends StatefulWidget {
   final Function(UFiles files)? onUploaded;
   final Function(UFiles files)? onError;
   final UploadController controller;
+  final List<String>? titles;
 
   const Upload({
     super.key,
@@ -41,6 +42,7 @@ class Upload extends StatefulWidget {
     this.onUploaded,
     this.onUploading,
     this.itemSize = 100,
+    this.titles,
     required this.controller,
   });
 
@@ -86,6 +88,8 @@ class _UploadState extends State<Upload> {
               children: List.generate(
                 widget.max,
                 (index) => UploadItem(
+                  title: widget.titles?[index],
+                  size: widget.itemSize,
                   onChange: (file) {
                     if (file == null) {
                       widget.controller.items.removeAt(index);

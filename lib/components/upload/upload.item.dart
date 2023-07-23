@@ -22,12 +22,14 @@ class StateFile {
 }
 
 class UploadItem extends StatefulWidget {
+  final String? title;
   final Function(StateFile? stateFile)? onChange;
   final double? size;
   const UploadItem({
     super.key,
     this.onChange,
     this.size,
+    this.title,
   });
 
   @override
@@ -45,12 +47,14 @@ class _UploadItemState extends State<UploadItem> {
       borderRadius: const BorderRadius.all(Radius.circular(4)),
       child: SizedBox(
         width: widget.size,
-        height: widget.size,
+        // height: widget.size,
         child: Stack(
           children: [
             Material(
               // color: Colors.amber,
               child: UiFilePicker(
+                size: widget.size,
+                title: widget.title,
                 onChange: (newFile) {
                   if (newFile == null) {
                     widget.onChange?.call(null);
@@ -85,7 +89,7 @@ class _UploadItemState extends State<UploadItem> {
   Future<String> upload() async {
     try {
       final stream = await MultipartFile.fromFile(file!.path);
-      final String url = await apis.app.uploadImage(
+      final List<String> url = await apis.app.upload(
         {"file": stream},
         HttpOptions(
           onSendProgress: (count, total) {
@@ -99,10 +103,10 @@ class _UploadItemState extends State<UploadItem> {
       setState(() {
         state = UploadingState.done;
       });
-      return url;
+      return url[0];
     } catch (e) {
       setState(() {
-        state = UploadingState.uploading;
+        state = UploadingState.error;
       });
       return Future.error(e);
     }
@@ -170,10 +174,7 @@ class UploadItemOverlay extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
-      children: [
-        Icon(Icons.error_outline, color: Colors.white),
-        Text("上传失败\n点击重试")
-      ],
+      children: [Icon(Icons.error_outline, color: Colors.white), Text("上传失败\n点击重试")],
     );
   }
 
