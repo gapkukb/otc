@@ -10,9 +10,6 @@ class Routes {
   static const tasks = '/tasks';
   static const security = '/security';
   static const auth = '/auth';
-  static const authPrimary = "/auth_primary";
-  static const authJunior = "/auth_junior";
-  static const authSenior = "/auth_senior";
   static const merchant = "/merchant";
   static const setting = "/setting";
   static const updateNickname = "/update_nickname";
@@ -59,4 +56,9 @@ class Routes {
   static const AdBuying = "/advertise_buying";
   static const AdSelling = "/advertise_selling";
   static const AdOwner = "/advertise_my";
+
+  //kyc
+  static const authPrimary = "/auth_primary";
+  static const authSenior = "/auth_senior";
+  static const authJunior = "/auth_junior";
 }

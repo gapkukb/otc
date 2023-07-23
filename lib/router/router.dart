@@ -19,6 +19,9 @@ import 'package:otc/pages/order/history.spot.order/history.spot.order.dart';
 import 'package:otc/pages/order/c2c.order/c2c.order.dart';
 import 'package:otc/pages/order/pending.future.order/pending.future.order.dart';
 import 'package:otc/pages/order/pending.spot.order/pending.spot.order.dart';
+import 'package:otc/pages/user/auth/auth_junior.dart';
+import 'package:otc/pages/user/auth/auth_primary.dart';
+import 'package:otc/pages/user/auth/auth_senior.dart';
 import 'package:otc/pages/user/merchant/merchant.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
@@ -65,7 +68,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.security,
+  initialLocation: Routes.auth,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

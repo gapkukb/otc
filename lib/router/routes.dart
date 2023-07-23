@@ -229,4 +229,16 @@ final List<RouteBase> routes = [
     path: Routes.withdrawal,
     page: const Withdrawal(),
   ),
+  ModalRoute(
+    path: Routes.authPrimary,
+    page: const AuthPrimary(),
+  ),
+  ModalRoute(
+    path: Routes.authJunior,
+    page: const AuthJunior(),
+  ),
+  ModalRoute(
+    path: Routes.authSenior,
+    page: const AuthSenior(),
+  ),
 ];

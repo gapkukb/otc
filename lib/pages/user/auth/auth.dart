@@ -6,9 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
-import 'package:otc/pages/user/auth/auth_profile.dart';
 import 'package:otc/providers/user.provider.dart';
-import 'package:otc/theme/padding.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 
 part './auth.helper.dart';
@@ -26,11 +25,11 @@ class _UserAuthState extends ConsumerState<UserAuth> {
   static List<dynamic> items = [
     {
       "level": "初级认证",
-      "status": 1,
+      "status": 0,
       "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
       "subtitle": "要求：1.姓名    2.年龄    3.身份证",
       "onTap": (BuildContext context) {
-        context.push('/auth_primary');
+        context.push(Routes.authPrimary);
       }
     },
     {
@@ -39,7 +38,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
       "title": "法币限额 200000 USDT 每日，提币限额 5000 USDT 每日",
       "subtitle": "要求：1.手持身份证照片",
       "onTap": (BuildContext context) {
-        context.push('/auth_junior');
+        context.pushNamed(Routes.authJunior);
       }
     },
     {
@@ -48,7 +47,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
       "title": "无限额法币交易，提币限额 10000 USDT 每日",
       "subtitle": "要求：1.手持身份证照片视频",
       "onTap": (BuildContext context) {
-        context.push('/auth_senior');
+        context.pushNamed(Routes.authSenior);
       }
     },
   ];
@@ -154,7 +153,15 @@ class _UserAuthState extends ConsumerState<UserAuth> {
     } else if (level1) {
       text = items[0]['level'];
     }
-    return Chip(label: Text(text));
+    return Chip(
+      label: Text(text),
+      backgroundColor: true
+          ? Theme.of(context).disabledColor
+          : Theme.of(context).primaryColor,
+      labelStyle: const TextStyle(color: Colors.white),
+      side: const BorderSide(color: Colors.transparent),
+      shape: const StadiumBorder(),
+    );
   }
 
   _buildCard(dynamic item) {
