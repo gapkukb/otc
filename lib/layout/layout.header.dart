@@ -57,7 +57,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
                 title: "我的广告",
                 subtitle: "在此管理广告",
                 icon: Icons.ads_click_outlined,
-                value: Routes.AdOwner,
+                value: Routes.AdOwn,
               ),
             ],
           )

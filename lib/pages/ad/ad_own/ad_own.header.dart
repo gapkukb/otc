@@ -3,8 +3,8 @@ import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 
-class AdBuyingHeader extends PreferredSize {
-  AdBuyingHeader({
+class AdOwnHeader extends PreferredSize {
+  AdOwnHeader({
     super.key,
   }) : super(
           preferredSize: const Size.fromHeight(80),

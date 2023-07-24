@@ -21,8 +21,7 @@ class ResetPwd extends StatefulWidget {
   State<ResetPwd> createState() => _ResetPwdState();
 }
 
-class _ResetPwdState extends State<ResetPwd>
-    with SingleTickerProviderStateMixin {
+class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin {
   late final TabController _controller;
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -44,10 +43,7 @@ class _ResetPwdState extends State<ResetPwd>
     super.dispose();
   }
 
-  static List<CaptchaDevice> items = CaptchaDevice.values
-      .where((element) =>
-          element == CaptchaDevice.phone || element == CaptchaDevice.email)
-      .toList();
+  static List<CaptchaDevice> items = CaptchaDevice.values.where((element) => element == CaptchaDevice.phone || element == CaptchaDevice.email).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +66,7 @@ class _ResetPwdState extends State<ResetPwd>
                 TabBar(
                   indicatorSize: TabBarIndicatorSize.tab,
                   controller: _controller,
-                  tabs:
-                      items.map((item) => Tab(text: item.chineseText)).toList(),
+                  tabs: items.map((item) => Tab(text: item.chineseText)).toList(),
                 ),
                 SizedBox(
                   height: isNext ? 200 : 120,
@@ -98,14 +93,14 @@ class _ResetPwdState extends State<ResetPwd>
   validate() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final result = await openCaptchaWindow(CaptchaWindowOptions(
-      context: context,
-      service: CaptchaSession.addAddressBook,
-      account: (_controller.index == 0 ? _phoneController : _emailController)
-          .text
-          .trim(),
-      preferredDevice: items[_controller.index],
-    ));
+    final result = await openCaptchaWindow(
+      CaptchaWindowOptions(
+        context: context,
+        service: CaptchaSession.addAddressBook,
+        account: (_controller.index == 0 ? _phoneController : _emailController).text.trim(),
+        preferredDevice: items[_controller.index],
+      ),
+    );
     if (result != null) {
       setState(() {
         isNext = true;

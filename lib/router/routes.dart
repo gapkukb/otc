@@ -136,15 +136,15 @@ final List<RouteBase> routes = [
         routes: [
           AuthRoute(
             path: Routes.AdBuying,
-            page: const AdvertiseBuying(),
+            page: const AdBuying(),
           ),
           AuthRoute(
             path: Routes.AdSelling,
-            page: const AgentIncome(),
+            page: const AdSelling(),
           ),
           AuthRoute(
-            path: Routes.AdOwner,
-            page: const AgentSetting(),
+            path: Routes.AdOwn,
+            page: const AdOwn(),
           ),
         ],
       ),

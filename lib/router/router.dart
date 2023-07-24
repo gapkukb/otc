@@ -7,6 +7,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
+import 'package:otc/pages/ad/ad_own/ad_own.dart';
+import 'package:otc/pages/ad/ad_selling/ad_selling.dart';
 import 'package:otc/pages/ad/layout/layout.dart';
 import 'package:otc/pages/error/404.dart';
 import 'package:otc/pages/account/login/login.dart';

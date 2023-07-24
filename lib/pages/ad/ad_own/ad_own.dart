@@ -1,15 +1,20 @@
+library ad_own;
+
 import 'package:flutter/material.dart';
 import 'package:otc/components/table/table.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.header.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AdBuying extends StatefulWidget {
-  const AdBuying({super.key});
+part 'ad_own.provider.dart';
+
+class AdOwn extends StatefulWidget {
+  const AdOwn({super.key});
 
   @override
-  State<AdBuying> createState() => _AdBuyingState();
+  State<AdOwn> createState() => _AdOwnState();
 }
 
-class _AdBuyingState extends State<AdBuying> {
+class _AdOwnState extends State<AdOwn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

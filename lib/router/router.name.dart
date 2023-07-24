@@ -53,9 +53,9 @@ class Routes {
   static const agentSetting = "/agent_system_setting";
 
   // 广告
-  static const AdBuying = "/advertise_buying";
-  static const AdSelling = "/advertise_selling";
-  static const AdOwner = "/advertise_my";
+  static const AdBuying = "/ad_buying";
+  static const AdSelling = "/ad_selling";
+  static const AdOwn = "/ad_own";
 
   //kyc
   static const authPrimary = "/auth_primary";
