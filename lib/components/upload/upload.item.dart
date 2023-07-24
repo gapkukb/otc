@@ -89,7 +89,7 @@ class _UploadItemState extends State<UploadItem> {
   Future<String> upload() async {
     try {
       final stream = await MultipartFile.fromFile(file!.path);
-      final List<String> url = await apis.app.upload(
+      final List<String> url = (await apis.app.uploadImage(
         {"file": stream},
         HttpOptions(
           onSendProgress: (count, total) {
@@ -99,7 +99,8 @@ class _UploadItemState extends State<UploadItem> {
             });
           },
         ),
-      );
+      ))
+          .cast();
       setState(() {
         state = UploadingState.done;
       });

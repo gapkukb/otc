@@ -1,7 +1,7 @@
 part of apis;
 
 class _AppApi {
-  final uploadImage = post<List<String>>(
+  final uploadImage = post<List>(
     "/file/upload/image",
     null,
     HttpOptions(
@@ -9,13 +9,13 @@ class _AppApi {
     ),
   );
 
-  final upload = http.post<String>(
-    "/file/upload/image",
-    null,
-    HttpOptions(
-      dataType: HttpDataType.form,
-    ),
-  );
+  // final upload = http.post<String>(
+  //   "/file/upload/image",
+  //   null,
+  //   HttpOptions(
+  //     dataType: HttpDataType.form,
+  //   ),
+  // );
 }
 
 final appApi = _AppApi();

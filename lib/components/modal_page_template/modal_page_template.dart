@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:otc/theme/text_theme.dart';
 
@@ -8,7 +10,8 @@ class ModalPageTemplate extends StatelessWidget {
   final IconData iconData;
   final Widget? icon;
   final List<Widget> children;
-  final void Function(BuildContext context) onCompelete;
+  final FutureOr<void> Function(BuildContext context) onCompelete;
+  final FutureOr<void> Function(BuildContext context)? onCancel;
 
   const ModalPageTemplate({
     super.key,
@@ -19,6 +22,7 @@ class ModalPageTemplate extends StatelessWidget {
     required this.onCompelete,
     required this.children,
     this.icon,
+    this.onCancel,
   });
 
   @override
@@ -79,17 +83,26 @@ class ModalPageTemplate extends StatelessWidget {
   }
 
   _buildActions(BuildContext context) {
+    bool disabled = false;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
           child: const Text("取消"),
           onPressed: () {
-            Navigator.of(context).maybePop();
+            onCancel?.call(context) ?? Navigator.of(context).maybePop();
           },
         ),
         TextButton(
-          onPressed: () => onCompelete(context),
+          onPressed: () async {
+            if (disabled) return;
+            try {
+              disabled = true;
+              await onCompelete(context);
+            } finally {
+              disabled = false;
+            }
+          },
           child: Text(nextText),
         ),
       ],

@@ -66,8 +66,7 @@ class _UiFilePickerState extends State<UiFilePicker> {
           BottomSheetItem(label: "从相册选择", value: false),
         ],
         onSelected: (value, _) async {
-          final ImageSource source =
-              value ? ImageSource.camera : ImageSource.gallery;
+          final ImageSource source = value ? ImageSource.camera : ImageSource.gallery;
 
           final result = await picker.pickImage(
             source: source,

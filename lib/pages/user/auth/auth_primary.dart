@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/upload/upload.dart';
+import 'package:otc/components/upload/upload.picker.dart';
 import './auth_primary_step_1.dart';
 import './auth_primary_step_2.dart';
 
@@ -34,7 +37,7 @@ class _AuthPrimaryState extends State<AuthPrimary> {
                 step++;
               });
             } else {
-              final result = await controller.upload();
+              inspect(controller.items);
 
               // apis.kyc.authLv1({
               //   "identity": "",

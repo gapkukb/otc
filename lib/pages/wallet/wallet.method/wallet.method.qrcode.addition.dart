@@ -16,12 +16,10 @@ class WalletMethodQRcodeAddition extends StatefulWidget {
   });
 
   @override
-  State<WalletMethodQRcodeAddition> createState() =>
-      _WalletMethodQRcodeAdditionState();
+  State<WalletMethodQRcodeAddition> createState() => _WalletMethodQRcodeAdditionState();
 }
 
-class _WalletMethodQRcodeAdditionState
-    extends State<WalletMethodQRcodeAddition> {
+class _WalletMethodQRcodeAdditionState extends State<WalletMethodQRcodeAddition> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formState = {};
   final controller = UploadController();
@@ -37,13 +35,11 @@ class _WalletMethodQRcodeAdditionState
       child: ModalPageTemplate(
         legend: "新增收款方式",
         title: "添加$addTypeText",
-        iconData: widget.addType == AddType.alipay
-            ? FontAwesomeIcons.alipay
-            : FontAwesomeIcons.weixin,
+        iconData: widget.addType == AddType.alipay ? FontAwesomeIcons.alipay : FontAwesomeIcons.weixin,
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            await controller.upload();
+            // await controller.upload();
             await apis.wallet.addQRcode({
               "paymentMethod": addTypeText,
               // "url":

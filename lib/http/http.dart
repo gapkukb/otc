@@ -1,6 +1,5 @@
 library http;
 
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -9,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/global/global.dart';
-import 'package:otc/models/http_response_model..t.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/map.dart' as map;
@@ -76,7 +74,10 @@ class Http {
           )
         },
         followRedirects: innerOptions?.followRedirects ?? outerOptions?.followRedirects,
-        headers: innerOptions?.headers ?? outerOptions?.headers,
+        headers: {
+          if (outerOptions != null) ...outerOptions.headers,
+          if (innerOptions != null) ...innerOptions.headers,
+        },
         listFormat: innerOptions?.listFormat ?? outerOptions?.listFormat,
         maxRedirects: innerOptions?.maxRedirects ?? outerOptions?.maxRedirects,
         method: "post" ?? innerOptions?.method ?? outerOptions?.method,
@@ -93,7 +94,11 @@ class Http {
       return dio.request<Map<String, dynamic>>(
         cancelToken: cancelToken,
         path,
-        data: data,
+        data: {
+          if (outerOptions != null) ...outerOptions.data as Map,
+          if (innerOptions != null) ...innerOptions.data as Map,
+          if (data != null) ...data,
+        },
         options: options,
         onReceiveProgress: innerOptions?.onReceiveProgress ?? outerOptions?.onReceiveProgress,
         onSendProgress: innerOptions?.onSendProgress ?? outerOptions?.onSendProgress,
@@ -101,8 +106,12 @@ class Http {
     };
   }
 
-  List<T> Function([Map<String, dynamic>? data, HttpOptions? innerOptions]) post<T>(String path, [ModelFactory<T>? model, HttpOptions? outerOptions]) {
-    return _base(path, model, outerOptions)().then((value) {
+  List<T> Function([Map<String, dynamic>? data, HttpOptions? innerOptions]) post<T>(
+    String path, [
+    ModelFactory<T>? model,
+    HttpOptions? outerOptions,
+  ]) {
+    return _base(path, model, outerOptions).then((value) {
       final data = value.data!["data"];
       return List.castFrom<dynamic, T>(data);
     });
@@ -153,13 +162,8 @@ class Request<T> {
     if (opt.cancelable == true) {
       cancelToken = CancelToken();
     }
-    Map<String, dynamic> $data = {};
-    if (opt.data != null) {
-      $data.addAll(opt.data);
-    }
-    if (data != null) {
-      $data.addAll(data);
-    }
+
+    data?.addAll(opt.data ?? {});
 
     final response = await dio.request(
       replacePathParams(
@@ -168,7 +172,7 @@ class Request<T> {
       ),
       cancelToken: cancelToken,
       queryParameters: opt.queryParameters,
-      data: $data,
+      data: data,
       onReceiveProgress: opt.onReceiveProgress,
       onSendProgress: opt.onSendProgress,
       options: Options(

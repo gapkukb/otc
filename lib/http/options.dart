@@ -96,14 +96,11 @@ class HttpOptions extends RequestOptions implements InnerOptions {
     if (options != null) {
       if (data != null && options.data != null) {
         options.data = {...data as Map, ...options.data};
-      } else if (options.data == null) {
-        options.data = data;
+      } else {
+        options.data ??= data;
       }
-      if (headers != null && options.headers != null) {
-        options.headers = {...headers, ...options.headers};
-      } else if (options.headers == null) {
-        options.headers = headers;
-      }
+
+      options.headers = {...headers, ...options.headers};
 
       return HttpOptions(
         pathParams: map.merge(options.pathParams, pathParams),

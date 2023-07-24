@@ -2,30 +2,28 @@ library upload;
 
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/upload/upload.picker.dart';
 import 'package:otc/http/http.dart';
 import 'package:otc/widgets/ui_file_picker.dart';
 import 'dart:io';
 
 part './upload.item.dart';
 
-typedef UFiles = List<StateFile>;
-
 class Upload extends StatefulWidget {
   final AutovalidateMode? autovalidateMode;
   final bool enabled;
   final String? initialValue;
-  final String? Function(UFiles? files)? validator;
+  final String? Function(List<File> files)? validator;
   final String? name;
   final Map<String, dynamic>? formStore;
   final int max;
   final double itemSize;
-  final Function(UFiles files)? onUploading;
-  final Function(UFiles files)? onUploaded;
-  final Function(UFiles files)? onError;
+  final Function(File file)? onUploaded;
+  final Function(File file)? onUploading;
+  final Function(File file)? onError;
   final UploadController controller;
   final List<String>? titles;
 
@@ -65,7 +63,7 @@ class _UploadState extends State<Upload> {
 
   @override
   Widget build(BuildContext context) {
-    return FormField<List<StateFile>>(
+    return FormField<List<File>>(
       // autovalidateMode: AutovalidateMode.always,
       enabled: widget.enabled,
       // initialValue: XFile(widget.initialValue!),
@@ -87,10 +85,11 @@ class _UploadState extends State<Upload> {
               spacing: 8,
               children: List.generate(
                 widget.max,
-                (index) => UploadItem(
+                (index) => UploadPicker(
                   title: widget.titles?[index],
                   size: widget.itemSize,
                   onChange: (file) {
+                    inspect(file);
                     if (file == null) {
                       widget.controller.items.removeAt(index);
                     } else {
@@ -105,23 +104,15 @@ class _UploadState extends State<Upload> {
               ),
             ));
       },
-      validator: widget.validator,
+      validator: (files) {
+        return widget.validator?.call(files ?? []);
+      },
     );
   }
 }
 
 class UploadController extends ChangeNotifier {
-  late final List<StateFile> items;
-
-  Future<void> upload() async {
-    await Future.wait(items
-        .where(
-          (item) => item.state != UploadingState.done,
-        )
-        .map(
-          (item) => item.upload(),
-        ));
-  }
+  late final List<File> items;
 
   @override
   void dispose() {
