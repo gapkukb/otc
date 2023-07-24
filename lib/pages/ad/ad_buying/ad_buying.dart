@@ -18,39 +18,54 @@ class _AdvertiseBuyingState extends State<AdvertiseBuying> {
         fetcher: (pageNo, pageSize) async {
           // await Future.delayed(Duration(seconds: 3));
 
-          return [
-            Employee(10001, 'James', 'Project Lead', 20000),
-            Employee(10002, 'Kathryn', 'Manager', 30000),
-            Employee(10003, 'Lara', 'Developer', 15000),
-            Employee(10004, 'Michael', 'Designer', 15000),
-            Employee(10005, 'Martin', 'Developer', 15000),
-            Employee(10006, 'Newberry', 'Developer', 15000),
-            Employee(10007, 'Balnc', 'Developer', 15000),
-            Employee(10008, 'Perry', 'Developer', 15000),
-            Employee(10009, 'Gable', 'Developer', 15000),
-            Employee(10010, 'Grimes', 'Developer', 15000)
-          ];
+          return [];
         },
         buildRow: (row) {},
+        pageSize: 50,
         columns: [
           DataGridColumn(
             columnName: 'id',
-            title: "ID",
+            title: "广告编号\n币种/法币",
             getValue: (row) => row.id,
           ),
           DataGridColumn(
             columnName: 'name',
-            title: "Name",
+            title: "类型",
             getValue: (row) => row.name,
           ),
           DataGridColumn(
             columnName: 'designation',
-            title: "Designation",
+            title: "广告数量\n限额",
             getValue: (row) => row.designation,
           ),
           DataGridColumn(
             columnName: 'salary',
-            title: "Salary",
+            title: "已成交数量\n（USDT）",
+            getValue: (row) => row.salary,
+          ),
+          DataGridColumn(
+            columnName: 'salary',
+            title: "汇率",
+            getValue: (row) => row.salary,
+          ),
+          DataGridColumn(
+            columnName: 'salary',
+            title: "支付方式",
+            getValue: (row) => row.salary,
+          ),
+          DataGridColumn(
+            columnName: 'salary',
+            title: "状态",
+            getValue: (row) => row.salary,
+          ),
+          DataGridColumn(
+            columnName: 'salary',
+            title: "更新时间\n创建时间",
+            getValue: (row) => row.salary,
+          ),
+          DataGridColumn(
+            columnName: 'salary',
+            title: "操作",
             getValue: (row) => row.salary,
           ),
         ],

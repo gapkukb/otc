@@ -92,10 +92,9 @@ class _DataGridState<T> extends State<DataGrid> {
                       columnWidthMode: ColumnWidthMode.fill,
                       gridLinesVisibility: GridLinesVisibility.none,
                       headerGridLinesVisibility: GridLinesVisibility.none,
-                      horizontalScrollPhysics:
-                          const NeverScrollableScrollPhysics(),
+                      horizontalScrollPhysics: const NeverScrollableScrollPhysics(),
                       source: dataGridDataSource,
-                      allowPullToRefresh: true,
+                      allowPullToRefresh: false,
                       footer: isEmtpy ? const UiEmptyView() : null,
                       footerHeight: constraints.maxHeight - 160,
                       columns: widget.columns
@@ -109,8 +108,7 @@ class _DataGridState<T> extends State<DataGrid> {
                               columnWidthMode: column.columnWidthMode,
                               filterIconPadding: column.filterIconPadding,
                               filterIconPosition: column.filterIconPosition,
-                              filterPopupMenuOptions:
-                                  column.filterPopupMenuOptions,
+                              filterPopupMenuOptions: column.filterPopupMenuOptions,
                               maximumWidth: column.maximumWidth,
                               minimumWidth: column.minimumWidth,
                               sortIconPosition: column.sortIconPosition,
@@ -118,9 +116,7 @@ class _DataGridState<T> extends State<DataGrid> {
                               width: column.width,
                               label: column.label is Nil
                                   ? Align(
-                                      alignment: widget.alignment ??
-                                          column.alignment ??
-                                          Alignment.centerLeft,
+                                      alignment: widget.alignment ?? column.alignment ?? Alignment.centerLeft,
                                       child: Text(column.title),
                                     )
                                   : column.label,

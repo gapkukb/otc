@@ -37,19 +37,21 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
         children: [
           Menu(
             text: "买/卖数字货币",
-            onSelected: (value) {},
+            onSelected: (value) {
+              context.go(value);
+            },
             items: const [
               MenuItem(
                 title: "买币",
                 subtitle: "支持当地银行和数字钱包充值",
                 icon: Icons.credit_card_outlined,
-                value: Routes.agentDashboard,
+                value: Routes.AdBuying,
               ),
               MenuItem(
                 title: "卖币",
                 subtitle: "以当地货币收款",
                 icon: Icons.wallet_outlined,
-                value: Routes.agentDashboard,
+                value: Routes.AdSelling,
               ),
               MenuItem(
                 title: "我的广告",
