@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/provider.dart';
 
@@ -25,6 +26,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     final user = await apis.user.getUser();
     state = user;
     global.updateUser(user);
+    print("0000000000000000000000000000");
     provider.read(authProvider.notifier).state = true;
     return user;
   }
@@ -56,6 +58,10 @@ final userBaseProvider = Provider(
 
 final kycProvider = Provider(
   (ref) => ref.watch(userProvider.select((value) => value.kyc)),
+);
+
+final kycAuthProvider = Provider<bool>(
+  (ref) => ref.watch(kycProvider.select((value) => value?.lv1Status == KycStatus.pass)),
 );
 
 final userStatsProvider = Provider(

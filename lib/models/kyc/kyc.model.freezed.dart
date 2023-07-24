@@ -25,14 +25,14 @@ mixin _$KycModel {
   String get identity => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get age => throw _privateConstructorUsedError;
-  bool get used => throw _privateConstructorUsedError;
-  String get idFrontPicture => throw _privateConstructorUsedError;
-  String get idBackPicture => throw _privateConstructorUsedError;
-  String get idHoldPicture => throw _privateConstructorUsedError;
-  String get idHoldVideo => throw _privateConstructorUsedError;
-  KycStatus get lv1Status => throw _privateConstructorUsedError;
-  KycStatus get lv2Status => throw _privateConstructorUsedError;
-  KycStatus get lv3Status => throw _privateConstructorUsedError;
+  bool? get used => throw _privateConstructorUsedError;
+  String? get idFrontPicture => throw _privateConstructorUsedError;
+  String? get idBackPicture => throw _privateConstructorUsedError;
+  String? get idHoldPicture => throw _privateConstructorUsedError;
+  String? get idHoldVideo => throw _privateConstructorUsedError;
+  KycStatus? get lv1Status => throw _privateConstructorUsedError;
+  KycStatus? get lv2Status => throw _privateConstructorUsedError;
+  KycStatus? get lv3Status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,14 +51,14 @@ abstract class $KycModelCopyWith<$Res> {
       String identity,
       String name,
       int age,
-      bool used,
-      String idFrontPicture,
-      String idBackPicture,
-      String idHoldPicture,
-      String idHoldVideo,
-      KycStatus lv1Status,
-      KycStatus lv2Status,
-      KycStatus lv3Status});
+      bool? used,
+      String? idFrontPicture,
+      String? idBackPicture,
+      String? idHoldPicture,
+      String? idHoldVideo,
+      KycStatus? lv1Status,
+      KycStatus? lv2Status,
+      KycStatus? lv3Status});
 }
 
 /// @nodoc
@@ -79,14 +79,14 @@ class _$KycModelCopyWithImpl<$Res, $Val extends KycModel>
     Object? identity = null,
     Object? name = null,
     Object? age = null,
-    Object? used = null,
-    Object? idFrontPicture = null,
-    Object? idBackPicture = null,
-    Object? idHoldPicture = null,
-    Object? idHoldVideo = null,
-    Object? lv1Status = null,
-    Object? lv2Status = null,
-    Object? lv3Status = null,
+    Object? used = freezed,
+    Object? idFrontPicture = freezed,
+    Object? idBackPicture = freezed,
+    Object? idHoldPicture = freezed,
+    Object? idHoldVideo = freezed,
+    Object? lv1Status = freezed,
+    Object? lv2Status = freezed,
+    Object? lv3Status = freezed,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -109,38 +109,38 @@ class _$KycModelCopyWithImpl<$Res, $Val extends KycModel>
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int,
-      used: null == used
+      used: freezed == used
           ? _value.used
           : used // ignore: cast_nullable_to_non_nullable
-              as bool,
-      idFrontPicture: null == idFrontPicture
+              as bool?,
+      idFrontPicture: freezed == idFrontPicture
           ? _value.idFrontPicture
           : idFrontPicture // ignore: cast_nullable_to_non_nullable
-              as String,
-      idBackPicture: null == idBackPicture
+              as String?,
+      idBackPicture: freezed == idBackPicture
           ? _value.idBackPicture
           : idBackPicture // ignore: cast_nullable_to_non_nullable
-              as String,
-      idHoldPicture: null == idHoldPicture
+              as String?,
+      idHoldPicture: freezed == idHoldPicture
           ? _value.idHoldPicture
           : idHoldPicture // ignore: cast_nullable_to_non_nullable
-              as String,
-      idHoldVideo: null == idHoldVideo
+              as String?,
+      idHoldVideo: freezed == idHoldVideo
           ? _value.idHoldVideo
           : idHoldVideo // ignore: cast_nullable_to_non_nullable
-              as String,
-      lv1Status: null == lv1Status
+              as String?,
+      lv1Status: freezed == lv1Status
           ? _value.lv1Status
           : lv1Status // ignore: cast_nullable_to_non_nullable
-              as KycStatus,
-      lv2Status: null == lv2Status
+              as KycStatus?,
+      lv2Status: freezed == lv2Status
           ? _value.lv2Status
           : lv2Status // ignore: cast_nullable_to_non_nullable
-              as KycStatus,
-      lv3Status: null == lv3Status
+              as KycStatus?,
+      lv3Status: freezed == lv3Status
           ? _value.lv3Status
           : lv3Status // ignore: cast_nullable_to_non_nullable
-              as KycStatus,
+              as KycStatus?,
     ) as $Val);
   }
 }
@@ -158,14 +158,14 @@ abstract class _$$_KycModelCopyWith<$Res> implements $KycModelCopyWith<$Res> {
       String identity,
       String name,
       int age,
-      bool used,
-      String idFrontPicture,
-      String idBackPicture,
-      String idHoldPicture,
-      String idHoldVideo,
-      KycStatus lv1Status,
-      KycStatus lv2Status,
-      KycStatus lv3Status});
+      bool? used,
+      String? idFrontPicture,
+      String? idBackPicture,
+      String? idHoldPicture,
+      String? idHoldVideo,
+      KycStatus? lv1Status,
+      KycStatus? lv2Status,
+      KycStatus? lv3Status});
 }
 
 /// @nodoc
@@ -184,14 +184,14 @@ class __$$_KycModelCopyWithImpl<$Res>
     Object? identity = null,
     Object? name = null,
     Object? age = null,
-    Object? used = null,
-    Object? idFrontPicture = null,
-    Object? idBackPicture = null,
-    Object? idHoldPicture = null,
-    Object? idHoldVideo = null,
-    Object? lv1Status = null,
-    Object? lv2Status = null,
-    Object? lv3Status = null,
+    Object? used = freezed,
+    Object? idFrontPicture = freezed,
+    Object? idBackPicture = freezed,
+    Object? idHoldPicture = freezed,
+    Object? idHoldVideo = freezed,
+    Object? lv1Status = freezed,
+    Object? lv2Status = freezed,
+    Object? lv3Status = freezed,
   }) {
     return _then(_$_KycModel(
       username: null == username
@@ -214,38 +214,38 @@ class __$$_KycModelCopyWithImpl<$Res>
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int,
-      used: null == used
+      used: freezed == used
           ? _value.used
           : used // ignore: cast_nullable_to_non_nullable
-              as bool,
-      idFrontPicture: null == idFrontPicture
+              as bool?,
+      idFrontPicture: freezed == idFrontPicture
           ? _value.idFrontPicture
           : idFrontPicture // ignore: cast_nullable_to_non_nullable
-              as String,
-      idBackPicture: null == idBackPicture
+              as String?,
+      idBackPicture: freezed == idBackPicture
           ? _value.idBackPicture
           : idBackPicture // ignore: cast_nullable_to_non_nullable
-              as String,
-      idHoldPicture: null == idHoldPicture
+              as String?,
+      idHoldPicture: freezed == idHoldPicture
           ? _value.idHoldPicture
           : idHoldPicture // ignore: cast_nullable_to_non_nullable
-              as String,
-      idHoldVideo: null == idHoldVideo
+              as String?,
+      idHoldVideo: freezed == idHoldVideo
           ? _value.idHoldVideo
           : idHoldVideo // ignore: cast_nullable_to_non_nullable
-              as String,
-      lv1Status: null == lv1Status
+              as String?,
+      lv1Status: freezed == lv1Status
           ? _value.lv1Status
           : lv1Status // ignore: cast_nullable_to_non_nullable
-              as KycStatus,
-      lv2Status: null == lv2Status
+              as KycStatus?,
+      lv2Status: freezed == lv2Status
           ? _value.lv2Status
           : lv2Status // ignore: cast_nullable_to_non_nullable
-              as KycStatus,
-      lv3Status: null == lv3Status
+              as KycStatus?,
+      lv3Status: freezed == lv3Status
           ? _value.lv3Status
           : lv3Status // ignore: cast_nullable_to_non_nullable
-              as KycStatus,
+              as KycStatus?,
     ));
   }
 }
@@ -282,21 +282,21 @@ class _$_KycModel implements _KycModel {
   @override
   final int age;
   @override
-  final bool used;
+  final bool? used;
   @override
-  final String idFrontPicture;
+  final String? idFrontPicture;
   @override
-  final String idBackPicture;
+  final String? idBackPicture;
   @override
-  final String idHoldPicture;
+  final String? idHoldPicture;
   @override
-  final String idHoldVideo;
+  final String? idHoldVideo;
   @override
-  final KycStatus lv1Status;
+  final KycStatus? lv1Status;
   @override
-  final KycStatus lv2Status;
+  final KycStatus? lv2Status;
   @override
-  final KycStatus lv3Status;
+  final KycStatus? lv3Status;
 
   @override
   String toString() {
@@ -372,14 +372,14 @@ abstract class _KycModel implements KycModel {
       required final String identity,
       required final String name,
       required final int age,
-      required final bool used,
-      required final String idFrontPicture,
-      required final String idBackPicture,
-      required final String idHoldPicture,
-      required final String idHoldVideo,
-      required final KycStatus lv1Status,
-      required final KycStatus lv2Status,
-      required final KycStatus lv3Status}) = _$_KycModel;
+      required final bool? used,
+      required final String? idFrontPicture,
+      required final String? idBackPicture,
+      required final String? idHoldPicture,
+      required final String? idHoldVideo,
+      required final KycStatus? lv1Status,
+      required final KycStatus? lv2Status,
+      required final KycStatus? lv3Status}) = _$_KycModel;
 
   factory _KycModel.fromJson(Map<String, dynamic> json) = _$_KycModel.fromJson;
 
@@ -394,21 +394,21 @@ abstract class _KycModel implements KycModel {
   @override
   int get age;
   @override
-  bool get used;
+  bool? get used;
   @override
-  String get idFrontPicture;
+  String? get idFrontPicture;
   @override
-  String get idBackPicture;
+  String? get idBackPicture;
   @override
-  String get idHoldPicture;
+  String? get idHoldPicture;
   @override
-  String get idHoldVideo;
+  String? get idHoldVideo;
   @override
-  KycStatus get lv1Status;
+  KycStatus? get lv1Status;
   @override
-  KycStatus get lv2Status;
+  KycStatus? get lv2Status;
   @override
-  KycStatus get lv3Status;
+  KycStatus? get lv3Status;
   @override
   @JsonKey(ignore: true)
   _$$_KycModelCopyWith<_$_KycModel> get copyWith =>

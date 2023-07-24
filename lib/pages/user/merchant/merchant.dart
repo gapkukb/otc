@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/models/kyc/kyc.model.dart';
+import 'package:otc/providers/user.provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_flex.dart';
 
-class Merchant extends StatelessWidget {
+class Merchant extends ConsumerWidget {
   const Merchant({super.key});
 
   List<String> get items {
@@ -42,7 +48,7 @@ class Merchant extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -63,26 +69,42 @@ class Merchant extends StatelessWidget {
           UiButton(
             label: "立即申请",
             size: UiButtonSize.medium,
-            onPressed: () {
-              Modal.confirm(
-                title: "商户申请",
-                content: "您的账户余额不足500 USDT，请先充值。",
-                okButtonText: "充币",
-                onOk: () {},
-              );
-              Modal.confirm(
-                title: "商户申请",
-                content: "您未完成身份认证，请先认证",
-                okButtonText: "去认证",
-                onOk: () {},
-              );
-              Modal.confirm(
-                title: "商户申请",
-                content: "请至少先绑定一张银行卡，银行卡户主姓名必须和身份证一致。",
-                okButtonText: "去绑卡",
-                onOk: () {},
-              );
-              // context.go('/agent_apply');
+            onPressed: () async {
+              final kyc = ref.read(kycProvider);
+              final balance = ref.read(balanceProvider);
+              if (balance.balance < 500) {
+                Modal.confirm(
+                  title: "商户申请",
+                  content: "您的账户余额不足500 USDT，请先充值。",
+                  okButtonText: "充币",
+                  onOk: () {
+                    // context.go(Routes.topup);
+                  },
+                );
+              } else if (kyc?.lv1Status == null) {
+                Modal.confirm(
+                  title: "商户申请",
+                  content: "您需要先完成初级或以上身份认证，请先认证",
+                  okButtonText: "去认证",
+                  onOk: () {
+                    context.go(Routes.auth);
+                  },
+                );
+              }
+              final bankCards = await apis.wallet.getAllBankCards();
+
+              if (bankCards.isEmpty) {
+                Modal.confirm(
+                  title: "商户申请",
+                  content: "请至少先绑定一张银行卡，银行卡户主姓名必须和身份证一致。",
+                  okButtonText: "去绑卡",
+                  onOk: () {
+                    context.go(Routes.auth);
+                  },
+                );
+              } else {
+                context.go('/agent_apply');
+              }
             },
           ),
           const SizedBox(height: 48),

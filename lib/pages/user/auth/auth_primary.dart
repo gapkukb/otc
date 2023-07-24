@@ -1,10 +1,14 @@
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/upload/upload.dart';
-import 'package:otc/components/upload/upload.picker.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/user.provider.dart';
 import './auth_primary_step_1.dart';
 import './auth_primary_step_2.dart';
 
@@ -16,7 +20,7 @@ class AuthPrimary extends StatefulWidget {
 }
 
 class _AuthPrimaryState extends State<AuthPrimary> {
-  int step = 2;
+  int step = 1;
   final formKey = GlobalKey<FormState>();
   final Map<String, dynamic> formState = {};
   final controller = UploadController();
@@ -37,15 +41,27 @@ class _AuthPrimaryState extends State<AuthPrimary> {
                 step++;
               });
             } else {
-              inspect(controller.items);
+              final close = Modal.showLoading("正在上传并提交，这可能需要一点时间\n请勿离开");
+              try {
+                final formData = FormData.fromMap({
+                  "file": (formState['idPicture'] as List<File>).map((file) {
+                    return MultipartFile.fromFileSync(file.path);
+                  }).toList(),
+                });
 
-              // apis.kyc.authLv1({
-              //   "identity": "",
-              //   "name": "",
-              //   "age": 0,
-              //   "front": "",
-              //   "back": ""
-              // });
+                final urls = (await apis.app.uploadImage(formData)).cast<String>();
+                formState.remove("idPicture");
+                formState.addAll({
+                  "front": urls[0],
+                  "back": urls[1],
+                });
+                await apis.kyc.authLv1(formState);
+                await provider.read(userProvider.notifier).updateUser();
+                context.pop();
+                Modal.alert(content: "平台会在48小时内审核完毕！", title: "您的个人信息上传成功");
+              } finally {
+                close();
+              }
             }
           }
         },

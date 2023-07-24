@@ -18,6 +18,10 @@ ShellRouteBuilder userLayout = (context, state, child) {
                 underline: false,
                 items: [
                   LayoutMenuItem(
+                    name: "总览",
+                    path: Routes.user,
+                  ),
+                  LayoutMenuItem(
                     name: "C2C用户中心",
                     path: Routes.c2c,
                   ),

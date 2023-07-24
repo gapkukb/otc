@@ -1,15 +1,15 @@
-import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:otc/components/modal/modal.dart';
-import 'package:photo_view/photo_view.dart';
+part of upload;
 
 enum UploadingState {
   idle,
   uploading,
   done,
   error,
+}
+
+enum MediaType {
+  image,
+  video,
 }
 
 class UiFilePickerController extends ChangeNotifier {}
@@ -21,7 +21,17 @@ class UploadPicker extends StatefulWidget {
   final double size;
   final double process;
   final UploadingState state;
-  const UploadPicker({super.key, required this.onChange, this.title, this.titleWidget, this.size = 100, this.process = 0, this.state = UploadingState.idle});
+  final MediaType? mediaType;
+  const UploadPicker({
+    super.key,
+    required this.onChange,
+    this.title,
+    this.titleWidget,
+    this.size = 100,
+    this.process = 0,
+    this.state = UploadingState.idle,
+    this.mediaType = MediaType.image,
+  });
 
   @override
   State<UploadPicker> createState() => _UploadPickerState();
@@ -29,11 +39,22 @@ class UploadPicker extends StatefulWidget {
 
 class _UploadPickerState extends State<UploadPicker> {
   File? file;
+  late VideoPlayerController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
     file = null;
+    _controller?.dispose();
     super.dispose();
+  }
+
+  bool get isImage {
+    return (widget.mediaType ?? MediaType.image) == MediaType.image;
   }
 
   @override
@@ -84,11 +105,30 @@ class _UploadPickerState extends State<UploadPicker> {
       key: ValueKey(file!.path),
       fit: StackFit.expand,
       children: [
-        Container(
-          color: Colors.black38,
-          child: Image(
-            image: FileImage(file!),
-            fit: BoxFit.contain,
+        GestureDetector(
+          onTap: () {
+            if (isImage) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return PhotoView(
+                    imageProvider: FileImage(file!),
+                    wantKeepAlive: false,
+                  );
+                },
+              );
+            } else {
+              _controller!.value.isPlaying ? _controller!.pause() : _controller!.play();
+            }
+          },
+          child: Container(
+            color: Colors.black38,
+            child: isImage
+                ? Image(
+                    image: FileImage(file!),
+                    fit: BoxFit.contain,
+                  )
+                : VideoPlayer(_controller!),
           ),
         ),
         if (widget.state != UploadingState.idle) stateView(),
@@ -111,38 +151,21 @@ class _UploadPickerState extends State<UploadPicker> {
     );
   }
 
-  Positioned stateView() {
+  Widget stateView() {
     return Positioned(
       right: 0,
       top: 0,
       bottom: 0,
       left: 0,
-      child: GestureDetector(
-        onTap: () {
-          if (widget.state == UploadingState.error) {
-            Modal.alert(content: "daf");
-          } else {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return PhotoView(
-                  imageProvider: FileImage(file!),
-                  wantKeepAlive: false,
-                );
-              },
-            );
-          }
-        },
-        child: Material(
-          color: Colors.black45,
-          child: DefaultTextStyle(
-            style: const TextStyle(fontSize: 12, color: Colors.white),
-            child: widget.state == UploadingState.uploading
-                ? uploadingView()
-                : widget.state == UploadingState.error
-                    ? errorView()
-                    : doneView(),
-          ),
+      child: Material(
+        color: Colors.black45,
+        child: DefaultTextStyle(
+          style: const TextStyle(fontSize: 12, color: Colors.white),
+          child: widget.state == UploadingState.uploading
+              ? uploadingView()
+              : widget.state == UploadingState.error
+                  ? errorView()
+                  : doneView(),
         ),
       ),
     );
@@ -196,20 +219,27 @@ class _UploadPickerState extends State<UploadPicker> {
     if (Platform.isAndroid || Platform.isIOS) {
       Modal.showBottomSheet(
         items: [
-          BottomSheetItem(label: "拍照", value: true),
+          BottomSheetItem(label: isImage ? "拍照" : "录像", value: true),
           BottomSheetItem(label: "从相册选择", value: false),
         ],
         onSelected: (value, _) async {
           final ImageSource source = value ? ImageSource.camera : ImageSource.gallery;
 
-          final result = await picker.pickImage(
+          final result = await (isImage ? picker.pickImage : picker.pickVideo)(
             source: source,
-            imageQuality: 80,
-            maxWidth: 1080,
-            maxHeight: 720,
           );
           if (result != null) {
-            _onChange(File(result.path));
+            final newFile = File(result.path);
+            if (isImage) {
+              _onChange(newFile);
+            } else {
+              _controller = VideoPlayerController.file(newFile)
+                ..initialize().then(
+                  (_) {
+                    _onChange(newFile);
+                  },
+                );
+            }
           }
         },
       );
@@ -219,7 +249,10 @@ class _UploadPickerState extends State<UploadPicker> {
   _onChange(File? newFile) {
     setState(() {
       file = newFile;
+      if (file != null && !isImage) {
+        _controller!.play();
+      }
+      widget.onChange(newFile);
     });
-    widget.onChange(newFile);
   }
 }

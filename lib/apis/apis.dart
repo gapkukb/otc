@@ -15,6 +15,7 @@ part 'security.api.dart';
 part 'wallet.api.dart';
 part 'agent.api.dart';
 part 'kyc.api.dart';
+part 'otc.api.dart';
 
 const duration = Duration(seconds: 30);
 
@@ -39,6 +40,7 @@ class _Apis {
   final wallet = walletApi;
   final agent = agentApi;
   final kyc = kycApi;
+  final otc = otcApi;
 }
 
 var apis = _Apis();

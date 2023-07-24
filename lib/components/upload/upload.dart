@@ -1,16 +1,14 @@
 library upload;
 
-import 'dart:async';
-import 'dart:developer';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:otc/apis/apis.dart';
-import 'package:otc/components/upload/upload.picker.dart';
-import 'package:otc/http/http.dart';
-import 'package:otc/widgets/ui_file_picker.dart';
 import 'dart:io';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:video_player/video_player.dart';
 
-part './upload.item.dart';
+part './upload.picker.dart';
 
 class Upload extends StatefulWidget {
   final AutovalidateMode? autovalidateMode;
@@ -26,6 +24,7 @@ class Upload extends StatefulWidget {
   final Function(File file)? onError;
   final UploadController controller;
   final List<String>? titles;
+  final MediaType? mediaType;
 
   const Upload({
     super.key,
@@ -42,6 +41,7 @@ class Upload extends StatefulWidget {
     this.itemSize = 100,
     this.titles,
     required this.controller,
+    this.mediaType,
   });
 
   @override
@@ -69,6 +69,7 @@ class _UploadState extends State<Upload> {
       // initialValue: XFile(widget.initialValue!),
       onSaved: (value) {
         if (widget.name == null || widget.formStore == null) return;
+        widget.formStore!.update(widget.name!, (_) => value, ifAbsent: () => value);
       },
       builder: (field) {
         return InputDecorator(
@@ -87,9 +88,9 @@ class _UploadState extends State<Upload> {
                 widget.max,
                 (index) => UploadPicker(
                   title: widget.titles?[index],
+                  mediaType: widget.mediaType,
                   size: widget.itemSize,
                   onChange: (file) {
-                    inspect(file);
                     if (file == null) {
                       widget.controller.items.removeAt(index);
                     } else {

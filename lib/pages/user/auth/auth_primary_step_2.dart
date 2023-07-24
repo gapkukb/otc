@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/upload/upload.dart';
 import 'package:otc/theme/text_theme.dart';
 
-class AuthPrimaryStep2 extends StatefulWidget {
+class AuthPrimaryStep2 extends StatelessWidget {
   final UploadController controller;
   final Map<String, dynamic> formState;
 
@@ -12,11 +12,6 @@ class AuthPrimaryStep2 extends StatefulWidget {
     required this.formState,
   });
 
-  @override
-  State<AuthPrimaryStep2> createState() => _AuthPrimaryStep2State();
-}
-
-class _AuthPrimaryStep2State extends State<AuthPrimaryStep2> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,10 +31,16 @@ class _AuthPrimaryStep2State extends State<AuthPrimaryStep2> {
         ),
         const SizedBox(height: 16),
         Upload(
-          controller: widget.controller,
+          controller: controller,
+          formStore: formState,
+          name: "idPicture",
           titles: const ["身份证正面（人像面）", "身份证反面（国徽面）"],
           itemSize: 150,
           max: 2,
+          validator: (files) {
+            if (files.length != 2) return "请分别上传您的身份证正反面照";
+            return null;
+          },
         ),
       ],
     );

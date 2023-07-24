@@ -18,15 +18,12 @@ class WalletBalanceModel {
         balance: balance ?? this.balance,
       );
 
-  factory WalletBalanceModel.fromRawJson(String str) =>
-      WalletBalanceModel.fromJson(json.decode(str));
+  factory WalletBalanceModel.fromRawJson(String str) => WalletBalanceModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory WalletBalanceModel.fromJson(Map<String, dynamic> json) =>
-      WalletBalanceModel(
-        detail:
-            List<Detail>.from(json["detail"].map((x) => Detail.fromJson(x))),
+  factory WalletBalanceModel.fromJson(Map<String, dynamic> json) => WalletBalanceModel(
+        detail: List<Detail>.from(json["detail"].map((x) => Detail.fromJson(x))),
         balance: Balance.fromJson(json["balance"]),
       );
 
@@ -37,13 +34,13 @@ class WalletBalanceModel {
 }
 
 class Balance {
-  final double bnb;
-  final double usd;
-  final double eth;
-  final double cny;
-  final double trx;
-  final double btc;
-  final double usdt;
+  final num bnb;
+  final num usd;
+  final num eth;
+  final num cny;
+  final num trx;
+  final num btc;
+  final num usdt;
 
   Balance({
     required this.bnb,
@@ -101,10 +98,10 @@ class Balance {
 
 class Detail {
   final String currency;
-  final double balance;
-  final double canUsd;
-  final double usdtPrice;
-  final double cnyPrice;
+  final num balance;
+  final num canUsd;
+  final num usdtPrice;
+  final num cnyPrice;
 
   Detail({
     required this.currency,

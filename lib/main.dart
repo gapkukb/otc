@@ -24,8 +24,8 @@ void main() async {
   usePathUrlStrategy();
   runApp(
     ProviderScope(
-      child: App(),
       parent: provider,
+      child: const App(),
     ),
   );
 }

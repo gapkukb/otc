@@ -10,20 +10,20 @@ class KycModel with _$KycModel {
     required String identity,
     required String name,
     required int age,
-    required bool used,
-    required String idFrontPicture,
-    required String idBackPicture,
-    required String idHoldPicture,
-    required String idHoldVideo,
-    required KycStatus lv1Status,
-    required KycStatus lv2Status,
-    required KycStatus lv3Status,
+    required bool? used,
+    required String? idFrontPicture,
+    required String? idBackPicture,
+    required String? idHoldPicture,
+    required String? idHoldVideo,
+    required KycStatus? lv1Status,
+    required KycStatus? lv2Status,
+    required KycStatus? lv3Status,
   }) = _KycModel;
 
-  factory KycModel.fromJson(Map<String, Object?> json) =>
-      _$KycModelFromJson(json);
+  factory KycModel.fromJson(Map<String, Object?> json) => _$KycModelFromJson(json);
 }
 
+@JsonEnum(valueField: 'value')
 enum KycStatus {
   pending('PENDING'),
   pass('PASS'),

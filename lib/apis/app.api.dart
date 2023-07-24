@@ -3,10 +3,9 @@ part of apis;
 class _AppApi {
   final uploadImage = post<List>(
     "/file/upload/image",
-    null,
-    HttpOptions(
-      dataType: HttpDataType.form,
-    ),
+  );
+  final uploadVideo = post<List>(
+    "/file/upload/video",
   );
 
   // final upload = http.post<String>(

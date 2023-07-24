@@ -2060,12 +2060,23 @@ class $AssetsImagesGen {
       ];
 }
 
+class $AssetsJsonsGen {
+  const $AssetsJsonsGen();
+
+  /// File path: assets/jsons/location_picker.json
+  String get locationPicker => 'assets/jsons/location_picker.json';
+
+  /// List of all assets
+  List<String> get values => [locationPicker];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsCoinsGen coins = $AssetsCoinsGen();
   static const $AssetsHtmlsGen htmls = $AssetsHtmlsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsJsonsGen jsons = $AssetsJsonsGen();
 }
 
 class AssetGenImage {

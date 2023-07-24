@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/asstes/assets.gen.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/providers/user.provider.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
-class RebateBanner extends StatelessWidget {
+class RebateBanner extends ConsumerWidget {
   const RebateBanner({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
     return Container(
       height: 387,
       padding: const EdgeInsets.only(left: 64.0),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: Colors.amber,
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         image: DecorationImage(
           image: Assets.images.rebate.provider(),
@@ -29,10 +33,7 @@ class RebateBanner extends StatelessWidget {
           ),
           Text(
             "挂单成交额度xx%的佣金",
-            style: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(color: Colors.red),
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Colors.red),
           ),
           const SizedBox(height: 32),
           Row(
@@ -41,14 +42,29 @@ class RebateBanner extends StatelessWidget {
                 size: UiButtonSize.medium,
                 color: Colors.black,
                 label: "立即加入",
-                onPressed: () {},
+                onPressed: () {
+                  context.go(Routes.merchant);
+                },
               ),
               const SizedBox(width: 24),
               UiButton(
                 size: UiButtonSize.medium,
                 color: Colors.white,
                 label: "邀请好友",
-                onPressed: () {},
+                onPressed: () {
+                  if (ref.read(kycAuthProvider)) {
+                    context.go(Routes.merchant);
+                  } else {
+                    Modal.confirm(
+                      title: "商户申请",
+                      content: "您需要先完成初级或以上身份认证才可以使用",
+                      okButtonText: "去认证",
+                      onOk: () {
+                        context.go(Routes.auth);
+                      },
+                    );
+                  }
+                },
               ),
             ],
           )

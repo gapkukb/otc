@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/widgets/ui_file_picker.dart';
-import 'package:otc/widgets/ui_text_field.dart';
-import 'package:intl/intl.dart';
+import 'package:otc/components/upload/upload.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/user.provider.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class AuthJunior extends StatefulWidget {
   const AuthJunior({super.key});
@@ -13,105 +19,70 @@ class AuthJunior extends StatefulWidget {
 }
 
 class _AuthJuniorState extends State<AuthJunior> {
-  bool _isNext = true;
-  DateTime _dateTime = DateTime.now();
-  late TextEditingController _controller;
-
-  get _dateTimeText {
-    return DateFormat('yyyy-MM-dd').format(_dateTime);
-  }
-
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> formState = {};
+  final controller = UploadController();
 
   @override
   Widget build(BuildContext context) {
-    return ModalPageTemplate(
-      legend: "身份认证",
-      title: "中级身份认证",
-      nextText: "继续",
-      onCompelete: (_) {
-        Modal.show(
-          okButtonText: "完成",
-          title: "您的个人信息上传成功",
-          content: "平台会在48小时内审核完毕！",
-          onOk: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-      children: _isNext ? _buildNext() : _buildPrimary(),
-    );
-  }
+    return Form(
+      key: formKey,
+      child: ModalPageTemplate(
+        legend: "身份认证",
+        title: "中级身份认证",
+        nextText: "下一步",
+        onCompelete: (_) async {
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
+            final close = Modal.showLoading("正在上传并提交，这可能需要一点时间\n请勿离开");
+            try {
+              final formData = FormData.fromMap({
+                "file": (formState['idPicture'] as List<File>).map((file) {
+                  return MultipartFile.fromFileSync(file.path);
+                }).toList(),
+              });
 
-  _buildPrimary() {
-    return [
-      const UiTextField(
-        readOnly: true,
-        label: "证件签发国/地区",
-      ),
-      const SizedBox(height: 16),
-      UiTextField(
-        label: "身份证号码",
-        controller: _controller,
-        decoration: const InputDecoration(
-          helperText: "使用政府签发的有效文件，目前仅接受身份证",
-        ),
-      ),
-    ];
-  }
-
-  _buildNext() {
-    return [
-      const Text(
-        "上传个人身份证",
-        style: TextStyle(fontSize: 18),
-      ),
-      const SizedBox(height: 8),
-      const Text(
-        "• 这是您的官方未过期证件\n• 这是原始文档，而非扫描件或副本\n•可读取且清晰明亮\n• 不反光、不模糊\n• 无黑白图像，未被编辑\n• 请将证件置于纯色背景下",
-        style: TextStyle(
-          fontSize: 12,
-          color: Colors.black45,
-        ),
-      ),
-      const SizedBox(height: 16),
-      Row(
+              final urls = (await apis.app.uploadImage(formData)).cast<String>();
+              formState.remove("idPicture");
+              formState.addAll({
+                "value": urls[0],
+              });
+              await apis.kyc.authLv2(formState);
+              await provider.read(userProvider.notifier).updateUser();
+              context.pop();
+              Modal.alert(content: "平台会在48小时内审核完毕！", title: "您的个人信息上传成功");
+            } finally {
+              close();
+            }
+          }
+        },
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                const Text("身份证正面（人像面）"),
-                const SizedBox(height: 8),
-                UiFilePicker(
-                  onChange: (file) {},
-                ),
-              ],
+          const Text(
+            "上传个人身份证",
+            style: Font.largeGrey,
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            "• 这是您的官方未过期证件\n• 这是原始文档，而非扫描件或副本\n•请保证是您本人手持本人的身份证\n• 请保证可以看清身份证的信息",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.black45,
             ),
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              children: [
-                const Text("身份证正面（人像面）"),
-                const SizedBox(height: 8),
-                UiFilePicker(
-                  onChange: (file) {},
-                ),
-              ],
-            ),
+          Upload(
+            controller: controller,
+            formStore: formState,
+            name: "idPicture",
+            titles: const ["手持身份证"],
+            itemSize: 150,
+            max: 1,
+            validator: (files) {
+              if (files.isEmpty) return "请上传您的手持身份证照";
+              return null;
+            },
           ),
         ],
       ),
-    ];
+    );
   }
 }

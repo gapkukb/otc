@@ -36,7 +36,7 @@ class UiEmptyView extends StatelessWidget {
           icon ??
               Image.asset(
                 "assets/images/empty.png",
-                height: 134,
+                height: 80,
               ),
           const SizedBox(
             height: 24,

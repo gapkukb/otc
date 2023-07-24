@@ -1,10 +1,13 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/widgets/ui_file_picker.dart';
-import 'package:otc/widgets/ui_text_field.dart';
-import 'package:intl/intl.dart';
-import 'package:otc/widgets/ui_video_picker.dart';
+import 'package:otc/components/upload/upload.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/user.provider.dart';
 
 class AuthSenior extends StatefulWidget {
   const AuthSenior({super.key});
@@ -14,96 +17,73 @@ class AuthSenior extends StatefulWidget {
 }
 
 class _AuthSeniorState extends State<AuthSenior> {
-  bool _isNext = true;
-  DateTime _dateTime = DateTime.now();
-  late TextEditingController _controller;
-
-  get _dateTimeText {
-    return DateFormat('yyyy-MM-dd').format(_dateTime);
-  }
-
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  int step = 1;
+  final formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> formState = {};
+  final controller = UploadController();
 
   @override
   Widget build(BuildContext context) {
-    return ModalPageTemplate(
-      legend: "身份认证",
-      title: "高级身份认证",
-      nextText: "继续",
-      onCompelete: (_) {
-        Modal.show(
-          okButtonText: "完成",
-          title: "您的个人信息上传成功",
-          content: "平台会在48小时内审核完毕！",
-          onOk: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-      children: _isNext ? _buildNext() : _buildPrimary(),
-    );
-  }
+    return Form(
+      key: formKey,
+      child: ModalPageTemplate(
+        legend: "身份认证",
+        title: "初级认证",
+        nextText: "提交",
+        onCompelete: (_) async {
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
 
-  _buildPrimary() {
-    return [
-      const UiTextField(
-        readOnly: true,
-        label: "证件签发国/地区",
-      ),
-      const SizedBox(height: 16),
-      UiTextField(
-        label: "身份证号码",
-        controller: _controller,
-        decoration: const InputDecoration(
-          helperText: "使用政府签发的有效文件，目前仅接受身份证",
-        ),
-      ),
-    ];
-  }
+            final close = Modal.showLoading("正在上传并提交，这可能需要一点时间\n请勿离开");
+            try {
+              final formData = FormData.fromMap({
+                "file": (formState['idVideo'] as List<File>).map((file) {
+                  return MultipartFile.fromFileSync(file.path);
+                }).toList(),
+              });
 
-  _buildNext() {
-    return [
-      const Text(
-        "您即将上传视频。请确保",
-        style: TextStyle(fontSize: 18),
-      ),
-      const SizedBox(height: 8),
-      const Text(
-        "• 这是您的官方未过期证件\n• 视频长度在3~10秒\n• 请保证是您本人手持本人的身份证\n• 请保证可以看清身份证的信息",
-        style: TextStyle(
-          fontSize: 12,
-          color: Colors.black45,
-        ),
-      ),
-      const SizedBox(height: 16),
-      const Row(
+              final urls = (await apis.app.uploadVideo(formData)).cast<String>();
+              formState.remove("idVideo");
+              formState.addAll({
+                "value": urls[0],
+              });
+              await apis.kyc.authLv3(formState);
+              await provider.read(userProvider.notifier).updateUser();
+              context.pop();
+              Modal.alert(content: "平台会在48小时内审核完毕！", title: "您的个人信息上传成功");
+            } finally {
+              close();
+            }
+          }
+        },
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("手持身份证视频"),
-                SizedBox(height: 8),
-                UiVideoPicker(),
-              ],
+          const Text(
+            "您即将上传视频。请确保",
+            style: TextStyle(fontSize: 18),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            "• 这是您的官方未过期证件\n• 视频长度在3~10秒\n• 请保证是您本人手持本人的身份证\n• 请保证可以看清身份证的信息",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.black45,
             ),
           ),
-          SizedBox(width: 16),
-          Expanded(
-            child: SizedBox.shrink(),
+          Upload(
+            controller: controller,
+            formStore: formState,
+            name: "idVideo",
+            titles: const ["手持身份证视频"],
+            itemSize: 150,
+            max: 1,
+            mediaType: MediaType.video,
+            validator: (files) {
+              if (files.isEmpty) return "请上传您的手持身份证照";
+              return null;
+            },
           ),
         ],
       ),
-    ];
+    );
   }
 }

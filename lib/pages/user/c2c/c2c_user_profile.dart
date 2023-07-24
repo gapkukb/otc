@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/pages/async_builder/async_builder.dart';
 import 'package:otc/utils/responsive.dart';
 
 class C2cUserProfile extends StatefulWidget {
@@ -80,16 +82,23 @@ class _C2cUserProfileState extends State<C2cUserProfile> {
       title: "用户数据",
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: _items.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-            height: context.responsive(56, lg: 94),
-            crossAxisCount: context.responsive(2, md: 5),
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return _buildItem(_items[index]);
+        child: AsyncBuilder(
+          future: () {
+            return apis.otc.stat30days();
+          },
+          builder: (context, data) {
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _items.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+                height: context.responsive(56, lg: 94),
+                crossAxisCount: context.responsive(2, md: 5),
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return _buildItem(_items[index]);
+              },
+            );
           },
         ),
       ),

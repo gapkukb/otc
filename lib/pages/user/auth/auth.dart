@@ -20,40 +20,49 @@ class UserAuth extends ConsumerStatefulWidget {
 }
 
 class _UserAuthState extends ConsumerState<UserAuth> {
-  static const List<String> statusText = ["未认证", "审核中", "已完成认证"];
-
-  static List<dynamic> items = [
-    {
-      "level": "初级认证",
-      "status": 0,
-      "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
-      "subtitle": "要求：1.姓名    2.年龄    3.身份证",
-      "onTap": (BuildContext context) {
-        context.push(Routes.authPrimary);
-      }
-    },
-    {
-      "level": "中级认证",
-      "status": 0,
-      "title": "法币限额 200000 USDT 每日，提币限额 5000 USDT 每日",
-      "subtitle": "要求：1.手持身份证照片",
-      "onTap": (BuildContext context) {
-        context.pushNamed(Routes.authJunior);
-      }
-    },
-    {
-      "level": "高级认证",
-      "status": 0,
-      "title": "无限额法币交易，提币限额 10000 USDT 每日",
-      "subtitle": "要求：1.手持身份证照片视频",
-      "onTap": (BuildContext context) {
-        context.pushNamed(Routes.authSenior);
-      }
-    },
+  static const List<Map<String, dynamic>> statusText = [
+    {"text": "审核中", "color": Colors.red},
+    {"text": "已完成认证", "color": Colors.green},
+    {"text": "未认证", "color": Colors.grey},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final kyc = ref.watch(kycProvider);
+
+    final List<dynamic> items = [
+      {
+        "level": "初级认证",
+        "status": kyc?.lv1Status ?? KycStatus.reject,
+        "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
+        "precondition": true,
+        "subtitle": "要求：1.姓名    2.年龄    3.身份证",
+        "onTap": (BuildContext context) {
+          context.push(Routes.authPrimary);
+        }
+      },
+      {
+        "level": "中级认证",
+        "status": kyc?.lv2Status ?? KycStatus.reject,
+        "title": "法币限额 200000 USDT 每日，提币限额 5000 USDT 每日",
+        "precondition": kyc?.lv1Status == KycStatus.pass,
+        "subtitle": "要求：1.手持身份证照片",
+        "onTap": (BuildContext context) {
+          context.pushNamed(Routes.authJunior);
+        }
+      },
+      {
+        "level": "高级认证",
+        "status": kyc?.lv3Status ?? KycStatus.reject,
+        "title": "无限额法币交易，提币限额 10000 USDT 每日",
+        "subtitle": "要求：1.手持身份证照片视频",
+        "precondition": kyc?.lv2Status == KycStatus.pass,
+        "onTap": (BuildContext context) {
+          context.pushNamed(Routes.authSenior);
+        }
+      },
+    ];
+
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -144,20 +153,18 @@ class _UserAuthState extends ConsumerState<UserAuth> {
     );
   }
 
-  _buildKycStatus(bool level3, level2, level1) {
+  _buildKycStatus(bool level1, level2, level3) {
     String text = "未认证";
     if (level3) {
-      text = items[2]['level'];
+      text = "高级认证";
     } else if (level2) {
-      text = items[1]['level'];
+      text = "中级认证";
     } else if (level1) {
-      text = items[0]['level'];
+      text = "初级认证";
     }
     return Chip(
       label: Text(text),
-      backgroundColor: true
-          ? Theme.of(context).disabledColor
-          : Theme.of(context).primaryColor,
+      backgroundColor: text == "未认证" ? Theme.of(context).disabledColor : Theme.of(context).primaryColor,
       labelStyle: const TextStyle(color: Colors.white),
       side: const BorderSide(color: Colors.transparent),
       shape: const StadiumBorder(),
@@ -165,59 +172,63 @@ class _UserAuthState extends ConsumerState<UserAuth> {
   }
 
   _buildCard(dynamic item) {
-    var isUnAuth = item['status'] == 0;
+    final enble = (item['status'] == null || item['status'] == KycStatus.reject) && item["precondition"];
+    final config = statusText[(item['status'] as KycStatus).index];
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      color: isUnAuth ? null : Colors.grey.shade100,
+      color: enble ? null : Colors.grey.shade100,
       child: ListTile(
-          onTap: !isUnAuth ? null : () => item['onTap'](context),
-          isThreeLine: true,
-          contentPadding: const EdgeInsets.only(left: 8),
-          leading: SizedBox(
-            width: 24,
-            child: Checkbox(
-              value: !isUnAuth,
-              onChanged: null,
+        onTap: enble ? () => item['onTap'](context) : null,
+        isThreeLine: true,
+        contentPadding: const EdgeInsets.only(left: 8),
+        leading: SizedBox(
+          width: 24,
+          child: Checkbox(
+            value: item['status'] == KycStatus.pass,
+            onChanged: null,
+          ),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item['level'],
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey.shade700,
+              ),
             ),
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item['level'],
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey.shade700,
-                ),
+            Text(
+              item['title'],
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black,
               ),
-              Text(
-                item['title'],
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 16)
-            ],
-          ),
-          subtitle: Text(
-            item['subtitle'],
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey.shade700,
             ),
+            const SizedBox(height: 16)
+          ],
+        ),
+        subtitle: Text(
+          item['subtitle'],
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey.shade700,
           ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                statusText[item['status']],
-                style:
-                    TextStyle(color: item['status'] == 1 ? Colors.red : null),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              config["text"],
+              style: TextStyle(
+                color: config["color"],
               ),
-              const Icon(Icons.arrow_right),
-            ],
-          )),
+            ),
+            const Icon(Icons.arrow_right),
+          ],
+        ),
+      ),
     );
   }
 }

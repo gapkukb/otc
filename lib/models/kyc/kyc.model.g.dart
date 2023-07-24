@@ -12,14 +12,14 @@ _$_KycModel _$$_KycModelFromJson(Map<String, dynamic> json) => _$_KycModel(
       identity: json['identity'] as String,
       name: json['name'] as String,
       age: json['age'] as int,
-      used: json['used'] as bool,
-      idFrontPicture: json['idFrontPicture'] as String,
-      idBackPicture: json['idBackPicture'] as String,
-      idHoldPicture: json['idHoldPicture'] as String,
-      idHoldVideo: json['idHoldVideo'] as String,
-      lv1Status: $enumDecode(_$KycStatusEnumMap, json['lv1Status']),
-      lv2Status: $enumDecode(_$KycStatusEnumMap, json['lv2Status']),
-      lv3Status: $enumDecode(_$KycStatusEnumMap, json['lv3Status']),
+      used: json['used'] as bool?,
+      idFrontPicture: json['idFrontPicture'] as String?,
+      idBackPicture: json['idBackPicture'] as String?,
+      idHoldPicture: json['idHoldPicture'] as String?,
+      idHoldVideo: json['idHoldVideo'] as String?,
+      lv1Status: $enumDecodeNullable(_$KycStatusEnumMap, json['lv1Status']),
+      lv2Status: $enumDecodeNullable(_$KycStatusEnumMap, json['lv2Status']),
+      lv3Status: $enumDecodeNullable(_$KycStatusEnumMap, json['lv3Status']),
     );
 
 Map<String, dynamic> _$$_KycModelToJson(_$_KycModel instance) =>
@@ -34,13 +34,13 @@ Map<String, dynamic> _$$_KycModelToJson(_$_KycModel instance) =>
       'idBackPicture': instance.idBackPicture,
       'idHoldPicture': instance.idHoldPicture,
       'idHoldVideo': instance.idHoldVideo,
-      'lv1Status': _$KycStatusEnumMap[instance.lv1Status]!,
-      'lv2Status': _$KycStatusEnumMap[instance.lv2Status]!,
-      'lv3Status': _$KycStatusEnumMap[instance.lv3Status]!,
+      'lv1Status': _$KycStatusEnumMap[instance.lv1Status],
+      'lv2Status': _$KycStatusEnumMap[instance.lv2Status],
+      'lv3Status': _$KycStatusEnumMap[instance.lv3Status],
     };
 
 const _$KycStatusEnumMap = {
-  KycStatus.pending: 'pending',
-  KycStatus.pass: 'pass',
-  KycStatus.reject: 'reject',
+  KycStatus.pending: 'PENDING',
+  KycStatus.pass: 'PASS',
+  KycStatus.reject: 'REJECT',
 };

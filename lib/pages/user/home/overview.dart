@@ -10,11 +10,11 @@ class Overview extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final stats = ref.watch(walletProvider.notifier);
+    final stats = ref.watch(balanceProvider);
     final List<dynamic> items = [
-      {"label": "账户余额", "value": stats.total.balance, "unit": "USDT"},
-      {"label": "可用余额", "value": stats.total.valid, "unit": "USDT"},
-      {"label": "冻结余额", "value": stats.total.freezed, "unit": "USDT"},
+      {"label": "账户余额", "value": stats.balance, "unit": "USDT"},
+      {"label": "可用余额", "value": stats.valid, "unit": "USDT"},
+      {"label": "冻结余额", "value": stats.freezed, "unit": "USDT"},
     ];
     return Flex(
       direction: context.responsive(

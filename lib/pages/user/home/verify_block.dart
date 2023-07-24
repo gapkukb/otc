@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/tip/tip.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class VerifyBlock extends StatelessWidget {
@@ -56,7 +57,7 @@ class VerifyBlock extends StatelessWidget {
                   color: Color(0xff016452),
                 ),
                 onPressed: () {
-                  context.go("/c2c");
+                  context.go(Routes.auth);
                 },
               ),
             ),
