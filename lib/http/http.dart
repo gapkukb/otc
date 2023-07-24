@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/regexp/regexp.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/map.dart' as map;

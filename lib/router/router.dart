@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
 import 'package:otc/pages/ad/ad_own/ad_own.dart';
+import 'package:otc/pages/ad/ad_post/ad_post.dart';
 import 'package:otc/pages/ad/ad_selling/ad_selling.dart';
 import 'package:otc/pages/ad/layout/layout.dart';
 import 'package:otc/pages/error/404.dart';
@@ -70,7 +71,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.auth,
+  initialLocation: Routes.adPost,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

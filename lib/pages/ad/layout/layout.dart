@@ -19,15 +19,15 @@ ShellRouteBuilder advertiseLayout = (context, state, child) {
                 items: [
                   LayoutMenuItem(
                     name: "我的广告",
-                    path: Routes.AdOwn,
+                    path: Routes.adOwn,
                   ),
                   LayoutMenuItem(
                     name: "买币",
-                    path: Routes.AdBuying,
+                    path: Routes.adBuying,
                   ),
                   LayoutMenuItem(
                     name: "卖币",
-                    path: Routes.AdSelling,
+                    path: Routes.adSelling,
                   ),
                 ],
               ),

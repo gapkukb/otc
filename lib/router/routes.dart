@@ -135,15 +135,15 @@ final List<RouteBase> routes = [
         builder: advertiseLayout,
         routes: [
           AuthRoute(
-            path: Routes.AdBuying,
+            path: Routes.adBuying,
             page: const AdBuying(),
           ),
           AuthRoute(
-            path: Routes.AdSelling,
+            path: Routes.adSelling,
             page: const AdSelling(),
           ),
           AuthRoute(
-            path: Routes.AdOwn,
+            path: Routes.adOwn,
             page: const AdOwn(),
           ),
         ],
@@ -240,5 +240,9 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.authSenior,
     page: const AuthSenior(),
+  ),
+  ModalRoute(
+    path: Routes.adPost,
+    page: const AdPost(),
   ),
 ];

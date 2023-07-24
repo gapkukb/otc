@@ -20,8 +20,7 @@ class ExceptionInterceptor extends InterceptorsWrapper {
     } else {
       final err = DioException(
         requestOptions: response.requestOptions,
-        error: BizException.create(
-            response.data['code'], response.data['message']),
+        error: BizException.create(response.data['code'], response.data['message']),
         message: null,
         response: response,
         // ignore: invalid_use_of_internal_member
@@ -41,10 +40,8 @@ class ExceptionInterceptor extends InterceptorsWrapper {
 
       // dio默认错误，进一步判断是否无网络状态
       if (err.type == DioExceptionType.unknown) {
-        if (await Connectivity().checkConnectivity() ==
-            ConnectivityResult.none) {
-          exception =
-              HttpException(ClientErrorCode.weakNetwork, "网络开小差了,请检查网络");
+        if (await Connectivity().checkConnectivity() == ConnectivityResult.none) {
+          exception = HttpException(ClientErrorCode.weakNetwork, "网络开小差了,请检查网络");
         }
       }
       err = err.copyWith(error: exception);
@@ -86,8 +83,7 @@ class HttpException extends _Exception {
       case DioExceptionType.cancel:
         return HttpException(ClientErrorCode.cancel, "请求取消");
       case DioExceptionType.connectionTimeout:
-        return HttpException(
-            ClientErrorCode.connectionTimeout, "您的网络信号弱，连接服务器超时");
+        return HttpException(ClientErrorCode.connectionTimeout, "您的网络信号弱，连接服务器超时");
       case DioExceptionType.sendTimeout:
         return HttpException(ClientErrorCode.sendTimeout, "请求服务器超时");
       case DioExceptionType.receiveTimeout:
@@ -100,6 +96,7 @@ class HttpException extends _Exception {
               case 400:
                 return HttpException(statusCode, "请求语法出错");
               case 401:
+                provider.read(userProvider.notifier).logout();
                 GoRouter.of(navigatorKey.currentContext!).replace('/login');
                 return HttpException(statusCode, "请先登录账户");
               case 403:
@@ -121,8 +118,7 @@ class HttpException extends _Exception {
                 );
             }
           } on Exception catch (e) {
-            return HttpException(
-                ClientErrorCode.unknown, '${e.toString()}-未知错误');
+            return HttpException(ClientErrorCode.unknown, '${e.toString()}-未知错误');
           }
         }
       default:

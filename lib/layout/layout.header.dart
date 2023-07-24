@@ -45,19 +45,19 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
                 title: "买币",
                 subtitle: "支持当地银行和数字钱包充值",
                 icon: Icons.credit_card_outlined,
-                value: Routes.AdBuying,
+                value: Routes.adBuying,
               ),
               MenuItem(
                 title: "卖币",
                 subtitle: "以当地货币收款",
                 icon: Icons.wallet_outlined,
-                value: Routes.AdSelling,
+                value: Routes.adSelling,
               ),
               MenuItem(
                 title: "我的广告",
                 subtitle: "在此管理广告",
                 icon: Icons.ads_click_outlined,
-                value: Routes.AdOwn,
+                value: Routes.adOwn,
               ),
             ],
           )

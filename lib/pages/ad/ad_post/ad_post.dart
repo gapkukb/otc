@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
+import 'package:otc/pages/ad/ad_post/ad_post.bank.template.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_number_stepper.dart';
 
-class AdvertisePlace extends StatefulWidget {
-  const AdvertisePlace({super.key});
+class AdPost extends StatefulWidget {
+  const AdPost({super.key});
 
   @override
-  State<AdvertisePlace> createState() => _AdvertisePlaceState();
+  State<AdPost> createState() => _AdPostState();
 }
 
-class _AdvertisePlaceState extends State<AdvertisePlace> {
+class _AdPostState extends State<AdPost> {
   final List<dynamic> _items = [
     {"value": 100, "unit": "USDT"},
     {"value": 200, "unit": "USDT"},
@@ -36,7 +37,7 @@ class _AdvertisePlaceState extends State<AdvertisePlace> {
   Widget build(BuildContext context) {
     return ModalPageTemplate(
       legend: "发布新广告",
-      title: "出售",
+      title: "发布",
       iconData: Icons.currency_exchange,
       nextText: "发布",
       onCompelete: (_) {},
@@ -73,6 +74,7 @@ class _AdvertisePlaceState extends State<AdvertisePlace> {
         title2: "支付时效",
         subtitle2: "15分钟",
       ),
+      AdPostBankTemplate()
     ];
   }
 
