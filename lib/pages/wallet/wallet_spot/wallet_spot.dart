@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/models/currency.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
@@ -86,8 +87,6 @@ class _WalletSpotState extends State<WalletSpot> {
     },
   ];
 
-  static final currencyCollection = CurrencyCollection.values;
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -162,8 +161,7 @@ class _WalletSpotState extends State<WalletSpot> {
       itemCount: statics.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
         crossAxisCount: 3,
         crossAxisSpacing: 8,
         height: 100,
@@ -260,19 +258,19 @@ class _WalletSpotState extends State<WalletSpot> {
           fixedWidth: 140,
         ),
       ],
-      rows: currencyCollection.map((currency) {
+      rows: Coins.values.map((coin) {
         return DataRow(
           cells: [
             DataCell(
               UiChip(
-                icon: Icons.abc,
-                text: currency.name,
+                iconWidget: Image.asset(coin.iconPath),
+                text: coin.name,
               ),
             ),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(Text("是狗鸡啊")),
-            DataCell(action(currency.name)),
+            DataCell(Text("0")),
+            DataCell(Text("0")),
+            DataCell(Text("0")),
+            DataCell(action(coin.name)),
           ],
         );
       }).toList(),

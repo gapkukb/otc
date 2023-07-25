@@ -8,11 +8,7 @@ import 'package:otc/components/panel/panel.dart';
 import 'package:otc/models/currency.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
-import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
-import 'package:otc/widgets/ui_chip.dart';
-import 'package:otc/widgets/ui_empty_view.dart';
-import 'package:otc/widgets/ui_flex.dart';
 
 bool ifUsdt(String currencyName) {
   if (currencyName == CurrencyCollection.USDT.name) {
@@ -45,8 +41,7 @@ class WalletFutures extends StatefulWidget {
   State<WalletFutures> createState() => _WalletFuturesState();
 }
 
-class _WalletFuturesState extends State<WalletFutures>
-    with SingleTickerProviderStateMixin {
+class _WalletFuturesState extends State<WalletFutures> with SingleTickerProviderStateMixin {
   late TabController controller;
   static final List<Map<String, dynamic>> statics = [
     {
@@ -134,11 +129,7 @@ class _WalletFuturesState extends State<WalletFutures>
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: controller.index == 0
-                  ? SizedBox(
-                      height: 300,
-                      width: double.infinity,
-                      child: _buildTable(),
-                    )
+                  ? const SizedBox.shrink()
                   : SizedBox(
                       width: double.infinity,
                       child: _buildTable(),
@@ -203,8 +194,7 @@ class _WalletFuturesState extends State<WalletFutures>
       itemCount: statics.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
         crossAxisCount: 3,
         crossAxisSpacing: 8,
         height: 100,

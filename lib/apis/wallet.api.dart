@@ -42,6 +42,9 @@ class _Wallet {
   /// 新增二维码
   final addQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/add");
 
+  /// 新增二维码
+  final deleteQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/delete");
+
   /// 查询用户所有地址簿
   final getAddressBook = get<List<dynamic>>("/customer/address-book/list");
 

@@ -106,6 +106,14 @@ final List<RouteBase> routes = [
             path: Routes.walletHistory,
             page: const WalletHistory(),
           ),
+          AuthRoute(
+            path: Routes.walletSpot,
+            page: const WalletSpot(),
+          ),
+          AuthRoute(
+            path: Routes.walletFutures,
+            page: const WalletFutures(),
+          ),
         ],
       ),
       ShellRoute(

@@ -45,7 +45,7 @@ class Http {
     dio.interceptors
       ..add(LogInterceptor())
       ..add(ExceptionInterceptor())
-      // ..add(DataTypeInterceptor())
+      ..add(DataTypeInterceptor())
       ..add(LoadingInterceptor());
   }
 
