@@ -55,8 +55,7 @@ class Dropdown extends DropdownSearch<DropdownItem> {
   final DropdownType type;
   final InputDecoration inputDecoration;
   final Widget? prefixIcon;
-  final Widget Function(BuildContext context, DropdownItem item, Widget widget)?
-      itemBuilder;
+  final Widget Function(BuildContext context, DropdownItem item, Widget widget)? itemBuilder;
   final PopupProps? props;
 
   Dropdown({
@@ -115,15 +114,11 @@ class Dropdown extends DropdownSearch<DropdownItem> {
                 tileColor: disabled ? Colors.grey.shade100 : null,
                 leading: item.leading,
                 title: gen(item.titleWidget, item.title, item.titleStyle),
-                trailing:
-                    gen(item.trailingWidget, item.trailing, item.trailingStyle),
-                subtitle:
-                    gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
+                trailing: gen(item.trailingWidget, item.trailing, item.trailingStyle),
+                subtitle: gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
               );
 
-              return itemBuilder == null
-                  ? widget
-                  : itemBuilder(context, item, widget);
+              return itemBuilder == null ? widget : itemBuilder(context, item, widget);
             },
 
             emptyBuilder: props?.emptyBuilder ??

@@ -1,12 +1,11 @@
-import 'dart:developer';
-
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/constants/banks.dart';
+import 'package:otc/pages/wallet/wallet.method/bank.provider.dart';
+import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_chip.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
@@ -15,20 +14,8 @@ class WalletMethodBankAddition extends StatefulWidget {
   const WalletMethodBankAddition({super.key});
 
   @override
-  State<WalletMethodBankAddition> createState() =>
-      _WalletMethodBankAdditionState();
+  State<WalletMethodBankAddition> createState() => _WalletMethodBankAdditionState();
 }
-
-var _currencies = [
-  "Food",
-  "Transport",
-  "Personal",
-  "Shopping",
-  "Medical",
-  "Rent",
-  "Movie",
-  "Salary"
-];
 
 class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
   final _formKey = GlobalKey<FormState>();
@@ -50,6 +37,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
               "account": _formState['cardNumber'],
               ..._formState,
             });
+            provider.refresh(bankProvider);
             context.pop(true);
           }
         },
@@ -57,8 +45,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
           UiTextFormField(
             formState: _formState,
             name: "name",
-            decoration: const InputDecoration(
-                label: Text("姓名"), hintText: "请输入银行卡户主姓名"),
+            decoration: const InputDecoration(label: Text("姓名"), hintText: "请输入银行卡户主姓名"),
             validator: (value) {
               return value!.trim().isNotEmpty ? null : "姓名不能为空";
             },
@@ -122,7 +109,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
               color: Color(0xfff5f5f5),
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -131,8 +118,8 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
                   text: "特别提示",
                   iconSize: 20,
                 ),
-                const SizedBox(height: 8),
-                const Text(
+                SizedBox(height: 8),
+                Text(
                   "秘钥可用于找回谷歌验证器，请勿透露给他人并妥善备份保存",
                   style: Font.miniGrey,
                 )

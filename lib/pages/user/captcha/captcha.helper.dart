@@ -46,7 +46,7 @@ enum CaptchaSession {
 
   final String value;
 
-  FutureOr validate(
+  validate(
     CaptchaDevice device,
     String captcha,
   ) {

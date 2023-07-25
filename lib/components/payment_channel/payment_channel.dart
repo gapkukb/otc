@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum PaymentChannel {
-  bankCard(type: 0, text: "银行借记卡"),
-  wechat(type: 1, text: "微信"),
-  alipay(type: 2, text: "支付宝");
+@JsonEnum(valueField: 'value')
+enum PaymentMethods {
+  bankCard(type: 0, text: "银行借记卡", value: "BANK_CARD_TRANSFER"),
+  wechat(type: 1, text: "微信", value: "WECHAT_TRANSFER"),
+  alipay(type: 2, text: "支付宝", value: "ALIPAY_TRANSFER");
 
-  const PaymentChannel({
+  const PaymentMethods({
     required this.type,
     required this.text,
+    required this.value,
   });
 
   final int type;
   final String text;
+  final String value;
 
   Widget get widget {
     return Chip(
@@ -27,18 +31,18 @@ enum PaymentChannel {
   }
 
   Color get color {
-    return type == PaymentChannel.bankCard.type
+    return type == PaymentMethods.bankCard.type
         ? Colors.orange
-        : type == PaymentChannel.wechat.type
+        : type == PaymentMethods.wechat.type
             ? Colors.green
             : Colors.blue;
   }
 
-  static PaymentChannel fromType(int type) {
-    return type == PaymentChannel.bankCard.type
-        ? PaymentChannel.bankCard
-        : type == PaymentChannel.wechat.type
-            ? PaymentChannel.wechat
-            : PaymentChannel.bankCard;
+  static PaymentMethods fromType(int type) {
+    return type == PaymentMethods.bankCard.type
+        ? PaymentMethods.bankCard
+        : type == PaymentMethods.wechat.type
+            ? PaymentMethods.wechat
+            : PaymentMethods.bankCard;
   }
 }

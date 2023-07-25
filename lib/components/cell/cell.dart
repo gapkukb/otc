@@ -14,6 +14,7 @@ class Cell extends StatelessWidget {
   final Color? backgroundColor;
   final BoxBorder? border;
   final MainAxisAlignment align;
+  final bool? divider;
 
   const Cell({
     super.key,
@@ -30,6 +31,7 @@ class Cell extends StatelessWidget {
     this.border,
     this.padding,
     this.align = MainAxisAlignment.spaceBetween,
+    this.divider,
   });
 
   @override
@@ -45,6 +47,7 @@ class Cell extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
+            fit: !evenly ? FlexFit.loose : FlexFit.tight,
             flex: evenly ? 1 : 0,
             child: title ??
                 (titleText == null
@@ -54,8 +57,13 @@ class Cell extends StatelessWidget {
                         style: titleTextStyle,
                       )),
           ),
+          if (divider == true)
+            const VerticalDivider(
+              width: 33,
+              thickness: 0.5,
+            ),
           Flexible(
-            flex: evenly ? 1 : 0,
+            fit: !evenly ? FlexFit.loose : FlexFit.tight,
             child: trailing ??
                 (trailingText == null
                     ? const SizedBox.shrink()

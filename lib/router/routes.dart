@@ -242,7 +242,11 @@ final List<RouteBase> routes = [
     page: const AuthSenior(),
   ),
   ModalRoute(
+    path: Routes.adPostPayment,
+    page: const AdPostPayment(),
+  ),
+  ModalRoute(
     path: Routes.adPost,
-    page: const AdPost(),
+    statePage: (context, state) => AdPost(type: state.extra as AdPostType),
   ),
 ];

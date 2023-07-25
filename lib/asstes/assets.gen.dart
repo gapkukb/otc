@@ -1968,6 +1968,10 @@ class $AssetsImagesGen {
   AssetGenImage get waveHeader =>
       const AssetGenImage('assets/images/WaveHeader.png');
 
+  /// File path: assets/images/ad_close_button.svg
+  SvgGenImage get adCloseButton =>
+      const SvgGenImage('assets/images/ad_close_button.svg');
+
   /// File path: assets/images/empty.png
   AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
 
@@ -2037,6 +2041,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
         waveHeader,
+        adCloseButton,
         empty,
         image1,
         image11,

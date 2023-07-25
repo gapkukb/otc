@@ -57,6 +57,7 @@ class Routes {
   static const adSelling = "/ad_selling";
   static const adOwn = "/ad_own";
   static const adPost = "/ad_post";
+  static const adPostPayment = "/ad_payment";
 
   //kyc
   static const authPrimary = "/auth_primary";

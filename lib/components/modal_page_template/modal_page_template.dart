@@ -10,6 +10,8 @@ class ModalPageTemplate extends StatelessWidget {
   final IconData iconData;
   final Widget? icon;
   final List<Widget> children;
+  final ScrollPhysics? physics;
+  final double maxWidth;
   final FutureOr<void> Function(BuildContext context) onCompelete;
   final FutureOr<void> Function(BuildContext context)? onCancel;
 
@@ -23,18 +25,21 @@ class ModalPageTemplate extends StatelessWidget {
     required this.children,
     this.icon,
     this.onCancel,
+    this.physics,
+    this.maxWidth = 460,
   });
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
+        physics: physics,
         child: Card(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 460,
+              constraints: BoxConstraints(
+                maxWidth: maxWidth,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,

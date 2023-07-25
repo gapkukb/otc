@@ -69,9 +69,7 @@ class _CaptchaState extends State<Captcha> {
 
   List<CaptchaDevice> get supportedModes {
     if (widget.user == null) return [device];
-    return CaptchaDevice.values
-        .where((mode) => mode.isValid(widget.user?.base))
-        .toList();
+    return CaptchaDevice.values.where((mode) => mode.isValid(widget.user?.base)).toList();
   }
 
   getRealDevice() {
@@ -80,8 +78,7 @@ class _CaptchaState extends State<Captcha> {
     // 优先级依照枚举排序 f2a->phone->email,
 
     device = widget.preferredDevice ?? CaptchaDevice.f2a;
-    device =
-        supportedModes.contains(device) ? device : supportedModes.elementAt(0);
+    device = supportedModes.contains(device) ? device : supportedModes.elementAt(0);
   }
 
   String get description {
@@ -229,7 +226,7 @@ class _CaptchaState extends State<Captcha> {
 
     final String token = await session.validate(device, code);
     global.updateCaptchaToken(token);
-    context.pop({
+    Navigator.of(context).maybePop<Map<String, dynamic>>({
       "device": device,
       "code": code,
     });

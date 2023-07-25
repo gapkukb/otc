@@ -6,7 +6,7 @@ import 'package:otc/router/router.dart';
 
 export 'package:otc/pages/user/captcha/captcha.dart' show CaptchaDevice, CaptchaSession, CaptchaController;
 
-Future<Map<String, String>?> openCaptchaWindow(CaptchaWindowOptions option) {
+Future<Map<String, dynamic>?> openCaptchaWindow(CaptchaWindowOptions option) {
   return (option.context ?? navigatorKey.currentContext!).pushNamed(
     Routes.captcha,
     extra: option,

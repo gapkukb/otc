@@ -49,13 +49,12 @@ class _AgentSettingState extends State<AgentSetting> {
               },
               builder: (context, data) {
                 int i = 0;
-                final items =
-                    ["代理佣金比例", "1代理佣金比例", "2代理佣金比例", "做市商"].map((group) {
+                final items = ["代理佣金比例", "1代理佣金比例", "2代理佣金比例", "做市商"].map((group) {
                   i++;
                   final disabled = i == 4;
                   return Block(
                       groupName: group,
-                      items: PaymentChannel.values.map((item) {
+                      items: PaymentMethods.values.map((item) {
                         return _Item(
                           channel: item,
                           min: disabled ? 0 : 0.5,
@@ -80,7 +79,7 @@ class _AgentSettingState extends State<AgentSetting> {
 }
 
 class _Item {
-  final PaymentChannel channel;
+  final PaymentMethods channel;
   final double min;
   final double max;
   final double value;
@@ -117,8 +116,7 @@ class Block extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 3,
-          gridDelegate:
-              const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             height: 140,
             crossAxisCount: 3,
             mainAxisSpacing: 32,
@@ -139,9 +137,7 @@ class Block extends StatelessWidget {
                   name: item.name,
                 ),
                 Text(
-                  item.disabled == true
-                      ? "固定比例，不可更改"
-                      : "在${item.min}%~${item.max}%范围内选择，下级至少会获得${item.min}%的返佣",
+                  item.disabled == true ? "固定比例，不可更改" : "在${item.min}%~${item.max}%范围内选择，下级至少会获得${item.min}%的返佣",
                   style: Font.miniGrey,
                 ),
               ],

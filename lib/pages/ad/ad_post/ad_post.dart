@@ -1,196 +1,58 @@
+library ad_post;
+
+import 'dart:developer';
+import 'dart:math';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:otc/components/cell/cell.dart';
+import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/pages/ad/ad_post/ad_post.bank.template.dart';
-import 'package:otc/utils/responsive.dart';
-import 'package:otc/widgets/ui_number_stepper.dart';
+import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/widgets/ui_chip.dart';
+import 'package:otc/widgets/ui_text_form_field.dart';
+part 'package:otc/pages/ad/ad_post/ad_post.next.dart';
+part 'package:otc/pages/ad/ad_post/ad_post.prev.dart';
+part './ad_post.range.dart';
+part './ad_post.bank.template.dart';
+part 'ad_post.payment.dart';
+
+enum AdPostType {
+  buying,
+  selling,
+}
 
 class AdPost extends StatefulWidget {
-  const AdPost({super.key});
+  final AdPostType type;
+  const AdPost({
+    super.key,
+    this.type = AdPostType.buying,
+  });
 
   @override
   State<AdPost> createState() => _AdPostState();
 }
 
-class _AdPostState extends State<AdPost> {
-  final List<dynamic> _items = [
-    {"value": 100, "unit": "USDT"},
-    {"value": 200, "unit": "USDT"},
-    {"value": 500, "unit": "USDT"},
-    {"value": 1000, "unit": "USDT"},
-    {"value": 2000, "unit": "USDT"},
-    {"value": 5000, "unit": "USDT"},
-    {"value": 10000, "unit": "USDT"},
-    {"value": 20000, "unit": "USDT"},
-  ];
-  late int _value;
-
-  late String gender = "male";
-
-  @override
-  void initState() {
-    _value = _items[0]['value'];
-    super.initState();
-  }
-
+class _AdPostState extends State<AdPost> with SingleTickerProviderStateMixin {
+  final bool isNext = false;
+  final Map<String, dynamic> formState = {};
   @override
   Widget build(BuildContext context) {
-    return ModalPageTemplate(
-      legend: "发布新广告",
-      title: "发布",
-      iconData: Icons.currency_exchange,
-      nextText: "发布",
-      onCompelete: (_) {},
-      children: _buildNext(),
-    );
-  }
-
-  List<Widget> _buildNext() {
-    return [
-      _buildCell(
-        title1: "类型",
-        subtitle1: "0.79000000 USDT",
-        title2: "币种",
-        subtitle2: "2 USDT",
-      ),
-      const Divider(height: 0.1, thickness: 0.5),
-      _buildCell(
-        title1: "参考汇率",
-        subtitle1: "6.47 CNY",
-        title2: "成交汇率",
-        subtitle2: "6.47 CNY",
-      ),
-      const Divider(height: 0.1, thickness: 0.5),
-      _buildCell(
-        title1: "数量",
-        subtitle1: "1000,00 USDT",
-        title2: "成交价格",
-        subtitle2: "6.570 CNY",
-      ),
-      const SizedBox(height: 24),
-      _buildCell(
-        title1: "支付方式",
-        subtitle1: "银行卡",
-        title2: "支付时效",
-        subtitle2: "15分钟",
-      ),
-      AdPostBankTemplate()
-    ];
-  }
-
-  List<Widget> _buildForm() {
-    return [
-      const Text("参考汇率：6.47"),
-      const SizedBox(height: 24),
-      const Text("数量"),
-      const SizedBox(height: 8),
-      _buildChoice(),
-      const SizedBox(height: 24),
-      const Text("汇率调控"),
-      const SizedBox(height: 8),
-      FittedBox(
-        fit: BoxFit.fitHeight,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            color: Colors.white,
-          ),
-          child: const UiNumberStepper(
-            unit: "%",
-            max: 100,
-            min: 0,
-          ),
-        ),
-      ),
-      const SizedBox(height: 24),
-      _buildCell(
-        title1: "成交价",
-        subtitle1: "657 CNY",
-        title2: "支付方式",
-        subtitle2: "银行卡划转",
-      ),
-    ];
-  }
-
-  Container _buildCell({
-    required String title1,
-    required String subtitle1,
-    required String title2,
-    required String subtitle2,
-  }) {
-    return Container(
-      color: const Color(0xffF7F9FA),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text.rich(
-              style: const TextStyle(height: 1.8),
-              TextSpan(
-                text: "$title1\n",
-                children: [
-                  TextSpan(
-                    text: subtitle1,
-                    style: const TextStyle(color: Colors.grey),
-                  )
-                ],
-              ),
+    return Form(
+      child: isNext
+          ? AdPostPrev(
+              formState: formState,
+              type: widget.type,
+            )
+          : AdPostNext(
+              formState: formState,
+              type: widget.type,
             ),
-          ),
-          Container(
-            width: 1,
-            height: 40,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            color: Colors.grey,
-          ),
-          Expanded(
-            child: Text.rich(
-              style: const TextStyle(height: 1.8),
-              TextSpan(
-                text: "$title2\n",
-                children: [
-                  TextSpan(
-                    text: subtitle2,
-                    style: const TextStyle(color: Colors.grey),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  _buildChoice() {
-    return GridView.builder(
-      itemCount: _items.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-        crossAxisCount: context.responsive(2, lg: 4),
-        height: 34,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-      ),
-      itemBuilder: (context, index) {
-        var item = _items[index];
-
-        return ChoiceChip(
-          avatar: null,
-          label: SizedBox.expand(
-            child: Text(
-              "${item['value']} ${item['unit']}",
-              textAlign: TextAlign.center,
-            ),
-          ),
-          selected: _value == item['value'],
-          onSelected: (selected) {
-            _value = item['value'];
-            setState(() {});
-          },
-        );
-      },
     );
   }
 }

@@ -37,8 +37,7 @@ class _Wallet {
   final setDefaultBankCard = post("/customer/bankcard/set-default");
 
   /// 查询用户所有二维码
-  final getAllQRcode =
-      post<List<Map<String, dynamic>>>("/customer/qrcode/list");
+  final getAllQRcode = post<List<dynamic>>("/customer/qrcode/list");
 
   /// 新增二维码
   final addQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/add");

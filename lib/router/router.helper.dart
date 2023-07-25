@@ -23,7 +23,7 @@ class ModalRoute extends GoRoute {
   final Widget? page;
   // 背景透明
   final bool? transparent;
-  final Widget Function(BuildContext, GoRouterState)? statePage;
+  final Widget Function(BuildContext context, GoRouterState state)? statePage;
   ModalRoute({
     required super.path,
     this.page,

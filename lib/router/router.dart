@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
 import 'package:otc/pages/ad/ad_own/ad_own.dart';
 import 'package:otc/pages/ad/ad_post/ad_post.dart';
@@ -71,7 +72,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.adPost,
+  initialLocation: Routes.walletMethod,
   debugLogDiagnostics: true,
   redirect: (context, state) {
     // for (var element in routes) {

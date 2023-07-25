@@ -50,7 +50,7 @@ class _AgentIncomeState extends State<AgentIncome> {
                       child: Dropdown(
                         labelText: "交易方式",
                         name: "",
-                        data: PaymentChannel.values.map((channel) {
+                        data: PaymentMethods.values.map((channel) {
                           return DropdownItem(title: channel.text, value: 0);
                         }).toList(),
                       ),
@@ -94,7 +94,7 @@ class _AgentIncomeState extends State<AgentIncome> {
               cells: List.generate(
                 9,
                 (index) => DataCell(
-                  PaymentChannel.fromType(0).widget,
+                  PaymentMethods.fromType(0).widget,
                 ),
               ),
             ),
