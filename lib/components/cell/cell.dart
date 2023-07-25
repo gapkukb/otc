@@ -13,6 +13,7 @@ class Cell extends StatelessWidget {
   final double? height;
   final Color? backgroundColor;
   final BoxBorder? border;
+  final MainAxisAlignment align;
 
   const Cell({
     super.key,
@@ -28,6 +29,7 @@ class Cell extends StatelessWidget {
     this.backgroundColor,
     this.border,
     this.padding,
+    this.align = MainAxisAlignment.spaceBetween,
   });
 
   @override
@@ -39,11 +41,11 @@ class Cell extends StatelessWidget {
       color: backgroundColor,
       decoration: BoxDecoration(border: border),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: align,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            fit: evenly ? FlexFit.tight : FlexFit.loose,
+            flex: evenly ? 1 : 0,
             child: title ??
                 (titleText == null
                     ? const SizedBox.shrink()
@@ -53,7 +55,7 @@ class Cell extends StatelessWidget {
                       )),
           ),
           Flexible(
-            fit: evenly ? FlexFit.tight : FlexFit.loose,
+            flex: evenly ? 1 : 0,
             child: trailing ??
                 (trailingText == null
                     ? const SizedBox.shrink()
