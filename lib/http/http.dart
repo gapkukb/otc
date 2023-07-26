@@ -143,7 +143,3 @@ class Request<T> {
     return model == null ? resp : model!(resp);
   }
 }
-
-extension Typing<T> on List<T> {
-  Type get genericType => T;
-}

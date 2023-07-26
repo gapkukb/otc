@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/providers/coin.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
@@ -22,6 +27,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   usePathUrlStrategy();
+
   runApp(
     ProviderScope(
       parent: provider,
@@ -46,6 +52,7 @@ class _AppState extends ConsumerState<App> {
       ref.read(userProvider.notifier).updateUser();
       ref.read(walletProvider.notifier).updateWallet();
     }
+
     theme.addListener(themeHandle);
   }
 

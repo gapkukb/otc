@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/models/wallet.balance/wallet.balance.dart';
 
 class WalletNotifier extends StateNotifier<WalletBalanceModel> {
@@ -40,9 +41,9 @@ final balanceProvider = Provider((ref) {
   final $total = BalanceTotal(balance: 0, freezed: 0, valid: 0);
 
   for (var element in wallet.detail) {
-    $total.balance += element.balance;
-    $total.valid += element.canUsd;
-    $total.freezed += element.balance - element.canUsd;
+    $total.balance += element.balance / element.usdtPrice;
+    $total.valid += element.canUsd / element.usdtPrice;
+    $total.freezed += (element.balance - element.canUsd) / element.usdtPrice;
   }
 
   return $total;

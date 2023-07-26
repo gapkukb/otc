@@ -14,29 +14,57 @@ enum Cryptocurrency {
 }
 
 enum Coins {
-  USDT(name: "USDT", enable: true),
-  ETH(name: "ETH", enable: true),
-  TRX(name: "TRX", enable: true),
-  BNB(name: "BNB", enable: true),
-  BTC(name: "BTC", enable: false),
-  USDC(name: "USDC", enable: false),
-  XRP(name: "XRP", enable: false),
-  ADA(name: "ADA", enable: false),
-  DOGE(name: "DOGE", enable: false),
-  SOL(name: "SOL", enable: false),
-  MATIC(name: "MATI", enable: false),
-  LTC(name: "LTC", enable: false),
-  DOT(name: "DOT", enable: false),
-  AVAX(name: "AVAX", enable: false),
-  DAI(name: "DAI", enable: false);
+  USDT(
+    name: "USDT",
+  ),
+  ETH(
+    name: "ETH",
+  ),
+  TRX(
+    name: "TRX",
+  ),
+  BNB(
+    name: "BNB",
+  ),
+  BTC(
+    name: "BTC",
+  ),
+  USDC(
+    name: "USDC",
+  ),
+  XRP(
+    name: "XRP",
+  ),
+  ADA(
+    name: "ADA",
+  ),
+  DOGE(
+    name: "DOGE",
+  ),
+  SOL(
+    name: "SOL",
+  ),
+  MATIC(
+    name: "MATI",
+  ),
+  LTC(
+    name: "LTC",
+  ),
+  DOT(
+    name: "DOT",
+  ),
+  AVAX(
+    name: "AVAX",
+  ),
+  DAI(
+    name: "DAI",
+  );
 
   const Coins({
     required this.name,
-    required this.enable,
   });
 
   final String name;
-  final bool enable;
 
   String get iconPath {
     return "assets/coins/${name.toLowerCase()}.svg";
@@ -44,9 +72,5 @@ enum Coins {
 
   SvgPicture get icon {
     return SvgPicture.asset(iconPath);
-  }
-
-  static List<Coins> get enabled {
-    return values.where((element) => element.enable).toList();
   }
 }

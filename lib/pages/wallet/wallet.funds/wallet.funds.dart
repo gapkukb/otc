@@ -1,14 +1,22 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/constants/currency.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/models/currency.dart';
+import 'package:otc/models/wallet.balance/wallet.balance.dart';
 import 'package:otc/pages/async_builder/async_builder.dart';
+import 'package:otc/providers/coin.provider.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
+import 'package:otc/utils/predication.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
@@ -39,66 +47,39 @@ bool ifNotKYC1(int kyc) {
   return true;
 }
 
-class WalletFunds extends StatefulWidget {
+class WalletFunds extends ConsumerStatefulWidget {
   const WalletFunds({super.key});
 
   @override
-  State<WalletFunds> createState() => _WalletFundsState();
+  ConsumerState<WalletFunds> createState() => _WalletFundsState();
 }
 
-class _WalletFundsState extends State<WalletFunds> {
-  static final List<Map<String, dynamic>> statics = [
-    {
-      "label": "账户余额",
-      "value": 0,
-    },
-    {
-      "label": "可用余额",
-      "value": 0,
-    },
-    {
-      "label": "冻结余额",
-      "value": 0,
-    },
-  ];
-
-  static final List<dynamic> actions = [
-    {
-      "name": "充值",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName)) {}
-      },
-    },
-    {
-      "name": "提币",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "站内转账",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(1)) {}
-      },
-    },
-    {
-      "name": "购买",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "出售",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName) && ifNotKYC1(0)) {}
-      },
-    },
-    {
-      "name": "划转",
-      "action": (String currencyName) {
-        if (ifUsdt(currencyName)) {}
-      },
-    },
+class _WalletFundsState extends ConsumerState<WalletFunds> {
+  static final List<_Item> actions = [
+    _Item(
+      name: "充值",
+      hanlder: (context, coin) {},
+    ),
+    _Item(
+      name: "提币",
+      hanlder: (context, coin) {},
+    ),
+    _Item(
+      name: "站内转账",
+      hanlder: (context, coin) {},
+    ),
+    _Item(
+      name: "购买",
+      hanlder: (context, coin) {},
+    ),
+    _Item(
+      name: "出售",
+      hanlder: (context, coin) {},
+    ),
+    _Item(
+      name: "划转",
+      hanlder: (context, coin) {},
+    ),
   ];
 
   static final List<Map<String, dynamic>> buttons = [
@@ -114,11 +95,13 @@ class _WalletFundsState extends State<WalletFunds> {
     {
       "child": "站内转账",
       "variant": UiButtonVariant.outline,
-      "onPressed": () {},
+      "onPressed": () {
+        if (ifNotKYC1(0)) {
+          GoRouter.of(navigatorKey.currentContext!).push(Routes.transfer);
+        }
+      },
     },
   ];
-
-  static final currencyCollection = CurrencyCollection.values;
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +149,11 @@ class _WalletFundsState extends State<WalletFunds> {
                 spacing: 8,
                 children: buttons.map(
                   (e) {
-                    return HitTestBlocker(
-                      up: false,
-                      child: UiButton(
-                        shape: UiButtonShape.rounded,
-                        variant: e['variant'],
-                        onPressed: e['onPressed'],
-                        label: e['child'],
-                      ),
+                    return UiButton(
+                      shape: UiButtonShape.rounded,
+                      variant: e['variant'],
+                      onPressed: e['onPressed'],
+                      label: e['child'],
                     );
                   },
                 ).toList(),
@@ -190,12 +170,26 @@ class _WalletFundsState extends State<WalletFunds> {
   }
 
   Widget _buildStatics(BuildContext context) {
+    final balance = ref.watch(balanceProvider);
+    final List<Map<String, dynamic>> statics = [
+      {
+        "label": "账户余额",
+        "value": balance.balance,
+      },
+      {
+        "label": "可用余额",
+        "value": balance.valid,
+      },
+      {
+        "label": "冻结余额",
+        "value": balance.freezed,
+      },
+    ];
     return GridView.builder(
       itemCount: statics.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
         crossAxisCount: 3,
         crossAxisSpacing: 8,
         height: 100,
@@ -235,49 +229,13 @@ class _WalletFundsState extends State<WalletFunds> {
   }
 
   _buildTable() {
-    Widget Function(String name) action;
+    final response = ref.watch(coinProvider);
+    final wallet = ref.watch(walletProvider);
 
-    if (context.md) {
-      action = (dynamic item) {
-        return IconButton(
-          icon: const Icon(Icons.more_vert),
-          onPressed: () {
-            Modal.showBottomSheet(
-              items: actions.map(
-                (e) {
-                  return BottomSheetItem(
-                    label: e['name'],
-                  );
-                },
-              ).toList(),
-              onSelected: (value, item) {},
-            );
-          },
-        );
-      };
-    } else {
-      action = (String item) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: actions
-              .map(
-                (e) => UiButton(
-                  variant: UiButtonVariant.text,
-                  size: UiButtonSize.mini,
-                  onPressed: () {
-                    e['action'](item);
-                  },
-                  child: Text(e['name']),
-                ),
-              )
-              .toList(),
-        );
-      };
-    }
-
-    return AsyncBuilder(
-      future: () => Future.delayed(Duration(seconds: 30)),
-      builder: (context, data) {
+    return response.when(
+      error: (_, __) => const SizedBox.shrink(),
+      loading: () => const SizedBox.shrink(),
+      data: (coins) {
         return DataTable(
           columnSpacing: 8,
           horizontalMargin: 8,
@@ -295,19 +253,48 @@ class _WalletFundsState extends State<WalletFunds> {
               fixedWidth: 120,
             ),
           ],
-          rows: currencyCollection.map((currency) {
+          rows: coins.map((coin) {
+            final Detail? current = wallet.detail.firstWhere((element) => element.currency == coin.name);
             return DataRow(
               cells: [
                 DataCell(
                   UiChip(
-                    icon: Icons.abc,
-                    text: currency.name,
+                    iconWidget: SizedBox(
+                      width: 20,
+                      child: coin.icon,
+                    ),
+                    text: coin.name,
                   ),
                 ),
-                DataCell(Text("是狗鸡啊")),
-                DataCell(Text("是狗鸡啊")),
-                DataCell(Text("是狗鸡啊")),
-                DataCell(action(currency.name)),
+                DataCell(Text((current?.balance ?? 0).decimalize())),
+                DataCell(Text((current?.canUsd ?? 0).decimalize())),
+                DataCell(Text(((current?.balance ?? 0) - (current?.canUsd ?? 0)).decimalize())),
+                DataCell(
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: actions
+                        .map(
+                          (action) => UiButton(
+                            variant: UiButtonVariant.text,
+                            size: UiButtonSize.mini,
+                            onPressed: () async {
+                              if (coin.name == Coins.USDT.name) {
+                                if (await predication(
+                                  context: context,
+                                  types: [Predication.kyc1],
+                                )) {
+                                  action.hanlder(context, coin);
+                                }
+                              } else {
+                                Modal.alert(content: "此功能正在紧急修复中。");
+                              }
+                            },
+                            child: Text(action.name),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
               ],
             );
           }).toList(),
@@ -315,4 +302,13 @@ class _WalletFundsState extends State<WalletFunds> {
       },
     );
   }
+}
+
+class _Item {
+  final String name;
+  final Function(BuildContext context, Coins coin) hanlder;
+  _Item({
+    required this.name,
+    required this.hanlder,
+  });
 }

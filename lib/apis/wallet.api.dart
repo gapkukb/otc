@@ -14,7 +14,7 @@ class _Wallet {
   final currencyDetails = get("/customer/wallet/balance-details/:currency");
 
   /// 站内转账
-  final transfer = get("/customer/wallet/transfer");
+  final transfer = post("/customer/wallet/transfer");
 
   /// 站内转账记录
   final transferRecords = get("/customer/wallet/transfer/records");

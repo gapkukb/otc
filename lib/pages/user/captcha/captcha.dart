@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/code_field/code_field.dart';
+import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/global/global.dart';
@@ -44,6 +45,8 @@ class Captcha extends StatefulWidget {
 
 class _CaptchaState extends State<Captcha> {
   TextEditingController _controller = TextEditingController();
+  final Map<String, dynamic> formState = {};
+  final formKey = GlobalKey<FormState>();
 
   final int _length = 6;
 
@@ -122,65 +125,78 @@ class _CaptchaState extends State<Captcha> {
 
   @override
   Widget build(BuildContext context) {
-    return ModalPageTemplate(
-      nextText: "下一步",
-      title: widget.legend ?? "${device.chineseText}验证",
-      onCompelete: action,
-      children: [
-        if (session == CaptchaSession.funds)
-          const UiTextFormField(
-            name: "funds",
-            autofocus: true,
-            labelText: "资金密码为6位数字",
-            maxLength: 6,
-            keyboardType: TextInputType.numberWithOptions(),
-          )
-        else
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                device.chineseText,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Color(0xff667086),
+    return Form(
+      key: formKey,
+      child: ModalPageTemplate(
+        nextText: "下一步",
+        title: widget.legend ?? "${device.chineseText}验证",
+        onCompelete: action,
+        children: [
+          if (session == CaptchaSession.funds)
+            UiTextFormField(
+              formState: formState,
+              name: "funds",
+              autofocus: true,
+              labelText: "资金密码",
+              maxLength: 6,
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                return value?.length == 6 ? null : "资金密码为6位数字";
+              },
+            )
+          else
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  device.chineseText,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Color(0xff667086),
+                  ),
                 ),
-              ),
-              Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xff667086),
-                ),
-              ),
-            ],
-          ),
-        const SizedBox(height: 24),
-        if (device == CaptchaDevice.f2a)
-          UiTextFormField(
-            autofocus: session != CaptchaSession.funds,
-            labelText: "谷歌验证码为6位数字",
-            controller: _controller,
-            maxLength: 6,
-            keyboardType: const TextInputType.numberWithOptions(),
-            decoration: InputDecoration(
-              suffixIcon: UiButton(
-                variant: UiButtonVariant.text,
-                label: "粘贴",
-                onPressed: paste,
-              ),
+              ],
             ),
-          )
-        else
-          CodeField(
-            textController: _controller,
-            disabled: false,
-            onPressed: send,
-            onlyNumber: session != CaptchaSession.addF2A,
+          const Gap.small(),
+          Text(
+            description,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Color(0xff667086),
+            ),
           ),
-        ...switcher,
-      ],
+          const Gap.small(),
+          if (device == CaptchaDevice.f2a)
+            UiTextFormField(
+              autofocus: session != CaptchaSession.funds,
+              name: "code",
+              formState: formState,
+              labelText: "谷歌验证码",
+              controller: _controller,
+              maxLength: 6,
+              validator: (value) {
+                return value?.length == 6 ? null : "谷歌验证码为6位数字";
+              },
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                suffixIcon: UiButton(
+                  variant: UiButtonVariant.text,
+                  label: "粘贴",
+                  onPressed: paste,
+                ),
+              ),
+            )
+          else
+            CodeField(
+              textController: _controller,
+              disabled: false,
+              onPressed: send,
+              onlyNumber: session != CaptchaSession.addF2A,
+            ),
+          ...switcher,
+        ],
+      ),
     );
   }
 
@@ -218,17 +234,11 @@ class _CaptchaState extends State<Captcha> {
 
   // 校验验证码
   action(_) async {
-    final code = _controller.text;
-    if (code.length != _length) {
-      Modal.showText(text: "请输入6位验证码");
-      return;
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      final String token = await session.validate(device, _controller.text);
+      global.updateCaptchaToken(token);
+      Navigator.of(context).maybePop<Map<String, dynamic>>(formState);
     }
-
-    final String token = await session.validate(device, code);
-    global.updateCaptchaToken(token);
-    Navigator.of(context).maybePop<Map<String, dynamic>>({
-      "device": device,
-      "code": code,
-    });
   }
 }

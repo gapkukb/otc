@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/modal/modal.dart';
@@ -19,7 +21,7 @@ enum AddType {
 }
 
 // 前置判断的高阶函数
-void Function() verify(BuildContext context, Function then) {
+void Function() verify(BuildContext context, FutureOr Function() then) {
   return () async {
     if (!global.user.base.phoneValid) {
       Modal.confirm(
@@ -44,6 +46,6 @@ void Function() verify(BuildContext context, Function then) {
       return;
     }
 
-    then();
+    await then();
   };
 }

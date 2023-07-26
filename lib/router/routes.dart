@@ -99,10 +99,6 @@ final List<RouteBase> routes = [
             page: const WalletFunds(),
           ),
           AuthRoute(
-            path: Routes.transfer,
-            page: const WalletTransfer(),
-          ),
-          AuthRoute(
             path: Routes.walletHistory,
             page: const WalletHistory(),
           ),
@@ -256,5 +252,9 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.adPost,
     statePage: (context, state) => AdPost(type: state.extra as AdPostType),
+  ),
+  ModalRoute(
+    path: Routes.transfer,
+    page: const WalletTransfer(),
   ),
 ];
