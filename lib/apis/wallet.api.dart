@@ -55,9 +55,8 @@ class _Wallet {
   /// 查询用户所有地址簿
   final addAddress = post("/customer/address-book/add");
 
-  // /// 查询用户所有地址簿
-  // final deleteAddress =
-  //     get<List<Map<String, Object>>>("/customer/address-book/delete");
+  /// 删除地址簿
+  final deleteAddress = post("/customer/address-book/delete");
 }
 
 final walletApi = _Wallet();

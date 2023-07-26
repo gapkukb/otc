@@ -1,16 +1,37 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/table/table.dart';
+import 'package:otc/pages/wallet/wallet_history/wallet_history.provider.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history_filter.dart';
 import 'package:otc/theme/text_theme.dart';
-import 'package:otc/utils/number.dart';
-import 'package:otc/widgets/ui_clipboard.dart';
 
-class WalletHistoryBlockchain extends StatelessWidget {
+class WalletHistoryBlockchain extends ConsumerWidget {
   const WalletHistoryBlockchain({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final result = ref.watch(transferHisotryProvider);
+
+    return result.when(
+      loading: () => Center(child: CircularProgressIndicator()),
+      error: (_, __) => Center(child: CircularProgressIndicator()),
+      data: (items) {
+        return Column(
+          children: [
+            FilledButton(
+              onPressed: () {
+                ref.read(filterProvider.notifier).update(orderId: "发发斯蒂芬");
+                // return ref.refresh(transferHisotryProvider);
+              },
+              child: Text("data"),
+            ),
+            Text(items),
+          ],
+        );
+      },
+    );
+
     return Column(
       children: [
         const WalletHistoryFilter(),
@@ -20,16 +41,7 @@ class WalletHistoryBlockchain extends StatelessWidget {
             child: DataGrid<_Mock>(
               fetcher: (pageNo, pageSize) async {
                 await Future.delayed(const Duration(seconds: 3));
-                return List.generate(
-                    10,
-                    (index) => _Mock(
-                        Txid: "Txid",
-                        address: "address",
-                        amount: "amount",
-                        currencyType: "currencyType",
-                        dateTime: "dateTime",
-                        status: "status",
-                        type: "type"));
+                return List.generate(10, (index) => _Mock(Txid: "Txid", address: "address", amount: "amount", currencyType: "currencyType", dateTime: "dateTime", status: "status", type: "type"));
               },
               columns: [
                 DataGridColumn(

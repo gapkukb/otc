@@ -20,7 +20,10 @@ class CurrencySelector extends Dropdown {
               spacing: 16,
             );
           },
-          data: Coins.enabled.map((item) {
+          props: PopupProps.menu(
+            disabledItemFn: (item) => item.title != "USDT",
+          ),
+          data: Coins.values.map((item) {
             return DropdownItem(
               leading: SvgPicture.asset(
                 item.iconPath,

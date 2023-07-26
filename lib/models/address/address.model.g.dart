@@ -41,4 +41,5 @@ const _$BlockChainEnumMap = {
   BlockChain.BSC: 'BSC',
   BlockChain.ETH: 'ETH',
   BlockChain.TRON: 'TRON',
+  BlockChain.BTC: 'BTC',
 };

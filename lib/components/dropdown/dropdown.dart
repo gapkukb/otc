@@ -82,7 +82,6 @@ class Dropdown extends DropdownSearch<DropdownItem> {
     this.inputDecoration = const InputDecoration(),
     this.prefixIcon,
     this.itemBuilder,
-    // super.dropdownButtonProps,
     super.onChanged,
     this.props,
   }) : super(
