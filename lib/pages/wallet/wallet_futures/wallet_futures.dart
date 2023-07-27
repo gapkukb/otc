@@ -251,16 +251,16 @@ class _WalletFuturesState extends State<WalletFutures> with SingleTickerProvider
             (e) => DataRow(
               cells: [
                 DataCell(Text(e.name)),
-                DataCell(Text("data")),
-                DataCell(Text("data")),
-                DataCell(Text("data")),
+                DataCell(Text(0.decimalize())),
+                DataCell(Text(0.decimalize())),
+                DataCell(Text(0.decimalize())),
                 DataCell(
                   UiButton(
                     variant: UiButtonVariant.text,
                     size: UiButtonSize.mini,
                     label: "划转",
                     onPressed: () {
-                      if (ifUsdt(e.name)) {}
+                      Modal.alert(content: "此功能正在紧急修复中。");
                     },
                   ),
                 ),

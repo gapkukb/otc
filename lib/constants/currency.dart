@@ -73,4 +73,8 @@ enum Coins {
   SvgPicture get icon {
     return SvgPicture.asset(iconPath);
   }
+
+  static Coins? getByName(String name) {
+    return Coins.values.firstWhere((element) => element.name == name);
+  }
 }
