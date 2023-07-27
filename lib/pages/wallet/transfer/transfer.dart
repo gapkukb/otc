@@ -60,14 +60,9 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
         legend: "钱包",
         title: "平台转账",
         iconData: Icons.credit_card_outlined,
-        nextButton: UiButton(
-          onPressed: () {
-            apply(context);
-          },
-          label: "提币",
-          size: UiButtonSize.medium,
-        ),
+        filledButton: true,
         onCompelete: apply,
+        nextText: "提币",
         children: [
           CurrencySelector(
             name: "currency",

@@ -8,7 +8,7 @@ class ModalPageTemplate extends StatelessWidget {
   final String legend;
   final String title;
   final String nextText;
-  final UiButton? nextButton;
+  final bool? filledButton;
   final IconData iconData;
   final Widget? icon;
   final List<Widget> children;
@@ -29,7 +29,7 @@ class ModalPageTemplate extends StatelessWidget {
     this.onCancel,
     this.physics,
     this.maxWidth = 460,
-    this.nextButton,
+    this.filledButton,
   });
 
   @override
@@ -101,19 +101,19 @@ class ModalPageTemplate extends StatelessWidget {
             onCancel?.call(context) ?? Navigator.of(context).maybePop();
           },
         ),
-        nextButton ??
-            UiButton(
-              onPressed: () async {
-                if (disabled) return;
-                try {
-                  disabled = true;
-                  await onCompelete(context);
-                } finally {
-                  disabled = false;
-                }
-              },
-              child: Text(nextText),
-            ),
+        UiButton(
+          variant: filledButton == true ? UiButtonVariant.filled : UiButtonVariant.text,
+          onPressed: () async {
+            if (disabled) return;
+            try {
+              disabled = true;
+              await onCompelete(context);
+            } finally {
+              disabled = false;
+            }
+          },
+          child: Text(nextText),
+        ),
       ],
     );
   }

@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/constants/blockchain.dart';
@@ -9,49 +8,11 @@ import 'package:otc/constants/currency.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
-class CryptoAddtion {
-  String name;
-  String protocol;
-  num deadline;
-  CryptoAddtion({
-    required this.name,
-    required this.protocol,
-    required this.deadline,
-  });
-
-  factory CryptoAddtion.fromJson(Map<String, dynamic> json) {
-    return CryptoAddtion(
-      name: json["name"],
-      protocol: json["protocol"],
-      deadline: json["deadline"],
-    );
-  }
-}
-
 class ModelMethodCryptoAddtion extends StatefulWidget {
-  static List<Map<String, dynamic>> items = [
-    {
-      "name": "Ethereum (ERC20)",
-      "protocol": "Ethereum (ETH)",
-      "deadline": 5,
-    },
-    {
-      "name": "BNB Smart Chain (BEP20)",
-      "protocol": "Binance Smart Chain",
-      "deadline": 1,
-    },
-    {
-      "name": "Tron (TRC20)",
-      "protocol": "Tron (TRX)",
-      "deadline": 1,
-    },
-  ];
-
   const ModelMethodCryptoAddtion({super.key});
 
   @override
-  State<ModelMethodCryptoAddtion> createState() =>
-      _ModelMethodCryptoAddtionState();
+  State<ModelMethodCryptoAddtion> createState() => _ModelMethodCryptoAddtionState();
 }
 
 class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
@@ -68,10 +29,10 @@ class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
         iconData: Icons.credit_card_outlined,
         legend: "提币地址管理",
         title: "添加钱包地址",
+        filledButton: true,
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            inspect(formState);
             await apis.wallet.addAddress(formState);
           }
         },
@@ -81,23 +42,13 @@ class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
             formState: formState,
             labelText: "地址备注",
             validator: (value) {
-              return value!.length < 4 && value.length > 20
-                  ? "请输入4~20个字符的备注"
-                  : null;
+              return value!.length < 4 || value.length > 20 ? "请输入4~20个字符的备注" : null;
             },
           ),
           const SizedBox(height: 16),
-          Dropdown(
+          CurrencySelector(
             name: "currency",
             formState: formState,
-            labelText: "币种选择",
-            showSearchBox: false,
-            data: Cryptocurrency.values
-                .map((e) => DropdownItem(title: e.name))
-                .toList(),
-            validator: (value) {
-              return value == null ? "请选择币种" : null;
-            },
           ),
           const SizedBox(height: 16),
           UiTextFormField(

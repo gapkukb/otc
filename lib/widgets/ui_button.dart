@@ -15,7 +15,7 @@ enum UiButtonShape {
 }
 
 enum UiButtonVariant {
-  elevated,
+  filled,
   outline,
   text,
 }
@@ -61,9 +61,7 @@ class UiButton extends StatelessWidget {
     var themeColor = Theme.of(context).primaryColor;
     return MaterialButton(
       padding: padding ?? _pad[size],
-      minWidth: fullWidth
-          ? double.infinity
-          : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
+      minWidth: fullWidth ? double.infinity : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
       onPressed: disabled ? null : onPressed,
       height: _size[size],
       color: getbackgroundColor(themeColor),
