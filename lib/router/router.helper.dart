@@ -39,8 +39,15 @@ class ModalRoute extends GoRoute {
         );
 }
 
-FutureOr<String?> redirect(BuildContext ontext, GoRouterState state) {
-  if (global.authorization == null) return Routes.home;
+FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+  if (global.authorization == null) {
+    Future(() async {
+      await Future.delayed(const Duration(milliseconds: 1));
+      navigatorKey.currentContext!.push(Routes.login);
+    });
+    return Routes.home;
+  }
+
   return null;
 }
 
