@@ -45,15 +45,17 @@ FutureOr<String?> redirect(BuildContext ontext, GoRouterState state) {
 }
 
 class AuthRoute extends GoRoute {
-  final Widget page;
+  final Widget? page;
+  final Widget Function(BuildContext context, GoRouterState state)? statePage;
 
   AuthRoute({
     super.parentNavigatorKey,
     required super.path,
-    required this.page,
+    this.page,
+    this.statePage,
   }) : super(
           name: path.substring(1),
-          builder: (context, state) => page,
+          builder: statePage ?? (context, state) => page!,
           redirect: redirect,
         );
 }

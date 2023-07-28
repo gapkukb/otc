@@ -14,35 +14,31 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-PaginationModel _$PaginationModelFromJson(Map<String, dynamic> json) {
-  return _PaginationModel.fromJson(json);
-}
-
 /// @nodoc
-mixin _$PaginationModel {
-  num get size => throw _privateConstructorUsedError;
-  num get current => throw _privateConstructorUsedError;
-  num get pages => throw _privateConstructorUsedError;
-  num get total => throw _privateConstructorUsedError;
+mixin _$PaginationModel<T> {
+  int get size => throw _privateConstructorUsedError;
+  int get current => throw _privateConstructorUsedError;
+  int get pages => throw _privateConstructorUsedError;
+  int get total => throw _privateConstructorUsedError;
+  List<T> get records => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PaginationModelCopyWith<PaginationModel> get copyWith =>
+  $PaginationModelCopyWith<T, PaginationModel<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PaginationModelCopyWith<$Res> {
+abstract class $PaginationModelCopyWith<T, $Res> {
   factory $PaginationModelCopyWith(
-          PaginationModel value, $Res Function(PaginationModel) then) =
-      _$PaginationModelCopyWithImpl<$Res, PaginationModel>;
+          PaginationModel<T> value, $Res Function(PaginationModel<T>) then) =
+      _$PaginationModelCopyWithImpl<T, $Res, PaginationModel<T>>;
   @useResult
-  $Res call({num size, num current, num pages, num total});
+  $Res call({int size, int current, int pages, int total, List<T> records});
 }
 
 /// @nodoc
-class _$PaginationModelCopyWithImpl<$Res, $Val extends PaginationModel>
-    implements $PaginationModelCopyWith<$Res> {
+class _$PaginationModelCopyWithImpl<T, $Res, $Val extends PaginationModel<T>>
+    implements $PaginationModelCopyWith<T, $Res> {
   _$PaginationModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -57,45 +53,50 @@ class _$PaginationModelCopyWithImpl<$Res, $Val extends PaginationModel>
     Object? current = null,
     Object? pages = null,
     Object? total = null,
+    Object? records = null,
   }) {
     return _then(_value.copyWith(
       size: null == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       current: null == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       pages: null == pages
           ? _value.pages
           : pages // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       total: null == total
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
+      records: null == records
+          ? _value.records
+          : records // ignore: cast_nullable_to_non_nullable
+              as List<T>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_PaginationModelCopyWith<$Res>
-    implements $PaginationModelCopyWith<$Res> {
-  factory _$$_PaginationModelCopyWith(
-          _$_PaginationModel value, $Res Function(_$_PaginationModel) then) =
-      __$$_PaginationModelCopyWithImpl<$Res>;
+abstract class _$$_PaginationModelCopyWith<T, $Res>
+    implements $PaginationModelCopyWith<T, $Res> {
+  factory _$$_PaginationModelCopyWith(_$_PaginationModel<T> value,
+          $Res Function(_$_PaginationModel<T>) then) =
+      __$$_PaginationModelCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({num size, num current, num pages, num total});
+  $Res call({int size, int current, int pages, int total, List<T> records});
 }
 
 /// @nodoc
-class __$$_PaginationModelCopyWithImpl<$Res>
-    extends _$PaginationModelCopyWithImpl<$Res, _$_PaginationModel>
-    implements _$$_PaginationModelCopyWith<$Res> {
+class __$$_PaginationModelCopyWithImpl<T, $Res>
+    extends _$PaginationModelCopyWithImpl<T, $Res, _$_PaginationModel<T>>
+    implements _$$_PaginationModelCopyWith<T, $Res> {
   __$$_PaginationModelCopyWithImpl(
-      _$_PaginationModel _value, $Res Function(_$_PaginationModel) _then)
+      _$_PaginationModel<T> _value, $Res Function(_$_PaginationModel<T>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,103 +106,112 @@ class __$$_PaginationModelCopyWithImpl<$Res>
     Object? current = null,
     Object? pages = null,
     Object? total = null,
+    Object? records = null,
   }) {
-    return _then(_$_PaginationModel(
+    return _then(_$_PaginationModel<T>(
       size: null == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       current: null == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       pages: null == pages
           ? _value.pages
           : pages // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       total: null == total
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
+      records: null == records
+          ? _value._records
+          : records // ignore: cast_nullable_to_non_nullable
+              as List<T>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$_PaginationModel implements _PaginationModel {
+
+class _$_PaginationModel<T> extends _PaginationModel<T> {
   const _$_PaginationModel(
       {required this.size,
       required this.current,
       required this.pages,
-      required this.total});
+      required this.total,
+      required final List<T> records = const []})
+      : _records = records,
+        super._();
 
-  factory _$_PaginationModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PaginationModelFromJson(json);
-
   @override
-  final num size;
+  final int size;
   @override
-  final num current;
+  final int current;
   @override
-  final num pages;
+  final int pages;
   @override
-  final num total;
+  final int total;
+  final List<T> _records;
+  @override
+  @JsonKey()
+  List<T> get records {
+    if (_records is EqualUnmodifiableListView) return _records;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_records);
+  }
 
   @override
   String toString() {
-    return 'PaginationModel(size: $size, current: $current, pages: $pages, total: $total)';
+    return 'PaginationModel<$T>(size: $size, current: $current, pages: $pages, total: $total, records: $records)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PaginationModel &&
+            other is _$_PaginationModel<T> &&
             (identical(other.size, size) || other.size == size) &&
             (identical(other.current, current) || other.current == current) &&
             (identical(other.pages, pages) || other.pages == pages) &&
-            (identical(other.total, total) || other.total == total));
+            (identical(other.total, total) || other.total == total) &&
+            const DeepCollectionEquality().equals(other._records, _records));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, size, current, pages, total);
+  int get hashCode => Object.hash(runtimeType, size, current, pages, total,
+      const DeepCollectionEquality().hash(_records));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PaginationModelCopyWith<_$_PaginationModel> get copyWith =>
-      __$$_PaginationModelCopyWithImpl<_$_PaginationModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_PaginationModelToJson(
-      this,
-    );
-  }
+  _$$_PaginationModelCopyWith<T, _$_PaginationModel<T>> get copyWith =>
+      __$$_PaginationModelCopyWithImpl<T, _$_PaginationModel<T>>(
+          this, _$identity);
 }
 
-abstract class _PaginationModel implements PaginationModel {
+abstract class _PaginationModel<T> extends PaginationModel<T> {
   const factory _PaginationModel(
-      {required final num size,
-      required final num current,
-      required final num pages,
-      required final num total}) = _$_PaginationModel;
+      {required final int size,
+      required final int current,
+      required final int pages,
+      required final int total,
+      required final List<T> records}) = _$_PaginationModel<T>;
+  const _PaginationModel._() : super._();
 
-  factory _PaginationModel.fromJson(Map<String, dynamic> json) =
-      _$_PaginationModel.fromJson;
-
   @override
-  num get size;
+  int get size;
   @override
-  num get current;
+  int get current;
   @override
-  num get pages;
+  int get pages;
   @override
-  num get total;
+  int get total;
+  @override
+  List<T> get records;
   @override
   @JsonKey(ignore: true)
-  _$$_PaginationModelCopyWith<_$_PaginationModel> get copyWith =>
+  _$$_PaginationModelCopyWith<T, _$_PaginationModel<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

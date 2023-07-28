@@ -73,7 +73,9 @@ class WalletHome extends ConsumerWidget {
       {
         "child": "站内转账",
         "variant": UiButtonVariant.outline,
-        "onPressed": () {},
+        "onPressed": () {
+          context.push(Routes.transfer);
+        },
       },
     ];
     return Card(

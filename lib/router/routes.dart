@@ -100,7 +100,7 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.walletHistory,
-            page: const WalletHistory(),
+            statePage: (context, state) => WalletHistory(initialIndex: state.extra as int?),
           ),
           AuthRoute(
             path: Routes.walletSpot,
