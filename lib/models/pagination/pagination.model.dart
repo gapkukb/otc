@@ -12,7 +12,7 @@ class PaginationModel<T> with _$PaginationModel<T> {
     required int current,
     required int pages,
     required int total,
-    @Default([]) required List<T> records,
+    @Default([]) List<T> records,
   }) = _PaginationModel<T>;
 
   //It only works with block bodies and not with expression bodies

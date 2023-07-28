@@ -141,7 +141,7 @@ class _$_PaginationModel<T> extends _PaginationModel<T> {
       required this.current,
       required this.pages,
       required this.total,
-      required final List<T> records = const []})
+      final List<T> records = const []})
       : _records = records,
         super._();
 
@@ -197,7 +197,7 @@ abstract class _PaginationModel<T> extends PaginationModel<T> {
       required final int current,
       required final int pages,
       required final int total,
-      required final List<T> records}) = _$_PaginationModel<T>;
+      final List<T> records}) = _$_PaginationModel<T>;
   const _PaginationModel._() : super._();
 
   @override
