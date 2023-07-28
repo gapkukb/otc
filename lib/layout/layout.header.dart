@@ -82,7 +82,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
         IconButton(
           icon: const Icon(Icons.description_outlined),
           onPressed: () {
-            _router.goNamed(Routes.order);
+            _router.go(Routes.walletHistory);
           },
         ),
         const NoticeAppbar(),

@@ -70,7 +70,6 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
             name: "bank",
             labelText: "开户银行",
             searchHintText: "请输入银行名称或银行代码",
-            selectedItem: null,
             data: Banks.values
                 .map(
                   (e) => DropdownItem(

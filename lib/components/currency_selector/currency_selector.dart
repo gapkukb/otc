@@ -26,25 +26,25 @@ class CurrencySelector extends Dropdown {
     super.type,
     this.selected,
   }) : super(
-            labelText: "选择币种",
-            dropdownBuilder: (context, selectedItem) {
-              if (selectedItem == null) return null;
-              return SizedBox(
-                height: 60,
-                child: UiChip(
-                  text: selectedItem.title,
-                  iconWidget: selectedItem.leading,
-                  spacing: 16,
-                ),
-              );
-            },
-            selectedItem: selected == null ? null : buildItem(selected),
-            props: PopupProps.menu(
-              disabledItemFn: (item) => item.title != "USDT",
-            ),
-            data: Coins.values.map(buildItem).toList(),
-            validator: (value) {
-              if (value == null) return "请选择币种";
-              return null;
-            });
+          labelText: "选择币种",
+          dropdownBuilder: (context, selectedItem) {
+            if (selectedItem == null) return null;
+            return SizedBox(
+              height: 60,
+              child: UiChip(
+                text: selectedItem.title,
+                iconWidget: selectedItem.leading,
+                spacing: 16,
+              ),
+            );
+          },
+          props: PopupProps.menu(
+            disabledItemFn: (item) => item.title != "USDT",
+          ),
+          data: Coins.values.map(buildItem).toList(),
+          validator: (value) {
+            if (value == null) return "请选择币种";
+            return null;
+          },
+        );
 }
