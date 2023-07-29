@@ -14,8 +14,9 @@ _$_WalletBlockchainHistoryModel _$$_WalletBlockchainHistoryModelFromJson(
       deposit: json['deposit'] as bool,
       currency: json['currency'] as String,
       amount: json['amount'] as num,
-      address: json['address'] as String,
-      transactionId: json['transactionId'] as num,
+      fromAddress: json['fromAddress'] as String,
+      toAddress: json['toAddress'] as String,
+      transactionIndex: json['transactionIndex'] as num,
       transactionHash: json['transactionHash'] as String,
       confirmed: json['confirmed'] as String,
     );
@@ -28,8 +29,9 @@ Map<String, dynamic> _$$_WalletBlockchainHistoryModelToJson(
       'deposit': instance.deposit,
       'currency': instance.currency,
       'amount': instance.amount,
-      'address': instance.address,
-      'transactionId': instance.transactionId,
+      'fromAddress': instance.fromAddress,
+      'toAddress': instance.toAddress,
+      'transactionIndex': instance.transactionIndex,
       'transactionHash': instance.transactionHash,
       'confirmed': instance.confirmed,
     };

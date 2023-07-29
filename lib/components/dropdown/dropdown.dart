@@ -90,19 +90,22 @@ class _DropdownState extends State<Dropdown> {
 
   @override
   void initState() {
-    selectedItem = widget.data.firstWhere((element) => element.value == widget.initialValue || element.title == widget.initialValue);
+    if (widget.initialValue != null) {
+      selectedItem = widget.data.firstWhere((element) => element.value == widget.initialValue || element.title == widget.initialValue);
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text("data");
     return DropdownSearch<DropdownItem>(
       items: widget.data,
-      // selectedItem: selectedItem,
+      selectedItem: selectedItem,
       onSaved: (now) {
-        final $value = now?.value ?? now?.title;
-        widget.formState?.update(widget.name, (val) => val, ifAbsent: () => $value);
+        if (selectedItem == null) return;
+
+        final $value = selectedItem?.value ?? selectedItem?.title;
+        widget.formState?.update(widget.name, (_) => $value, ifAbsent: () => $value);
       },
       dropdownBuilder: widget.dropdownBuilder,
       validator: widget.validator,
@@ -136,7 +139,7 @@ class _DropdownState extends State<Dropdown> {
             subtitle: gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
           );
 
-          return widget.itemBuilder == null ? widget : widget.itemBuilder!(context, item, view);
+          return widget.itemBuilder == null ? view : widget.itemBuilder!(context, item, view);
         },
 
         emptyBuilder: widget.props?.emptyBuilder ??

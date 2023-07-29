@@ -26,8 +26,9 @@ mixin _$WalletBlockchainHistoryModel {
   bool get deposit => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
-  num get transactionId => throw _privateConstructorUsedError;
+  String get fromAddress => throw _privateConstructorUsedError;
+  String get toAddress => throw _privateConstructorUsedError;
+  num get transactionIndex => throw _privateConstructorUsedError;
   String get transactionHash => throw _privateConstructorUsedError;
   String get confirmed => throw _privateConstructorUsedError;
 
@@ -51,8 +52,9 @@ abstract class $WalletBlockchainHistoryModelCopyWith<$Res> {
       bool deposit,
       String currency,
       num amount,
-      String address,
-      num transactionId,
+      String fromAddress,
+      String toAddress,
+      num transactionIndex,
       String transactionHash,
       String confirmed});
 }
@@ -76,8 +78,9 @@ class _$WalletBlockchainHistoryModelCopyWithImpl<$Res,
     Object? deposit = null,
     Object? currency = null,
     Object? amount = null,
-    Object? address = null,
-    Object? transactionId = null,
+    Object? fromAddress = null,
+    Object? toAddress = null,
+    Object? transactionIndex = null,
     Object? transactionHash = null,
     Object? confirmed = null,
   }) {
@@ -102,13 +105,17 @@ class _$WalletBlockchainHistoryModelCopyWithImpl<$Res,
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      fromAddress: null == fromAddress
+          ? _value.fromAddress
+          : fromAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      transactionId: null == transactionId
-          ? _value.transactionId
-          : transactionId // ignore: cast_nullable_to_non_nullable
+      toAddress: null == toAddress
+          ? _value.toAddress
+          : toAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      transactionIndex: null == transactionIndex
+          ? _value.transactionIndex
+          : transactionIndex // ignore: cast_nullable_to_non_nullable
               as num,
       transactionHash: null == transactionHash
           ? _value.transactionHash
@@ -137,8 +144,9 @@ abstract class _$$_WalletBlockchainHistoryModelCopyWith<$Res>
       bool deposit,
       String currency,
       num amount,
-      String address,
-      num transactionId,
+      String fromAddress,
+      String toAddress,
+      num transactionIndex,
       String transactionHash,
       String confirmed});
 }
@@ -161,8 +169,9 @@ class __$$_WalletBlockchainHistoryModelCopyWithImpl<$Res>
     Object? deposit = null,
     Object? currency = null,
     Object? amount = null,
-    Object? address = null,
-    Object? transactionId = null,
+    Object? fromAddress = null,
+    Object? toAddress = null,
+    Object? transactionIndex = null,
     Object? transactionHash = null,
     Object? confirmed = null,
   }) {
@@ -187,13 +196,17 @@ class __$$_WalletBlockchainHistoryModelCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      fromAddress: null == fromAddress
+          ? _value.fromAddress
+          : fromAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      transactionId: null == transactionId
-          ? _value.transactionId
-          : transactionId // ignore: cast_nullable_to_non_nullable
+      toAddress: null == toAddress
+          ? _value.toAddress
+          : toAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      transactionIndex: null == transactionIndex
+          ? _value.transactionIndex
+          : transactionIndex // ignore: cast_nullable_to_non_nullable
               as num,
       transactionHash: null == transactionHash
           ? _value.transactionHash
@@ -216,8 +229,9 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
       required this.deposit,
       required this.currency,
       required this.amount,
-      required this.address,
-      required this.transactionId,
+      required this.fromAddress,
+      required this.toAddress,
+      required this.transactionIndex,
       required this.transactionHash,
       required this.confirmed});
 
@@ -235,9 +249,11 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
   @override
   final num amount;
   @override
-  final String address;
+  final String fromAddress;
   @override
-  final num transactionId;
+  final String toAddress;
+  @override
+  final num transactionIndex;
   @override
   final String transactionHash;
   @override
@@ -245,7 +261,7 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
 
   @override
   String toString() {
-    return 'WalletBlockchainHistoryModel(reference: $reference, createdTime: $createdTime, deposit: $deposit, currency: $currency, amount: $amount, address: $address, transactionId: $transactionId, transactionHash: $transactionHash, confirmed: $confirmed)';
+    return 'WalletBlockchainHistoryModel(reference: $reference, createdTime: $createdTime, deposit: $deposit, currency: $currency, amount: $amount, fromAddress: $fromAddress, toAddress: $toAddress, transactionIndex: $transactionIndex, transactionHash: $transactionHash, confirmed: $confirmed)';
   }
 
   @override
@@ -261,9 +277,12 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.transactionId, transactionId) ||
-                other.transactionId == transactionId) &&
+            (identical(other.fromAddress, fromAddress) ||
+                other.fromAddress == fromAddress) &&
+            (identical(other.toAddress, toAddress) ||
+                other.toAddress == toAddress) &&
+            (identical(other.transactionIndex, transactionIndex) ||
+                other.transactionIndex == transactionIndex) &&
             (identical(other.transactionHash, transactionHash) ||
                 other.transactionHash == transactionHash) &&
             (identical(other.confirmed, confirmed) ||
@@ -272,8 +291,18 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, reference, createdTime, deposit,
-      currency, amount, address, transactionId, transactionHash, confirmed);
+  int get hashCode => Object.hash(
+      runtimeType,
+      reference,
+      createdTime,
+      deposit,
+      currency,
+      amount,
+      fromAddress,
+      toAddress,
+      transactionIndex,
+      transactionHash,
+      confirmed);
 
   @JsonKey(ignore: true)
   @override
@@ -298,8 +327,9 @@ abstract class _WalletBlockchainHistoryModel
       required final bool deposit,
       required final String currency,
       required final num amount,
-      required final String address,
-      required final num transactionId,
+      required final String fromAddress,
+      required final String toAddress,
+      required final num transactionIndex,
       required final String transactionHash,
       required final String confirmed}) = _$_WalletBlockchainHistoryModel;
 
@@ -317,9 +347,11 @@ abstract class _WalletBlockchainHistoryModel
   @override
   num get amount;
   @override
-  String get address;
+  String get fromAddress;
   @override
-  num get transactionId;
+  String get toAddress;
+  @override
+  num get transactionIndex;
   @override
   String get transactionHash;
   @override

@@ -67,7 +67,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
           CurrencySelector(
             name: "currency",
             formState: formState,
-            selected: widget.coin,
+            initialValue: widget.coin,
           ),
           const Gap.small(),
           UiTextFormField(
