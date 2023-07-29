@@ -101,7 +101,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
       UiButton(
         label: "注册",
         onPressed: () {
-          _router.go('/register');
+          _router.go(Routes.register);
         },
       ),
       const SizedBox(width: 32),

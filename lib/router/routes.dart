@@ -165,6 +165,10 @@ final List<RouteBase> routes = [
     page: const Login(),
   ),
   ModalRoute(
+    path: Routes.register,
+    page: const Register(),
+  ),
+  ModalRoute(
     path: Routes.updateNickname,
     page: const UpdateNickname(),
   ),
