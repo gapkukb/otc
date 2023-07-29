@@ -19,33 +19,35 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1242),
-          child: ListView(
-            children: const [
-              HomeTop(),
-              HomeMarqueer(),
-              SizedBox(height: 16),
-              HomeCarousel(),
-              SizedBox(height: 56),
-              Text(
-                "市场",
-                style: Font.x6largeBold,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 32),
-              HomeMarket(),
-              SizedBox(height: 16),
-              HomeBizPlan(),
-              SizedBox(height: 185),
-              HomeServices(),
-              SizedBox(height: 196),
-              HomeAdvantage(),
-              SizedBox(height: 96),
-              LayoutFooter(),
-            ],
+    return SingleChildScrollView(
+      child: Material(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1242),
+            child: const Column(
+              children: [
+                HomeTop(),
+                HomeMarqueer(),
+                SizedBox(height: 16),
+                HomeCarousel(),
+                SizedBox(height: 56),
+                Text(
+                  "市场",
+                  style: Font.x6largeBold,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 32),
+                HomeMarket(),
+                SizedBox(height: 16),
+                HomeBizPlan(),
+                SizedBox(height: 185),
+                HomeServices(),
+                SizedBox(height: 196),
+                HomeAdvantage(),
+                SizedBox(height: 96),
+                LayoutFooter(),
+              ],
+            ),
           ),
         ),
       ),

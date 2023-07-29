@@ -16,25 +16,33 @@ class LayoutLogo extends StatelessWidget {
       child: Logo(),
     );
 
-    if (global.user.base.type == "GENERAL") {
-      return GestureDetector(
-        child: logo,
-        onTap: () {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(Routes.home, (route) => false);
-        },
-      );
-    }
     return RawGestureDetector(
       gestures: {
-        LongPressGestureRecognizer:
-            GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
-          () => LongPressGestureRecognizer(
-            debugOwner: this,
-            duration: const Duration(seconds: 5),
-          ),
-          (instance) {
-            instance.onLongPress = () => context.go(Routes.agentDashboard);
+        SerialTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<SerialTapGestureRecognizer>(SerialTapGestureRecognizer.new, (SerialTapGestureRecognizer instance) {
+          instance.onSerialTapDown = (SerialTapDownDetails details) {
+            if (details.count == 4) {
+              context.go(Routes.agentDashboard);
+            } else if (details.count == 1) {
+              context.go(Routes.home);
+            }
+          };
+        }),
+
+        // if (global.user.base.type != "GENERAL")
+        //   LongPressGestureRecognizer: GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
+        //     () => LongPressGestureRecognizer(
+        //       duration: const Duration(seconds: 3),
+        //     ),
+        //     (instance) {
+        //       instance.onLongPress = () => context.go(Routes.agentDashboard);
+        //     },
+        //   ),
+        TapGestureRecognizer: GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
+          () => TapGestureRecognizer(),
+          (TapGestureRecognizer instance) {
+            instance.onTap = () {
+              context.go(Routes.home);
+            };
           },
         ),
       },

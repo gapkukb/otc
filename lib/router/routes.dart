@@ -6,6 +6,7 @@ final List<RouteBase> routes = [
     builder: layout,
     routes: [
       GoRoute(
+        parentNavigatorKey: appLayoutKey,
         name: Routes.home,
         path: Routes.home,
         builder: (context, state) => const Home(),

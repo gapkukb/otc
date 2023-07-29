@@ -15,8 +15,9 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: Size.fromHeight(size ?? 56),
+    return Container(
+      color: Colors.transparent,
+      height: 56,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -30,8 +31,7 @@ class Logo extends StatelessWidget {
           if (withLogoText == true)
             Assets.images.logo2.svg(
               height: 20,
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withAlpha(170), BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(Colors.black.withAlpha(170), BlendMode.srcIn),
             )
         ],
       ),

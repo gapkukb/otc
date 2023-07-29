@@ -15,8 +15,7 @@ class Login extends ConsumerStatefulWidget {
   ConsumerState<Login> createState() => _LoginState();
 }
 
-class _LoginState extends ConsumerState<Login>
-    with SingleTickerProviderStateMixin {
+class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formState = {};
 
@@ -135,7 +134,7 @@ class _LoginState extends ConsumerState<Login>
             password: _formState['password'],
           );
       if (mounted) Navigator.of(context).maybePop();
-      context.pushReplacementNamed(Routes.home);
+      GoRouter.of(context).go(Routes.home);
     }
   }
 }

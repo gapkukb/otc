@@ -76,6 +76,7 @@ final router = GoRouter(
   // 根据平台和启动页引导页区分
   initialLocation: Routes.walletMethod,
   debugLogDiagnostics: true,
+
   redirect: (context, state) {
     // for (var element in routes) {
     //   if (element.runtimeType == CustomShellRoute) {

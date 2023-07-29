@@ -26,7 +26,6 @@ class UserNotifier extends StateNotifier<UserModel> {
     final user = await apis.user.getUser();
     state = user;
     global.updateUser(user);
-    print("0000000000000000000000000000");
     provider.read(authProvider.notifier).state = true;
     return user;
   }
