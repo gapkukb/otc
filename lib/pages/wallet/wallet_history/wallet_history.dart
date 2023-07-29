@@ -5,7 +5,11 @@ import 'package:otc/pages/wallet/wallet_history/wallet_history_platform.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history_trade.dart';
 
 class WalletHistory extends StatefulWidget {
-  const WalletHistory({super.key});
+  final int? initialIndex;
+  const WalletHistory({
+    super.key,
+    this.initialIndex,
+  });
 
   @override
   State<WalletHistory> createState() => _WalletHistoryState();
@@ -14,9 +18,10 @@ class WalletHistory extends StatefulWidget {
 class _WalletHistoryState extends State<WalletHistory> {
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
+    return DefaultTabController(
       length: 3,
-      child: Panel(
+      initialIndex: widget.initialIndex ?? 0,
+      child: const Panel(
         titleWidget: TabBar(
           isScrollable: true,
           padding: EdgeInsets.symmetric(horizontal: 8.0),

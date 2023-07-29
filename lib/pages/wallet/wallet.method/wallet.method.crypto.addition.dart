@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/constants/blockchain.dart';
-import 'package:otc/constants/currency.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
@@ -30,10 +31,12 @@ class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
         legend: "提币地址管理",
         title: "添加钱包地址",
         filledButton: true,
-        onCompelete: (_) async {
+        onCompelete: (context) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
             await apis.wallet.addAddress(formState);
+            context.pop(true);
+            Modal.showText(text: "新增地址成功");
           }
         },
         children: [

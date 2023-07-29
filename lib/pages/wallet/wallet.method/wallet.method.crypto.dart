@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/models/address/address.model.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
 import 'package:otc/providers/provider.dart';
@@ -11,6 +12,7 @@ import 'package:otc/providers/wallet.address.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
@@ -62,29 +64,40 @@ class WalletMethodCrypto extends ConsumerWidget {
                   TextButton.icon(
                     icon: const Icon(Icons.add),
                     label: const Text("钱包地址"),
-                    onPressed: verify(context, () {
-                      context.pushNamed(Routes.walletMethodCryptoAddition);
-                    }),
+                    onPressed: () async {
+                      final ok = await predication(context: context, types: [
+                        Predication.phone,
+                        Predication.kyc1,
+                      ]);
+
+                      if (ok) {
+                        final successful = await context.pushNamed<bool>(Routes.walletMethodCryptoAddition);
+                        if (successful == true) {
+                          return ref.refresh(walletAddressProvider);
+                        }
+                      }
+                    },
                   )
                 ],
               ),
               Expanded(
                 child: DataTable2(
-                  columnSpacing: 8,
+                  columnSpacing: 4,
                   horizontalMargin: 8,
                   dividerThickness: 0.01,
                   headingTextStyle: const TextStyle(color: Colors.grey),
                   columns: const [
                     DataColumn2(label: Text("地址备注")),
                     DataColumn2(label: Text("币种")),
-                    DataColumn2(label: Text("地址")),
+                    DataColumn2(label: Text("地址"), fixedWidth: 360),
                     DataColumn2(label: Text("转账网络")),
                     DataColumn2(
-                        label: Text(
-                          "\t\t\t操作",
-                          style: TextStyle(),
-                        ),
-                        fixedWidth: 120),
+                      label: Text(
+                        "\t\t\t操作",
+                        style: TextStyle(),
+                      ),
+                      fixedWidth: 60,
+                    ),
                   ],
                   rows: items
                       .map(
@@ -92,9 +105,15 @@ class WalletMethodCrypto extends ConsumerWidget {
                           cells: [
                             DataCell(Text(item.remark)),
                             DataCell(
-                              UiChip(icon: Icons.abc, text: item.currency.name),
+                              UiChip(
+                                iconWidget: SizedBox(
+                                  width: 20,
+                                  child: Coins.getByName(item.currency.name)?.icon,
+                                ),
+                                text: item.currency.name,
+                              ),
                             ),
-                            DataCell(Text(item.reference)),
+                            DataCell(Text(item.wallet)),
                             DataCell(Text(item.blockchain.name)),
                             DataCell(
                               Row(

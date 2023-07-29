@@ -84,7 +84,6 @@ class _AdPostNextState extends State<AdPostNext> with SingleTickerProviderStateM
         const Gap.small(),
         Dropdown(
           name: "",
-          selectedItem: DropdownItem(title: "15分钟", value: 0),
           data: [
             DropdownItem(title: "15分钟", value: 0),
             DropdownItem(title: "30分钟", value: 1),
