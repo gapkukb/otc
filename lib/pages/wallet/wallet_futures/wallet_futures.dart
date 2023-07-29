@@ -1,47 +1,26 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/models/currency.dart';
+import 'package:otc/providers/coin.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/widgets/ui_chip.dart';
 
-bool ifUsdt(String currencyName) {
-  if (currencyName == CurrencyCollection.USDT.name) {
-    return true;
-  }
-  Modal.alert(content: "此功能正在紧急修复中。");
-  return false;
-}
-
-bool ifNotKYC1(int kyc) {
-  if (kyc == 1) {
-    Modal.confirm(
-      title: "交易资格",
-      content: "您必须完成至少初级KYC认证才能开启该功能。",
-      okButtonText: "去认证",
-      onOk: () {
-        GoRouter.of(navigatorKey.currentContext!).go('/topup');
-      },
-    );
-    return false;
-  }
-
-  return true;
-}
-
-class WalletFutures extends StatefulWidget {
+class WalletFutures extends ConsumerStatefulWidget {
   const WalletFutures({super.key});
 
   @override
-  State<WalletFutures> createState() => _WalletFuturesState();
+  ConsumerState<WalletFutures> createState() => _WalletFuturesState();
 }
 
-class _WalletFuturesState extends State<WalletFutures> with SingleTickerProviderStateMixin {
+class _WalletFuturesState extends ConsumerState<WalletFutures> with SingleTickerProviderStateMixin {
   late TabController controller;
   static final List<Map<String, dynamic>> statics = [
     {
@@ -55,20 +34,6 @@ class _WalletFuturesState extends State<WalletFutures> with SingleTickerProvider
     {
       "label": "冻结余额",
       "value": 0,
-    },
-  ];
-
-  static final List<Map<String, dynamic>> buttons = [
-    {
-      "child": "划转",
-      "onPressed": () {
-        Modal.alert(content: "此功能正在紧急修复中。");
-      },
-    },
-    {
-      "child": "划转记录",
-      "variant": UiButtonVariant.outline,
-      "onPressed": () {},
     },
   ];
 
@@ -164,19 +129,24 @@ class _WalletFuturesState extends State<WalletFutures> with SingleTickerProvider
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: buttons.map(
-                  (e) {
-                    return HitTestBlocker(
-                      up: false,
-                      child: UiButton(
-                        shape: UiButtonShape.rounded,
-                        variant: e['variant'],
-                        onPressed: e['onPressed'],
-                        label: e['child'],
-                      ),
-                    );
-                  },
-                ).toList(),
+                children: [
+                  UiButton(
+                    shape: UiButtonShape.rounded,
+                    variant: UiButtonVariant.filled,
+                    label: "划转",
+                    onPressed: () {
+                      Modal.alert(content: "此功能正在紧急修复中。");
+                    },
+                  ),
+                  UiButton(
+                    shape: UiButtonShape.rounded,
+                    variant: UiButtonVariant.outline,
+                    label: "划转记录",
+                    onPressed: () {
+                      context.push(Routes.walletHistory, extra: 2);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -234,40 +204,53 @@ class _WalletFuturesState extends State<WalletFutures> with SingleTickerProvider
   }
 
   _buildTable() {
-    return DataTable(
-      columnSpacing: 8,
-      horizontalMargin: 8,
-      dividerThickness: 0.01,
-      headingTextStyle: const TextStyle(color: Colors.grey),
-      columns: const [
-        DataColumn2(label: Text("资产")),
-        DataColumn2(label: Text("余额")),
-        DataColumn2(label: Text("未实现盈亏")),
-        DataColumn2(label: Text("保证金余额")),
-        DataColumn2(label: Text("  操作")),
-      ],
-      rows: CurrencyCollection.values
-          .map(
-            (e) => DataRow(
-              cells: [
-                DataCell(Text(e.name)),
-                DataCell(Text(0.decimalize())),
-                DataCell(Text(0.decimalize())),
-                DataCell(Text(0.decimalize())),
-                DataCell(
-                  UiButton(
-                    variant: UiButtonVariant.text,
-                    size: UiButtonSize.mini,
-                    label: "划转",
-                    onPressed: () {
-                      Modal.alert(content: "此功能正在紧急修复中。");
-                    },
-                  ),
+    final response = ref.watch(coinProvider);
+    return response.when(
+      error: (_, __) => const SizedBox.shrink(),
+      loading: () => const SizedBox.shrink(),
+      data: (coins) {
+        return DataTable(
+          columnSpacing: 8,
+          horizontalMargin: 8,
+          dividerThickness: 0.01,
+          headingTextStyle: const TextStyle(color: Colors.grey),
+          columns: const [
+            DataColumn2(label: Text("资产")),
+            DataColumn2(label: Text("余额")),
+            DataColumn2(label: Text("未实现盈亏")),
+            DataColumn2(label: Text("保证金余额")),
+            DataColumn2(label: Text("  操作")),
+          ],
+          rows: coins
+              .map(
+                (e) => DataRow(
+                  cells: [
+                    DataCell(UiChip(
+                      text: e.name,
+                      iconWidget: SizedBox(
+                        width: 20,
+                        child: e.icon,
+                      ),
+                    )),
+                    DataCell(Text(0.decimalize())),
+                    DataCell(Text(0.decimalize())),
+                    DataCell(Text(0.decimalize())),
+                    DataCell(
+                      UiButton(
+                        variant: UiButtonVariant.text,
+                        size: UiButtonSize.mini,
+                        label: "划转",
+                        onPressed: () {
+                          Modal.alert(content: "此功能正在紧急修复中。");
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
-          .toList(),
+              )
+              .toList(),
+        );
+      },
     );
   }
 }

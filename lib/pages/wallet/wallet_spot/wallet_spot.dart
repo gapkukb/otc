@@ -186,7 +186,6 @@ class _WalletSpotState extends ConsumerState<WalletSpot> {
             ),
           ],
           rows: coins.map((coin) {
-            final Detail? current = wallet.detail.firstWhere((element) => element.currency == coin.name);
             return DataRow(
               cells: [
                 DataCell(
@@ -198,9 +197,9 @@ class _WalletSpotState extends ConsumerState<WalletSpot> {
                     text: coin.name,
                   ),
                 ),
-                DataCell(Text("0")),
-                DataCell(Text("0")),
-                DataCell(Text("0")),
+                const DataCell(Text("0")),
+                const DataCell(Text("0")),
+                const DataCell(Text("0")),
                 DataCell(Row(
                   children: [
                     UiButton.text(
