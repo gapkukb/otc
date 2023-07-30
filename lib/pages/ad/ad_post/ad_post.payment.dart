@@ -14,6 +14,7 @@ class _AdPostPaymentState extends State<AdPostPayment> {
     return ModalPageTemplate(
       legend: "发布广告",
       title: "添加收款方式",
+      iconData: Icons.ads_click_outlined,
       onCompelete: (_) {},
       physics: const NeverScrollableScrollPhysics(),
       children: [

@@ -36,7 +36,7 @@ class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateM
     return ModalPageTemplate(
       legend: "发布新广告",
       title: "发布",
-      iconData: Icons.currency_exchange,
+      iconData: Icons.ads_click_outlined,
       okButtonText: "发布",
       onCompelete: (_) {},
       physics: NeverScrollableScrollPhysics(),

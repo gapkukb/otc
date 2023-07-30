@@ -50,7 +50,7 @@ class _AdPostNextState extends State<AdPostNext> with SingleTickerProviderStateM
     return ModalPageTemplate(
       legend: "发布新广告",
       title: "出售USDT",
-      iconData: Icons.currency_exchange,
+      iconData: Icons.ads_click_outlined,
       okButtonText: "继续",
       onCompelete: (_) {},
       physics: const NeverScrollableScrollPhysics(),
