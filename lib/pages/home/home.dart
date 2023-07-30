@@ -28,7 +28,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Material(
+      child: Container(
+        color: Colors.transparent,
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1242),

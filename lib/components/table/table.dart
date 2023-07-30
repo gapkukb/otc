@@ -149,6 +149,7 @@ class _DataGridState<T> extends State<DataGrid> {
               direction: Axis.horizontal,
               delegate: dataGridDataSource,
               visibleItemsCount: 10,
+              onPageNavigationStart: (pageIndex) {},
             )
           ],
         );
@@ -182,12 +183,13 @@ class DataGridDataSource<T> extends DataGridSource {
     final List<DataGridRow> rows = [];
 
     for (var row in _db) {
-      final List<DataGridCell> cells = [];
+      final List<_Cell> cells = [];
 
       for (var column in columns) {
-        final cell = DataGridCell(
+        final cell = _Cell(
           columnName: column.columnName,
           value: column.getValue(row),
+          getWidget: column.getWidget,
         );
 
         cells.add(cell);
@@ -200,10 +202,11 @@ class DataGridDataSource<T> extends DataGridSource {
   }
 
   Widget _defaultBuildCell(cell) {
-    return Align(
-      alignment: alignment,
-      child: Text(cell.value.toString()),
-    );
+    return cell.getWidget?.call(cell.value) ??
+        Align(
+          alignment: alignment,
+          child: Text(cell.value.toString()),
+        );
     // return Align(alignment: row.);
   }
 
@@ -230,6 +233,7 @@ class DataGridDataSource<T> extends DataGridSource {
 
 class DataGridColumn<T> extends GridColumn {
   final Object Function(T row) getValue;
+  final Widget Function(dynamic value)? getWidget;
   final Alignment? alignment;
   final String title;
   DataGridColumn({
@@ -251,5 +255,16 @@ class DataGridColumn<T> extends GridColumn {
     this.alignment,
     this.title = "",
     required this.getValue,
+    this.getWidget,
+  });
+}
+
+class _Cell extends DataGridCell {
+  final Widget Function(dynamic value)? getWidget;
+
+  _Cell({
+    required super.columnName,
+    super.value,
+    this.getWidget,
   });
 }

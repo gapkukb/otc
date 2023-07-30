@@ -131,12 +131,14 @@ class WalletHome extends ConsumerWidget {
   }
 
   _buildDataBoard(BuildContext context, WidgetRef ref) {
+    final balance = ref.watch(balanceProvider);
+
     final List<Map<String, dynamic>> wallets = [
       {
         "label": "资金",
-        "balance": 0,
-        "validBalance": 0,
-        "invalidBalance": 0,
+        "balance": balance.balance,
+        "validBalance": balance.valid,
+        "invalidBalance": balance.freezed,
         "path": "/wallet_funds",
         "tooltip": "您的C2C交易钱包",
       },

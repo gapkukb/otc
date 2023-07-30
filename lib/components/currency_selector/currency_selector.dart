@@ -18,13 +18,12 @@ DropdownItem buildItem(Cryptocurrency item) {
 }
 
 class CurrencySelector extends Dropdown {
-  final Cryptocurrency? selected;
   CurrencySelector({
     super.key,
     required super.name,
     super.formState,
     super.type,
-    this.selected,
+    super.initialValue,
   }) : super(
           labelText: "选择币种",
           dropdownBuilder: (context, selectedItem) {
