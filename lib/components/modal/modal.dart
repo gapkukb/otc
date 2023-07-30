@@ -1,8 +1,7 @@
 library modal;
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:bot_toast/src/toast_widget/animation.dart'
-    show loadingAnimation;
+import 'package:bot_toast/src/toast_widget/animation.dart' show loadingAnimation;
 import 'package:flutter/material.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
@@ -81,6 +80,8 @@ class Modal {
     bool? clickClose,
     Function()? onOk,
     Function()? onDecline,
+    UiButtonVariant? okButtonVariant,
+    UiButtonVariant? cancelButtonVariant,
   }) {
     return Modal.show(
       okButtonText: okButtonText,
@@ -92,6 +93,8 @@ class Modal {
       onDecline: onDecline,
       widget: widget,
       clickClose: clickClose,
+      okButtonVariant: okButtonVariant,
+      cancelButtonVariant: cancelButtonVariant,
     );
   }
 

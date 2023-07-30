@@ -28,6 +28,7 @@ class Routes {
   static const recharge = "/recharge";
   static const withdrawal = "/withdrawal";
   static const transfer = "/transfer";
+  static const walletDetail = "/wallet_detail/:id";
 
   static const udpatePwd = "/update_pwd";
   static const updateEmail = "/update_email";

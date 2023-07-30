@@ -85,12 +85,15 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
   static final List<Map<String, dynamic>> buttons = [
     {
       "child": "充值",
-      "onPressed": () {},
+      "onPressed": (BuildContext context) {
+        context.push(Routes.recharge);
+      },
     },
     {
       "child": "提现",
-      "variant": UiButtonVariant.outline,
-      "onPressed": () {},
+      "onPressed": (BuildContext context) {
+        context.push(Routes.recharge);
+      },
     },
     {
       "child": "站内转账",
@@ -152,7 +155,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
                     return UiButton(
                       shape: UiButtonShape.rounded,
                       variant: e['variant'],
-                      onPressed: e['onPressed'],
+                      onPressed: () => e['onPressed'](context),
                       label: e['child'],
                     );
                   },

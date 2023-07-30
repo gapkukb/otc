@@ -223,7 +223,7 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.walletMethodQRcodeAddition,
     statePage: (context, state) => WalletMethodQRcodeAddition(
-      addType: (state.extra as dynamic)['addType'],
+      addType: state.extra as dynamic,
     ),
   ),
   ModalRoute(
@@ -261,5 +261,9 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.transfer,
     page: const WalletTransfer(),
+  ),
+  ModalRoute(
+    path: Routes.walletDetail,
+    statePage: (context, state) => WalletDetail(id: state.pathParameters['id']!),
   ),
 ];

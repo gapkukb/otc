@@ -28,7 +28,11 @@ class AdPostBankTemplate extends StatelessWidget {
                   height: 32,
                   trailing: editable == true
                       ? GestureDetector(
-                          onTap: () => onEdit(context),
+                          onTap: () async {
+                            final result = await onEdit(context);
+
+                            print(result);
+                          },
                           child: const Icon(Icons.edit_note_outlined),
                         )
                       : GestureDetector(
@@ -84,80 +88,61 @@ class AdPostBankTemplate extends StatelessWidget {
   }
 
   onEdit(BuildContext context) {
-    // Modal.showWidget(
-    //   toastBuilder: (cancelFunc) {
-    //     return Material(
-    //       child: Row(
-    //         children: [
-    //           UiTextFormField(
-    //             name: "min",
-    //             labelText: "最小",
-    //           ),
-    //           UiTextFormField(
-    //             name: "max",
-    //             labelText: "最大",
-    //           ),
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
-
-    showDialog(
+    final formKey = GlobalKey<FormState>();
+    final Map<String, dynamic> formState = {};
+    return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text("修改订单限制"),
-          actions: [
-            UiButton.text(
-              onPressed: () {
-                Navigator.of(context).maybePop();
-              },
-              label: "取消",
-              size: UiButtonSize.small,
-            ),
-            UiButton.text(
-              onPressed: () {},
-              label: "确定",
-              size: UiButtonSize.small,
-            ),
-          ],
-          content: SizedBox(
-            width: 328,
-            child: Row(
-              children: [
-                Expanded(
-                  child: UiTextFormField(
-                    name: "min",
-                    labelText: "最小",
+        return Form(
+          key: formKey,
+          child: ModalPageTemplate(
+            legend: "添加收款方式",
+            title: "修改订单限制",
+            iconData: Icons.wallet,
+            maxWidth: 300,
+            onCompelete: (context) {
+              formKey.currentState!.save();
+              if ((double.tryParse(formState['max']!) ?? 0) - (double.tryParse(formState['min']!) ?? 0) < 0) {
+                Modal.showText(text: "最大值不可小于最小值");
+              } else {
+                context.pop(formState);
+              }
+            },
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: UiTextFormField(
+                      keyboardType: TextInputType.number,
+                      name: "min",
+                      labelText: "最小",
+                      formState: formState,
+                    ),
                   ),
-                ),
-                const Gap.small(horizition: true),
-                Expanded(
-                  child: UiTextFormField(
-                    name: "min",
-                    labelText: "最小",
+                  const Gap.small(horizition: true),
+                  Expanded(
+                    child: UiTextFormField(
+                      keyboardType: TextInputType.number,
+                      name: "max",
+                      labelText: "最大",
+                      formState: formState,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
-        );
-        return Row(
-          children: [
-            UiTextFormField(
-              name: "min",
-              labelText: "最小",
-            ),
-            UiTextFormField(
-              name: "max",
-              labelText: "最大",
-            ),
-          ],
         );
       },
     );
   }
 
-  onDelete() {}
+  onDelete() {
+    Modal.confirm(
+      content: "确认删除该收款方式?",
+      okButtonText: "删除",
+      okButtonVariant: UiButtonVariant.filled,
+      onOk: () {},
+    );
+  }
 }

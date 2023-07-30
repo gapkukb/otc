@@ -1,6 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum FiatCurrency {
+enum Fiatcurrency {
   CNY(text: "人民币", symbol: "￥"),
   USD(text: "美元", symbol: "\$"),
   CAD(text: "加币", symbol: "C\$"),
@@ -13,7 +13,7 @@ enum FiatCurrency {
   MYR(text: "马币", symbol: "RM"),
   ;
 
-  const FiatCurrency({
+  const Fiatcurrency({
     required this.symbol,
     required this.text,
   });

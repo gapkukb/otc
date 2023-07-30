@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/providers/wallet.provider.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -27,7 +29,9 @@ class Overview extends ConsumerWidget {
             title: UiButton(
               size: UiButtonSize.medium,
               label: "充值",
-              onPressed: () {},
+              onPressed: () {
+                context.push(Routes.recharge);
+              },
             ),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 24.0),
@@ -35,7 +39,9 @@ class Overview extends ConsumerWidget {
                 variant: UiButtonVariant.outline,
                 size: UiButtonSize.medium,
                 label: "提现",
-                onPressed: () {},
+                onPressed: () {
+                  context.push(Routes.withdrawal);
+                },
               ),
             ),
           ),

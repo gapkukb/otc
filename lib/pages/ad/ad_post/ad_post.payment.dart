@@ -29,42 +29,36 @@ class _AdPostPaymentState extends State<AdPostPayment> {
             separatorBuilder: (context, index) {
               return const Gap.small();
             },
-            itemCount: 100,
+            itemCount: 10,
           ),
         ),
         const Gap.small(),
         Row(
           children: [
             Expanded(
-              child: UiButton(
-                onPressed: () {},
+              child: _Button(
                 label: "银行卡",
-                fullWidth: true,
-                iconData: Icons.add,
-                variant: UiButtonVariant.outline,
-                size: UiButtonSize.medium,
+                onPressed: () async {
+                  await context.push(Routes.walletMethodBankAddition);
+                },
               ),
             ),
             const Gap.small(horizition: true),
             Expanded(
-              child: UiButton(
-                onPressed: () {},
+              child: _Button(
                 label: "支付宝",
-                fullWidth: true,
-                iconData: Icons.add,
-                variant: UiButtonVariant.outline,
-                size: UiButtonSize.medium,
+                onPressed: () async {
+                  await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.alipay);
+                },
               ),
             ),
             const Gap.small(horizition: true),
             Expanded(
-              child: UiButton(
-                onPressed: () {},
+              child: _Button(
                 label: "微信",
-                fullWidth: true,
-                iconData: Icons.add,
-                variant: UiButtonVariant.outline,
-                size: UiButtonSize.medium,
+                onPressed: () async {
+                  await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.wechat);
+                },
               ),
             ),
           ],
@@ -72,4 +66,17 @@ class _AdPostPaymentState extends State<AdPostPayment> {
       ],
     );
   }
+}
+
+class _Button extends UiButton {
+  const _Button({
+    super.key,
+    super.label,
+    required super.onPressed,
+  }) : super(
+          fullWidth: true,
+          iconData: Icons.add,
+          variant: UiButtonVariant.outline,
+          size: UiButtonSize.medium,
+        );
 }

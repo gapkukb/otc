@@ -6,6 +6,7 @@ import 'package:otc/layout/layout.logo.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/pages/notice/notice_appbar.dart';
 import 'package:otc/router/router.dart';
+import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/providers/user.provider.dart';
 
@@ -37,8 +38,13 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
         children: [
           Menu(
             text: "买/卖数字货币",
-            onSelected: (value) {
-              context.go(value);
+            onSelected: (value) async {
+              if (await predication(
+                context: context,
+                types: [
+                  Predication.kyc1,
+                ],
+              )) context.go(value);
             },
             items: const [
               MenuItem(

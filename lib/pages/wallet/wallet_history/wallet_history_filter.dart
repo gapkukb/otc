@@ -74,7 +74,7 @@ class _WalletHistoryFilterState extends State<WalletHistoryFilter> {
             child: CurrencySelector(
               name: "currency",
               formState: widget.formState,
-              initialValue: Coins.USDT.name,
+              initialValue: Cryptocurrency.USDT.name,
             ),
           ),
           const Gap.small(horizition: true),

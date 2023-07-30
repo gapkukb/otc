@@ -29,7 +29,7 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
       "action": (BuildContext context) {
         context.pushNamed(
           Routes.walletMethodQRcodeAddition,
-          extra: {'addType': AddType.alipay},
+          extra: AddType.alipay,
         );
       }
     },
@@ -39,7 +39,7 @@ class _WalletMethodLegalState extends State<WalletMethodLegal> {
       "action": (BuildContext context) {
         context.pushNamed(
           Routes.walletMethodQRcodeAddition,
-          extra: {'addType': AddType.wechat},
+          extra: AddType.wechat,
         );
       }
     },

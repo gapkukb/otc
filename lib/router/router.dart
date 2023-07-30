@@ -57,6 +57,7 @@ import 'package:otc/pages/wallet/wallet.method/wallet.method.qrcode.addition.dar
 import 'package:otc/pages/wallet/wallet_futures/wallet_futures.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history.dart';
 import 'package:otc/pages/wallet/wallet_spot/wallet_spot.dart';
+import 'package:otc/pages/wallet/wallet.detail/wallet.detail.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.dart';
 import 'package:otc/pages/agent/layout/layout.dart';
 import 'package:otc/pages/agent/dashboard/dashboard.dart';

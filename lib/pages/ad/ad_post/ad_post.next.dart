@@ -57,12 +57,14 @@ class _AdPostNextState extends State<AdPostNext> with SingleTickerProviderStateM
       maxWidth: 624,
       children: [
         DottedBorder(
-          dashPattern: [6],
+          dashPattern: const [6],
           child: UiButton.text(
             iconData: Icons.add,
             fullWidth: true,
-            onPressed: () {},
             label: "添加收款方式",
+            onPressed: () {
+              context.push(Routes.adPostPayment);
+            },
           ),
         ),
         const Gap.small(),
@@ -84,6 +86,7 @@ class _AdPostNextState extends State<AdPostNext> with SingleTickerProviderStateM
         const Gap.small(),
         Dropdown(
           name: "",
+          initialValue: 0,
           data: [
             DropdownItem(title: "15分钟", value: 0),
             DropdownItem(title: "30分钟", value: 1),
