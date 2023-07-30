@@ -13,7 +13,7 @@ class Filters {
   final FilterTime time;
   final FilterState status;
   final String orderId;
-  final Coins coin;
+  final Cryptocurrency coin;
 
   const Filters({
     required this.type,
@@ -28,7 +28,7 @@ class Filters {
     FilterTime? time,
     FilterState? status,
     String? orderId,
-    Coins? coin,
+    Cryptocurrency? coin,
   }) {
     return Filters(
       type: type ?? this.type,
@@ -44,7 +44,7 @@ class FilterNotifier extends StateNotifier<Filters> {
   FilterNotifier()
       : super(
           const Filters(
-            coin: Coins.USDT,
+            coin: Cryptocurrency.USDT,
             orderId: "",
             status: FilterState.all,
             time: FilterTime.week,
@@ -57,7 +57,7 @@ class FilterNotifier extends StateNotifier<Filters> {
     FilterTime? time,
     FilterState? status,
     String? orderId,
-    Coins? coin,
+    Cryptocurrency? coin,
   }) {
     state = state.copyWith(
       type: type,

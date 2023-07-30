@@ -50,7 +50,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
       key: _formKey,
       child: ModalPageTemplate(
         title: "修改手机",
-        nextText: "完成",
+        okButtonText: "完成",
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();

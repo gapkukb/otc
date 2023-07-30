@@ -128,7 +128,7 @@ class _CaptchaState extends State<Captcha> {
     return Form(
       key: formKey,
       child: ModalPageTemplate(
-        nextText: "下一步",
+        okButtonText: "下一步",
         title: widget.legend ?? "${device.chineseText}验证",
         onCompelete: action,
         children: [

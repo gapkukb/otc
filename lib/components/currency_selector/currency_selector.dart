@@ -4,7 +4,7 @@ import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/widgets/ui_chip.dart';
 
-DropdownItem buildItem(Coins item) {
+DropdownItem buildItem(Cryptocurrency item) {
   return DropdownItem(
     leading: SvgPicture.asset(
       item.iconPath,
@@ -18,7 +18,7 @@ DropdownItem buildItem(Coins item) {
 }
 
 class CurrencySelector extends Dropdown {
-  final Coins? selected;
+  final Cryptocurrency? selected;
   CurrencySelector({
     super.key,
     required super.name,
@@ -41,7 +41,7 @@ class CurrencySelector extends Dropdown {
           props: PopupProps.menu(
             disabledItemFn: (item) => item.title != "USDT",
           ),
-          data: Coins.values.map(buildItem).toList(),
+          data: Cryptocurrency.values.map(buildItem).toList(),
           validator: (value) {
             if (value == null) return "请选择币种";
             return null;

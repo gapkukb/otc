@@ -49,7 +49,7 @@ class UiClipboard extends StatelessWidget {
     if (child == null) return button;
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [child!, button],
+      children: [Flexible(child: child!), button],
     );
   }
 }

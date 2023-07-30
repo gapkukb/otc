@@ -1,7 +1,5 @@
 // part of layout;
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/router/router.dart';
@@ -83,8 +81,7 @@ class LayoutMenuItem extends ListTile {
       mouseCursor: mouseCursor,
       onFocusChange: onFocusChange,
       onLongPress: onLongPress,
-      selected: (GoRouter.of(context).location == path ||
-          GoRouter.of(context).location == pathname),
+      selected: (GoRouter.of(context).location == path || GoRouter.of(context).location == pathname),
       selectedColor: selectedColor,
       selectedTileColor: selectedTileColor,
       shape: shape,

@@ -32,7 +32,7 @@ class _AuthPrimaryState extends State<AuthPrimary> {
       child: ModalPageTemplate(
         legend: "身份认证",
         title: "初级认证",
-        nextText: "下一步",
+        okButtonText: "下一步",
         onCompelete: (_) async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();

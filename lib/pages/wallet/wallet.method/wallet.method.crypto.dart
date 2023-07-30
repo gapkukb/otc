@@ -108,7 +108,7 @@ class WalletMethodCrypto extends ConsumerWidget {
                               UiChip(
                                 iconWidget: SizedBox(
                                   width: 20,
-                                  child: Coins.getByName(item.currency.name)?.icon,
+                                  child: Cryptocurrency.getByName(item.currency.name)?.icon,
                                 ),
                                 text: item.currency.name,
                               ),

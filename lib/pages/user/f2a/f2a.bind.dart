@@ -22,7 +22,7 @@ class _F2ABindState extends State<F2ABind> {
     return ModalPageTemplate(
       legend: "账户安全",
       title: "谷歌身份验证器",
-      nextText: "下一步",
+      okButtonText: "下一步",
       onCompelete: (_) async {
         var cancel = BotToast.showLoading();
         await Future.delayed(const Duration(seconds: 1));

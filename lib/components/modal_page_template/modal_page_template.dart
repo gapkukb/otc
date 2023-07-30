@@ -7,8 +7,11 @@ import 'package:otc/widgets/ui_button.dart';
 class ModalPageTemplate extends StatelessWidget {
   final String legend;
   final String title;
-  final String nextText;
+  final String okButtonText;
+  final String cancelButtonText;
   final bool? filledButton;
+  final bool? showCancelButton;
+  final bool? showOkButton;
   final IconData iconData;
   final Widget? icon;
   final List<Widget> children;
@@ -20,7 +23,8 @@ class ModalPageTemplate extends StatelessWidget {
   const ModalPageTemplate({
     super.key,
     this.legend = "账户安全",
-    this.nextText = "确定",
+    this.okButtonText = "确定",
+    this.cancelButtonText = "取消",
     this.iconData = Icons.security,
     required this.title,
     required this.onCompelete,
@@ -30,6 +34,8 @@ class ModalPageTemplate extends StatelessWidget {
     this.physics,
     this.maxWidth = 460,
     this.filledButton,
+    this.showCancelButton,
+    this.showOkButton,
   });
 
   @override
@@ -75,9 +81,12 @@ class ModalPageTemplate extends StatelessWidget {
                           ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Divider(height: 1),
-                  const SizedBox(height: 24),
+                  // const SizedBox(height: 8),
+                  const Divider(
+                    thickness: 1,
+                    height: 33,
+                  ),
+                  // const SizedBox(height: 24),
                   ...children,
                   const SizedBox(height: 24),
                   _buildActions(context),
@@ -95,25 +104,27 @@ class ModalPageTemplate extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        TextButton(
-          child: const Text("取消"),
-          onPressed: () {
-            onCancel?.call(context) ?? Navigator.of(context).maybePop();
-          },
-        ),
-        UiButton(
-          variant: filledButton == true ? UiButtonVariant.filled : UiButtonVariant.text,
-          onPressed: () async {
-            if (disabled) return;
-            try {
-              disabled = true;
-              await onCompelete(context);
-            } finally {
-              disabled = false;
-            }
-          },
-          child: Text(nextText),
-        ),
+        if (showCancelButton != false)
+          UiButton.text(
+            child: Text(cancelButtonText),
+            onPressed: () {
+              onCancel?.call(context) ?? Navigator.of(context).maybePop();
+            },
+          ),
+        if (showOkButton != false)
+          UiButton(
+            variant: filledButton == true ? UiButtonVariant.filled : UiButtonVariant.text,
+            onPressed: () async {
+              if (disabled) return;
+              try {
+                disabled = true;
+                await onCompelete(context);
+              } finally {
+                disabled = false;
+              }
+            },
+            child: Text(okButtonText),
+          ),
       ],
     );
   }

@@ -83,7 +83,7 @@ class HttpException extends _Exception {
       case DioExceptionType.cancel:
         return HttpException(ClientErrorCode.cancel, "请求取消");
       case DioExceptionType.connectionTimeout:
-        return HttpException(ClientErrorCode.connectionTimeout, "您的网络信号弱，连接服务器超时");
+        return HttpException(ClientErrorCode.connectionTimeout, "连接服务器超时");
       case DioExceptionType.sendTimeout:
         return HttpException(ClientErrorCode.sendTimeout, "请求服务器超时");
       case DioExceptionType.receiveTimeout:
@@ -98,7 +98,7 @@ class HttpException extends _Exception {
               case 401:
                 provider.read(userProvider.notifier).logout();
                 GoRouter.of(navigatorKey.currentContext!).replace('/login');
-                return HttpException(statusCode, "请先登录账户");
+                return HttpException(statusCode, "会话已失效，请重新登录");
               case 403:
                 return HttpException(statusCode, "您的权限不足，服务器拒绝执行");
               case 404:

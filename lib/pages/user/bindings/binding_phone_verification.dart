@@ -6,8 +6,7 @@ class BindingPhoneVerification extends StatefulWidget {
   const BindingPhoneVerification({super.key});
 
   @override
-  State<BindingPhoneVerification> createState() =>
-      _BindingPhoneVerificationState();
+  State<BindingPhoneVerification> createState() => _BindingPhoneVerificationState();
 }
 
 class _BindingPhoneVerificationState extends State<BindingPhoneVerification> {
@@ -16,7 +15,7 @@ class _BindingPhoneVerificationState extends State<BindingPhoneVerification> {
     return ModalPageTemplate(
       legend: "绑定手机",
       title: "手机验证",
-      nextText: "下一步",
+      okButtonText: "下一步",
       onCompelete: (_) {},
       children: [
         const UiTextField(

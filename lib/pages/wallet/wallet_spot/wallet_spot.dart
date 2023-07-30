@@ -258,7 +258,7 @@ class _WalletSpotState extends State<WalletSpot> {
           fixedWidth: 140,
         ),
       ],
-      rows: Coins.values.map((coin) {
+      rows: Cryptocurrency.values.map((coin) {
         return DataRow(
           cells: [
             DataCell(

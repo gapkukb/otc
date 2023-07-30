@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otc/components/gap/gap.dart';
 
 class Cell extends StatelessWidget {
   final Widget? title;
@@ -57,6 +58,7 @@ class Cell extends StatelessWidget {
                         style: titleTextStyle,
                       )),
           ),
+          const Gap.large(horizition: true),
           if (divider == true)
             const VerticalDivider(
               width: 33,

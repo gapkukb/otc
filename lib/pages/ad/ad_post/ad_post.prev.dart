@@ -37,7 +37,7 @@ class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateM
       legend: "发布新广告",
       title: "发布",
       iconData: Icons.currency_exchange,
-      nextText: "发布",
+      okButtonText: "发布",
       onCompelete: (_) {},
       physics: NeverScrollableScrollPhysics(),
       children: [

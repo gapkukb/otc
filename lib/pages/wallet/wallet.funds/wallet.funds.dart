@@ -278,7 +278,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
                             variant: UiButtonVariant.text,
                             size: UiButtonSize.mini,
                             onPressed: () async {
-                              if (coin.name == Coins.USDT.name) {
+                              if (coin.name == Cryptocurrency.USDT.name) {
                                 if (await predication(
                                   context: context,
                                   types: [Predication.kyc1],
@@ -306,7 +306,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
 
 class _Item {
   final String name;
-  final Function(BuildContext context, Coins coin) hanlder;
+  final Function(BuildContext context, Cryptocurrency coin) hanlder;
   _Item({
     required this.name,
     required this.hanlder,

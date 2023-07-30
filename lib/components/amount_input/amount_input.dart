@@ -7,7 +7,7 @@ import 'package:otc/widgets/ui_text_form_field.dart';
 import 'package:otc/utils/formatter.dart';
 
 class AmountInput extends UiTextFormField {
-  final Coins coin;
+  final Cryptocurrency coin;
   final double? maxAmount;
 
   AmountInput({

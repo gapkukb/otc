@@ -23,10 +23,10 @@ import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class WalletTransfer extends ConsumerStatefulWidget {
-  final Coins coin;
+  final Cryptocurrency coin;
   const WalletTransfer({
     super.key,
-    this.coin = Coins.USDT,
+    this.coin = Cryptocurrency.USDT,
   });
 
   @override
@@ -62,7 +62,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
         iconData: Icons.credit_card_outlined,
         filledButton: true,
         onCompelete: apply,
-        nextText: "提币",
+        okButtonText: "提币",
         children: [
           CurrencySelector(
             name: "currency",
@@ -81,7 +81,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
           const Gap.small(),
           AmountInput(
             labelText: "转账数量",
-            coin: Coins.USDT,
+            coin: Cryptocurrency.USDT,
             name: "amount",
             formState: formState,
             controller: controller,

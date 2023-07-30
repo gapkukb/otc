@@ -18,7 +18,7 @@ part 'agent.api.dart';
 part 'kyc.api.dart';
 part 'otc.api.dart';
 
-const duration = Duration(seconds: 30);
+const duration = Duration(seconds: 15);
 
 final http = Http(BaseOptions(
   receiveTimeout: duration,

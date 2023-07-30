@@ -51,7 +51,7 @@ class _AdPostNextState extends State<AdPostNext> with SingleTickerProviderStateM
       legend: "发布新广告",
       title: "出售USDT",
       iconData: Icons.currency_exchange,
-      nextText: "继续",
+      okButtonText: "继续",
       onCompelete: (_) {},
       physics: const NeverScrollableScrollPhysics(),
       maxWidth: 624,

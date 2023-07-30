@@ -20,7 +20,7 @@ class AddressSelector extends Dropdown {
               style: Font.largeBold,
             ),
           ),
-          itemBuilders: (context, item, widget) => Padding(
+          itemBuilder: (context, item, widget) => Padding(
             padding: Pads.xs,
             child: widget,
           ),

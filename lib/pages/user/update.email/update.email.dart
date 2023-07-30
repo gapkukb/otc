@@ -52,7 +52,7 @@ class _UpdateEmailState extends State<UpdateEmail> {
       key: _formKey,
       child: ModalPageTemplate(
         title: "修改邮箱",
-        nextText: "完成",
+        okButtonText: "完成",
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             await apis.security.validateCaptcha({

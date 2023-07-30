@@ -51,7 +51,7 @@ class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin
       key: _formKey,
       child: ModalPageTemplate(
         title: "重置登录密码",
-        nextText: "下一步",
+        okButtonText: "下一步",
         onCompelete: (_) async {
           if (isNext) {
           } else {
