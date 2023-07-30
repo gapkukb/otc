@@ -65,6 +65,7 @@ import 'package:otc/pages/agent/agent_setting/agent_setting.dart';
 import 'package:otc/pages/agent/income/income.dart';
 import 'package:otc/pages/agent/agent_system_Hierarchy/agent_system_Hierarchy.dart';
 import 'package:otc/pages/account/register/register.dart';
+import 'package:otc/pages/terms/terms.dart';
 import 'package:otc/utils/navigator.dart';
 
 import '../layout/layout.dart';

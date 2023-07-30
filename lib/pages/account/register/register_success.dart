@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class RegisterSuccess extends StatelessWidget {
@@ -31,7 +32,9 @@ class RegisterSuccess extends StatelessWidget {
                   variant: UiButtonVariant.outline,
                   label: "先去逛逛",
                   onPressed: () {
-                    context.replace('/');
+                    Router.neglect(context, () {
+                      context.goNamed(Routes.home);
+                    });
                   },
                 ),
               ),
@@ -41,7 +44,9 @@ class RegisterSuccess extends StatelessWidget {
                   size: UiButtonSize.medium,
                   label: "加入做市商联盟",
                   onPressed: () {
-                    context.replace('/');
+                    Router.neglect(context, () {
+                      context.goNamed(Routes.home);
+                    });
                   },
                 ),
               ),

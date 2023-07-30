@@ -40,6 +40,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
   @override
   dispose() {
     focusNode.removeListener(_showPop);
+    overlayEntry?.remove();
     overlayEntry = null;
     super.dispose();
   }

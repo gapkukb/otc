@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class LegalTerms extends StatefulWidget {
-  const LegalTerms({super.key});
+class Terms extends StatefulWidget {
+  const Terms({super.key});
 
   @override
-  State<LegalTerms> createState() => _LegalTermsState();
+  State<Terms> createState() => _TermsState();
 }
 
-class _LegalTermsState extends State<LegalTerms> {
+class _TermsState extends State<Terms> {
   @override
   void initState() {
     super.initState();

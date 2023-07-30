@@ -12,7 +12,7 @@ CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
   return CustomTransitionPage(
     barrierColor: Colors.black38,
     barrierDismissible: barrierDismissible ?? false,
-    fullscreenDialog: false,
+    fullscreenDialog: true,
     opaque: false,
     transitionsBuilder: (_, __, ___, child) => child,
     child: child,
@@ -24,14 +24,16 @@ class ModalRoute extends GoRoute {
   // 背景透明
   final bool? transparent;
   final Widget Function(BuildContext context, GoRouterState state)? statePage;
+  final GlobalKey<NavigatorState>? key;
   ModalRoute({
     required super.path,
     this.page,
     this.statePage,
     this.transparent,
+    this.key,
   }) : super(
           name: path,
-          parentNavigatorKey: navigatorKey,
+          parentNavigatorKey: key ?? navigatorKey,
           pageBuilder: (context, state) => modalPage(
             statePage?.call(context, state) ?? page!,
             transparent,

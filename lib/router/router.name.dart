@@ -14,6 +14,7 @@ class Routes {
   static const setting = "/setting";
   static const updateNickname = "/update_nickname";
   static const updateAvatar = "/update_avatar";
+  static const terms = "/terms";
   // 钱包
   static const wallet = "/wallet";
   static const walletMethodBanks = "/wallet_method_banks";

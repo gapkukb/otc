@@ -161,14 +161,6 @@ final List<RouteBase> routes = [
     statePage: (context, state) => const NoticeWindow(),
   ),
   ModalRoute(
-    path: Routes.login,
-    page: const Login(),
-  ),
-  ModalRoute(
-    path: Routes.register,
-    page: const Register(),
-  ),
-  ModalRoute(
     path: Routes.updateNickname,
     page: const UpdateNickname(),
   ),
@@ -265,5 +257,17 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.walletDetail,
     statePage: (context, state) => WalletDetail(id: state.pathParameters['id']!),
+  ),
+  ModalRoute(
+    path: Routes.login,
+    page: const Login(),
+  ),
+  ModalRoute(
+    path: Routes.register,
+    page: const Register(),
+  ),
+  ModalRoute(
+    path: Routes.terms,
+    page: const Terms(),
   ),
 ];

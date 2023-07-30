@@ -47,7 +47,11 @@ class _Page404State extends State<Page404> {
                   iconData: Icons.keyboard_arrow_left_outlined,
                   label: "返回",
                   onPressed: () {
-                    if (context.canPop()) context.pop();
+                    if (context.canPop()) {
+                      context.pop();
+                    } else {
+                      context.go(Routes.home);
+                    }
                   },
                 ),
                 const SizedBox(width: 16),

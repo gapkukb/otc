@@ -10,7 +10,7 @@ import 'package:otc/components/text_form_field_invite_code/text_form_field_invit
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
 import 'package:otc/pages/account/login/login_util.dart';
-import 'package:otc/pages/user/captcha/captcha.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/utils/navigator.dart';
 import './register_success.dart';
@@ -22,8 +22,7 @@ class Register extends StatefulWidget {
   State<Register> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register>
-    with SingleTickerProviderStateMixin {
+class _RegisterState extends State<Register> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formState = {};
 
@@ -54,12 +53,17 @@ class _RegisterState extends State<Register>
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      borderOnForeground: true,
-      child: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: _successful ? const RegisterSuccess() : _buildBody(),
+    return UnconstrainedBox(
+      child: SizedBox(
+        width: 500,
+        child: Card(
+          elevation: 10,
+          borderOnForeground: true,
+          child: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: _successful ? const RegisterSuccess() : _buildBody(),
+          ),
+        ),
       ),
     );
   }
@@ -116,8 +120,9 @@ class _RegisterState extends State<Register>
                   Checkbox(
                     value: _agreement,
                     onChanged: (checked) {
-                      _agreement = checked!;
-                      setState(() {});
+                      setState(() {
+                        _agreement = checked!;
+                      });
                     },
                   ),
                   Text.rich(
@@ -131,7 +136,7 @@ class _RegisterState extends State<Register>
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              context.push('/terms');
+                              context.replace(Routes.terms);
                             },
                         ),
                       ],
@@ -158,7 +163,7 @@ class _RegisterState extends State<Register>
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.go("/account/login");
+                          context.push(Routes.login);
                         },
                     ),
                   ],

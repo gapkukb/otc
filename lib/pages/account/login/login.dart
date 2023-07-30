@@ -44,83 +44,91 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      borderOnForeground: true,
-      child: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "登录",
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 32),
-            TabBar(
-              indicatorSize: TabBarIndicatorSize.tab,
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _controller,
-              tabs: const [
-                Tab(
-                  text: "邮箱登录",
+    return UnconstrainedBox(
+      child: SizedBox(
+        width: 500,
+        child: Card(
+          elevation: 10,
+          borderOnForeground: true,
+          child: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "登录",
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                Tab(
-                  text: "手机登录",
+                const SizedBox(height: 32),
+                TabBar(
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _controller,
+                  tabs: const [
+                    Tab(
+                      text: "邮箱登录",
+                    ),
+                    Tab(
+                      text: "手机登录",
+                    ),
+                  ],
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(height: 32),
+                      _showEmail
+                          ? TextFormFieldEmail(
+                              name: "username",
+                              formState: _formState,
+                            )
+                          : TextFormFieldPhone(
+                              name: "username",
+                              formState: _formState,
+                            ),
+                      const SizedBox(height: 32),
+                      TextFormFieldPassword(
+                        formState: _formState,
+                      ),
+                      const SizedBox(height: 16),
+                      UiButton(
+                        fullWidth: true,
+                        size: UiButtonSize.medium,
+                        label: "登录",
+                        onPressed: login,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          UiButton(
+                            variant: UiButtonVariant.text,
+                            onPressed: () {
+                              context.push(Routes.register);
+                            },
+                            label: "免费注册",
+                          ),
+                          UiButton(
+                            variant: UiButtonVariant.text,
+                            onPressed: () {
+                              // context.push(Routes.resetPwd);
+                              Router.neglect(context, () {
+                                context.goNamed(Routes.home);
+                              });
+                            },
+                            label: "忘记密码",
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 32),
-                  _showEmail
-                      ? TextFormFieldEmail(
-                          name: "username",
-                          formState: _formState,
-                        )
-                      : TextFormFieldPhone(
-                          name: "username",
-                          formState: _formState,
-                        ),
-                  const SizedBox(height: 32),
-                  TextFormFieldPassword(
-                    formState: _formState,
-                  ),
-                  const SizedBox(height: 16),
-                  UiButton(
-                    fullWidth: true,
-                    size: UiButtonSize.medium,
-                    label: "登录",
-                    onPressed: login,
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      UiButton(
-                        variant: UiButtonVariant.text,
-                        onPressed: () {
-                          context.go("/account/register");
-                        },
-                        label: "免费注册",
-                      ),
-                      UiButton(
-                        variant: UiButtonVariant.text,
-                        onPressed: () {
-                          context.pushNamed(Routes.resetPwd);
-                        },
-                        label: "忘记密码",
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
