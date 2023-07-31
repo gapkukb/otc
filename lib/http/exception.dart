@@ -97,7 +97,9 @@ class HttpException extends _Exception {
                 return HttpException(statusCode, "请求语法出错");
               case 401:
                 provider.read(userProvider.notifier).logout();
-                GoRouter.of(navigatorKey.currentContext!).replace('/login');
+                GoRouter.of(navigatorKey.currentContext!)
+                  ..replace(Routes.home)
+                  ..pushNamed(Routes.login);
                 return HttpException(statusCode, "会话已失效，请重新登录");
               case 403:
                 return HttpException(statusCode, "您的权限不足，服务器拒绝执行");
