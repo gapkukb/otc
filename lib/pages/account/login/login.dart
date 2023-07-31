@@ -107,7 +107,7 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                           UiButton(
                             variant: UiButtonVariant.text,
                             onPressed: () {
-                              context.push(Routes.register);
+                              context.pushReplacementNamed(Routes.register);
                             },
                             label: "免费注册",
                           ),

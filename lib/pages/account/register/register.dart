@@ -163,7 +163,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.push(Routes.login);
+                          context.pushReplacementNamed(Routes.login);
                         },
                     ),
                   ],

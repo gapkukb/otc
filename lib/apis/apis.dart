@@ -1,6 +1,7 @@
 library apis;
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:otc/constants/base_url.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
@@ -27,7 +28,7 @@ final http = Http(BaseOptions(
   baseUrl: baseUrl,
   headers: {
     global.keys.authorization: global.authorization,
-    "Referer": "APP",
+    if (!kIsWeb) "Referer": "APP",
   },
 ));
 
