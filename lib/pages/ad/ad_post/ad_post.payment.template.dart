@@ -1,8 +1,8 @@
 part of ad_post;
 
-class AdPostBankTemplate extends StatelessWidget {
+class AdPostPaymentTemplate extends StatelessWidget {
   final bool? editable;
-  const AdPostBankTemplate({
+  const AdPostPaymentTemplate({
     super.key,
     this.editable,
   });

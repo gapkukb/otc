@@ -23,7 +23,7 @@ class _AdPostPaymentState extends State<AdPostPayment> {
           child: ListView.separated(
             cacheExtent: 100,
             itemBuilder: (context, index) {
-              return AdPostBankTemplate(
+              return const AdPostPaymentTemplate(
                 editable: true,
               );
             },
@@ -80,4 +80,22 @@ class _Button extends UiButton {
           variant: UiButtonVariant.outline,
           size: UiButtonSize.medium,
         );
+}
+
+class PaymentItem {
+  final double min;
+  final double max;
+  final String account;
+  final String remark;
+  final String username;
+  final PaymentMethods paymentMethod;
+
+  PaymentItem({
+    required this.min,
+    required this.max,
+    required this.account,
+    required this.remark,
+    required this.username,
+    required this.paymentMethod,
+  });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 @JsonEnum(valueField: 'value')
@@ -38,11 +39,26 @@ enum PaymentMethods {
             : Colors.blue;
   }
 
+  get icon {
+    switch (type) {
+      case 0:
+        return const Icon(FontAwesomeIcons.weixin);
+      case 1:
+        return const Icon(FontAwesomeIcons.alipay);
+      default:
+        return const Icon(FontAwesomeIcons.weixin);
+    }
+  }
+
   static PaymentMethods fromType(int type) {
     return type == PaymentMethods.bankCard.type
         ? PaymentMethods.bankCard
         : type == PaymentMethods.wechat.type
             ? PaymentMethods.wechat
             : PaymentMethods.bankCard;
+  }
+
+  static PaymentMethods getByValue(String value) {
+    return PaymentMethods.values.firstWhere((element) => element.value == value);
   }
 }
