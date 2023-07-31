@@ -47,9 +47,6 @@ class _CaptchaState extends State<Captcha> {
   TextEditingController _controller = TextEditingController();
   final Map<String, dynamic> formState = {};
   final formKey = GlobalKey<FormState>();
-
-  final int _length = 6;
-
   late CaptchaDevice device;
 
   paste() async {
@@ -59,7 +56,7 @@ class _CaptchaState extends State<Captcha> {
 
   @override
   void initState() {
-    getRealDevice();
+    getDevice();
     if (widget.autoStart == true) send();
     super.initState();
   }
@@ -71,17 +68,16 @@ class _CaptchaState extends State<Captcha> {
   }
 
   List<CaptchaDevice> get supportedModes {
-    if (widget.user == null) return [device];
+    if (widget.user == null) return [widget.preferredDevice!];
     return CaptchaDevice.values.where((mode) => mode.isValid(widget.user?.base)).toList();
   }
 
-  getRealDevice() {
+  getDevice() {
     // preferredDevice参数是设置验证模式偏好.
     // 但是要判断用户是否开启此模式
     // 优先级依照枚举排序 f2a->phone->email,
-
     device = widget.preferredDevice ?? CaptchaDevice.f2a;
-    device = supportedModes.contains(device) ? device : supportedModes.elementAt(0);
+    device = supportedModes.contains(device) ? device : widget.preferredDevice!;
   }
 
   String get description {
@@ -219,7 +215,7 @@ class _CaptchaState extends State<Captcha> {
         "session": session.value,
       };
 
-      if (session == CaptchaSession.register) {
+      if (session == CaptchaSession.register || session == CaptchaSession.forget) {
         payload.addAll({
           "account": widget.account!,
         });

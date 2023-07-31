@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -16,11 +18,7 @@ class HomeTop extends ConsumerWidget {
 
     if (context.md) {
       return Column(
-        children: [
-          Assets.images.topBanner.image(),
-          const SizedBox(height: 32),
-          _buildText(context, user)
-        ],
+        children: [Assets.images.topBanner.image(), const SizedBox(height: 32), _buildText(context, user)],
       );
     }
 
@@ -65,7 +63,9 @@ class HomeTop extends ConsumerWidget {
           iconOnRight: true,
           size: UiButtonSize.medium,
           color: const Color(0xff2D68FE),
-          onPressed: () {},
+          onPressed: () {
+            context.push(Routes.agentDashboard);
+          },
         ),
       ],
     );

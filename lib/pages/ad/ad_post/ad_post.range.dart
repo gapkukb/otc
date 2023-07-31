@@ -37,6 +37,14 @@ class _AdPostRangeState extends State<AdPostRange> {
   }
 
   @override
+  void didUpdateWidget(covariant AdPostRange oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    startValue = max(widget.initValue, widget.min);
+    endValue = min(widget.initValue, widget.max);
+    value = min(max(widget.initValue, widget.min), widget.max);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -54,7 +62,7 @@ class _AdPostRangeState extends State<AdPostRange> {
         Flexible(
           fit: FlexFit.tight,
           child: RadioListTile<int>(
-            title: Text("固定价格"),
+            title: const Text("固定价格"),
             contentPadding: EdgeInsets.zero,
             value: 0,
             groupValue: typeIndex,
@@ -63,7 +71,7 @@ class _AdPostRangeState extends State<AdPostRange> {
         ),
         Flexible(
           child: RadioListTile<int>(
-            title: Text("浮动价格"),
+            title: const Text("浮动价格"),
             value: 1,
             groupValue: typeIndex,
             onChanged: onChanged,
@@ -99,17 +107,22 @@ class _AdPostRangeState extends State<AdPostRange> {
     return FormField(
       onSaved: onSaved,
       builder: (field) {
-        return Slider(
-          max: widget.max,
-          min: widget.min,
-          divisions: 100,
-          value: value,
-          label: value.toStringAsFixed(2),
-          onChanged: (val) {
-            setState(() {
-              value = val;
-            });
-          },
+        return SliderTheme(
+          data: const SliderThemeData(
+            showValueIndicator: ShowValueIndicator.always,
+          ),
+          child: Slider(
+            max: widget.max,
+            min: widget.min,
+            divisions: 100,
+            value: value,
+            label: value.toStringAsFixed(2),
+            onChanged: (val) {
+              setState(() {
+                value = val;
+              });
+            },
+          ),
         );
       },
       validator: widget.validator,
@@ -118,7 +131,7 @@ class _AdPostRangeState extends State<AdPostRange> {
 
   onSaved(newValue) {
     if (widget.name != null) {
-      widget.formState?.update(widget.name!, (value) => newValue, ifAbsent: () => newValue);
+      widget.formState?.update(widget.name!, (value) => value, ifAbsent: () => value);
     }
   }
 

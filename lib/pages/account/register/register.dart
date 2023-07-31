@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_invite_code/text_form_field_invite_code.dart';
@@ -96,7 +97,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 32),
+              const Gap.small(),
               _showEmail
                   ? TextFormFieldEmail(
                       name: "account",
@@ -106,15 +107,14 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                       name: "account",
                       formState: _formState,
                     ),
-              const SizedBox(height: 32),
+              const Gap.small(),
               TextFormFieldPassword(
                 formState: _formState,
               ),
-              const SizedBox(height: 32),
+              const Gap.small(),
               TextFormFieldInviteCode(
                 formState: _formState,
               ),
-              const SizedBox(height: 16),
               Row(
                 children: [
                   Checkbox(
@@ -144,14 +144,13 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                   )
                 ],
               ),
-              const SizedBox(height: 16),
               UiButton(
                 fullWidth: true,
-                size: UiButtonSize.medium,
+                size: UiButtonSize.large,
                 label: "注册",
                 onPressed: register,
               ),
-              const SizedBox(height: 16),
+              const Gap.small(),
               Text.rich(
                 TextSpan(
                   text: '已有账号？',
@@ -190,7 +189,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
       var code = await openCaptchaWindow(CaptchaWindowOptions(
         context: context,
         preferredDevice: device,
-        service: CaptchaSession.register,
+        session: CaptchaSession.register,
         account: _formState['account'],
         switchable: false,
       ));

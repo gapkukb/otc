@@ -140,7 +140,10 @@ class HttpOptions extends RequestOptions implements InnerOptions {
 
 String replacePathParams(String path, Map<String, String>? mapper) {
   if (mapper == null) return path;
+
   return path.replaceAllMapped(pathReplacer, (match) {
+    print(path);
+    print(match);
     final matched = match.group(0)!;
     final subMatched = matched.substring(1, matched.length - 1);
 

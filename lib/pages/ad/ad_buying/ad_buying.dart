@@ -18,7 +18,7 @@ class _AdBuyingState extends State<AdBuying> {
         fetcher: (pageNo, pageSize) async {
           // await Future.delayed(Duration(seconds: 3));
 
-          return [];
+          return [] as dynamic;
         },
         buildRow: (row) {},
         pageSize: 50,

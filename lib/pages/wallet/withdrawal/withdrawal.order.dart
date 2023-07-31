@@ -31,7 +31,7 @@ class _WithdrawalOrderState extends State<WithdrawalOrder> {
         await openCaptchaWindow(CaptchaWindowOptions(
           legend: "安全验证",
           context: context,
-          service: CaptchaSession.funds,
+          session: CaptchaSession.funds,
         ));
       },
       children: [

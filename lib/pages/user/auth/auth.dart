@@ -34,7 +34,8 @@ class _UserAuthState extends ConsumerState<UserAuth> {
       {
         "level": "初级认证",
         "status": kyc?.lv1Status ?? KycStatus.reject,
-        "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
+        "title": "提币限额2000 USDT1每日",
+        // "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
         "precondition": true,
         "subtitle": "要求：1.姓名    2.年龄    3.身份证",
         "onTap": (BuildContext context) {
@@ -132,8 +133,8 @@ class _UserAuthState extends ConsumerState<UserAuth> {
                   ),
                   const SizedBox(height: 16),
                   _buildItem("数字货币充值限额", "无限额", true),
-                  _buildItem("数字货币提币限额", "0 USDT 每日"),
-                  _buildItem("法币充值&提现限额", "0 USDT 每日"),
+                  // _buildItem("数字货币提币限额", "0 USDT 每日"),
+                  // _buildItem("法币充值&提现限额", "0 USDT 每日"),
                   _buildItem("C2C交易限额", "无限额", true),
                 ],
               ),

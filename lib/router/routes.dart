@@ -157,7 +157,7 @@ final List<RouteBase> routes = [
   ),
   ModalRoute(
     path: '/notice_window',
-    transparent: true,
+    barrierDismissible: true,
     statePage: (context, state) => const NoticeWindow(),
   ),
   ModalRoute(
@@ -178,7 +178,7 @@ final List<RouteBase> routes = [
         final CaptchaWindowOptions? option = state.extra as dynamic;
         return Captcha(
           preferredDevice: option?.preferredDevice,
-          session: option?.service,
+          session: option?.session,
           account: option?.account,
           switchable: option?.switchable,
           user: option?.user ?? global.user,
@@ -261,10 +261,12 @@ final List<RouteBase> routes = [
   ModalRoute(
     path: Routes.login,
     page: const Login(),
+    barrierDismissible: true,
   ),
   ModalRoute(
     path: Routes.register,
     page: const Register(),
+    barrierDismissible: true,
   ),
   ModalRoute(
     path: Routes.terms,

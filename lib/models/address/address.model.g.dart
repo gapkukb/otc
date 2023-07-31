@@ -32,9 +32,20 @@ Map<String, dynamic> _$$_AddressModelToJson(_$_AddressModel instance) =>
 
 const _$CryptocurrencyEnumMap = {
   Cryptocurrency.USDT: 'USDT',
+  Cryptocurrency.ETH: 'ETH',
   Cryptocurrency.TRX: 'TRX',
   Cryptocurrency.BNB: 'BNB',
-  Cryptocurrency.ETH: 'ETH',
+  Cryptocurrency.BTC: 'BTC',
+  Cryptocurrency.USDC: 'USDC',
+  Cryptocurrency.XRP: 'XRP',
+  Cryptocurrency.ADA: 'ADA',
+  Cryptocurrency.DOGE: 'DOGE',
+  Cryptocurrency.SOL: 'SOL',
+  Cryptocurrency.MATI: 'MATI',
+  Cryptocurrency.LTC: 'LTC',
+  Cryptocurrency.DOT: 'DOT',
+  Cryptocurrency.AVAX: 'AVAX',
+  Cryptocurrency.DAI: 'DAI',
 };
 
 const _$BlockChainEnumMap = {

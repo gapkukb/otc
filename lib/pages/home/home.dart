@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1242),
-            child: Column(
+            child: const Column(
               children: [
                 HomeTop(),
                 HomeMarqueer(),

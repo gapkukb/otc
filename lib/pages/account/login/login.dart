@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
@@ -79,7 +80,7 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(height: 32),
+                      const Gap.small(),
                       _showEmail
                           ? TextFormFieldEmail(
                               name: "username",
@@ -89,18 +90,18 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                               name: "username",
                               formState: _formState,
                             ),
-                      const SizedBox(height: 32),
+                      const Gap.small(),
                       TextFormFieldPassword(
                         formState: _formState,
                       ),
-                      const SizedBox(height: 16),
+                      const Gap.small(),
                       UiButton(
                         fullWidth: true,
-                        size: UiButtonSize.medium,
+                        size: UiButtonSize.large,
                         label: "登录",
                         onPressed: login,
                       ),
-                      const SizedBox(height: 16),
+                      const Gap.small(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -114,10 +115,7 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                           UiButton(
                             variant: UiButtonVariant.text,
                             onPressed: () {
-                              // context.push(Routes.resetPwd);
-                              Router.neglect(context, () {
-                                context.goNamed(Routes.home);
-                              });
+                              context.pushReplacementNamed(Routes.resetPwd);
                             },
                             label: "忘记密码",
                           ),

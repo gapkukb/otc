@@ -33,27 +33,27 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
   @override
   void initState() {
     box = _buildBox(false, false, false, false);
-    focusNode.addListener(_showPop);
+    // focusNode.addListener(_showPop);
     super.initState();
   }
 
   @override
   dispose() {
-    focusNode.removeListener(_showPop);
-    overlayEntry?.remove();
-    overlayEntry = null;
+    // focusNode.removeListener(_showPop);
+    // overlayEntry?.remove();
+    // overlayEntry = null;
     super.dispose();
   }
 
-  _showPop() {
-    if (focusNode.hasFocus) {
-      overlayEntry = createPopup();
-      Overlay.of(context).insert(overlayEntry!);
-    } else {
-      overlayEntry?.remove();
-      overlayEntry = null;
-    }
-  }
+  // _showPop() {
+  //   if (focusNode.hasFocus) {
+  //     overlayEntry = createPopup();
+  //     Overlay.of(context).insert(overlayEntry!);
+  //   } else {
+  //     overlayEntry?.remove();
+  //     overlayEntry = null;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +87,16 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
         }
         var flag = step1 && step2 && step3 && step4;
 
-        overlayEntry?.remove();
-        if (flag) {
-          overlayEntry = null;
-        } else {
-          Future.delayed(const Duration(seconds: 0)).then((value) {
-            box = _buildBox(step1, step2, step3, step4);
-            overlayEntry = createPopup();
-            Overlay.of(context).insert(overlayEntry!);
-          });
-        }
+        // overlayEntry?.remove();
+        // if (flag) {
+        //   overlayEntry = null;
+        // } else {
+        //   Future.delayed(const Duration(seconds: 0)).then((value) {
+        //     box = _buildBox(step1, step2, step3, step4);
+        //     overlayEntry = createPopup();
+        //     Overlay.of(context).insert(overlayEntry!);
+        //   });
+        // }
 
         return flag ? null : "至少8位字符，必须包含大小写字母和数字";
       },

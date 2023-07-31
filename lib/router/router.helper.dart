@@ -22,21 +22,21 @@ CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
 class ModalRoute extends GoRoute {
   final Widget? page;
   // 背景透明
-  final bool? transparent;
+  final bool? barrierDismissible;
   final Widget Function(BuildContext context, GoRouterState state)? statePage;
   final GlobalKey<NavigatorState>? key;
   ModalRoute({
     required super.path,
     this.page,
     this.statePage,
-    this.transparent,
+    this.barrierDismissible,
     this.key,
   }) : super(
           name: path,
           parentNavigatorKey: key ?? navigatorKey,
           pageBuilder: (context, state) => modalPage(
             statePage?.call(context, state) ?? page!,
-            transparent,
+            barrierDismissible,
           ),
         );
 }

@@ -6,7 +6,7 @@ import 'package:otc/widgets/ui_button.dart';
 
 class ModalPageTemplate extends StatelessWidget {
   final String legend;
-  final String title;
+  final String? title;
   final String okButtonText;
   final String cancelButtonText;
   final bool? filledButton;
@@ -26,7 +26,7 @@ class ModalPageTemplate extends StatelessWidget {
     this.okButtonText = "确定",
     this.cancelButtonText = "取消",
     this.iconData = Icons.security,
-    required this.title,
+    this.title,
     required this.onCompelete,
     required this.children,
     this.icon,
@@ -65,13 +65,15 @@ class ModalPageTemplate extends StatelessWidget {
                         ),
                       ),
                     ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 24),
-                      child: Text(
-                        title,
-                        style: Font.largeBold,
-                      ),
-                    ),
+                    subtitle: title == null
+                        ? null
+                        : Padding(
+                            padding: const EdgeInsets.only(top: 24),
+                            child: Text(
+                              title!,
+                              style: Font.largeBold,
+                            ),
+                          ),
                     trailing: Opacity(
                       opacity: 0.2,
                       child: icon ??

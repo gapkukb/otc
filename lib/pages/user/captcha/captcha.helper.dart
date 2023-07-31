@@ -16,31 +16,21 @@ enum CaptchaDevice {
     if (user == null) return false;
     if (this == email) return user.emailValid;
     if (this == phone) return user.phoneValid;
-    return true;
+    if (this == f2a) return user.googleSecretValid;
+    return false;
   }
 }
 
 enum CaptchaSession {
-  addBankcard("add-bankcard"),
-  editBankcard("edit-bankcard"),
-  delBankcard("del-bankcard"),
-  addAddressBook("add-address-book"),
-  editAddressBook("edit-address-book"),
-  delAddressBook("del-address-book"),
-  addQrcode("add-qrcode"),
-  editQrcode("edit-qrcode"),
-  delQrcode("del-qrcode"),
+  normal("default"),
   register("register"),
   boundDevice("bound-device"),
-  boundPhone("bound-phone"),
-  applyGoogleAuth("apply-google-auth"),
   boundFunds("bound-funds"),
   forget("forget"),
   // 客户端自定义类型 - 添加谷歌验证器
   addF2A("addF2A"),
   // 客户端自定义类型 - 验证资金密码
-  funds("funds"),
-  normal("default");
+  funds("funds");
 
   const CaptchaSession(this.value);
 
@@ -52,7 +42,6 @@ enum CaptchaSession {
   ) {
     switch (this) {
       case boundDevice:
-      case boundPhone:
         return apis.user.validateBindDevice({
           "device": device,
           "captcha": captcha,
@@ -66,26 +55,6 @@ enum CaptchaSession {
         return apis.user.updatePayPwd({
           "device": device,
         });
-      // case CaptchaServiceType.delBankcard:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.addAddressBook:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.editAddressBook:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.delAddressBook:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.addQrcode:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.editQrcode:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.delQrcode:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.boundEmail:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.boundPhone:
-      //   return apis.user.validateBindDevice;
-      // case CaptchaServiceType.register:
-      //   return apis.user.validateBindDevice;
       default:
         if (device == CaptchaDevice.f2a) {
           // 谷歌验证器需要特殊处理

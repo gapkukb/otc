@@ -1,7 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:marqueer/marqueer.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class HomeMarqueer extends StatefulWidget {
@@ -34,8 +32,7 @@ class _HomeMarqueerState extends State<HomeMarqueer> {
               itemCount: 15,
               itemBuilder: (context, itemIndex, pageViewIndex) => Container(
                 // height: 30,
-                child: Text(
-                    "测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字"),
+                child: Text("测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字"),
               ),
             ),
           ),

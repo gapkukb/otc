@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:nil/nil.dart';
+import 'package:otc/models/pagination/pagination.model.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 export 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
 
-typedef Fetcher<T> = Future<List<T>> Function(
+typedef Fetcher<T> = Future<PaginationModel<T>> Function(
   int pageNo,
   int pageSize,
 );
@@ -48,8 +46,9 @@ class _DataGridState<T> extends State<DataGrid> {
   @override
   void initState() {
     super.initState();
+
     dataGridDataSource = DataGridDataSource(
-      pageSize: widget.pageSize,
+      rowsPerPage: widget.pageSize,
       buildCell: widget.buildCell,
       columns: widget.columns as List<DataGridColumn<T>>,
       alignment: alignment,
@@ -59,14 +58,14 @@ class _DataGridState<T> extends State<DataGrid> {
           isEmtpy = false;
         });
         return widget.fetcher(pageNo, pageSize).then((value) {
-          isEmtpy = value.isEmpty;
-          return value as List<T>;
-        }).whenComplete(
-          () => setState(() {
-            showLoading = false;
-            pageCount = 10.0;
-          }),
-        );
+          setState(() {
+            isEmtpy = value.records.isEmpty;
+            pageCount = value.pages.toDouble();
+          });
+          return value as PaginationModel<T>;
+        }).whenComplete(() {
+          showLoading = false;
+        });
       },
     );
   }
@@ -84,46 +83,41 @@ class _DataGridState<T> extends State<DataGrid> {
             Expanded(
               child: Stack(
                 children: [
-                  SfDataGridTheme(
-                    data: SfDataGridThemeData(
-                        // gridLineColor: Colors.transparent,
-                        ),
-                    child: SfDataGrid(
-                      columnWidthMode: ColumnWidthMode.fill,
-                      gridLinesVisibility: GridLinesVisibility.none,
-                      headerGridLinesVisibility: GridLinesVisibility.none,
-                      horizontalScrollPhysics: const NeverScrollableScrollPhysics(),
-                      source: dataGridDataSource,
-                      allowPullToRefresh: false,
-                      footer: isEmtpy ? const UiEmptyView() : null,
-                      footerHeight: constraints.maxHeight - 160,
-                      columns: widget.columns
-                          .map(
-                            (column) => GridColumn(
-                              columnName: column.columnName,
-                              allowEditing: column.allowEditing,
-                              allowFiltering: column.allowFiltering,
-                              allowSorting: column.allowSorting,
-                              autoFitPadding: column.autoFitPadding,
-                              columnWidthMode: column.columnWidthMode,
-                              filterIconPadding: column.filterIconPadding,
-                              filterIconPosition: column.filterIconPosition,
-                              filterPopupMenuOptions: column.filterPopupMenuOptions,
-                              maximumWidth: column.maximumWidth,
-                              minimumWidth: column.minimumWidth,
-                              sortIconPosition: column.sortIconPosition,
-                              visible: column.visible,
-                              width: column.width,
-                              label: column.label is Nil
-                                  ? Align(
-                                      alignment: widget.alignment ?? column.alignment ?? Alignment.centerLeft,
-                                      child: Text(column.title),
-                                    )
-                                  : column.label,
-                            ),
-                          )
-                          .toList(),
-                    ),
+                  SfDataGrid(
+                    columnWidthMode: ColumnWidthMode.fill,
+                    gridLinesVisibility: GridLinesVisibility.none,
+                    headerGridLinesVisibility: GridLinesVisibility.none,
+                    horizontalScrollPhysics: const NeverScrollableScrollPhysics(),
+                    source: dataGridDataSource,
+                    allowPullToRefresh: false,
+                    footer: isEmtpy ? const UiEmptyView() : null,
+                    footerHeight: constraints.maxHeight - 160,
+                    columns: widget.columns
+                        .map(
+                          (column) => GridColumn(
+                            columnName: column.columnName,
+                            allowEditing: column.allowEditing,
+                            allowFiltering: column.allowFiltering,
+                            allowSorting: column.allowSorting,
+                            autoFitPadding: column.autoFitPadding,
+                            columnWidthMode: column.columnWidthMode,
+                            filterIconPadding: column.filterIconPadding,
+                            filterIconPosition: column.filterIconPosition,
+                            filterPopupMenuOptions: column.filterPopupMenuOptions,
+                            maximumWidth: column.maximumWidth,
+                            minimumWidth: column.minimumWidth,
+                            sortIconPosition: column.sortIconPosition,
+                            visible: column.visible,
+                            width: column.width,
+                            label: column.label is Nil
+                                ? Align(
+                                    alignment: widget.alignment ?? column.alignment ?? Alignment.centerLeft,
+                                    child: Text(column.title),
+                                  )
+                                : column.label,
+                          ),
+                        )
+                        .toList(),
                   ),
                   if (showLoading)
                     Positioned(
@@ -144,12 +138,12 @@ class _DataGridState<T> extends State<DataGrid> {
                 ],
               ),
             ),
+            // if (!isEmtpy && !showLoading)
             SfDataPager(
               pageCount: pageCount,
               direction: Axis.horizontal,
               delegate: dataGridDataSource,
-              visibleItemsCount: 10,
-              onPageNavigationStart: (pageIndex) {},
+              // visibleItemsCount: 10,
             )
           ],
         );
@@ -159,7 +153,7 @@ class _DataGridState<T> extends State<DataGrid> {
 }
 
 class DataGridDataSource<T> extends DataGridSource {
-  final int pageSize;
+  final int rowsPerPage;
   final Fetcher<T> fetcher;
   final Widget Function(DataGridCell<dynamic>)? buildCell;
   final List<DataGridColumn<T>> columns;
@@ -167,7 +161,7 @@ class DataGridDataSource<T> extends DataGridSource {
 
   int index = 1;
   DataGridDataSource({
-    required this.pageSize,
+    required this.rowsPerPage,
     required this.fetcher,
     required this.columns,
     this.buildCell,
@@ -217,15 +211,9 @@ class DataGridDataSource<T> extends DataGridSource {
   }
 
   @override
-  Future<void> handleRefresh() async {
-    handlePageChange(index - 1, index);
-    notifyListeners();
-  }
-
-  @override
   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
-    index = newPageIndex;
-    _db = await fetcher(newPageIndex, pageSize);
+    index = newPageIndex + 1;
+    _db = (await fetcher(index, rowsPerPage)).records;
     notifyListeners();
     return true;
   }

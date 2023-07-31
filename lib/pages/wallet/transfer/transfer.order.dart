@@ -31,7 +31,7 @@ class _TransferOrderState extends State<TransferOrder> {
         await openCaptchaWindow(CaptchaWindowOptions(
           legend: "安全验证",
           context: context,
-          service: CaptchaSession.funds,
+          session: CaptchaSession.funds,
         ));
       },
       children: [

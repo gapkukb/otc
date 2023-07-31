@@ -16,7 +16,7 @@ Future<Map<String, dynamic>?> openCaptchaWindow(CaptchaWindowOptions option) {
 class CaptchaWindowOptions {
   final BuildContext? context;
   final CaptchaDevice? preferredDevice;
-  final CaptchaSession? service;
+  final CaptchaSession? session;
   final String? account;
   final bool? switchable;
   final UserModel? user;
@@ -26,7 +26,7 @@ class CaptchaWindowOptions {
   CaptchaWindowOptions({
     this.context,
     this.preferredDevice,
-    this.service,
+    this.session,
     this.account,
     this.switchable,
     this.user,

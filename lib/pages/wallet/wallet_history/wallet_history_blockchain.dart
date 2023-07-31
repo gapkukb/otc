@@ -44,7 +44,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
               width: double.infinity,
               child: DataGrid<WalletBlockchainHistoryModel>(
                 key: key,
-                pageSize: 20,
+                pageSize: 3,
                 fetcher: (pageNo, pageSize) async {
                   formKey.currentState!.save();
                   final begin = dateFormatter.format(DateTime.now().subtract(Duration(days: formState["datetime"])));
@@ -54,7 +54,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                     "pageSize": pageSize,
                     "begin": "$begin 00:00:00",
                     "end": "${dateFormatter.format(DateTime.now())} 23:59:59",
-                  }).then((value) => value.records);
+                  });
                 },
                 columns: [
                   DataGridColumn(

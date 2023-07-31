@@ -1,12 +1,10 @@
 library reset_pwd;
 
 import 'package:flutter/material.dart';
-import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
-import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/utils/navigator.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
@@ -23,9 +21,8 @@ class ResetPwd extends StatefulWidget {
 
 class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin {
   late final TabController _controller;
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> formState = {};
 
   bool isNext = false;
 
@@ -38,8 +35,6 @@ class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin
   @override
   void dispose() {
     _controller.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
     super.dispose();
   }
 
@@ -76,10 +71,12 @@ class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin
                       return Center(
                         child: item == CaptchaDevice.phone
                             ? TextFormFieldPhone(
-                                controller: _phoneController,
+                                formState: formState,
+                                name: "account",
                               )
                             : TextFormFieldEmail(
-                                controller: _emailController,
+                                formState: formState,
+                                name: "account",
                               ),
                       );
                     }).toList(),
@@ -92,13 +89,13 @@ class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin
 
   validate() async {
     if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
 
     final result = await openCaptchaWindow(
       CaptchaWindowOptions(
-        context: context,
-        service: CaptchaSession.addAddressBook,
-        account: (_controller.index == 0 ? _phoneController : _emailController).text.trim(),
-        preferredDevice: items[_controller.index],
+        account: formState['account'],
+        preferredDevice: _controller.index == 0 ? CaptchaDevice.phone : CaptchaDevice.email,
+        session: CaptchaSession.forget,
       ),
     );
     if (result != null) {
@@ -107,6 +104,4 @@ class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin
       });
     }
   }
-
-  reset() {}
 }

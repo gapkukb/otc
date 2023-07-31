@@ -3,11 +3,13 @@ part of ad_post;
 class AdPostPrev extends StatefulWidget {
   final Map<String, dynamic> formState;
   final AdPostType type;
+  final Function(bool isBuying) onCompelete;
 
   const AdPostPrev({
     super.key,
     required this.formState,
     required this.type,
+    required this.onCompelete,
   });
 
   @override
@@ -16,10 +18,24 @@ class AdPostPrev extends StatefulWidget {
 
 class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateMixin {
   late final TabController controller;
-
+  double rate = 0;
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
+    apis.otc
+        .rate(
+            null,
+            HttpOptions(
+              pathParams: {
+                "from": Cryptocurrency.USDT.name,
+                "to": Fiatcurrency.CNY.name,
+              },
+            ))
+        .then((value) {
+      setState(() {
+        rate = value;
+      });
+    });
     super.initState();
   }
 
@@ -29,32 +45,42 @@ class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateM
     super.dispose();
   }
 
-  double start = 30.0;
-  double end = 50.0;
+  double get max {
+    return rate * (1 + 0.01);
+  }
+
+  double get min {
+    return rate * (1 - 0.01);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModalPageTemplate(
       legend: "发布新广告",
-      title: "发布",
       iconData: Icons.ads_click_outlined,
-      okButtonText: "发布",
-      onCompelete: (_) {},
-      physics: NeverScrollableScrollPhysics(),
+      okButtonText: "下一步",
+      onCompelete: (_) {
+        widget.onCompelete(controller.index != 0);
+      },
+      physics: const NeverScrollableScrollPhysics(),
       children: [
-        // UnconstrainedBox(
-        //   child: SizedBox(
-        //     height: 60,
-        //     child: TabBar(
-        //       controller: controller,
-        //       tabs: [
-        //         Tab(text: "出售"),
-        //         Tab(text: "购买"),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        Card(
-          child: const Cell(
+        SizedBox(
+          height: 60,
+          child: TabBar(
+            controller: controller,
+            indicatorSize: TabBarIndicatorSize.tab,
+            isScrollable: true,
+            dividerColor: Colors.transparent,
+            tabs: const [
+              Tab(text: "出售"),
+              Tab(text: "购买"),
+            ],
+          ),
+        ),
+        const Divider(height: 1),
+        const Gap.small(),
+        const Card(
+          child: Cell(
             height: 84,
             padding: Pads.sm,
             evenly: true,
@@ -78,20 +104,21 @@ class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateM
             ),
           ),
         ),
-        Gap.medium(),
-        Text("参考价格"),
-        Gap.mini(),
-        Text("￥ 7.01"),
-        Gap.medium(),
-        Gap.medium(),
-        Text("价格类型"),
+        const Gap.medium(),
+        const Text("参考价格", style: Font.smallGrey),
+        const Gap.mini(),
+        Text("￥ $rate", style: Font.mediumBold),
+        const Gap.medium(),
+        const Text("价格类型", style: Font.smallGrey),
         AdPostRange(
-          max: 700 * (1 + 0.01),
-          min: 700 * (1 - 0.01),
-          initValue: 700,
+          max: max,
+          min: min,
+          initValue: rate,
+          name: "price",
+          formState: widget.formState,
         ),
-        Gap.mini(),
-        Text("可设定的价格区间是6.91~7.11"),
+        const Gap.mini(),
+        Text("可设定的价格区间是${min.toStringAsFixed(2)}~${max.toStringAsFixed(2)}", style: Font.smallGrey),
       ],
     );
   }

@@ -28,7 +28,7 @@ class _AuthSeniorState extends State<AuthSenior> {
       key: formKey,
       child: ModalPageTemplate(
         legend: "身份认证",
-        title: "初级认证",
+        title: "高级认证",
         okButtonText: "提交",
         onCompelete: (_) async {
           if (formKey.currentState!.validate()) {

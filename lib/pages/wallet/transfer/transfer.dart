@@ -136,7 +136,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
 
-    final result = await openCaptchaWindow(CaptchaWindowOptions(service: CaptchaSession.funds));
+    final result = await openCaptchaWindow(CaptchaWindowOptions(session: CaptchaSession.funds));
 
     if (result == null) return;
 
