@@ -10,6 +10,7 @@ class UiEmptyView extends StatelessWidget {
   final TextStyle? subtitleTyle;
   final List<Widget>? actions;
   final Widget? icon;
+  final double? iconSize;
 
   const UiEmptyView({
     super.key,
@@ -21,6 +22,7 @@ class UiEmptyView extends StatelessWidget {
     this.subtitleTyle,
     this.titleStyle,
     this.icon,
+    this.iconSize,
   });
 
   @override
@@ -36,7 +38,8 @@ class UiEmptyView extends StatelessWidget {
           icon ??
               Image.asset(
                 "assets/images/empty.png",
-                height: 80,
+                color: Colors.grey,
+                height: iconSize ?? 100,
               ),
           const SizedBox(
             height: 24,
@@ -45,7 +48,7 @@ class UiEmptyView extends StatelessWidget {
               Text(
                 title ?? "暂无数据",
                 textAlign: TextAlign.center,
-                style: titleStyle ?? Font.medium,
+                style: titleStyle ?? Font.mediumGrey,
               ),
           if (subtitleWidget == null && subtitle != null)
             Padding(

@@ -164,10 +164,10 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
             ],
           ),
         ),
-        trailing: TextButton(
-          child: const Text("充值提现记录"),
-          onPressed: () {},
-        ),
+        // trailing: TextButton(
+        //   child: const Text("充值提现记录"),
+        //   onPressed: () {},
+        // ),
       ),
     );
   }

@@ -57,10 +57,9 @@ class AddressSelector extends Dropdown {
             },
           ),
           asyncItems: (text) async {
-            final result = await apis.wallet.getAddressBook();
-            await Future.delayed(Duration(seconds: 10));
-            // final addresses = result.map(AddressModel.fromJson).toList();
-            print("+++++++++++++++++++++++++++++++");
+            final result = (await apis.wallet.getAddressBook() as List).cast<Map<String, dynamic>>();
+            final addresses = result.map(AddressModel.fromJson).toList();
+            print(addresses);
             return [];
             // return addresses
             //     .map(

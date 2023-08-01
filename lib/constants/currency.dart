@@ -33,7 +33,7 @@ enum Cryptocurrency {
   ADA(name: "ADA"),
   DOGE(name: "DOGE"),
   SOL(name: "SOL"),
-  MATI(name: "MATI"),
+  MATIC(name: "MATIC"),
   LTC(name: "LTC"),
   DOT(name: "DOT"),
   AVAX(name: "AVAX"),

@@ -62,7 +62,7 @@ class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
               bool isValid = true;
               if (_blockchain == null) {
                 isValid = value!.length == 42 || value.length == 34;
-              } else if (_blockchain == BlockChain.TRON.name) {
+              } else if (_blockchain == Blockchain.TRON.name) {
                 isValid = value!.startsWith("T") && value.length == 34;
               } else {
                 isValid = value!.startsWith("0x") && value.length == 42;
@@ -76,7 +76,7 @@ class _ModelMethodCryptoAddtionState extends State<ModelMethodCryptoAddtion> {
             formState: formState,
             labelText: "转账网络",
             showSearchBox: false,
-            data: BlockChain.values
+            data: Blockchain.values
                 .map(
                   (item) => DropdownItem(
                     title: item.title,

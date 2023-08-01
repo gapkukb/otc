@@ -58,6 +58,9 @@ class _Wallet {
   /// 删除地址簿
   final deleteAddress = post("/customer/address-book/delete");
 
+  /// 删除地址簿
+  final getDepositAddress = post("/payment/deposit/address");
+
   /// 区块链转账订单记录
   final blockchainHistory = post("/payment/records", (Map<String, dynamic> json) {
     return PaginationModel.fromJson(json, (item) => WalletBlockchainHistoryModel.fromJson(item as dynamic));

@@ -4,7 +4,7 @@ enum Protocal {
   TRC20,
 }
 
-enum BlockChain {
+enum Blockchain {
   BSC(
     title: "Ethereum (ERC20)",
     subTitle: "Ethereum (ETH)",
@@ -39,11 +39,15 @@ enum BlockChain {
     enable: false,
   );
 
-  static List<BlockChain> get valid {
-    return BlockChain.values.where((element) => element.enable).toList();
+  static List<Blockchain> get valid {
+    return Blockchain.values.where((element) => element.enable).toList();
   }
 
-  const BlockChain({
+  static Blockchain getByName(String name) {
+    return Blockchain.values.firstWhere((element) => element.name == name);
+  }
+
+  const Blockchain({
     required this.title,
     required this.subTitle,
     required this.duration,

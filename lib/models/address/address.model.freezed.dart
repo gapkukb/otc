@@ -26,7 +26,7 @@ mixin _$AddressModel {
   String get username => throw _privateConstructorUsedError;
   String get wallet => throw _privateConstructorUsedError;
   Cryptocurrency get currency => throw _privateConstructorUsedError;
-  BlockChain get blockchain => throw _privateConstructorUsedError;
+  Blockchain get blockchain => throw _privateConstructorUsedError;
   String get createdTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $AddressModelCopyWith<$Res> {
       String username,
       String wallet,
       Cryptocurrency currency,
-      BlockChain blockchain,
+      Blockchain blockchain,
       String createdTime});
 }
 
@@ -102,7 +102,7 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
       blockchain: null == blockchain
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
-              as BlockChain,
+              as Blockchain,
       createdTime: null == createdTime
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
@@ -126,7 +126,7 @@ abstract class _$$_AddressModelCopyWith<$Res>
       String username,
       String wallet,
       Cryptocurrency currency,
-      BlockChain blockchain,
+      Blockchain blockchain,
       String createdTime});
 }
 
@@ -178,7 +178,7 @@ class __$$_AddressModelCopyWithImpl<$Res>
       blockchain: null == blockchain
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
-              as BlockChain,
+              as Blockchain,
       createdTime: null == createdTime
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
@@ -216,7 +216,7 @@ class _$_AddressModel implements _AddressModel {
   @override
   final Cryptocurrency currency;
   @override
-  final BlockChain blockchain;
+  final Blockchain blockchain;
   @override
   final String createdTime;
 
@@ -272,7 +272,7 @@ abstract class _AddressModel implements AddressModel {
       required final String username,
       required final String wallet,
       required final Cryptocurrency currency,
-      required final BlockChain blockchain,
+      required final Blockchain blockchain,
       required final String createdTime}) = _$_AddressModel;
 
   factory _AddressModel.fromJson(Map<String, dynamic> json) =
@@ -291,7 +291,7 @@ abstract class _AddressModel implements AddressModel {
   @override
   Cryptocurrency get currency;
   @override
-  BlockChain get blockchain;
+  Blockchain get blockchain;
   @override
   String get createdTime;
   @override

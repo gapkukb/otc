@@ -14,7 +14,7 @@ _$_AddressModel _$$_AddressModelFromJson(Map<String, dynamic> json) =>
       username: json['username'] as String,
       wallet: json['wallet'] as String,
       currency: $enumDecode(_$CryptocurrencyEnumMap, json['currency']),
-      blockchain: $enumDecode(_$BlockChainEnumMap, json['blockchain']),
+      blockchain: $enumDecode(_$BlockchainEnumMap, json['blockchain']),
       createdTime: json['createdTime'] as String,
     );
 
@@ -26,7 +26,7 @@ Map<String, dynamic> _$$_AddressModelToJson(_$_AddressModel instance) =>
       'username': instance.username,
       'wallet': instance.wallet,
       'currency': _$CryptocurrencyEnumMap[instance.currency]!,
-      'blockchain': _$BlockChainEnumMap[instance.blockchain]!,
+      'blockchain': _$BlockchainEnumMap[instance.blockchain]!,
       'createdTime': instance.createdTime,
     };
 
@@ -41,16 +41,16 @@ const _$CryptocurrencyEnumMap = {
   Cryptocurrency.ADA: 'ADA',
   Cryptocurrency.DOGE: 'DOGE',
   Cryptocurrency.SOL: 'SOL',
-  Cryptocurrency.MATI: 'MATI',
+  Cryptocurrency.MATIC: 'MATIC',
   Cryptocurrency.LTC: 'LTC',
   Cryptocurrency.DOT: 'DOT',
   Cryptocurrency.AVAX: 'AVAX',
   Cryptocurrency.DAI: 'DAI',
 };
 
-const _$BlockChainEnumMap = {
-  BlockChain.BSC: 'BSC',
-  BlockChain.ETH: 'ETH',
-  BlockChain.TRON: 'TRON',
-  BlockChain.BTC: 'BTC',
+const _$BlockchainEnumMap = {
+  Blockchain.BSC: 'BSC',
+  Blockchain.ETH: 'ETH',
+  Blockchain.TRON: 'TRON',
+  Blockchain.BTC: 'BTC',
 };

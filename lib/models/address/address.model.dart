@@ -13,10 +13,9 @@ class AddressModel with _$AddressModel {
     required String username,
     required String wallet,
     required Cryptocurrency currency,
-    required BlockChain blockchain,
+    required Blockchain blockchain,
     required String createdTime,
   }) = _AddressModel;
 
-  factory AddressModel.fromJson(Map<String, Object?> json) =>
-      _$AddressModelFromJson(json);
+  factory AddressModel.fromJson(Map<String, Object?> json) => _$AddressModelFromJson(json);
 }

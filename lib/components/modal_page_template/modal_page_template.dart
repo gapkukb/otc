@@ -41,59 +41,66 @@ class ModalPageTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SingleChildScrollView(
-        physics: physics,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: maxWidth,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    title: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        legend,
-                        style: const TextStyle(
-                          color: Color(0xff7C7C7C),
-                        ),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: maxWidth,
+              // maxHeight: MediaQuery.of(context).size.height - 100,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  contentPadding: const EdgeInsets.all(0),
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      legend,
+                      style: const TextStyle(
+                        color: Color(0xff7C7C7C),
                       ),
                     ),
-                    subtitle: title == null
-                        ? null
-                        : Padding(
-                            padding: const EdgeInsets.only(top: 24),
-                            child: Text(
-                              title!,
-                              style: Font.largeBold,
-                            ),
+                  ),
+                  subtitle: title == null
+                      ? null
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 24),
+                          child: Text(
+                            title!,
+                            style: Font.largeBold,
                           ),
-                    trailing: Opacity(
-                      opacity: 0.2,
-                      child: icon ??
-                          Icon(
-                            iconData,
-                            size: 40,
-                          ),
+                        ),
+                  trailing: Opacity(
+                    opacity: 0.2,
+                    child: icon ??
+                        Icon(
+                          iconData,
+                          size: 40,
+                        ),
+                  ),
+                ),
+                const Divider(
+                  thickness: 1,
+                  height: 33,
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height - 260,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: children,
                     ),
                   ),
-                  // const SizedBox(height: 8),
-                  const Divider(
-                    thickness: 1,
-                    height: 33,
-                  ),
-                  // const SizedBox(height: 24),
-                  ...children,
-                  const SizedBox(height: 24),
-                  _buildActions(context),
-                ],
-              ),
+                ),
+                const SizedBox(height: 24),
+                _buildActions(context),
+              ],
             ),
           ),
         ),

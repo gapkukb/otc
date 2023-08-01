@@ -29,7 +29,7 @@ class BlockchainSelector extends Dropdown {
             padding: Pads.xs,
             child: widget,
           ),
-          data: BlockChain.values
+          data: Blockchain.values
               .map(
                 (item) => DropdownItem(
                   title: item.title,

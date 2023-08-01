@@ -6,6 +6,12 @@ class _OTCApi {
   final rate = get("/otc/rate/{from}/{to}");
   final qrcode = post<List<Map<String, dynamic>>>("/otc/qrcode");
   final bankcard = post<List<Map<String, dynamic>>>("/otc/bankcard");
+
+  /// 获取支持的币种
+  final supportedCoins = post("/otc/coin/support");
+
+  /// 获取支持的网络
+  final supportedBlockchain = post("/otc/blockchain/support");
 }
 
 final otcApi = _OTCApi();

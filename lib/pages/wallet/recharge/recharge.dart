@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/blockchain_selector/blockchain_selector.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/constants/blockchain.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/pages/wallet/recharge/recharge.stepper.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -10,17 +14,18 @@ import 'package:otc/widgets/ui_clipboard.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 
-class Recharge extends StatefulWidget {
+class Recharge extends ConsumerStatefulWidget {
   const Recharge({super.key});
 
   @override
-  State<Recharge> createState() => _RechargeState();
+  ConsumerState<Recharge> createState() => _RechargeState();
 }
 
-class _RechargeState extends State<Recharge> {
+class _RechargeState extends ConsumerState<Recharge> {
   final _linker = LayerLink();
   String? blockChainName;
   String? coinName;
+  String? address;
 
   List<Map<String, dynamic>> items = [
     {"name": "最小充币数量", "value": "0.00000001 USDT"},
@@ -41,7 +46,7 @@ class _RechargeState extends State<Recharge> {
         onCompelete: (context) {},
         legend: "钱包",
         title: "数字货币充值",
-        maxWidth: 800,
+        maxWidth: 600,
         iconData: Icons.wallet,
         filledButton: true,
         okButtonText: "充值",
@@ -76,6 +81,7 @@ class _RechargeState extends State<Recharge> {
             onChanged: (selectedItem) {
               setState(() {
                 coinName = selectedItem?.title;
+                ref.read(_currencyProvider.notifier).state = Cryptocurrency.getByName(coinName!);
               });
             },
           ),
@@ -85,33 +91,49 @@ class _RechargeState extends State<Recharge> {
             onChanged: (selectedItem) {
               setState(() {
                 blockChainName = selectedItem?.title;
+                ref.read(_blockchainProvider.notifier).state = Blockchain.getByName(selectedItem!.value);
               });
             },
           ),
           const SizedBox(height: 24),
-          ListTile(
-            tileColor: Colors.grey.shade100,
-            title: const Text(
-              "地址：",
-              style: Font.mediumBold,
-            ),
-            subtitle: UiClipboard(
-              text: "0x4e2b74082e7d92f268af688fd6b939cc7b57d428",
-              child: Text("0x4e2b74082e7d92f268af688fd6b939cc7b57d428"),
-              iconSize: 18,
-            ),
-            trailing: CompositedTransformTarget(
-              link: _linker,
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  createOverlay();
-                },
-                child: QrImageView(
-                  data: "data",
+          Consumer(
+            builder: (context, ref, child) {
+              final resp = ref.watch(rechageProvider);
+              return resp.when(
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ),
-            ),
+                error: (_, __) => const SizedBox.shrink(),
+                data: (data) {
+                  address = data;
+                  if (data == null) return const SizedBox.shrink();
+                  return ListTile(
+                    tileColor: Colors.grey.shade100,
+                    title: const Text(
+                      "地址：",
+                      style: Font.mediumBold,
+                    ),
+                    subtitle: UiClipboard(
+                      text: data,
+                      iconSize: 18,
+                      child: Text(data),
+                    ),
+                    trailing: CompositedTransformTarget(
+                      link: _linker,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          createOverlay();
+                        },
+                        child: QrImageView(
+                          data: "data",
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
           const SizedBox(height: 24),
           Padding(
@@ -209,7 +231,7 @@ class _RechargeState extends State<Recharge> {
                         style: Font.smallGrey,
                       ),
                       QrImageView(
-                        data: "data",
+                        data: address!,
                       ),
                     ],
                   ),
@@ -225,3 +247,25 @@ class _RechargeState extends State<Recharge> {
     Overlay.of(context, debugRequiredFor: widget).insert(overlayEntry!);
   }
 }
+
+final _currencyProvider = StateProvider.autoDispose<Cryptocurrency?>((ref) {
+  return null;
+});
+
+final _blockchainProvider = StateProvider.autoDispose<Blockchain?>((ref) {
+  return null;
+});
+
+final rechageProvider = FutureProvider.autoDispose<dynamic>((
+  ref,
+) async {
+  final currency = ref.watch(_currencyProvider);
+  final blockchain = ref.watch(_blockchainProvider);
+
+  if (currency == null || blockchain == null) return;
+
+  return apis.wallet.getDepositAddress({
+    "currency": currency.name,
+    "blockchain": blockchain.name,
+  });
+});
