@@ -9,6 +9,7 @@ import 'package:otc/utils/formatter.dart';
 class AmountInput extends UiTextFormField {
   final Cryptocurrency coin;
   final double? maxAmount;
+  final String? hintText;
 
   AmountInput({
     super.key,
@@ -18,10 +19,13 @@ class AmountInput extends UiTextFormField {
     super.controller,
     required this.coin,
     this.maxAmount,
+    this.hintText,
+    super.onChanged,
   }) : super(
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: decimalTextInputFormatter,
             decoration: InputDecoration(
+              hintText: hintText,
               suffixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -29,10 +33,13 @@ class AmountInput extends UiTextFormField {
                     minWidth: 50,
                     size: UiButtonSize.small,
                     onPressed: () {
-                      controller?.text = maxAmount.toString();
-                      controller?.selection = TextSelection.fromPosition(
-                        TextPosition(offset: controller.text.length),
-                      );
+                      if (controller != null) {
+                        controller.text = maxAmount.toString();
+                        controller.selection = TextSelection.fromPosition(
+                          TextPosition(offset: controller.text.length),
+                        );
+                        onChanged?.call(controller.text);
+                      }
                     },
                     label: "全部",
                   ),

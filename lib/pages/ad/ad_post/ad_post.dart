@@ -20,6 +20,7 @@ import 'package:otc/http/http.dart';
 import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/models/wallet.qrcode/wallet.qrcode.model.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
+import 'package:otc/providers/provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -31,6 +32,7 @@ part 'package:otc/pages/ad/ad_post/ad_post.prev.dart';
 part './ad_post.range.dart';
 part 'ad_post.payment.template.dart';
 part 'ad_post.payment.dart';
+part 'ad_post.provider.dart';
 
 enum AdPostType {
   buying,
@@ -52,6 +54,7 @@ class _AdPostState extends State<AdPost> with SingleTickerProviderStateMixin {
   bool isNext = false;
   final Map<String, dynamic> formState = {};
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -71,7 +74,6 @@ class _AdPostState extends State<AdPost> with SingleTickerProviderStateMixin {
 
   _onCompelete(bool isBuying) {
     formKey.currentState!.save();
-    inspect(formState);
     setState(() {
       isNext = true;
     });

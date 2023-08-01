@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/router/router.dart';
 
 enum UserNavList {
+  user("总览", Routes.user),
   c2c("C2C用户中心", Routes.c2c),
   rebate("返佣", Routes.rebate),
   tasks("任务中心", Routes.tasks),

@@ -30,8 +30,6 @@ class AdPostPaymentTemplate extends StatelessWidget {
                       ? GestureDetector(
                           onTap: () async {
                             final result = await onEdit(context);
-
-                            print(result);
                           },
                           child: const Icon(Icons.edit_note_outlined),
                         )

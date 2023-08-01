@@ -21,6 +21,11 @@ class Gap extends StatelessWidget {
   }
 
   /// size = 8,
+  const Gap.micro({super.key, bool? horizition})
+      : size = 4,
+        horizition = horizition ?? false;
+
+  /// size = 8,
   const Gap.mini({super.key, bool? horizition})
       : size = 8,
         horizition = horizition ?? false;

@@ -187,9 +187,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       onSaved: _onSave,
       validator: widget.validator,
       inputFormatters: [
-        if (widget.keyboardType == TextInputType.number ||
-            widget.keyboardType == _numberType)
-          FilteringTextInputFormatter.digitsOnly,
+        if (widget.keyboardType == TextInputType.number || widget.keyboardType == _numberType) FilteringTextInputFormatter.digitsOnly,
         if (widget.inputFormatters != null) ...widget.inputFormatters!
       ],
       enabled: widget.enabled,
@@ -204,8 +202,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       buildCounter: widget.buildCounter,
       scrollPhysics: widget.scrollPhysics,
       autofillHints: widget.autofillHints,
-      autovalidateMode:
-          widget.autovalidateMode ?? AutovalidateMode.onUserInteraction,
+      autovalidateMode: widget.autovalidateMode ?? AutovalidateMode.onUserInteraction,
       scrollController: widget.scrollController,
       restorationId: widget.restorationId,
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
@@ -250,6 +247,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
                 ),
                 onTap: () {
                   _controller.clear();
+                  widget.onChanged?.call(_controller.text);
                 },
               ),
             )

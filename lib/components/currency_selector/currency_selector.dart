@@ -24,6 +24,7 @@ class CurrencySelector extends Dropdown {
     super.formState,
     super.type,
     super.initialValue,
+    super.onChanged,
   }) : super(
           labelText: "选择币种",
           dropdownBuilder: (context, selectedItem) {

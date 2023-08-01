@@ -24,6 +24,7 @@ class LogInterceptor extends Interceptor {
 
   @override
   void onResponse(response, handler) {
+    
     log.i(response.data);
     super.onResponse(response, handler);
   }

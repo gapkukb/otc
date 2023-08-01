@@ -10,6 +10,8 @@ class BlockchainSelector extends Dropdown {
     required super.name,
     super.formState,
     super.type = DropdownType.dialog,
+    super.onChanged,
+    // super.con
   }) : super(
           labelText: "选择转账网络",
           title: const ListTile(

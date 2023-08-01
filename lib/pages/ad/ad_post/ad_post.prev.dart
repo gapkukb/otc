@@ -1,6 +1,6 @@
 part of ad_post;
 
-class AdPostPrev extends StatefulWidget {
+class AdPostPrev extends ConsumerStatefulWidget {
   final Map<String, dynamic> formState;
   final AdPostType type;
   final Function(bool isBuying) onCompelete;
@@ -13,12 +13,11 @@ class AdPostPrev extends StatefulWidget {
   });
 
   @override
-  State<AdPostPrev> createState() => _AdPostPrevState();
+  ConsumerState<AdPostPrev> createState() => _AdPostPrevState();
 }
 
-class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateMixin {
+class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProviderStateMixin {
   late final TabController controller;
-  double rate = 0;
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
@@ -32,9 +31,7 @@ class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateM
               },
             ))
         .then((value) {
-      setState(() {
-        rate = value;
-      });
+      ref.read(rateProvider.notifier).state = value;
     });
     super.initState();
   }
@@ -45,16 +42,12 @@ class _AdPostPrevState extends State<AdPostPrev> with SingleTickerProviderStateM
     super.dispose();
   }
 
-  double get max {
-    return rate * (1 + 0.01);
-  }
-
-  double get min {
-    return rate * (1 - 0.01);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final rate = ref.watch(rateProvider);
+    final double max = rate * (1 + 0.01);
+    final double min = rate * (1 - 0.01);
+
     return ModalPageTemplate(
       legend: "发布新广告",
       iconData: Icons.ads_click_outlined,

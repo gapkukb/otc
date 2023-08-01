@@ -46,7 +46,7 @@ class _Wallet {
   final deleteQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/delete");
 
   /// 查询用户所有地址簿
-  final getAddressBook = get<List<dynamic>>("/customer/address-book/list");
+  final getAddressBook = get("/customer/address-book/list");
 
   // /// 查询用户所有地址簿
   // final updateAddress =

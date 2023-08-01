@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
-export 'package:dropdown_search/dropdown_search.dart' show PopupProps;
+export 'package:dropdown_search/dropdown_search.dart';
 
 enum DropdownType {
   menu,
@@ -62,6 +63,8 @@ class Dropdown extends StatefulWidget {
   final dynamic initialValue;
   final Widget? Function(BuildContext, DropdownItem?)? dropdownBuilder;
   final String? Function(DropdownItem?)? validator;
+  final void Function(DropdownItem? selectedItem)? onChanged;
+  final Future<List<DropdownItem>> Function(String text)? asyncItems;
   const Dropdown({
     super.key,
     required this.name,
@@ -79,6 +82,8 @@ class Dropdown extends StatefulWidget {
     this.initialValue,
     this.dropdownBuilder,
     this.validator,
+    this.onChanged,
+    this.asyncItems,
   });
 
   @override
@@ -107,10 +112,12 @@ class _DropdownState extends State<Dropdown> {
         final $value = selectedItem?.value ?? selectedItem?.title;
         widget.formState?.update(widget.name, (_) => $value, ifAbsent: () => $value);
       },
+      asyncItems: widget.asyncItems,
       dropdownBuilder: widget.dropdownBuilder,
       validator: widget.validator,
       onChanged: (now) {
         selectedItem = now;
+        widget.onChanged?.call(now);
       },
       popupProps: (widget.type == DropdownType.menu
           ? PopupProps.menu
@@ -122,6 +129,7 @@ class _DropdownState extends State<Dropdown> {
         fit: FlexFit.loose,
         title: widget.title,
         footnote: widget.props?.footnote,
+
         itemBuilder: (context, item, isSelected, disabled) {
           Widget? gen(Widget? widget, String? text, TextStyle? style) {
             if (widget != null) return widget;
@@ -151,6 +159,7 @@ class _DropdownState extends State<Dropdown> {
             },
         errorBuilder: widget.props?.errorBuilder ??
             (context, searchEntry, exception) {
+              inspect(exception);
               return const UiEmptyView(
                 title: "出错了",
                 subtitle: "网络故障，请稍后再试",

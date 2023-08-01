@@ -1,70 +1,96 @@
 part of ad_post;
 
-class AdPostPayment extends StatefulWidget {
+class AdPostPayment extends ConsumerStatefulWidget {
   const AdPostPayment({super.key});
 
   @override
-  State<AdPostPayment> createState() => _AdPostPaymentState();
+  ConsumerState<AdPostPayment> createState() => _AdPostPaymentState();
 }
 
-class _AdPostPaymentState extends State<AdPostPayment> {
+class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final resp = ref.watch(adPostProvider);
+    return resp.when(
+        error: (_, __) => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        data: (data) {
+          return Text("大师傅");
+        });
     return ModalPageTemplate(
       legend: "发布广告",
       title: "添加收款方式",
       iconData: Icons.ads_click_outlined,
       onCompelete: (_) {},
       physics: const NeverScrollableScrollPhysics(),
-      children: [
-        SizedBox(
-          height: height - 620,
-          child: ListView.separated(
-            cacheExtent: 100,
-            itemBuilder: (context, index) {
-              return const AdPostPaymentTemplate(
-                editable: true,
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Gap.small();
-            },
-            itemCount: 10,
-          ),
-        ),
-        const Gap.small(),
-        Row(
-          children: [
-            Expanded(
-              child: _Button(
-                label: "银行卡",
-                onPressed: () async {
-                  await context.push(Routes.walletMethodBankAddition);
+      children: resp.when(
+        error: (_, __) => [
+          const Center(
+            child: CircularProgressIndicator(),
+          )
+        ],
+        loading: () => [
+          const Center(
+            child: CircularProgressIndicator(),
+          )
+        ],
+        data: (data) {
+          
+          return [
+            SizedBox(
+              height: height - 620,
+              child: ListView.separated(
+                cacheExtent: 100,
+                itemBuilder: (context, index) {
+                  return const AdPostPaymentTemplate(
+                    editable: true,
+                  );
                 },
+                separatorBuilder: (context, index) {
+                  return const Gap.small();
+                },
+                itemCount: 10,
               ),
             ),
-            const Gap.small(horizition: true),
-            Expanded(
-              child: _Button(
-                label: "支付宝",
-                onPressed: () async {
-                  await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.alipay);
-                },
-              ),
-            ),
-            const Gap.small(horizition: true),
-            Expanded(
-              child: _Button(
-                label: "微信",
-                onPressed: () async {
-                  await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.wechat);
-                },
-              ),
-            ),
-          ],
-        )
-      ],
+            const Gap.small(),
+            Row(
+              children: [
+                Expanded(
+                  child: _Button(
+                    label: "银行卡",
+                    onPressed: () async {
+                      await context.push(Routes.walletMethodBankAddition);
+                    },
+                  ),
+                ),
+                const Gap.small(horizition: true),
+                Expanded(
+                  child: _Button(
+                    label: "支付宝",
+                    onPressed: () async {
+                      await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.alipay);
+                    },
+                  ),
+                ),
+                const Gap.small(horizition: true),
+                Expanded(
+                  child: _Button(
+                    label: "微信",
+                    onPressed: () async {
+                      await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.wechat);
+                    },
+                  ),
+                ),
+              ],
+            )
+          ];
+        },
+      ),
     );
   }
 }

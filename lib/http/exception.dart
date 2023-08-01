@@ -16,7 +16,6 @@ class ExceptionInterceptor extends InterceptorsWrapper {
   onResponse(response, handler) {
     if (response.data['success']) {
       super.onResponse(response, handler);
-      global.logger.i(response);
     } else {
       final err = DioException(
         requestOptions: response.requestOptions,
@@ -97,6 +96,10 @@ class HttpException extends _Exception {
                 return HttpException(statusCode, "请求语法出错");
               case 401:
                 provider.read(userProvider.notifier).logout();
+                final router= GoRouter.of(navigatorKey.currentContext!);
+                while(router.canPop()){
+                  router.pop();
+                }
                 GoRouter.of(navigatorKey.currentContext!)
                   ..replace(Routes.home)
                   ..pushNamed(Routes.login);
