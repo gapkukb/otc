@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/components/address_selector/address_selector.dart';
 import 'package:otc/components/amount_input/amount_input.dart';
 import 'package:otc/components/blockchain_selector/blockchain_selector.dart';
-import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/modal/modal.dart';

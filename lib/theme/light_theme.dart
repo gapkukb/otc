@@ -12,6 +12,7 @@ ThemeData lightTheme = ThemeData(
       color: Colors.white,
     ),
     dialogTheme: DialogTheme(
+      surfaceTintColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -26,10 +27,8 @@ ThemeData lightTheme = ThemeData(
     menuTheme: MenuThemeData(
       style: MenuStyle(
         shadowColor: MaterialStateColor.resolveWith((states) => Colors.grey),
-        backgroundColor:
-            MaterialStateColor.resolveWith((states) => Colors.white),
-        surfaceTintColor:
-            MaterialStateColor.resolveWith((states) => Colors.transparent),
+        backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+        surfaceTintColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
         elevation: MaterialStateProperty.resolveWith(
           (states) => 10,
         ),

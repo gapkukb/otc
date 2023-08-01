@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
@@ -7,13 +6,6 @@ import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
 export 'package:dropdown_search/dropdown_search.dart';
-
-enum DropdownType {
-  menu,
-  dialog,
-  bottomSheet,
-  modalBottomSheet,
-}
 
 class DropdownItem {
   final String title;
@@ -55,7 +47,7 @@ class Dropdown extends StatefulWidget {
   final String? labelText;
   final List<DropdownItem> data;
   final Widget? title;
-  final DropdownType type;
+  final Mode mode;
   final InputDecoration inputDecoration;
   final Widget? prefixIcon;
   final Widget Function(BuildContext context, DropdownItem item, Widget widget)? itemBuilder;
@@ -74,7 +66,7 @@ class Dropdown extends StatefulWidget {
     this.labelText,
     this.title,
     this.data = const [],
-    this.type = DropdownType.menu,
+    this.mode = Mode.MENU,
     this.inputDecoration = const InputDecoration(),
     this.prefixIcon,
     this.itemBuilder,
@@ -119,74 +111,7 @@ class _DropdownState extends State<Dropdown> {
         selectedItem = now;
         widget.onChanged?.call(now);
       },
-      popupProps: (widget.type == DropdownType.menu
-          ? PopupProps.menu
-          : widget.type == DropdownType.dialog
-              ? PopupProps.dialog
-              : widget.type == DropdownType.bottomSheet
-                  ? PopupProps.bottomSheet
-                  : PopupProps.modalBottomSheet)(
-        fit: FlexFit.loose,
-        title: widget.title,
-        footnote: widget.props?.footnote,
-
-        itemBuilder: (context, item, isSelected, disabled) {
-          Widget? gen(Widget? widget, String? text, TextStyle? style) {
-            if (widget != null) return widget;
-            if (text != null) {
-              return Text(text, style: style);
-            }
-            return null;
-          }
-
-          final view = ListTile(
-            tileColor: disabled ? Colors.grey.shade100 : null,
-            leading: item.leading,
-            title: gen(item.titleWidget, item.title, item.titleStyle),
-            trailing: gen(item.trailingWidget, item.trailing, item.trailingStyle),
-            subtitle: gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
-          );
-
-          return widget.itemBuilder == null ? view : widget.itemBuilder!(context, item, view);
-        },
-
-        emptyBuilder: widget.props?.emptyBuilder ??
-            (context, searchEntry) {
-              return const UiEmptyView(
-                title: "未匹配到结果",
-                subtitle: "换个关键词试试吧",
-              );
-            },
-        errorBuilder: widget.props?.errorBuilder ??
-            (context, searchEntry, exception) {
-              inspect(exception);
-              return const UiEmptyView(
-                title: "出错了",
-                subtitle: "网络故障，请稍后再试",
-              );
-            },
-        containerBuilder: widget.props?.containerBuilder ??
-            (context, popupWidget) => Material(
-                  borderRadius: BorderRadius.circular(4),
-                  color: Colors.white,
-                  child: popupWidget,
-                ),
-        // dialogProps: DialogProps(),
-        searchFieldProps: widget.props?.searchFieldProps ??
-            TextFieldProps(
-              decoration: InputDecoration(
-                hintText: widget.searchHintText,
-                isDense: true,
-                prefixIcon: const Icon(
-                  Icons.search,
-                ),
-              ),
-            ),
-        // showSelectedItems: true,
-        showSearchBox: widget.props?.showSearchBox ?? widget.showSearchBox,
-        searchDelay: widget.props?.searchDelay ?? const Duration(microseconds: 0),
-        disabledItemFn: widget.props?.disabledItemFn,
-      ),
+      popupProps: props,
       itemAsString: (item) {
         return item.title;
       },
@@ -203,5 +128,86 @@ class _DropdownState extends State<Dropdown> {
         baseStyle: Font.medium,
       ),
     );
+  }
+
+  PopupProps<DropdownItem> get baseProps {
+    return PopupProps.menu(
+      fit: FlexFit.loose,
+      title: widget.title,
+      footnote: widget.props?.footnote,
+      itemBuilder: (context, item, isSelected, disabled) {
+        Widget? gen(Widget? widget, String? text, TextStyle? style) {
+          if (widget != null) return widget;
+          if (text != null) {
+            return Text(text, style: style);
+          }
+          return null;
+        }
+
+        final view = ListTile(
+          tileColor: disabled ? Colors.grey.shade100 : Colors.white,
+          leading: item.leading,
+          title: gen(item.titleWidget, item.title, item.titleStyle),
+          trailing: gen(item.trailingWidget, item.trailing, item.trailingStyle),
+          subtitle: gen(item.subtitleWidget, item.subtitle, item.subtitleStyle),
+        );
+
+        return widget.itemBuilder == null ? view : widget.itemBuilder!(context, item, view);
+      },
+
+      emptyBuilder: widget.props?.emptyBuilder ??
+          (context, searchEntry) {
+            return const UiEmptyView(
+              title: "未匹配到结果",
+              subtitle: "换个关键词试试吧",
+            );
+          },
+      errorBuilder: widget.props?.errorBuilder ??
+          (context, searchEntry, exception) {
+            inspect(exception);
+            return const UiEmptyView(
+              title: "出错了",
+              subtitle: "网络故障，请稍后再试",
+            );
+          },
+      // containerBuilder: widget.props?.containerBuilder ??
+      //     (context, popupWidget) => Material(
+      //           borderRadius: BorderRadius.circular(4),
+      //           color: Colors.white,
+      //           child: popupWidget,
+      //         ),
+
+      searchFieldProps: widget.props?.searchFieldProps ??
+          TextFieldProps(
+            decoration: InputDecoration(
+              hintText: widget.searchHintText,
+              isDense: true,
+              prefixIcon: const Icon(
+                Icons.search,
+              ),
+            ),
+          ),
+      // showSelectedItems: true,
+      showSearchBox: widget.props?.showSearchBox ?? widget.showSearchBox,
+      searchDelay: widget.props?.searchDelay ?? const Duration(microseconds: 0),
+      disabledItemFn: widget.props?.disabledItemFn,
+    );
+  }
+
+  PopupProps<DropdownItem> get props {
+    if (widget.mode == Mode.DIALOG) {
+      return PopupProps.dialog(
+        fit: baseProps.fit,
+        title: baseProps.title,
+        itemBuilder: baseProps.itemBuilder,
+        emptyBuilder: baseProps.emptyBuilder,
+        errorBuilder: baseProps.errorBuilder,
+        searchFieldProps: baseProps.searchFieldProps,
+        showSearchBox: baseProps.showSearchBox,
+        searchDelay: baseProps.searchDelay,
+        disabledItemFn: baseProps.disabledItemFn,
+      );
+    }
+    return baseProps;
   }
 }

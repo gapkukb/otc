@@ -9,7 +9,7 @@ class BlockchainSelector extends Dropdown {
     super.key,
     required super.name,
     super.formState,
-    super.type = DropdownType.dialog,
+    super.mode = Mode.DIALOG,
     super.onChanged,
     // super.con
   }) : super(

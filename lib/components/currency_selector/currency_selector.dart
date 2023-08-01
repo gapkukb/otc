@@ -22,7 +22,7 @@ class CurrencySelector extends Dropdown {
     super.key,
     required super.name,
     super.formState,
-    super.type,
+    super.mode,
     super.initialValue,
     super.onChanged,
   }) : super(
