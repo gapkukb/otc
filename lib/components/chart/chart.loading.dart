@@ -45,7 +45,7 @@ class _ChartLoadingState extends State<ChartLoading> with SingleTickerProviderSt
     const size = 1000;
     const height = 300;
     final ox = math.Random().nextInt(10) + 10;
-    final length = math.Random().nextInt(6) + 20;
+    final length = math.Random().nextInt(20) + 20;
     final cw = (size - 10 * 2) / length;
 
     final xs = List.generate(length, (index) => cw * index + ox);
