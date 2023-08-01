@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/constants/blockchain.dart';
 import 'package:otc/models/address/address.model.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -52,6 +54,20 @@ class _AddressSelectorState extends State<AddressSelector> {
             subtitle: "将常用地址保存在地址簿，可以在将来提币时直接使用。为每个地址添加标签方便识别。",
           );
         },
+      ),
+      dialogProps: DialogProps(
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          UiButton.text(
+            fullWidth: true,
+            size: UiButtonSize.large,
+            iconData: Icons.add,
+            label: "添加地址",
+            onPressed: () {
+              context.push(Routes.walletMethodCryptoAddition);
+            },
+          ),
+        ],
       ),
       asyncItems: (text) async {
         final result = (await promise as List).cast<Map<String, dynamic>>();

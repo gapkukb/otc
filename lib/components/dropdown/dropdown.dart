@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:otc/apis/apis.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
@@ -57,6 +56,9 @@ class Dropdown extends StatefulWidget {
   final String? Function(DropdownItem?)? validator;
   final void Function(DropdownItem? selectedItem)? onChanged;
   final Future<List<DropdownItem>> Function(String text)? asyncItems;
+  final DialogProps? dialogProps;
+  final MenuProps? menuProps;
+
   const Dropdown({
     super.key,
     required this.name,
@@ -76,6 +78,8 @@ class Dropdown extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.asyncItems,
+    this.dialogProps,
+    this.menuProps,
   });
 
   @override
@@ -206,6 +210,21 @@ class _DropdownState extends State<Dropdown> {
         showSearchBox: baseProps.showSearchBox,
         searchDelay: baseProps.searchDelay,
         disabledItemFn: baseProps.disabledItemFn,
+        dialogProps: widget.dialogProps ?? const DialogProps(),
+      );
+    }
+    if (widget.mode == Mode.MENU) {
+      return PopupProps.menu(
+        fit: baseProps.fit,
+        title: baseProps.title,
+        itemBuilder: baseProps.itemBuilder,
+        emptyBuilder: baseProps.emptyBuilder,
+        errorBuilder: baseProps.errorBuilder,
+        searchFieldProps: baseProps.searchFieldProps,
+        showSearchBox: baseProps.showSearchBox,
+        searchDelay: baseProps.searchDelay,
+        disabledItemFn: baseProps.disabledItemFn,
+        menuProps: widget.menuProps ?? const MenuProps(),
       );
     }
     return baseProps;
