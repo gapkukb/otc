@@ -45,7 +45,7 @@ class _AgentSettingState extends State<AgentSetting> {
             ),
             AsyncBuilder(
               future: () {
-                return apis.agent.getAgentSetting();
+                return apis.agent.getRebate();
               },
               builder: (context, data) {
                 int i = 0;

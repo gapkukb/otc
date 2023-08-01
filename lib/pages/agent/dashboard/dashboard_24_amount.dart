@@ -8,11 +8,7 @@ import 'package:otc/components/chart/chart.line.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 final data = List.generate(24, (index) {
-  return {
-    "label": "0$index:00",
-    "value": math.Random().nextDouble(),
-    "index": index
-  };
+  return {"label": "0$index:00", "value": math.Random().nextDouble(), "index": index};
 });
 
 class Dashboard24Amount extends StatefulWidget {
@@ -111,7 +107,7 @@ class _Chart extends StatelessWidget {
         config: [
           ChartConifg(
             color: Colors.green,
-            barWidth: 3,
+            barWidth: 2,
             belowAreaGradient: [
               Colors.green.withAlpha(50),
               Colors.transparent,
@@ -127,7 +123,7 @@ class _Chart extends StatelessWidget {
           ),
           ChartConifg(
             color: Colors.pink,
-            barWidth: 3,
+            barWidth: 2,
             belowAreaGradient: [
               Colors.pink.withAlpha(50),
               Colors.transparent,

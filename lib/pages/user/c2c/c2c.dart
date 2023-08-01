@@ -14,16 +14,19 @@ class UserC2C extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     final kycAuthed = ref.read(kycAuthProvider);
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const UserTopBlock(),
-          if (!kycAuthed) const VerifyBlock(),
-          const C2cUserProfile(),
-          const C2cAgentProfile(),
-          const C2cChart(),
-        ],
+    return Material(
+      color: Colors.grey.shade50,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const UserTopBlock(),
+            if (!kycAuthed) const VerifyBlock(),
+            const C2cUserProfile(),
+            const C2cAgentProfile(),
+            const C2cChart(),
+          ],
+        ),
       ),
     );
   }

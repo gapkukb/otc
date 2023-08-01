@@ -57,11 +57,15 @@ class Overview extends ConsumerWidget {
           vertical: 16,
         ),
         minVerticalPadding: 0,
-        title: Text(
-          (item['value'] as num).decimalize(),
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            (item['value'] as num).decimalize(),
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         subtitle: Column(

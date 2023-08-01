@@ -12,14 +12,17 @@ class UserHome extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final kyc = ref.read(kycProvider);
-    return ListView(
-      children: [
-        const UserTopBlock(),
-        if (kyc == null) const VerifyBlock(),
-        const Overview(),
-        const Fee(),
-        const Log(),
-      ],
+    return Material(
+      color: Colors.grey.shade50,
+      child: ListView(
+        children: [
+          const UserTopBlock(),
+          if (kyc == null) const VerifyBlock(),
+          const Overview(),
+          const Fee(),
+          const Log(),
+        ],
+      ),
     );
   }
 }
