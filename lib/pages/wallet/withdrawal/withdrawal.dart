@@ -10,6 +10,7 @@ import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/wallet_address.input/wallet_address.input.dart';
+import 'package:otc/constants/blockchain.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
@@ -19,6 +20,7 @@ import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/navigator.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class Withdrawal extends StatefulWidget {
@@ -33,6 +35,7 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
   String amount = "";
   final Map<String, dynamic> formState = {};
   final formKey = GlobalKey<FormState>();
+  Protocal? protocal;
 
   num fee = 10;
 
@@ -71,13 +74,39 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
         onCompelete: (context) async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            inspect(formState);
-            if (controller.index == 0) {
-              await apis.wallet.withdrawWithoutBook();
-            } else {
-              await apis.wallet.withdrawWithBook();
-            }
 
+            final next = await showDialog(
+              context: context,
+              builder: (context) {
+                return WithdrawalOrder(
+                  formState: {
+                    ...formState,
+                    "fee": fee,
+                  },
+                );
+              },
+            );
+            if (!next) return;
+            final data = await openCaptchaWindow(CaptchaWindowOptions(
+              legend: "安全验证",
+              context: context,
+              session: CaptchaSession.funds,
+            ));
+            if (data == null) return;
+
+            formState.addAll({
+              "payPassword": data['payPassword'],
+            });
+
+            inspect(formState);
+
+            if (controller.index == 0) {
+              await apis.wallet.withdrawWithoutBook(formState);
+            } else {
+              await apis.wallet.withdrawWithBook(formState);
+            }
+            context.pop();
+            Modal.alert(content: "提币申请成功");
             provider.read(userProvider.notifier).updateUser();
           }
         },
@@ -115,17 +144,19 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                WalletAddressInput(
-                  name: "wallet",
-                  formState: formState,
-                ),
-                const Gap.medium(),
                 BlockchainSelector(
                   name: "blockchain",
                   formState: formState,
                   validator: (value) {
+                    protocal = value?.extra;
                     return value == null ? "请选择转账网络" : null;
                   },
+                ),
+                const Gap.medium(),
+                WalletAddressInput(
+                  name: "wallet",
+                  formState: formState,
+                  protocal: protocal,
                 ),
               ],
             )
@@ -148,7 +179,6 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
             },
           ),
           const Gap.medium(),
-
           Align(
             alignment: Alignment.centerRight,
             child: Text(
@@ -163,8 +193,6 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
               style: Font.miniGrey,
             ),
           ),
-
-          // WithdrawalOrder(),
         ],
       ),
     );

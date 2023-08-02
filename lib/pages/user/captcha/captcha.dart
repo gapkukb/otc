@@ -131,7 +131,7 @@ class _CaptchaState extends State<Captcha> {
           if (session == CaptchaSession.funds)
             UiTextFormField(
               formState: formState,
-              name: "funds",
+              name: "payPassword",
               autofocus: true,
               labelText: "资金密码",
               maxLength: 6,

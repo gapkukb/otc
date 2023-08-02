@@ -5,20 +5,20 @@ enum Protocal {
 }
 
 enum Blockchain {
-  BSC(
+  ETH(
     title: "Ethereum (ERC20)",
     subTitle: "Ethereum (ETH)",
     duration: 5,
     protocal: Protocal.ERC20,
-    value: "BSC",
+    value: "ETH",
     enable: true,
   ),
-  ETH(
+  BSC(
     title: "BNB Smart Chain (BEP20)",
     subTitle: "Binance Smart Chain",
     duration: 1,
     protocal: Protocal.BEP20,
-    value: "ETH",
+    value: "BSC",
     enable: true,
   ),
   TRON(
@@ -29,7 +29,6 @@ enum Blockchain {
     value: "TRON",
     enable: true,
   ),
-
   BTC(
     title: "Tron (TRC20)",
     subTitle: "Tron (TRX)",

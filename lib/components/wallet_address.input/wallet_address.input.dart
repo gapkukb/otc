@@ -19,16 +19,16 @@ class WalletAddressInput extends UiTextFormField {
             bool valid = true;
             if (value == null) {
               valid = false;
-            } else if (value.length != 34 && value.length != 42) {
-              valid = false;
             } else if (protocal == Protocal.BEP20 || protocal == Protocal.ERC20) {
-              if (value.length != 42 || value.startsWith("0x")) {
+              if (!value.startsWith("0x") || value.length != 42) {
                 valid = false;
               }
             } else if (protocal == Protocal.TRC20) {
-              if (value.length != 34 || value.startsWith("T")) {
+              if (!value.startsWith("T") || value.length != 34) {
                 valid = false;
               }
+            } else if (value.length != 34 && value.length != 42) {
+              valid = false;
             }
             return valid ? null : "地址格式错误";
           },
