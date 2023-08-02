@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/pagination/pagination.dart';
 import 'package:otc/components/table/table.dart';
 import 'package:otc/models/wallet.blockchain.history/wallet.blockchain.history.model.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history.provider.dart';
@@ -38,6 +39,9 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
               });
             },
             formState: formState,
+          ),
+          Pagination(
+            pageSize: 100,
           ),
           Expanded(
             child: SizedBox(
