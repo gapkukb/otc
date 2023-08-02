@@ -89,7 +89,7 @@ class ChartLoadingPainter extends CustomPainter {
   void paint(canvas, size) {
     final length = (points.length * precent).floor();
     final subPoints = points.sublist(0, length);
-    painter.color = painter.color.withOpacity(precent);
+    painter.color = painter.color.withOpacity(precent * 2);
     canvas.drawPoints(PointMode.polygon, subPoints, painter);
   }
 
