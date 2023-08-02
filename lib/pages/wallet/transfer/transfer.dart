@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +16,6 @@ import 'package:otc/router/router.dart';
 import 'package:otc/utils/navigator.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/utils/predication.dart';
-import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class WalletTransfer extends ConsumerStatefulWidget {
@@ -67,7 +63,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
           CurrencySelector(
             name: "currency",
             formState: formState,
-            initialValue: widget.coin,
+            initialValue: widget.coin.name,
           ),
           const Gap.small(),
           UiTextFormField(

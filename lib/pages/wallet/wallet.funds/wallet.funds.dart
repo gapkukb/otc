@@ -58,27 +58,39 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
   static final List<_Item> actions = [
     _Item(
       name: "充值",
-      hanlder: (context, coin) {},
+      hanlder: (context, coin) {
+        context.push(Routes.recharge);
+      },
     ),
     _Item(
       name: "提币",
-      hanlder: (context, coin) {},
+      hanlder: (context, coin) {
+        context.push(Routes.withdrawal);
+      },
     ),
     _Item(
       name: "站内转账",
-      hanlder: (context, coin) {},
+      hanlder: (context, coin) {
+        context.push(Routes.transfer);
+      },
     ),
     _Item(
       name: "购买",
-      hanlder: (context, coin) {},
+      hanlder: (context, coin) {
+        context.push(Routes.adBuying);
+      },
     ),
     _Item(
       name: "出售",
-      hanlder: (context, coin) {},
+      hanlder: (context, coin) {
+        context.push(Routes.adSelling);
+      },
     ),
     _Item(
       name: "划转",
-      hanlder: (context, coin) {},
+      hanlder: (context, coin) {
+        Modal.alert(content: "此功能正在紧急修复中。");
+      },
     ),
   ];
 
@@ -92,16 +104,14 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
     {
       "child": "提现",
       "onPressed": (BuildContext context) {
-        context.push(Routes.recharge);
+        context.push(Routes.withdrawal);
       },
     },
     {
       "child": "站内转账",
       "variant": UiButtonVariant.outline,
-      "onPressed": () {
-        if (ifNotKYC1(0)) {
-          GoRouter.of(navigatorKey.currentContext!).push(Routes.transfer);
-        }
+      "onPressed": (BuildContext context) {
+        context.push(Routes.transfer);
       },
     },
   ];
@@ -119,7 +129,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
             title: "资金账户",
             child: SizedBox(
               width: double.infinity,
-              child: _buildTable(),
+              child: _buildTable(context),
             ),
           ),
         ],
@@ -164,10 +174,6 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
             ],
           ),
         ),
-        // trailing: TextButton(
-        //   child: const Text("充值提现记录"),
-        //   onPressed: () {},
-        // ),
       ),
     );
   }
@@ -231,7 +237,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
     );
   }
 
-  _buildTable() {
+  _buildTable(BuildContext context) {
     final response = ref.watch(coinProvider);
     final wallet = ref.watch(walletProvider);
 

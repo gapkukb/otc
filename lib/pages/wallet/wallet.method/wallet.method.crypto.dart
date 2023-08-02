@@ -46,7 +46,6 @@ class WalletMethodCrypto extends ConsumerWidget {
         child: Text(e.toString()),
       ),
       data: (items) {
-        print("object");
         return Padding(
           padding: Pads.sm,
           child: Column(

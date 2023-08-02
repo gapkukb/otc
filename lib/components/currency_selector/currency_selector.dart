@@ -14,6 +14,7 @@ DropdownItem buildItem(Cryptocurrency item) {
       clipBehavior: Clip.none,
     ),
     title: item.name,
+    value: item.name,
   );
 }
 

@@ -3,7 +3,7 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/models/address/address.model.dart';
 
 final walletAddressProvider = FutureProvider<List<AddressModel>>((ref) async {
-  final result = await apis.wallet.getAddressBook();
+  final result = (await apis.wallet.getAddressBook() as List).cast<Map<String, dynamic>>();
   final addresses = result.map((item) => AddressModel.fromJson(item)).toList();
   return addresses;
 });
