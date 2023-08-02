@@ -1,8 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:otc/components/chart/chart.bar.dart';
-import 'package:otc/components/chart/chart.config.dart';
 import 'package:otc/components/chart/chart.loading.dart';
 import 'package:otc/pages/agent/dashboard/dashboard_24_amount.dart';
 import 'package:otc/pages/agent/dashboard/dashboard_24_counter.dart';

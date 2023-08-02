@@ -9,6 +9,8 @@ import 'package:otc/providers/provider.dart';
 class UserNotifier extends StateNotifier<UserModel> {
   UserNotifier() : super(global.user);
 
+  Timer? _timer;
+
   Future<UserModel> login({
     required String username,
     required String password,
@@ -19,6 +21,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     });
 
     global.updateAuthorization(token);
+    timerRefreshToken();
     return await updateUser();
   }
 
@@ -38,12 +41,22 @@ class UserNotifier extends StateNotifier<UserModel> {
     state = fakerUser();
     global.updateUser(state);
     global.updateAuthorization(null);
+    _timer?.cancel();
     provider.read(authProvider.notifier).state = false;
   }
 
   void updateNickName(String nickname) {
     final newBase = state.base.copyWith(nickname: nickname);
     state = state.copyWith(base: newBase);
+  }
+
+  void timerRefreshToken() {
+    // 15分钟刷新一次令牌
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      final token = await apis.security.refreshToken();
+      global.updateAuthorization(token);
+      provider.read(authProvider.notifier).state = true;
+    });
   }
 }
 

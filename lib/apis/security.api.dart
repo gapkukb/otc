@@ -11,6 +11,9 @@ class _SecurityApi {
 
   /// 通过谷歌验证器获取认证token
   final validateF2A = get("/customer/safety/google/valid");
+
+  /// 通过谷歌验证器获取认证token
+  final refreshToken = get("/auth/refresh", null, HttpOptions(loading: false));
 }
 
 final securityApi = _SecurityApi();

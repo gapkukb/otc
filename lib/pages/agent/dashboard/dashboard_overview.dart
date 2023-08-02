@@ -38,8 +38,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           itemCount: 4,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate:
-              const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             height: 108,
             crossAxisCount: 2,
             crossAxisSpacing: 8,
@@ -74,27 +73,24 @@ class _DashboardOverviewState extends State<DashboardOverview> {
               children: [
                 Text(
                   "300.00",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Colors.white),
                 ),
                 const Spacer(),
-                UiButton(
-                  shape: UiButtonShape.rounded,
-                  label: "划转",
-                  color: Colors.white,
-                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                  onPressed: () {},
-                ),
-                const SizedBox(width: 8),
-                UiButton(
-                  variant: UiButtonVariant.outline,
-                  shape: UiButtonShape.rounded,
-                  label: "划转记录",
-                  color: Colors.white,
-                  onPressed: () {},
-                ),
+                // UiButton(
+                //   shape: UiButtonShape.rounded,
+                //   label: "划转",
+                //   color: Colors.white,
+                //   labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                //   onPressed: () {},
+                // ),
+                // const SizedBox(width: 8),
+                // UiButton(
+                //   variant: UiButtonVariant.outline,
+                //   shape: UiButtonShape.rounded,
+                //   label: "划转记录",
+                //   color: Colors.white,
+                //   onPressed: () {},
+                // ),
               ],
             )
           ],
