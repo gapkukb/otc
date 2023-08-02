@@ -29,9 +29,7 @@ class _ChartLoadingState extends State<ChartLoading> with SingleTickerProviderSt
             if (controller.isCompleted) {
               points = createPoints();
               painter.color = color;
-              controller
-                ..reset()
-                ..forward();
+              controller.forward(from: 0.0);
             }
             setState(() {});
           }
