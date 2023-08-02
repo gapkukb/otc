@@ -1,19 +1,12 @@
 import 'package:data_table_2/data_table_2.dart';
-import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
-import 'package:otc/constants/currency.dart';
-import 'package:otc/models/currency.dart';
-import 'package:otc/models/wallet.balance/wallet.balance.dart';
 import 'package:otc/providers/coin.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
-import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
-import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
 
@@ -105,10 +98,6 @@ class _WalletSpotState extends ConsumerState<WalletSpot> {
               ),
             ],
           ),
-        ),
-        trailing: TextButton(
-          child: const Text("充值提现记录"),
-          onPressed: () {},
         ),
       ),
     );
