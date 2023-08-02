@@ -27,8 +27,9 @@ class UserNotifier extends StateNotifier<UserModel> {
 
   Future<UserModel> updateUser() async {
     final user = await apis.user.getUser();
-    state = user;
     global.updateUser(user);
+    updateShouldNotify(state, user);
+    state = user;
     provider.read(authProvider.notifier).state = true;
     return user;
   }
@@ -38,7 +39,9 @@ class UserNotifier extends StateNotifier<UserModel> {
   }
 
   FutureOr<void> logout() {
-    state = fakerUser();
+    final newState = fakerUser();
+    updateShouldNotify(state, newState);
+    state = newState;
     global.updateUser(state);
     global.updateAuthorization(null);
     _timer?.cancel();
@@ -52,7 +55,7 @@ class UserNotifier extends StateNotifier<UserModel> {
 
   void timerRefreshToken() {
     // 15分钟刷新一次令牌
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+    _timer = Timer.periodic(const Duration(minutes: 5), (timer) async {
       final token = await apis.security.refreshToken();
       global.updateAuthorization(token);
       provider.read(authProvider.notifier).state = true;
