@@ -24,14 +24,18 @@ class _ChartLoadingState extends State<ChartLoading> with SingleTickerProviderSt
     )
       ..forward()
       ..addListener(() {
-        if (controller.isCompleted) {
-          points = createPoints();
-          painter.color = color;
-          controller
-            ..reset()
-            ..forward();
-        }
-        setState(() {});
+        Future.delayed(const Duration(seconds: 2), () {
+          if (!mounted) {
+            if (controller.isCompleted) {
+              points = createPoints();
+              painter.color = color;
+              controller
+                ..reset()
+                ..forward();
+            }
+            setState(() {});
+          }
+        });
       });
 
     super.initState();
