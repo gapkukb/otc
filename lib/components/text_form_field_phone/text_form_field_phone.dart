@@ -28,8 +28,7 @@ class TextFormFieldPhone extends StatefulWidget {
 }
 
 class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
-  String _countryCode =
-      global.prefs.getString(global.keys.countryCode) ?? "+86";
+  String _countryCode = global.prefs.getString(global.keys.countryCode) ?? "+86";
 
   IsoCode get _isoCode {
     return countryCodeToIsoCode[_countryCode.substring(1)]!.first;
@@ -55,42 +54,42 @@ class _TextFormFieldPhoneState extends State<TextFormFieldPhone> {
       decoration: InputDecoration(
         hintStyle: TextStyle(color: Colors.grey[300]),
         hintText: example,
-        prefixIcon: SizedBox(
-          child: CountryCodePicker(
-            initialSelection: _countryCode,
-            favorite: const ['+86', '+63'],
-            onChanged: (value) {
-              _countryCode = value.dialCode!;
-              global.prefs.setString(global.keys.countryCode, _countryCode);
-              setState(() {});
-            },
-            builder: (country) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(country!.dialCode!),
-                    const Icon(Icons.keyboard_arrow_down),
-                  ],
-                ),
-              );
-            },
-            showFlagMain: false,
-            searchDecoration: const InputDecoration(
-              labelText: "请输入您要筛选的国家或者区号",
-            ),
-            showDropDownButton: false,
-            alignLeft: false,
-            dialogSize: context.xs ? null : const Size.fromWidth(500.0),
-            emptySearchBuilder: (context) {
-              return const UiEmptyView(
-                title: "未匹配到您的过滤条件",
-                subtitle: "请检查您的输入是否正确或联系客服",
-              );
-            },
-          ),
-        ),
+        // prefixIcon: SizedBox(
+        //   child: CountryCodePicker(
+        //     initialSelection: _countryCode,
+        //     favorite: const ['+86', '+63'],
+        //     onChanged: (value) {
+        //       _countryCode = value.dialCode!;
+        //       global.prefs.setString(global.keys.countryCode, _countryCode);
+        //       setState(() {});
+        //     },
+        //     builder: (country) {
+        //       return Padding(
+        //         padding: const EdgeInsets.only(left: 16.0, right: 8),
+        //         child: Row(
+        //           mainAxisSize: MainAxisSize.min,
+        //           children: [
+        //             Text(country!.dialCode!),
+        //             const Icon(Icons.keyboard_arrow_down),
+        //           ],
+        //         ),
+        //       );
+        //     },
+        //     showFlagMain: false,
+        //     searchDecoration: const InputDecoration(
+        //       labelText: "请输入您要筛选的国家或者区号",
+        //     ),
+        //     showDropDownButton: false,
+        //     alignLeft: false,
+        //     dialogSize: context.xs ? null : const Size.fromWidth(500.0),
+        //     emptySearchBuilder: (context) {
+        //       return const UiEmptyView(
+        //         title: "未匹配到您的过滤条件",
+        //         subtitle: "请检查您的输入是否正确或联系客服",
+        //       );
+        //     },
+        //   ),
+        // ),
       ),
       validator: (value) {
         var ph = PhoneNumber(isoCode: _isoCode, nsn: value!);

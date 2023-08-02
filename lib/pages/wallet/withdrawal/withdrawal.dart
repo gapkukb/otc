@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/amount_input/amount_input.dart';
 import 'package:otc/components/blockchain_selector/blockchain_selector.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
@@ -12,6 +15,8 @@ import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.book.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.order.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -27,6 +32,9 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
   late final TabController controller;
   String amount = "";
   final Map<String, dynamic> formState = {};
+  final formKey = GlobalKey<FormState>();
+
+  num fee = 10;
 
   @override
   void initState() {
@@ -52,90 +60,113 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return ModalPageTemplate(
-      legend: "钱包",
-      title: "数字货币提币",
-      iconData: Icons.wallet,
-      filledButton: true,
-      okButtonText: "提币",
-      onCompelete: (context) {},
-      children: [
-        CurrencySelector(
-          name: "currency",
-          formState: formState,
-          initialValue: Cryptocurrency.USDT.name,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TabBar(
-              controller: controller,
-              isScrollable: true,
-              physics: const NeverScrollableScrollPhysics(),
-              dividerColor: Colors.transparent,
-              onTap: (value) {
-                setState(() {});
-              },
-              tabs: const [
-                Tab(text: "使用新地址"),
-                Tab(text: "提币地址簿"),
-              ],
-            ),
-            UiButton.text(
-              onPressed: () {},
-              label: "地址管理",
-            )
-          ],
-        ),
-        const Divider(thickness: 1, height: 1),
-        const Gap.medium(),
-        if (controller.index == 0)
-          Column(
-            mainAxisSize: MainAxisSize.min,
+    return Form(
+      key: formKey,
+      child: ModalPageTemplate(
+        legend: "钱包",
+        title: "数字货币提币",
+        iconData: Icons.wallet,
+        filledButton: true,
+        okButtonText: "提币",
+        onCompelete: (context) async {
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
+            inspect(formState);
+            if (controller.index == 0) {
+              await apis.wallet.withdrawWithoutBook();
+            } else {
+              await apis.wallet.withdrawWithBook();
+            }
+
+            provider.read(userProvider.notifier).updateUser();
+          }
+        },
+        children: [
+          CurrencySelector(
+            name: "currency",
+            formState: formState,
+            initialValue: Cryptocurrency.USDT.name,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              WalletAddressInput(
-                name: "currency",
-                formState: formState,
+              TabBar(
+                controller: controller,
+                isScrollable: true,
+                physics: const NeverScrollableScrollPhysics(),
+                dividerColor: Colors.transparent,
+                onTap: (value) {
+                  setState(() {});
+                },
+                tabs: const [
+                  Tab(text: "使用新地址"),
+                  Tab(text: "提币地址簿"),
+                ],
               ),
-              const Gap.medium(),
-              BlockchainSelector(
-                name: "currency",
-                formState: formState,
-              ),
+              UiButton.text(
+                onPressed: () {},
+                label: "地址管理",
+              )
             ],
-          )
-        else
-          WithdrawalBook(),
-        const Gap.medium(),
-        AmountInput(
-          coin: Cryptocurrency.USDT,
-          labelText: "提币数量",
-          hintText: "0.00USDT可用",
-          onChanged: (value) {
-            setState(() {
-              amount = value;
-            });
-          },
-        ),
-        const Gap.medium(),
-
-        Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            "到账数量：$amount USDT",
-            style: Font.x2largeBold,
           ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            "1.00 USDT网络费用",
-            style: Font.miniGrey,
+          const Divider(height: 1),
+          const Gap.medium(),
+          if (controller.index == 0)
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                WalletAddressInput(
+                  name: "wallet",
+                  formState: formState,
+                ),
+                const Gap.medium(),
+                BlockchainSelector(
+                  name: "blockchain",
+                  formState: formState,
+                  validator: (value) {
+                    return value == null ? "请选择转账网络" : null;
+                  },
+                ),
+              ],
+            )
+          else
+            WithdrawalBook(
+              formState: formState,
+              name: "book",
+            ),
+          const Gap.medium(),
+          AmountInput(
+            coin: Cryptocurrency.USDT,
+            labelText: "提币数量",
+            hintText: "0.00USDT可用",
+            formState: formState,
+            name: "amount",
+            onChanged: (value) {
+              setState(() {
+                amount = value;
+              });
+            },
           ),
-        ),
+          const Gap.medium(),
 
-        // WithdrawalOrder(),
-      ],
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "到账数量：${(amount == "" ? 0 : double.parse(amount) - fee)} USDT",
+              style: Font.x2largeBold,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "$fee USDT网络费用",
+              style: Font.miniGrey,
+            ),
+          ),
+
+          // WithdrawalOrder(),
+        ],
+      ),
     );
   }
 }

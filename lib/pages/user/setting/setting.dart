@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 
 class UserSetting extends ConsumerStatefulWidget {
@@ -74,7 +75,7 @@ class _UserSettingState extends ConsumerState<UserSetting> {
       TextButton(
         child: const Text("编辑"),
         onPressed: () {
-          context.push('/setting_nickname');
+          context.push(Routes.updateNickname);
         },
       ),
     ]);
@@ -88,7 +89,7 @@ class _UserSettingState extends ConsumerState<UserSetting> {
       TextButton(
         child: const Text("修改"),
         onPressed: () {
-          context.push('/setting_avatar');
+          context.push(Routes.updateAvatar);
         },
       )
     ]);

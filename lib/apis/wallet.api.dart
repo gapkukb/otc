@@ -65,6 +65,12 @@ class _Wallet {
   final blockchainHistory = post("/payment/records", (Map<String, dynamic> json) {
     return PaginationModel.fromJson(json, (item) => WalletBlockchainHistoryModel.fromJson(item as dynamic));
   });
+
+  /// 填写地址-申请提款
+  final withdrawWithoutBook = post("/payment/withdraw/apply");
+
+  /// 使用地址簿-申请提款
+  final withdrawWithBook = post("/payment/withdraw/apply/with-book");
 }
 
 final walletApi = _Wallet();

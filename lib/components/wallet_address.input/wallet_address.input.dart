@@ -4,7 +4,7 @@ import 'package:otc/constants/blockchain.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class WalletAddressInput extends UiTextFormField {
-  Protocal? protocal;
+  final Protocal? protocal;
   WalletAddressInput({
     super.key,
     super.name,
@@ -21,8 +21,7 @@ class WalletAddressInput extends UiTextFormField {
               valid = false;
             } else if (value.length != 34 && value.length != 42) {
               valid = false;
-            } else if (protocal == Protocal.BEP20 ||
-                protocal == Protocal.ERC20) {
+            } else if (protocal == Protocal.BEP20 || protocal == Protocal.ERC20) {
               if (value.length != 42 || value.startsWith("0x")) {
                 valid = false;
               }

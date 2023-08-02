@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/address_selector/address_selector.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/gap/gap.dart';
+import "dart:developer";
 
 class WithdrawalBook extends StatefulWidget {
-  const WithdrawalBook({super.key});
+  final Map<String, dynamic> formState;
+  final String name;
+  const WithdrawalBook({
+    super.key,
+    required this.formState,
+    required this.name,
+  });
 
   @override
   State<WithdrawalBook> createState() => _WithdrawalBookState();
@@ -19,10 +26,13 @@ class _WithdrawalBookState extends State<WithdrawalBook> {
       mainAxisSize: MainAxisSize.min,
       children: [
         AddressSelector(
-          name: "address",
+          name: widget.name,
+          formState: widget.formState,
           onChanged: (selectedItem) {
             setState(() {
-              address = selectedItem!.title;
+              inspect(selectedItem);
+              address = selectedItem!.value;
+              blockchain = selectedItem.subtitle!;
             });
           },
         ),

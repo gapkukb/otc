@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
-import 'package:otc/constants/blockchain.dart';
 import 'package:otc/models/address/address.model.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
@@ -14,7 +13,6 @@ import 'package:otc/widgets/ui_empty_view.dart';
 class AddressSelector extends StatefulWidget {
   final String name;
   final Map<String, dynamic>? formState;
-
   final void Function(DropdownItem?)? onChanged;
   const AddressSelector({
     super.key,
@@ -35,6 +33,10 @@ class _AddressSelectorState extends State<AddressSelector> {
     return Dropdown(
       name: widget.name,
       formState: widget.formState,
+      onChanged: widget.onChanged,
+      validator: (value) {
+        return value == null ? "请选择提币地址" : null;
+      },
       labelText: "选择提币地址",
       mode: Mode.DIALOG,
       title: const ListTile(
@@ -76,7 +78,7 @@ class _AddressSelectorState extends State<AddressSelector> {
             title: item.remark,
             subtitle: item.blockchain.name,
             subtitleStyle: Font.miniGrey,
-            value: item.title,
+            value: item.wallet,
             extra: item.reference,
             trailingWidget: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

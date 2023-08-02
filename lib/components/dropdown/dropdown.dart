@@ -53,7 +53,7 @@ class Dropdown extends StatefulWidget {
   final PopupProps? props;
   final dynamic initialValue;
   final Widget? Function(BuildContext, DropdownItem?)? dropdownBuilder;
-  final String? Function(DropdownItem?)? validator;
+  final String? Function(DropdownItem? value)? validator;
   final void Function(DropdownItem? selectedItem)? onChanged;
   final Future<List<DropdownItem>> Function(String text)? asyncItems;
   final DialogProps? dialogProps;
@@ -102,6 +102,7 @@ class _DropdownState extends State<Dropdown> {
     return DropdownSearch<DropdownItem>(
       items: widget.data,
       selectedItem: selectedItem,
+      autoValidateMode: AutovalidateMode.onUserInteraction,
       onSaved: (now) {
         if (selectedItem == null) return;
 
