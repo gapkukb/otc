@@ -42,10 +42,11 @@ class WalletMethodCrypto extends ConsumerWidget {
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      error: (_, __) => const Center(
-        child: CircularProgressIndicator(),
+      error: (e, __) => Center(
+        child: Text(e.toString()),
       ),
       data: (items) {
+        print("object");
         return Padding(
           padding: Pads.sm,
           child: Column(
