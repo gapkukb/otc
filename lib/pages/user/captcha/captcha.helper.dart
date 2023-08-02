@@ -56,6 +56,7 @@ enum CaptchaSession {
         return apis.user.updatePayPwd({
           "device": device,
         });
+      case CaptchaSession.forget:
       case CaptchaSession.register:
         return apis.security.validateOpenCaptcha({
           "session": value,

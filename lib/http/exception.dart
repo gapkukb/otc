@@ -40,7 +40,7 @@ class ExceptionInterceptor extends InterceptorsWrapper {
       // dio默认错误，进一步判断是否无网络状态
       if (err.type == DioExceptionType.unknown) {
         if (await Connectivity().checkConnectivity() == ConnectivityResult.none) {
-          exception = HttpException(ClientErrorCode.weakNetwork, "网络开小差了,请检查网络");
+          exception = HttpException(ClientErrorCode.weakNetwork, "网络无法连接,请检查您的网络");
         }
       }
       err = err.copyWith(error: exception);

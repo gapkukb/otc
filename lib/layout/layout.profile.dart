@@ -44,7 +44,7 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
           style: MenuItemButton.styleFrom(
             fixedSize: const Size.fromWidth(180.0),
           ),
-          child: const Text("注销", style: Font.small),
+          child: const Text("退出", style: Font.small),
           onPressed: () {
             context.go(Routes.home);
             ref.read(userProvider.notifier).logout();

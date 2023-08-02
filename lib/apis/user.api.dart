@@ -63,6 +63,9 @@ class _User {
 
   /// 申请绑定设备(邮箱，手机)
   final bindDevice = post("/customer/safety/bound/device");
+
+  /// 忘记密码
+  final forgotPwd = post("/customer/safety/open/forget");
 }
 
 final userApi = _User();
