@@ -30,9 +30,7 @@ class ChartLine extends ChartBase {
                       .toList(),
                   isCurved: true,
                   color: item.color,
-                  gradient: item.gradient == null
-                      ? null
-                      : LinearGradient(colors: item.gradient!),
+                  gradient: item.gradient == null ? null : LinearGradient(colors: item.gradient!),
                   isStrokeCapRound: true,
                   dotData: const FlDotData(
                     show: false,
@@ -44,7 +42,7 @@ class ChartLine extends ChartBase {
                           gradient: LinearGradient(
                             begin: Alignment(0, simple ? 0 : -1),
                             end: const Alignment(0, 1),
-                            stops: [0.1, simple ? 0.5 : -1],
+                            stops: const [0, 1],
                             colors: item.belowAreaGradient!,
                           ),
                         ),

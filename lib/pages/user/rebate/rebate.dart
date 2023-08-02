@@ -16,15 +16,18 @@ class UserRebate extends StatefulWidget {
 class _UserRebateState extends State<UserRebate> {
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          RebateBanner(),
-          RebateProportion(),
-          RebateStatics(),
-          RebateDetails(),
-          RebateAgentDetails(),
-        ],
+    return Material(
+      color: Colors.grey.shade50,
+      child: const SingleChildScrollView(
+        child: Column(
+          children: [
+            RebateBanner(),
+            RebateProportion(),
+            RebateStatics(),
+            RebateDetails(),
+            RebateAgentDetails(),
+          ],
+        ),
       ),
     );
   }

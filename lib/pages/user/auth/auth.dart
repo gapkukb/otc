@@ -64,22 +64,25 @@ class _UserAuthState extends ConsumerState<UserAuth> {
       },
     ];
 
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildBasement(),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: items.length,
-            // separatorBuilder: (context, index) => const SizedBox(height: 0),
-            itemBuilder: (context, index) {
-              return _buildCard(items[index]);
-            },
-          )
-        ],
+    return Material(
+      color: Colors.grey.shade50,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildBasement(),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: items.length,
+              // separatorBuilder: (context, index) => const SizedBox(height: 0),
+              itemBuilder: (context, index) {
+                return _buildCard(items[index]);
+              },
+            )
+          ],
+        ),
       ),
     );
   }

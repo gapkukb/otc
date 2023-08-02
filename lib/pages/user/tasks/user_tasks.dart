@@ -13,8 +13,7 @@ class UserTasks extends StatefulWidget {
   State<UserTasks> createState() => _UserTasksState();
 }
 
-class _UserTasksState extends State<UserTasks>
-    with SingleTickerProviderStateMixin {
+class _UserTasksState extends State<UserTasks> with SingleTickerProviderStateMixin {
   late final TabController controller;
   bool _isEmpty = true;
 
@@ -37,14 +36,17 @@ class _UserTasksState extends State<UserTasks>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildHeader(),
-          _buildTaskView(),
-        ],
+    return Material(
+      color: Colors.grey.shade50,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildHeader(),
+            _buildTaskView(),
+          ],
+        ),
       ),
     );
   }
@@ -66,8 +68,7 @@ class _UserTasksState extends State<UserTasks>
               labelColor: Colors.white,
               unselectedLabelColor: Colors.black,
               indicatorSize: TabBarIndicatorSize.tab,
-              labelPadding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              labelPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               labelStyle: const TextStyle(fontSize: 12),
               indicator: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
@@ -87,42 +88,12 @@ class _UserTasksState extends State<UserTasks>
 
   Padding _buildTab() {
     const List<_Task> tasks = [
-      _Task(
-          amount: 500,
-          deadtime: "2023-05-03 01:24(UTC+8)到期",
-          status: "已过期",
-          title: "可兑换500 USDT 灵活适用基金代金券！",
-          type: "手续费减免"),
-      _Task(
-          amount: 50,
-          deadtime: "2023-05-03 01:24(UTC+8)到期",
-          status: "已过期",
-          title: "可兑换您的 500 USDT 储蓄试用基金代金券！",
-          type: "手续费减免"),
-      _Task(
-          amount: 100,
-          deadtime: "2023-05-03 01:24(UTC+8)到期",
-          status: "已过期",
-          title: "可兑换您的 100 USDT 合约试用代金券！",
-          type: "手续费减免"),
-      _Task(
-          amount: 10,
-          deadtime: "2023-05-03 01:24(UTC+8)到期",
-          status: "已过期",
-          title: "完成账户验证并获得 10 USDT 现金返还！",
-          type: "手续费减免"),
-      _Task(
-          amount: 10,
-          deadtime: "2023-05-03 01:24(UTC+8)到期",
-          status: "已过期",
-          title: "完成做市商验证并获得 10 USDT 现金返还！",
-          type: "手续费减免"),
-      _Task(
-          amount: 5,
-          deadtime: "2023-05-03 01:24(UTC+8)到期",
-          status: "已过期",
-          title: "完成星级订单获得 5 USDT 现金返还！",
-          type: "手续费减免"),
+      _Task(amount: 500, deadtime: "2023-05-03 01:24(UTC+8)到期", status: "已过期", title: "可兑换500 USDT 灵活适用基金代金券！", type: "手续费减免"),
+      _Task(amount: 50, deadtime: "2023-05-03 01:24(UTC+8)到期", status: "已过期", title: "可兑换您的 500 USDT 储蓄试用基金代金券！", type: "手续费减免"),
+      _Task(amount: 100, deadtime: "2023-05-03 01:24(UTC+8)到期", status: "已过期", title: "可兑换您的 100 USDT 合约试用代金券！", type: "手续费减免"),
+      _Task(amount: 10, deadtime: "2023-05-03 01:24(UTC+8)到期", status: "已过期", title: "完成账户验证并获得 10 USDT 现金返还！", type: "手续费减免"),
+      _Task(amount: 10, deadtime: "2023-05-03 01:24(UTC+8)到期", status: "已过期", title: "完成做市商验证并获得 10 USDT 现金返还！", type: "手续费减免"),
+      _Task(amount: 5, deadtime: "2023-05-03 01:24(UTC+8)到期", status: "已过期", title: "完成星级订单获得 5 USDT 现金返还！", type: "手续费减免"),
     ];
     return Padding(
       padding: EdgeInsets.all(
@@ -137,8 +108,7 @@ class _UserTasksState extends State<UserTasks>
               itemCount: tasks.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
                 height: 160,
                 crossAxisCount: context.responsive(1, md: 2, xl: 3, xxl: 4),
                 crossAxisSpacing: 16,
@@ -234,9 +204,7 @@ class _UserTasksState extends State<UserTasks>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: Colors.deepPurpleAccent,
-          image: DecorationImage(
-              image: Assets.images.image4.provider(),
-              alignment: Alignment.centerRight),
+          image: DecorationImage(image: Assets.images.image4.provider(), alignment: Alignment.centerRight),
         ),
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,

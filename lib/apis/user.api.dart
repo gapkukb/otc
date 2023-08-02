@@ -28,7 +28,7 @@ class _User {
   /// 修改用户昵称
   final modifyNickname = post("/customer/modify/nickname");
 
-  /// 申请成为maker
+  /// 申请成为maker(做市商)
   final applyMaker = post("/customer/maker/apply");
 
   /// 获取kyc信息

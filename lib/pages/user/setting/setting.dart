@@ -16,24 +16,27 @@ class UserSetting extends ConsumerStatefulWidget {
 class _UserSettingState extends ConsumerState<UserSetting> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Panel(
-            title: "个人资料",
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                children: [
-                  _buildNickName(),
-                  const SizedBox(height: 16),
-                  _buildAvatar(),
-                ],
+    return Material(
+      color: Colors.grey.shade50,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Panel(
+              title: "个人资料",
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  children: [
+                    _buildNickName(),
+                    const SizedBox(height: 16),
+                    _buildAvatar(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -61,8 +64,7 @@ class _UserSettingState extends ConsumerState<UserSetting> {
   }
 
   _buildNickName() {
-    final nickName =
-        ref.watch(userBaseProvider.select((value) => value.nickname));
+    final nickName = ref.watch(userBaseProvider.select((value) => value.nickname));
 
     return _buildItem(title: "昵称", subtitle: "为您的个人资料设置自定义昵称。", trailing: [
       Text(
@@ -92,8 +94,7 @@ class _UserSettingState extends ConsumerState<UserSetting> {
     ]);
   }
 
-  final MaterialStateProperty<Icon?> thumbIcon =
-      MaterialStateProperty.resolveWith<Icon?>(
+  final MaterialStateProperty<Icon?> thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
       if (states.contains(MaterialState.selected)) {
         return const Icon(Icons.check);
