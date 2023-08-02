@@ -39,6 +39,7 @@ enum CaptchaSession {
   validate(
     CaptchaDevice device,
     String captcha,
+    String? account,
   ) {
     switch (this) {
       case boundDevice:
@@ -54,6 +55,13 @@ enum CaptchaSession {
       case CaptchaSession.boundFunds:
         return apis.user.updatePayPwd({
           "device": device,
+        });
+      case CaptchaSession.register:
+        return apis.security.validateOpenCaptcha({
+          "session": value,
+          "device": device.value,
+          "captcha": captcha,
+          "account": account,
         });
       default:
         if (device == CaptchaDevice.f2a) {

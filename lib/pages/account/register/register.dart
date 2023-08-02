@@ -10,7 +10,8 @@ import 'package:otc/components/text_form_field_email/text_form_field_email.dart'
 import 'package:otc/components/text_form_field_invite_code/text_form_field_invite_code.dart';
 import 'package:otc/components/text_form_field_password/text_form_field_password.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
-import 'package:otc/pages/account/login/login_util.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/utils/navigator.dart';
@@ -30,6 +31,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
   bool _showEmail = true;
   bool _agreement = false;
   bool _successful = false;
+  double rate = 0.0;
 
   late TabController _controller;
 
@@ -62,7 +64,11 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
           borderOnForeground: true,
           child: Padding(
             padding: const EdgeInsets.all(40.0),
-            child: _successful ? const RegisterSuccess() : _buildBody(),
+            child: _successful
+                ? RegisterSuccess(
+                    rate: rate,
+                  )
+                : _buildBody(),
           ),
         ),
       ),
@@ -186,25 +192,22 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
 
       _formKey.currentState!.save();
 
-      var code = await openCaptchaWindow(CaptchaWindowOptions(
+      var result = await openCaptchaWindow(CaptchaWindowOptions(
         context: context,
         preferredDevice: device,
         session: CaptchaSession.register,
         account: _formState['account'],
         switchable: false,
       ));
-
+      if (result == null) return;
       var payload = {
-        "captcha": code,
         "device": device.value,
+        ...result,
         ..._formState,
       };
       await apis.user.register(payload);
-
-      await loginUtil(
-        username: "username",
-        password: _formState['password'],
-      );
+      await provider.read(userProvider.notifier).login(username: _formState['account'], password: _formState['password']);
+      rate = await apis.otc.getCommissionRate();
       setState(() {
         _successful = true;
       });

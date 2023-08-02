@@ -96,8 +96,8 @@ class HttpException extends _Exception {
                 return HttpException(statusCode, "请求语法出错");
               case 401:
                 provider.read(userProvider.notifier).logout();
-                final router= GoRouter.of(navigatorKey.currentContext!);
-                while(router.canPop()){
+                final router = GoRouter.of(navigatorKey.currentContext!);
+                while (router.canPop()) {
                   router.pop();
                 }
                 GoRouter.of(navigatorKey.currentContext!)
@@ -148,7 +148,7 @@ class BizException extends _Exception {
     if (code == 2001002) {
       /// 验证码已过期,为了不干扰其他组件，这里延迟调用
       (() async {
-        await Future.delayed(Duration(milliseconds: 1));
+        await Future.delayed(const Duration(milliseconds: 1));
         navigatorKey.currentContext!.push(Routes.captcha);
       })();
       message = "您的身份认证已过期，请重新认证";

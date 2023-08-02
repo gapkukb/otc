@@ -30,7 +30,6 @@ class _WithdrawalBookState extends State<WithdrawalBook> {
           formState: widget.formState,
           onChanged: (selectedItem) {
             setState(() {
-              inspect(selectedItem);
               address = selectedItem!.value;
               blockchain = selectedItem.subtitle!;
             });

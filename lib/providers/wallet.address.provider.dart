@@ -7,6 +7,5 @@ import 'package:riverpod/riverpod.dart';
 final walletAddressProvider = FutureProvider<List<AddressModel>>((ref) async {
   final result = await apis.wallet.getAddressBook();
   final addresses = result.map((item) => AddressModel.fromJson(item)).toList();
-  inspect(addresses);
   return addresses;
 });

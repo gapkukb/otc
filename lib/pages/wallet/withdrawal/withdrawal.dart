@@ -98,8 +98,6 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
               "payPassword": data['payPassword'],
             });
 
-            inspect(formState);
-
             if (controller.index == 0) {
               await apis.wallet.withdrawWithoutBook(formState);
             } else {

@@ -4,7 +4,11 @@ import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class RegisterSuccess extends StatelessWidget {
-  const RegisterSuccess({super.key});
+  final double rate;
+  const RegisterSuccess({
+    super.key,
+    required this.rate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class RegisterSuccess extends StatelessWidget {
           ),
           // const SizedBox(height: 32),
           Text(
-            "全国招商计划正在火热进行中，加入做市商联盟可以获得高额返佣。每笔成交的星级订单，可获得不低于 xx% 的返佣！！！",
+            "全国招商计划正在火热进行中，加入做市商联盟可以获得高额返佣。每笔成交的星级订单，可获得不低于 $rate% 的返佣！！！",
             style: Theme.of(context).textTheme.labelLarge,
           ),
 
@@ -33,7 +37,7 @@ class RegisterSuccess extends StatelessWidget {
                   label: "先去逛逛",
                   onPressed: () {
                     Router.neglect(context, () {
-                      context.goNamed(Routes.home);
+                      context.go(Routes.home);
                     });
                   },
                 ),
@@ -45,7 +49,7 @@ class RegisterSuccess extends StatelessWidget {
                   label: "加入做市商联盟",
                   onPressed: () {
                     Router.neglect(context, () {
-                      context.goNamed(Routes.home);
+                      context.go(Routes.merchant);
                     });
                   },
                 ),

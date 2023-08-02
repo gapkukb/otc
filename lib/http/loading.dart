@@ -28,7 +28,7 @@ class LoadingInterceptor extends Interceptor {
 
   off(dynamic result) {
     final opt = (result.requestOptions.extra['_options'] as InnerOptions);
-    if (opt.loading != true && --loadingCounter == 0) {
+    if (opt.loading != false && --loadingCounter == 0) {
       close();
     }
   }

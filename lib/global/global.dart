@@ -72,7 +72,6 @@ class _Global {
     final key = keys.captchaToken;
     global.captchaToken = newValue;
     http.updateHeader(key, newValue);
-    inspect(http.dio.options.headers);
     if (newValue == null) {
       prefs.remove(key);
     } else {

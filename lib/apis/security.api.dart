@@ -3,7 +3,10 @@ part of apis;
 class _SecurityApi {
   final login = get("/auth/login");
 
-  /// 通过手机或者邮箱验证器获取认证token
+  /// 未登录（注册，忘记密码）情况下校验验证码
+  final validateOpenCaptcha = post("/captcha/open/valid");
+
+  /// 已登录情况下校验验证码
   final validateCaptcha = post("/captcha/valid");
 
   /// 通过谷歌验证器获取认证token

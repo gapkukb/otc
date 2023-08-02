@@ -12,6 +12,18 @@ class _OTCApi {
 
   /// 获取支持的网络
   final supportedBlockchain = post("/otc/blockchain/support");
+
+  /// 查询当前用户佣金比例
+  final getCommissionRate = get("/commission/rate");
+
+  /// 佣金明细
+  final commissionDeals = post("/commission/deals/page");
+
+  /// 邀请明细
+  final commissionInvPage = post("/commission/inv-detail/page");
+
+  /// 佣金总览
+  final commissionOverview = post("/commission/overview");
 }
 
 final otcApi = _OTCApi();

@@ -1,6 +1,7 @@
 library captha;
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
@@ -232,8 +233,15 @@ class _CaptchaState extends State<Captcha> {
   action(_) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      final String token = await session.validate(device, _controller.text);
+      final String token = await session.validate(
+        device,
+        _controller.text,
+        widget.account,
+      );
       global.updateCaptchaToken(token);
+      formState.addAll({
+        "token": token,
+      });
       Navigator.of(context).maybePop<Map<String, dynamic>>(formState);
     }
   }

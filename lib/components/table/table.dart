@@ -3,6 +3,7 @@ import 'package:nil/nil.dart';
 import 'package:otc/models/pagination/pagination.model.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'dart:math';
 export 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 typedef Fetcher<T> = Future<PaginationModel<T>> Function(
@@ -60,7 +61,7 @@ class _DataGridState<T> extends State<DataGrid> {
         return widget.fetcher(pageNo, pageSize).then((value) {
           setState(() {
             isEmtpy = value.records.isEmpty;
-            pageCount = value.pages.toDouble();
+            pageCount = max(value.pages.toDouble(), 1);
           });
           return value as PaginationModel<T>;
         }).whenComplete(() {
