@@ -26,229 +26,40 @@ class WalletHistoryBlockchain extends ConsumerStatefulWidget {
 
 class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchain> {
   final Map<String, dynamic> formState = {};
-  final formKey = GlobalKey<FormState>();
-  int pageNo = 1;
-  int pageCount = 1;
-  final int PageSize = 20;
-  final source = SourceData(count: 0);
-  bool loading = true;
-
-  Map<String, dynamic> get filters {
-    final begin = dateFormatter.format(DateTime.now().subtract(Duration(days: formState["datetime"] ?? 7)));
-    return {
-      ...formState,
-      "deposit": formState["deposit"] ?? true,
-      "currency": formState["currency"] ?? Cryptocurrency.USDT.name,
-      "reference": formState["reference"],
-      "confirmed": formState["confirmed"] ?? "UNKNOWN",
-      "page": pageNo,
-      "pageSize": pageCount,
-      "begin": "$begin 00:00:00",
-      "end": "${dateFormatter.format(DateTime.now())} 23:59:59",
-    };
-  }
 
   @override
   Widget build(context) {
-    final provider = ref.watch(blockchainHisotryProvider(filters));
-    provider.maybeWhen(orElse: () => loading = false);
-    provider.whenData((data) {});
-    return Form(
-      key: formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          WalletHistoryFilter(
-            onSearch: () async {
-              formKey.currentState!.save();
-              setState(() {
-                pageNo = 1;
-                return ref.refresh(blockchainHisotryProvider(filters));
-              });
-            },
-            formState: formState,
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: DataTable2(
-                    columns: const [
-                      DataColumn2(label: Text("类型")),
-                      DataColumn2(label: Text("资产")),
-                      DataColumn2(label: Text("数量")),
-                      DataColumn2(label: Text("打款地址")),
-                      DataColumn2(label: Text("收款地址")),
-                      DataColumn2(label: Text("Txid")),
-                      DataColumn2(label: Text("状态")),
-                    ],
-                    columnSpacing: 4,
-                    dividerThickness: 0.001,
-                    empty: provider.isLoading ? null : const UiEmptyView(),
-                    rows: [],
-                  ),
-                ),
-                if (provider.isLoading)
-                  const Positioned(
-                    child: Material(
-                      color: Colors.white30,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  )
-              ],
-            ),
+    final begin = dateFormatter.format(DateTime.now().subtract(Duration(days: formState["datetime"] ?? 7)));
 
-            // child: DataGrid<WalletBlockchainHistoryModel>(
-            //   key: key,
-            //   pageSize: 3,
-            //   fetcher: (pageNo, pageSize) async {
-            //     formKey.currentState!.save();
-            //     final begin = dateFormatter.format(DateTime.now().subtract(Duration(days: formState["datetime"])));
-            //     return await apis.wallet.blockchainHistory({
-            //       ...formState,
-            //       "page": pageNo,
-            //       "pageSize": pageSize,
-            //       "begin": "$begin 00:00:00",
-            //       "end": "${dateFormatter.format(DateTime.now())} 23:59:59",
-            //     });
-            //   },
-            //   columns: [
-            //     DataGridColumn(
-            //       columnName: "time",
-            //       title: "时间",
-            //       getValue: (row) => row.createdTime,
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "type",
-            //       title: "类型",
-            //       getValue: (row) => row.deposit ? "充值" : "提币",
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "assets",
-            //       title: "资产",
-            //       getValue: (row) => row.currency,
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "amount",
-            //       title: "数量",
-            //       getValue: (row) => row.amount.decimalize(),
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "fromAddress",
-            //       title: "打款地址",
-            //       getValue: (row) => row.fromAddress,
-            //       getWidget: (value) => UiClipboard(
-            //         text: value,
-            //         iconSize: 16,
-            //         child: Text(maskText(value)),
-            //       ),
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "toAddress",
-            //       title: "收款地址",
-            //       getValue: (row) => row.toAddress,
-            //       getWidget: (value) => UiClipboard(
-            //         text: value,
-            //         iconSize: 16,
-            //         child: Text(maskText(value)),
-            //       ),
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "txid",
-            //       title: "Txid",
-            //       getValue: (row) => row.transactionHash,
-            //       getWidget: (value) => UiClipboard(
-            //         text: value,
-            //         iconSize: 16,
-            //         child: Text(maskText(value)),
-            //       ),
-            //     ),
-            //     DataGridColumn(
-            //       columnName: "status",
-            //       title: "状态",
-            //       getValue: (row) => row.confirmed == "YES" ? "已完成" : "待确认",
-            //     ),
-            //   ],
-            // ),
-          ),
-          Pagination(
-            pageCount: pageCount,
-            pageNo: pageNo,
-            disabled: loading,
-            onChange: (current) {
-              setState(() {
-                pageNo = current;
-                return ref.refresh(blockchainHisotryProvider(filters));
-              });
-            },
-          ),
-        ],
+    final provider = ref.watch(
+      blockchainHisotryProvider({
+        "deposit": formState["deposit"] ?? true,
+        "currency": formState["currency"] ?? Cryptocurrency.USDT.name,
+        "reference": formState["reference"],
+        "confirmed": formState["confirmed"] ?? "UNKNOWN",
+        "page": 1,
+        "pageSize": 10,
+        "begin": "$begin 00:00:00",
+        "end": "${dateFormatter.format(DateTime.now())} 23:59:59",
+      }),
+    );
+    // provider.maybeWhen(
+    //     orElse: () => setState(() {
+    //           print("object");
+    //           loading = false;
+    //         }));
+    // provider.whenData((data) {
+    //   print("object1111111");
+    // });
+
+    return provider.when(
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
       ),
+      error: (_, __) => Text(_.toString() + __.toString()),
+      data: (data) {
+        return Text(data.toString());
+      },
     );
-  }
-
-  maskText(String text) {
-    return "${text.substring(0, 3)}...${text.substring(text.length - 3)}";
-  }
-}
-
-class SourceData extends DataTableSource {
-  final int count;
-  SourceData({
-    required this.count,
-  });
-  final List<Map<String, dynamic>> _sourceData = List.generate(
-      200,
-      (index) => {
-            "avatar": (index % 3 == 1)
-                ? 'images/icon_hzw01.jpg'
-                : (index % 3 == 2)
-                    ? 'images/icon_hzw03.jpg'
-                    : 'images/icon_music.png',
-            "id": (index + 1),
-            "name": "Item Name ${(index + 1)}",
-            "price": Random().nextInt(10000),
-            "no.": Random().nextInt(10000),
-            "address": (index % 3 == 1)
-                ? 'Beijing'
-                : (index % 3 == 2)
-                    ? 'New York'
-                    : 'Los Angeles'
-          });
-
-  @override
-  bool get isRowCountApproximate => false;
-  @override
-  int get rowCount => count;
-  @override
-  int get selectedRowCount => 0;
-  @override
-  DataRow? getRow(int index) {
-    if (index >= _sourceData.length) {
-      notifyListeners();
-      return null;
-    }
-
-    final item = _sourceData[index];
-
-    return DataRow(
-      cells: [
-        DataCell(CircleAvatar(backgroundImage: AssetImage(item["avatar"]))),
-        DataCell(Text(item['id'].toString())),
-        DataCell(Text(item['name'])),
-        DataCell(Text('\$ ${item['price']}')),
-        DataCell(Text(item['no.'].toString())),
-        DataCell(Text(item['address'].toString()))
-      ],
-    );
-  }
-
-  addData(dynamic data) {
-    _sourceData.addAll(data);
-    notifyListeners();
   }
 }
