@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -38,12 +39,21 @@ class _SettingAvatarState extends ConsumerState<SettingAvatar> {
         }
         final close = Modal.showLoading("正在上传并提交，这可能需要一点时间\n请勿离开");
         try {
-          final formData = FormData.fromMap({
-            "file": controller.items.map((file) {
-              return MultipartFile.fromFileSync(file.path);
-            }).toList(),
-          });
+          final formData = await () async {
+            var futures = controller.items.map((file) async {
+              final bytes = await file.readAsBytes();
+              return MultipartFile.fromBytes(
+                bytes,
+                filename: file.name,
+              );
+            });
 
+            final result = await Future.wait(futures);
+
+            return FormData.fromMap({
+              "file": result.toList(),
+            });
+          }();
           await apis.app.uploadImage(formData);
           await ref.read(userProvider.notifier).updateUser();
           context.pop();
