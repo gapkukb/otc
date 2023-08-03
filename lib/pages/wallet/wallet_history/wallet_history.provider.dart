@@ -78,3 +78,9 @@ final transferHisotryProvider = FutureProvider.autoDispose<String>((ref) async {
   await Future.delayed(Duration(seconds: 3));
   return Future.value(filters.time.name + filters.type.name + filters.status.name + filters.orderId);
 });
+
+final blockchainHisotryProvider = FutureProvider.family<dynamic, Map<String, dynamic>>((ref, filters) async {
+  print("object");
+  await Future.delayed(Duration(seconds: 3));
+  return [];
+});

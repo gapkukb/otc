@@ -64,7 +64,7 @@ class _Wallet {
   /// 区块链转账订单记录
   final blockchainHistory = post("/payment/records", (Map<String, dynamic> json) {
     return PaginationModel.fromJson(json, (item) => WalletBlockchainHistoryModel.fromJson(item as dynamic));
-  });
+  }, HttpOptions(loading: false));
 
   /// 填写地址-申请提款
   final withdrawWithoutBook = post("/payment/withdraw/apply");
