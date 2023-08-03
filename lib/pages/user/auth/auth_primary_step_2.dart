@@ -33,7 +33,6 @@ class AuthPrimaryStep2 extends StatelessWidget {
         Upload(
           controller: controller,
           formStore: formState,
-          name: "idPicture",
           titles: const ["身份证正面（人像面）", "身份证反面（国徽面）"],
           itemSize: 150,
           max: 2,

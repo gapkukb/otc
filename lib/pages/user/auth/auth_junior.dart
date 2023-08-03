@@ -36,19 +36,13 @@ class _AuthJuniorState extends State<AuthJunior> {
             formKey.currentState!.save();
             final close = Modal.showLoading("正在上传并提交，这可能需要一点时间\n请勿离开");
             try {
-              final formData = FormData.fromMap({
-                "file": (formState['idPicture'] as List<File>).map((file) {
-                  return MultipartFile.fromFileSync(file.path);
-                }).toList(),
-              });
-
-              final urls = (await apis.app.uploadImage(formData)).cast<String>();
+              final urls = await controller.upload();
               formState.remove("idPicture");
               formState.addAll({
                 "value": urls[0],
               });
               await apis.kyc.authLv2(formState);
-              await provider.read(userProvider.notifier).updateUser();
+              provider.read(userProvider.notifier).updateUser();
               context.pop();
               Modal.alert(content: "平台会在48小时内审核完毕！", title: "您的个人信息上传成功");
             } finally {
@@ -72,7 +66,6 @@ class _AuthJuniorState extends State<AuthJunior> {
           Upload(
             controller: controller,
             formStore: formState,
-            name: "idPicture",
             titles: const ["手持身份证"],
             itemSize: 150,
             max: 1,

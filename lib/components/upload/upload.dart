@@ -1,9 +1,11 @@
 library upload;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
@@ -120,5 +122,24 @@ class UploadController extends ChangeNotifier {
     items.clear();
     notifyListeners();
     super.dispose();
+  }
+
+  Future<List<String>> upload() async {
+    final formData = await () async {
+      var futures = items.map((file) async {
+        final bytes = await file.readAsBytes();
+        return MultipartFile.fromBytes(
+          bytes,
+          filename: file.name,
+        );
+      });
+
+      final result = await Future.wait(futures);
+
+      return FormData.fromMap({
+        "file": result.toList(),
+      });
+    }();
+    return (await apis.app.uploadImage(formData)).cast<String>();
   }
 }

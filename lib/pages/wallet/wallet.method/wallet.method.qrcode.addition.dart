@@ -45,15 +45,7 @@ class _WalletMethodQRcodeAdditionState extends State<WalletMethodQRcodeAddition>
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-
-            final formData = FormData.fromMap({
-              "file": (_formState['qrcode'] as List<File>).map((file) {
-                return MultipartFile.fromFileSync(file.path);
-              }).toList(),
-            });
-
-            final urls = (await apis.app.uploadImage(formData)).cast<String>();
-            _formState.remove("qrcode");
+            final urls = await controller.upload();
             _formState.addAll({
               "content": urls[0],
               "paymentMethod": widget.addType.type,
