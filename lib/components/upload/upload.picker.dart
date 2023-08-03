@@ -15,7 +15,7 @@ enum MediaType {
 class UiFilePickerController extends ChangeNotifier {}
 
 class UploadPicker extends StatefulWidget {
-  final Function(File? file) onChange;
+  final Function(XFile? file) onChange;
   final String? title;
   final Widget? titleWidget;
   final double size;
@@ -38,7 +38,7 @@ class UploadPicker extends StatefulWidget {
 }
 
 class _UploadPickerState extends State<UploadPicker> {
-  File? file;
+  XFile? file;
   late VideoPlayerController? _controller;
 
   @override
@@ -101,6 +101,7 @@ class _UploadPickerState extends State<UploadPicker> {
   }
 
   Stack imageView() {
+    final imageProvider = (kIsWeb ? NetworkImage(file!.path) : FileImage(File(file!.path))) as ImageProvider;
     return Stack(
       key: ValueKey(file!.path),
       fit: StackFit.expand,
@@ -112,7 +113,7 @@ class _UploadPickerState extends State<UploadPicker> {
                 context: context,
                 builder: (context) {
                   return PhotoView(
-                    imageProvider: FileImage(file!),
+                    imageProvider: imageProvider,
                     wantKeepAlive: false,
                   );
                 },
@@ -125,7 +126,7 @@ class _UploadPickerState extends State<UploadPicker> {
             color: Colors.black38,
             child: isImage
                 ? Image(
-                    image: FileImage(file!),
+                    image: imageProvider,
                     fit: BoxFit.contain,
                   )
                 : VideoPlayer(_controller!),
@@ -215,8 +216,9 @@ class _UploadPickerState extends State<UploadPicker> {
   }
 
   _pick() {
-    final picker = ImagePicker();
-    if (Platform.isAndroid || Platform.isIOS) {
+    if (kIsWeb) {
+      _picking(ImageSource.camera);
+    } else {
       Modal.showBottomSheet(
         items: [
           BottomSheetItem(label: isImage ? "拍照" : "录像", value: true),
@@ -224,29 +226,35 @@ class _UploadPickerState extends State<UploadPicker> {
         ],
         onSelected: (value, _) async {
           final ImageSource source = value ? ImageSource.camera : ImageSource.gallery;
-
-          final result = await (isImage ? picker.pickImage : picker.pickVideo)(
-            source: source,
-          );
-          if (result != null) {
-            final newFile = File(result.path);
-            if (isImage) {
-              _onChange(newFile);
-            } else {
-              _controller = VideoPlayerController.file(newFile)
-                ..initialize().then(
-                  (_) {
-                    _onChange(newFile);
-                  },
-                );
-            }
-          }
+          _picking(source);
         },
       );
     }
   }
 
-  _onChange(File? newFile) {
+  _picking(ImageSource source) async {
+    final picker = ImagePicker();
+    final result = await (isImage ? picker.pickImage : picker.pickVideo)(
+      source: source,
+    );
+
+    if (result != null) {
+      result.readAsBytes();
+      final newFile = File(result.path);
+      if (isImage) {
+        _onChange(result);
+      } else {
+        _controller = VideoPlayerController.file(newFile)
+          ..initialize().then(
+            (_) {
+              _onChange(result);
+            },
+          );
+      }
+    }
+  }
+
+  _onChange(XFile? newFile) {
     setState(() {
       file = newFile;
       if (file != null && !isImage) {

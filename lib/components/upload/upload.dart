@@ -1,27 +1,27 @@
 library upload;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
-
+import 'package:image_picker/image_picker.dart';
 part './upload.picker.dart';
 
 class Upload extends StatefulWidget {
   final AutovalidateMode? autovalidateMode;
   final bool enabled;
   final String? initialValue;
-  final String? Function(List<File> files)? validator;
+  final String? Function(List<XFile> files)? validator;
   final String? name;
   final Map<String, dynamic>? formStore;
   final int max;
   final double itemSize;
-  final Function(File file)? onUploaded;
-  final Function(File file)? onUploading;
-  final Function(File file)? onError;
+  final Function(XFile file)? onUploaded;
+  final Function(XFile file)? onUploading;
+  final Function(XFile file)? onError;
   final UploadController controller;
   final List<String>? titles;
   final MediaType? mediaType;
@@ -63,7 +63,7 @@ class _UploadState extends State<Upload> {
 
   @override
   Widget build(BuildContext context) {
-    return FormField<List<File>>(
+    return FormField<List<XFile>>(
       // autovalidateMode: AutovalidateMode.always,
       enabled: widget.enabled,
       // initialValue: XFile(widget.initialValue!),
@@ -113,7 +113,7 @@ class _UploadState extends State<Upload> {
 }
 
 class UploadController extends ChangeNotifier {
-  late final List<File> items;
+  late final List<XFile> items;
 
   @override
   void dispose() {

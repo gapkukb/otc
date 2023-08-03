@@ -47,7 +47,7 @@ class _WalletHistoryFilterState extends State<WalletHistoryFilter> {
               name: "datetime",
               labelText: "时间",
               formState: widget.formState,
-              initialValue: 30,
+              initialValue: 7,
               data: [
                 DropdownItem(
                   title: "近7天",

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/pagination/pagination.dart';
 import 'package:otc/components/table/table.dart';
+import 'package:otc/constants/currency.dart';
 import 'package:otc/models/wallet.blockchain.history/wallet.blockchain.history.model.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history.provider.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history_filter.dart';
@@ -33,12 +34,23 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
   bool loading = true;
 
   Map<String, dynamic> get filters {
-    return formState;
+    final begin = dateFormatter.format(DateTime.now().subtract(Duration(days: formState["datetime"] ?? 7)));
+    return {
+      ...formState,
+      "deposit": formState["deposit"] ?? true,
+      "currency": formState["currency"] ?? Cryptocurrency.USDT.name,
+      "reference": formState["reference"],
+      "confirmed": formState["confirmed"] ?? "UNKNOWN",
+      "page": pageNo,
+      "pageSize": pageCount,
+      "begin": "$begin 00:00:00",
+      "end": "${dateFormatter.format(DateTime.now())} 23:59:59",
+    };
   }
 
   @override
   Widget build(context) {
-    final provider = ref.watch(blockchainHisotryProvider(formState));
+    final provider = ref.watch(blockchainHisotryProvider(filters));
     provider.maybeWhen(orElse: () => loading = false);
     provider.whenData((data) {});
     return Form(
@@ -50,8 +62,10 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
           WalletHistoryFilter(
             onSearch: () async {
               formKey.currentState!.save();
-              formState['pageNo'] = 1;
-              return ref.refresh(blockchainHisotryProvider(formState));
+              setState(() {
+                pageNo = 1;
+                return ref.refresh(blockchainHisotryProvider(filters));
+              });
             },
             formState: formState,
           ),
@@ -62,16 +76,17 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                   width: double.infinity,
                   child: DataTable2(
                     columns: const [
-                      DataColumn2(label: Text('Avatar')),
-                      DataColumn2(label: Text('ID')),
-                      DataColumn2(label: Text('Name')),
-                      DataColumn2(label: Row(children: [Text('Price'), SizedBox(width: 5.0), Icon(Icons.airplanemode_active)])),
-                      DataColumn2(label: Text('No.')),
-                      DataColumn2(label: Text('Address'))
+                      DataColumn2(label: Text("类型")),
+                      DataColumn2(label: Text("资产")),
+                      DataColumn2(label: Text("数量")),
+                      DataColumn2(label: Text("打款地址")),
+                      DataColumn2(label: Text("收款地址")),
+                      DataColumn2(label: Text("Txid")),
+                      DataColumn2(label: Text("状态")),
                     ],
                     columnSpacing: 4,
                     dividerThickness: 0.001,
-                    empty: const UiEmptyView(),
+                    empty: provider.isLoading ? null : const UiEmptyView(),
                     rows: [],
                   ),
                 ),
@@ -161,14 +176,14 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
             // ),
           ),
           Pagination(
-            pageCount: 10,
+            pageCount: pageCount,
             pageNo: pageNo,
             disabled: loading,
             onChange: (current) {
               setState(() {
                 pageNo = current;
+                return ref.refresh(blockchainHisotryProvider(filters));
               });
-              return ref.refresh(blockchainHisotryProvider(formState));
             },
           ),
         ],

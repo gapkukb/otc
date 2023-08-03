@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/models/pagination/pagination.model.dart';
+import 'package:otc/models/wallet.blockchain.history/wallet.blockchain.history.model.dart';
 
 enum FilterType { topup, withdraw }
 
@@ -79,8 +81,6 @@ final transferHisotryProvider = FutureProvider.autoDispose<String>((ref) async {
   return Future.value(filters.time.name + filters.type.name + filters.status.name + filters.orderId);
 });
 
-final blockchainHisotryProvider = FutureProvider.family<dynamic, Map<String, dynamic>>((ref, filters) async {
-  print("object");
-  await Future.delayed(Duration(seconds: 3));
-  return [];
+final blockchainHisotryProvider = FutureProvider.family<PaginationModel<WalletBlockchainHistoryModel>, Map<String, dynamic>>((ref, filters) async {
+  return await apis.wallet.blockchainHistory(filters);
 });
