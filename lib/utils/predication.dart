@@ -27,7 +27,7 @@ FutureOr<bool> predication({
         title: "交易资格",
         content: "您必须完成至少KYC1级别的身份认证才能使用此功能。",
         onOk: () {
-          ctx.goNamed(Routes.authPrimary);
+          ctx.push(Routes.authPrimary);
         },
       );
       return false;
@@ -55,7 +55,7 @@ FutureOr<bool> predication({
         title: "交易资格",
         content: "您必须完成手机绑定才能使用此功能。",
         onOk: () {
-          ctx.goNamed(Routes.updatePhone);
+          ctx.push(Routes.updatePhone);
         },
       );
       return false;

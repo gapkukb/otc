@@ -10,7 +10,6 @@ import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/providers/user.provider.dart';
 
-final _color = MaterialStateColor.resolveWith((states) => Colors.transparent);
 final _router = GoRouter.of(navigatorKey.currentContext!);
 
 class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
@@ -34,43 +33,45 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
       elevation: 1,
       surfaceTintColor: Colors.white,
       scrolledUnderElevation: 1,
-      title: !isAuthed
-          ? null
-          : Row(
-              children: [
-                Menu(
-                  text: "买/卖数字货币",
-                  onSelected: (value) async {
-                    if (await predication(
-                      context: context,
-                      types: [
-                        Predication.kyc1,
-                      ],
-                    )) context.go(value);
-                  },
-                  items: const [
-                    MenuItem(
-                      title: "买币",
-                      subtitle: "支持当地银行和数字钱包充值",
-                      icon: Icons.credit_card_outlined,
-                      value: Routes.adBuying,
-                    ),
-                    MenuItem(
-                      title: "卖币",
-                      subtitle: "以当地货币收款",
-                      icon: Icons.wallet_outlined,
-                      value: Routes.adSelling,
-                    ),
-                    MenuItem(
-                      title: "我的广告",
-                      subtitle: "在此管理广告",
-                      icon: Icons.ads_click_outlined,
-                      value: Routes.adOwn,
-                    ),
-                  ],
-                )
-              ],
-            ),
+      title: Row(
+        children: [
+          Menu(
+            text: "买/卖数字货币",
+            onSelected: (value) async {
+              if (!isAuthed) {
+                context.push(Routes.login);
+                return;
+              }
+              if (await predication(
+                context: context,
+                types: [
+                  Predication.kyc1,
+                ],
+              )) context.go(value);
+            },
+            items: const [
+              MenuItem(
+                title: "买币",
+                subtitle: "支持当地银行和数字钱包充值",
+                icon: Icons.credit_card_outlined,
+                value: Routes.adBuying,
+              ),
+              MenuItem(
+                title: "卖币",
+                subtitle: "以当地货币收款",
+                icon: Icons.wallet_outlined,
+                value: Routes.adSelling,
+              ),
+              MenuItem(
+                title: "我的广告",
+                subtitle: "在此管理广告",
+                icon: Icons.ads_click_outlined,
+                value: Routes.adOwn,
+              ),
+            ],
+          )
+        ],
+      ),
       actions: _buildActions(isAuthed),
     );
   }
