@@ -153,6 +153,10 @@ final List<RouteBase> routes = [
             path: Routes.adOwn,
             page: const AdOwn(),
           ),
+          AuthRoute(
+            path: Routes.adHistory,
+            page: const AdHistory(),
+          ),
         ],
       ),
     ],
