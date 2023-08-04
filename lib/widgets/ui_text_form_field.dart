@@ -175,7 +175,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       smartQuotesType: widget.smartQuotesType,
       enableSuggestions: widget.enableSuggestions,
       maxLengthEnforcement: widget.maxLengthEnforcement,
-      maxLines: widget.maxLines,
+      maxLines: widget.maxLines ?? 1,
       minLines: widget.minLines,
       expands: widget.expands,
       maxLength: widget.maxLength,

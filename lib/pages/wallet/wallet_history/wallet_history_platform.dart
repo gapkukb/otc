@@ -77,8 +77,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryPlatform>
                   setState(() {
                     pageNo = 1;
                     updateFilters();
-                    inspect(filters);
-                    return ref.refresh(blockchainHisotryProvider(filters));
+                    return ref.refresh(platformHisotryProvider(filters));
                   });
                 },
                 formState: formState,
@@ -132,7 +131,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryPlatform>
                   setState(() {
                     pageNo = current;
                     updateFilters();
-                    return ref.refresh(blockchainHisotryProvider(filters));
+                    return ref.refresh(platformHisotryProvider(filters));
                   });
                 },
               ),
