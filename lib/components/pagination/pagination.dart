@@ -28,6 +28,7 @@ class Pagination extends StatelessWidget {
   }
 
   int get start {
+    if (length == pageCount) return 0;
     final num = math.max(pageNo - length / 2, 0).toInt();
     return math.min(num, length);
   }

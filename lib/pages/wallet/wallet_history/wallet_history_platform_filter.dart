@@ -3,24 +3,23 @@ import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/constants/currency.dart';
-import 'package:otc/utils/date_time.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
-class WalletHistoryFilter extends StatefulWidget {
+class WalletHistoryPlatformFilter extends StatefulWidget {
   final void Function() onSearch;
   final Map<String, dynamic> formState;
-  const WalletHistoryFilter({
+  const WalletHistoryPlatformFilter({
     super.key,
     required this.onSearch,
     required this.formState,
   });
 
   @override
-  State<WalletHistoryFilter> createState() => _WalletHistoryFilterState();
+  State<WalletHistoryPlatformFilter> createState() => _WalletHistoryPlatformFilterState();
 }
 
-class _WalletHistoryFilterState extends State<WalletHistoryFilter> {
+class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilter> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -75,21 +74,6 @@ class _WalletHistoryFilterState extends State<WalletHistoryFilter> {
               name: "currency",
               formState: widget.formState,
               initialValue: Cryptocurrency.USDT.name,
-            ),
-          ),
-          const Gap.small(horizition: true),
-          SizedBox(
-            width: 120,
-            child: Dropdown(
-              name: "confirmed",
-              labelText: "状态",
-              formState: widget.formState,
-              initialValue: "UNKNOWN",
-              data: [
-                DropdownItem(title: "全部", value: "UNKNOWN"),
-                DropdownItem(title: "已完成", value: "YES"),
-                DropdownItem(title: "待确认", value: "NO"),
-              ],
             ),
           ),
           const Gap.small(horizition: true),

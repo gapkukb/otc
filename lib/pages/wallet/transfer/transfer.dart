@@ -138,7 +138,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
 
     await apis.wallet.transfer({
       ...formState,
-      "payPass": result['funds'],
+      "payPass": result['payPassword'],
     });
 
     context.pop();

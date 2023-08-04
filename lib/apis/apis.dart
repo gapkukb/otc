@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:otc/constants/base_url.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
+import 'package:otc/models/wallet.transfer.history/wallet.transfer.history.model.dart';
 import '../http/http.dart';
 import '../models/user/user.model.dart';
 import '../models/otc/otc.model.dart';

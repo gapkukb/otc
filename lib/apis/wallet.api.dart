@@ -17,7 +17,10 @@ class _Wallet {
   final transfer = post("/customer/wallet/transfer");
 
   /// 站内转账记录
-  final transferRecords = get("/customer/wallet/transfer/records");
+
+  final transferRecords = post("/customer/wallet/transfer/records", (Map<String, dynamic> json) {
+    return PaginationModel.fromJson(json, (item) => WalletTransferHistoryModel.fromJson(item as dynamic));
+  }, HttpOptions(loading: false));
 
   /// 查询用户所有银行卡
   final getAllBankCards = get<List<dynamic>>(
