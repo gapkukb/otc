@@ -25,7 +25,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryPlatform>
   final formKey = GlobalKey<FormState>();
   int pageCount = 1;
   int pageNo = 1;
-  final pageSize = 5;
+  final pageSize = 50;
 
   @override
   void initState() {
