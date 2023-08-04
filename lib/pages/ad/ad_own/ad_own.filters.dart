@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/constants/currency.dart';
 
-class AdOwnHeader extends PreferredSize {
-  AdOwnHeader({
+class AdOwnFilters extends PreferredSize {
+  final Map<String, dynamic> formState;
+  final Function() onCompelete;
+
+  AdOwnFilters({
     super.key,
+    required this.formState,
+    required this.onCompelete,
   }) : super(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
@@ -18,18 +24,24 @@ class AdOwnHeader extends PreferredSize {
                   SizedBox(
                     width: 150,
                     height: 56,
-                    child: CurrencySelector(name: "name"),
+                    child: CurrencySelector(
+                      name: "currency",
+                      formState: formState,
+                      initialValue: Cryptocurrency.USDT.name,
+                    ),
                   ),
                   //交易类型
                   SizedBox(
                     width: 150,
                     height: 56,
                     child: Dropdown(
-                      labelText: "交易类型",
-                      name: "",
+                      labelText: "类型",
+                      name: "type",
+                      initialValue: 0,
                       data: [
-                        DropdownItem(title: "购买", value: 0),
-                        DropdownItem(title: "出售", value: 1),
+                        DropdownItem(title: "全部", value: 0),
+                        DropdownItem(title: "购买", value: 1),
+                        DropdownItem(title: "出售", value: 2),
                       ],
                     ),
                   ),
@@ -39,10 +51,16 @@ class AdOwnHeader extends PreferredSize {
                     height: 56,
                     child: Dropdown(
                       labelText: "全部状态",
-                      name: "",
+                      name: "status",
+                      initialValue: 0,
                       data: [
-                        DropdownItem(title: "已上架", value: 0),
-                        DropdownItem(title: "卖家待支付", value: 1),
+                        DropdownItem(title: "全部", value: 0),
+                        DropdownItem(title: "已取消", value: 1),
+                        DropdownItem(title: "卖家待付款", value: 2),
+                        DropdownItem(title: "卖家已付款", value: 3),
+                        DropdownItem(title: "买家待付款", value: 4),
+                        DropdownItem(title: "买家已付款", value: 5),
+                        DropdownItem(title: "审核中", value: 6),
                       ],
                     ),
                   ),

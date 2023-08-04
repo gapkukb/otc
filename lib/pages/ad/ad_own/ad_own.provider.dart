@@ -1,5 +1,5 @@
 part of ad_own;
 
-final _adBuying = Provider.autoDispose(
-  (ref) => null,
-);
+final adOwnProvider = FutureProvider.family.autoDispose<PaginationModel<AdMyModel>, Map<String, dynamic>>((ref, filters) async {
+  return await apis.otc.myAdvertise(filters);
+});

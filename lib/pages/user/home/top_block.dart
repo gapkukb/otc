@@ -24,16 +24,14 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
   @override
   Widget build(context) {
     final user = ref.read(userBaseProvider);
-    final lastLoggedIp =
-        ref.read(userStatsProvider.select((value) => value.lastLoggedIp));
+    final lastLoggedIp = ref.read(userStatsProvider.select((value) => value.lastLoggedIp));
 
     final securities = <bool>[
       user.emailValid,
       user.phoneValid,
       user.googleSecretValid,
     ];
-    final securityLevel =
-        securities.where((element) => element).length / securities.length * 100;
+    final securityLevel = securities.where((element) => element).length / securities.length * 100;
 
     return Row(
       children: [
@@ -42,7 +40,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
         ),
         SizedBox(
           width: 300,
-          height: 220,
+          height: 228,
           child: Card(
             child: Column(
               children: [
@@ -91,27 +89,15 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                 avatar: user.avatar,
                 radius: 72 / 2,
               ),
-              title: Row(
-                children: [
-                  Text(
-                    user.nickname,
-                    style: Font.mediumBold,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.settings_outlined),
-                    iconSize: 18,
-                    onPressed: () {
-                      context.go(Routes.setting);
-                    },
-                  )
-                ],
+              title: Text(
+                user.nickname,
+                style: Font.mediumBold,
               ),
               subtitle: Text(
                 "用户ID：${user.username}",
                 style: Font.smallGrey,
               ),
             ),
-            const SizedBox(height: 24),
             Text(
               "上次登录时间\u0020\u0020\u0020\u0020IP: $lastLoggedIp",
               style: Font.smallGrey,

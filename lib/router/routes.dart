@@ -93,7 +93,9 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.walletMethod,
-            page: const WalletMethod(),
+            statePage: (_, state) => WalletMethod(
+              tabIndex: state.extra as int?,
+            ),
           ),
           AuthRoute(
             path: Routes.walletFunds,

@@ -49,8 +49,8 @@ const _$CryptocurrencyEnumMap = {
 };
 
 const _$BlockchainEnumMap = {
-  Blockchain.BSC: 'BSC',
   Blockchain.ETH: 'ETH',
+  Blockchain.BSC: 'BSC',
   Blockchain.TRON: 'TRON',
   Blockchain.BTC: 'BTC',
 };

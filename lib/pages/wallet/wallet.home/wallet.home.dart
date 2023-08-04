@@ -63,12 +63,16 @@ class WalletHome extends ConsumerWidget {
     final List<Map<String, dynamic>> buttons = [
       {
         "child": "充值",
-        "onPressed": () {},
+        "onPressed": () {
+          context.push(Routes.recharge);
+        },
       },
       {
         "child": "提现",
         "variant": UiButtonVariant.outline,
-        "onPressed": () {},
+        "onPressed": () {
+          context.push(Routes.withdrawal);
+        },
       },
       {
         "child": "站内转账",

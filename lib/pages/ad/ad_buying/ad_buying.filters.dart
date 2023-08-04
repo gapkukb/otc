@@ -8,8 +8,12 @@ import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class AdBuyingHeader extends PreferredSize {
+  final Map<String, dynamic> formState;
+
   AdBuyingHeader({
     super.key,
+    required this.formState,
+    // required this.onCompelete,
   }) : super(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
@@ -25,7 +29,10 @@ class AdBuyingHeader extends PreferredSize {
                       SizedBox(
                         width: 150,
                         height: 56,
-                        child: CurrencySelector(name: "name"),
+                        child: CurrencySelector(
+                          name: "name",
+                          formState: formState,
+                        ),
                       ),
                       //交易类型
                       SizedBox(

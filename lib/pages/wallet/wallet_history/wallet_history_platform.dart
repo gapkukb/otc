@@ -98,7 +98,12 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryPlatform>
                         ],
                         columnSpacing: 4,
                         dividerThickness: 0.001,
-                        empty: provider.isLoading ? null : const UiEmptyView(),
+                        empty: provider.isLoading
+                            ? null
+                            : const UiEmptyView(
+                                iconSize: 140,
+                                title: "未找到交易记录",
+                              ),
                         rows: data.records.map((row) {
                           return DataRow(cells: [
                             DataCell(Text(row.createdTime)),

@@ -24,6 +24,12 @@ class _OTCApi {
 
   /// 佣金总览
   final commissionOverview = post("/commission/overview");
+
+  /// 我的广告
+
+  final myAdvertise = post("/otc/record/advertise", (Map<String, dynamic> json) {
+    return PaginationModel.fromJson(json, (item) => AdMyModel.fromJson(item as dynamic));
+  }, HttpOptions(loading: false));
 }
 
 final otcApi = _OTCApi();

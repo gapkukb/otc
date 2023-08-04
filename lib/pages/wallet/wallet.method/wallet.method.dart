@@ -3,14 +3,18 @@ import 'package:otc/pages/wallet/wallet.method/wallet.method.crypto.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.legal.dart';
 
 class WalletMethod extends StatelessWidget {
-  const WalletMethod({super.key});
+  final int? tabIndex;
+  const WalletMethod({
+    super.key,
+    this.tabIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
+    return DefaultTabController(
       length: 2,
-      initialIndex: 0,
-      child: Card(
+      initialIndex: tabIndex ?? 0,
+      child: const Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

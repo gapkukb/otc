@@ -131,7 +131,14 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
                 ],
               ),
               UiButton.text(
-                onPressed: () {},
+                onPressed: () {
+                  context
+                    ..pop()
+                    ..push(
+                      Routes.walletMethod,
+                      extra: 1,
+                    );
+                },
                 label: "地址管理",
               )
             ],

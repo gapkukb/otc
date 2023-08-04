@@ -82,8 +82,7 @@ class _DatePickerState extends State<DatePicker> {
                         confirmText: "确定",
                         onCancel: () {},
                         onSelectionChanged: (dateTime) {
-                          final value =
-                              dateFormatter.format(dateTime.value as DateTime);
+                          final value = dateFormatter.format(dateTime.value as DateTime);
                           text = value;
                           Navigator.of(context, rootNavigator: true).pop(value);
                           field.setState(() {
@@ -104,8 +103,7 @@ class _DatePickerState extends State<DatePicker> {
             child: InputDecorator(
                 isEmpty: text == null,
                 decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsetsDirectional.symmetric(horizontal: 16),
+                    contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                     labelText: widget.labelText,
                     border: const OutlineInputBorder(),
                     suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined)),
