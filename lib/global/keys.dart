@@ -8,4 +8,5 @@ class _Keys {
   final String user = "user";
   final String captchaToken = "CaptchaToken";
   final String username = "username";
+  final String otcConfig = "otc_config";
 }

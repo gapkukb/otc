@@ -7,9 +7,14 @@ ThemeData lightTheme = ThemeData(
     primaryColor: Colors.purple,
     primaryColorLight: Colors.purple.shade100,
     primaryColorDark: Colors.deepPurple,
-    cardTheme: const CardTheme(
+    cardTheme: CardTheme(
       surfaceTintColor: Colors.white,
       color: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        side: BorderSide(width: 1, color: Colors.grey.shade200),
+      ),
     ),
     dialogTheme: DialogTheme(
       surfaceTintColor: Colors.white,

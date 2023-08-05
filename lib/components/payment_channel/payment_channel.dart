@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:otc/asstes/assets.gen.dart';
 
 @JsonEnum(valueField: 'value')
 enum PaymentMethods {
-  bankCard(type: 0, text: "银行借记卡", value: "BANK_CARD_TRANSFER"),
-  wechat(type: 1, text: "微信", value: "WECHAT_TRANSFER"),
-  alipay(type: 2, text: "支付宝", value: "ALIPAY_TRANSFER");
+  bankCard(
+    type: 0,
+    text: "银行借记卡",
+    value: "BANK_CARD_TRANSFER",
+  ),
+  wechat(
+    type: 1,
+    text: "微信",
+    value: "WECHAT_TRANSFER",
+  ),
+  alipay(
+    type: 2,
+    text: "支付宝",
+    value: "ALIPAY_TRANSFER",
+  );
 
   const PaymentMethods({
     required this.type,
@@ -39,14 +52,14 @@ enum PaymentMethods {
             : Colors.blue;
   }
 
-  get icon {
+  SvgPicture get icon {
     switch (type) {
       case 0:
-        return const Icon(FontAwesomeIcons.weixin);
+        return Assets.images.unionpay.svg(width: 24);
       case 1:
-        return const Icon(FontAwesomeIcons.alipay);
+        return Assets.images.wechat.svg(width: 24);
       default:
-        return const Icon(FontAwesomeIcons.weixin);
+        return Assets.images.alipay.svg(width: 24);
     }
   }
 

@@ -1,38 +1,34 @@
 part of ad_post;
 
 class AdPostPayment extends ConsumerStatefulWidget {
-  const AdPostPayment({super.key});
+  final bool isBuying;
+  const AdPostPayment({
+    super.key,
+    required this.isBuying,
+  });
 
   @override
   ConsumerState<AdPostPayment> createState() => _AdPostPaymentState();
 }
 
 class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
+  final List<PaymentItem> payments = [];
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final resp = ref.watch(adPostProvider);
-    return resp.when(
-        error: (_, __) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        data: (data) {
-          return Text("大师傅");
-        });
+    final resp = ref.watch(adPostPaymentProvider);
+
     return ModalPageTemplate(
       legend: "发布广告",
       title: "添加收款方式",
       iconData: Icons.ads_click_outlined,
-      onCompelete: (_) {},
+      onCompelete: (context) {
+        context.pop(payments);
+      },
       physics: const NeverScrollableScrollPhysics(),
       children: resp.when(
         error: (_, __) => [
-          const Center(
-            child: CircularProgressIndicator(),
-          )
+          Text(_.toString() + __.toString()),
         ],
         loading: () => [
           const Center(
@@ -40,21 +36,36 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
           )
         ],
         data: (data) {
-          
+          if (data.isEmpty) {
+            return [const UiEmptyView()];
+          }
           return [
             SizedBox(
-              height: height - 620,
+              height: height - 400,
               child: ListView.separated(
                 cacheExtent: 100,
                 itemBuilder: (context, index) {
-                  return const AdPostPaymentTemplate(
+                  final item = data[index];
+                  return AdPostPaymentTemplate(
+                    isBuying: widget.isBuying,
                     editable: true,
+                    data: item,
+                    onSelectedChange: (selected) {
+                      setState(() {
+                        item.selected = selected;
+                        if (selected) {
+                          payments.add(item);
+                        } else {
+                          payments.remove(item);
+                        }
+                      });
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {
                   return const Gap.small();
                 },
-                itemCount: 10,
+                itemCount: data.length,
               ),
             ),
             const Gap.small(),
@@ -97,7 +108,6 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
 
 class _Button extends UiButton {
   const _Button({
-    super.key,
     super.label,
     required super.onPressed,
   }) : super(
@@ -109,19 +119,33 @@ class _Button extends UiButton {
 }
 
 class PaymentItem {
-  final double min;
-  final double max;
+  final String reference;
+  final String? username;
+  final String name;
+  final String title;
+  double inMax;
+  double inMin;
+  double outMax;
+  double outMin;
   final String account;
-  final String remark;
-  final String username;
+  final String? bank;
+  final String? bankBranch;
   final PaymentMethods paymentMethod;
+  bool selected;
 
   PaymentItem({
-    required this.min,
-    required this.max,
+    required this.reference,
+    required this.name,
+    required this.title,
     required this.account,
-    required this.remark,
-    required this.username,
     required this.paymentMethod,
+    required this.selected,
+    required this.inMax,
+    required this.inMin,
+    required this.outMax,
+    required this.outMin,
+    this.username,
+    this.bank,
+    this.bankBranch,
   });
 }

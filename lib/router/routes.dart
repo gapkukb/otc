@@ -250,7 +250,7 @@ final List<RouteBase> routes = [
   ),
   ModalRoute(
     path: Routes.adPostPayment,
-    page: const AdPostPayment(),
+    statePage: (context, state) => AdPostPayment(isBuying: state.extra as bool),
   ),
   ModalRoute(
     path: Routes.adPost,

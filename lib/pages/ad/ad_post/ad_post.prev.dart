@@ -20,7 +20,11 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
   late final TabController controller;
   @override
   void initState() {
-    controller = TabController(length: 2, vsync: this);
+    controller = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: widget.type == AdPostType.selling ? 0 : 1,
+    );
     apis.otc
         .rate(
             null,
@@ -45,14 +49,19 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final rate = ref.watch(rateProvider);
-    final double max = rate * (1 + 0.01);
-    final double min = rate * (1 - 0.01);
+    final double max = rate + 0.1;
+    final double min = rate - 0.1;
 
     return ModalPageTemplate(
       legend: "发布新广告",
       iconData: Icons.ads_click_outlined,
       okButtonText: "下一步",
-      onCompelete: (_) {
+      onCompelete: (context) {
+        widget.formState.update(
+          "refRate",
+          (value) => rate,
+          ifAbsent: () => rate,
+        );
         widget.onCompelete(controller.index != 0);
       },
       physics: const NeverScrollableScrollPhysics(),
@@ -72,46 +81,75 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
         ),
         const Divider(height: 1),
         const Gap.small(),
-        const Card(
-          child: Cell(
-            height: 84,
+        Card(
+          child: Padding(
             padding: Pads.sm,
-            evenly: true,
-            align: MainAxisAlignment.start,
-            divider: true,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("币种"),
-                Gap.mini(),
-                Text("USDT"),
-              ],
-            ),
-            trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("用法币"),
-                Gap.mini(),
-                Text("CNY"),
-              ],
+            child: SizedBox(
+              height: 46,
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("币种"),
+                        Gap.mini(),
+                        Text("USDT", style: Font.miniGrey),
+                      ],
+                    ),
+                  ),
+                  const VerticalDivider(thickness: 1, width: 33),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("用法币"),
+                        Gap.mini(),
+                        Text("CNY", style: Font.miniGrey),
+                      ],
+                    ),
+                  ),
+                  const VerticalDivider(thickness: 1, width: 33),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Text("参考价格"),
+                            Tip(
+                              message: "平台针对实时汇率给出的指导价格",
+                              iconSize: 18,
+                            )
+                          ],
+                        ),
+                        const Gap.mini(),
+                        Text("￥ ${rate.toString()}", style: Font.miniGrey),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         const Gap.medium(),
-        const Text("参考价格", style: Font.smallGrey),
-        const Gap.mini(),
-        Text("￥ $rate", style: Font.mediumBold),
-        const Gap.medium(),
         const Text("价格类型", style: Font.smallGrey),
         AdPostRange(
-          max: max,
-          min: min,
-          initValue: rate,
-          name: "price",
+          rate: rate,
+          name: "floatOffset",
           formState: widget.formState,
         ),
         const Gap.mini(),
         Text("可设定的价格区间是${min.toStringAsFixed(2)}~${max.toStringAsFixed(2)}", style: Font.smallGrey),
+        UiTextFormField(
+          labelText: "请输入${widget.type == AdPostType.selling ? "出售" : "购买"}数量",
+          name: "amount",
+          formState: widget.formState,
+          validator: (value) {
+            return value?.isEmpty == true ? "请输入数量" : null;
+          },
+        ),
       ],
     );
   }

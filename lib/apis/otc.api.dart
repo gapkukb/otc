@@ -4,8 +4,8 @@ class _OTCApi {
   final stat30days = get("/otc/customer-stat/30days");
   final getCoins = get("/otc/coin/support");
   final rate = get("/otc/rate/{from}/{to}");
-  final qrcode = post<List<Map<String, dynamic>>>("/otc/qrcode");
-  final bankcard = post<List<Map<String, dynamic>>>("/otc/bankcard");
+  final qrcode = get<List>("/otc/qrcode");
+  final bankcard = get<List>("/otc/bankcard");
 
   /// 获取支持的币种
   final supportedCoins = post("/otc/coin/support");
@@ -30,6 +30,9 @@ class _OTCApi {
   final myAdvertise = post("/otc/record/advertise", (Map<String, dynamic> json) {
     return PaginationModel.fromJson(json, (item) => AdMyModel.fromJson(item as dynamic));
   }, HttpOptions(loading: false));
+
+  /// 发布广告
+  final publishAd = post("/otc/publish");
 }
 
 final otcApi = _OTCApi();

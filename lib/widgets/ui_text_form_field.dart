@@ -134,6 +134,9 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
   @override
   void initState() {
     _controller = widget.controller ?? TextEditingController();
+    if (widget.initialValue != null) {
+      _controller.text = widget.initialValue.toString();
+    }
     _showClearButotn = widget.initialValue?.isNotEmpty ?? false;
     _controller.addListener(_toogleClearButton);
 
@@ -154,7 +157,6 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: _controller,
-      initialValue: widget.initialValue,
       focusNode: widget.focusNode,
       decoration: _buildClearButton(),
       textAlign: widget.textAlign,

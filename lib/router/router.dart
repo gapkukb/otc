@@ -78,7 +78,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.walletMethod,
+  initialLocation: Routes.adBuying,
   debugLogDiagnostics: true,
 
   redirect: (context, state) {

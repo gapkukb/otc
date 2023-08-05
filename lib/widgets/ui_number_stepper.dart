@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:otc/theme/text_theme.dart';
 
 class UiNumberStepper extends StatefulWidget {
   final String unit;
   final double max;
   final double min;
   final double step;
+  final double? initValue;
   final bool disabeld;
 
   const UiNumberStepper({
@@ -15,6 +17,7 @@ class UiNumberStepper extends StatefulWidget {
     this.max = double.infinity,
     this.step = 1,
     this.disabeld = false,
+    this.initValue,
   });
 
   @override
@@ -27,7 +30,7 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
 
   @override
   void initState() {
-    _value = widget.min;
+    _value = widget.initValue ?? widget.min;
     super.initState();
   }
 
@@ -38,26 +41,48 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
       child: FormField(
         builder: (field) {
           _field = field;
-          return Row(
-            children: [
-              IconButton(
+          return InputDecorator(
+            decoration: InputDecoration(
+              // constraints: const BoxConstraints(
+              //   minHeight: 56,
+              //   maxHeight: 56,
+              // ),
+              prefixIcon: IconButton(
                 onPressed: decrease,
                 icon: const Icon(Icons.remove),
               ),
-              Text("$_value${widget.unit}"),
-              IconButton(
+              suffixIcon: IconButton(
                 onPressed: increase,
                 icon: const Icon(Icons.add),
               ),
-            ],
+              border: const OutlineInputBorder(),
+            ),
+            child: Text(
+              "$_value${widget.unit}",
+              style: Font.medium,
+              textAlign: TextAlign.center,
+            ),
           );
+          // Row(
+          //   children: [
+          //     IconButton(
+          //       onPressed: decrease,
+          //       icon: const Icon(Icons.remove),
+          //     ),
+          //     Text("$_value${widget.unit}"),
+          //     IconButton(
+          //       onPressed: increase,
+          //       icon: const Icon(Icons.add),
+          //     ),
+          //   ],
+          // );
         },
       ),
     );
   }
 
   decrease() {
-    _value = min(_value + widget.step, widget.max);
+    _value = max(_value - widget.step, widget.min);
     next();
   }
 

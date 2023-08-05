@@ -11,9 +11,6 @@ class WalletBankModel with _$WalletBankModel {
     /// 	标题
     required String title,
 
-    /// 	用户名
-    required String username,
-
     /// 	银行卡号
     required String cardNumber,
 
@@ -31,14 +28,7 @@ class WalletBankModel with _$WalletBankModel {
 
     /// 	户主名
     required String name,
-
-    /// 	是否禁用
-    required bool disabled,
-
-    ///
-    required String createdTime,
   }) = _WalletBankModel;
 
-  factory WalletBankModel.fromJson(Map<String, Object?> json) =>
-      _$WalletBankModelFromJson(json);
+  factory WalletBankModel.fromJson(Map<String, Object?> json) => _$WalletBankModelFromJson(json);
 }

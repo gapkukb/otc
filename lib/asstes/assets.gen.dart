@@ -1972,6 +1972,9 @@ class $AssetsImagesGen {
   SvgGenImage get adCloseButton =>
       const SvgGenImage('assets/images/ad_close_button.svg');
 
+  /// File path: assets/images/alipay.svg
+  SvgGenImage get alipay => const SvgGenImage('assets/images/alipay.svg');
+
   /// File path: assets/images/empty.png
   AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
 
@@ -2038,10 +2041,17 @@ class $AssetsImagesGen {
   AssetGenImage get topBanner =>
       const AssetGenImage('assets/images/top-banner.png');
 
+  /// File path: assets/images/unionpay.svg
+  SvgGenImage get unionpay => const SvgGenImage('assets/images/unionpay.svg');
+
+  /// File path: assets/images/wechat.svg
+  SvgGenImage get wechat => const SvgGenImage('assets/images/wechat.svg');
+
   /// List of all assets
   List<dynamic> get values => [
         waveHeader,
         adCloseButton,
+        alipay,
         empty,
         image1,
         image11,
@@ -2061,7 +2071,9 @@ class $AssetsImagesGen {
         noticeEmpty,
         rebate,
         register,
-        topBanner
+        topBanner,
+        unionpay,
+        wechat
       ];
 }
 

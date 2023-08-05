@@ -1,21 +1,17 @@
 part of ad_post;
 
 class AdPostRange extends StatefulWidget {
-  final double initValue;
-  final double max;
-  final double min;
+  final double rate;
   final String? name;
-  final Map<String, dynamic>? formState;
+  final Map<String, dynamic> formState;
   final String? Function(RangeValues?)? validator;
 
   const AdPostRange({
     super.key,
-    this.initValue = 0,
-    this.max = 100,
-    this.min = 0,
+    this.rate = 0,
     this.name,
-    this.formState,
     this.validator,
+    required this.formState,
   });
 
   @override
@@ -23,25 +19,20 @@ class AdPostRange extends StatefulWidget {
 }
 
 class _AdPostRangeState extends State<AdPostRange> {
-  late double startValue;
-  late double endValue;
   late double value;
   int typeIndex = 0;
 
   @override
   void initState() {
-    startValue = max(widget.initValue, widget.min);
-    endValue = min(widget.initValue, widget.max);
-    value = min(max(widget.initValue, widget.min), widget.max);
+    value = widget.rate;
+    saveFlag();
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant AdPostRange oldWidget) {
     super.didUpdateWidget(oldWidget);
-    startValue = max(widget.initValue, widget.min);
-    endValue = min(widget.initValue, widget.max);
-    value = min(max(widget.initValue, widget.min), widget.max);
+    value = value = widget.rate;
   }
 
   @override
@@ -49,7 +40,14 @@ class _AdPostRangeState extends State<AdPostRange> {
     return Column(
       children: [
         buildRow(),
-        typeIndex == 0 ? buildSingle() : buildRange(),
+        typeIndex == 0
+            ? buildSingle(
+                widget.rate + 0.1,
+                widget.rate - 0.1,
+                widget.rate,
+              )
+            : buildSingle(0.1, -0.1, 0),
+        if (typeIndex == 0) const Text("固定价格的范围在参考价格的±0.1，固定价格一旦设定后，不会改变", style: Font.miniGrey),
       ],
     );
   }
@@ -81,48 +79,16 @@ class _AdPostRangeState extends State<AdPostRange> {
     );
   }
 
-  Widget buildRange() {
+  Widget buildSingle(double max, double min, double initValue) {
     return FormField(
+      key: ValueKey(typeIndex),
       onSaved: onSaved,
       builder: (field) {
-        return RangeSlider(
-          max: widget.max,
-          min: widget.min,
-          divisions: 100,
-          values: RangeValues(startValue, endValue),
-          labels: RangeLabels(startValue.toStringAsFixed(2), endValue.toStringAsFixed(2)),
-          onChanged: (value) {
-            setState(() {
-              startValue = value.start;
-              endValue = value.end;
-            });
-          },
-        );
-      },
-      validator: widget.validator,
-    );
-  }
-
-  Widget buildSingle() {
-    return FormField(
-      onSaved: onSaved,
-      builder: (field) {
-        return SliderTheme(
-          data: const SliderThemeData(
-            showValueIndicator: ShowValueIndicator.always,
-          ),
-          child: Slider(
-            max: widget.max,
-            min: widget.min,
-            divisions: 100,
-            value: value,
-            label: value.toStringAsFixed(2),
-            onChanged: (val) {
-              setState(() {
-                value = val;
-              });
-            },
-          ),
+        return UiNumberStepper(
+          max: max,
+          min: min,
+          step: 0.01,
+          initValue: initValue,
         );
       },
       validator: widget.validator,
@@ -131,13 +97,25 @@ class _AdPostRangeState extends State<AdPostRange> {
 
   onSaved(newValue) {
     if (widget.name != null) {
-      widget.formState?.update(widget.name!, (value) => value, ifAbsent: () => value);
+      if (value > 1) {
+        value = value - widget.rate;
+      }
+      widget.formState.update(widget.name!, (_) => value, ifAbsent: () => value);
     }
+  }
+
+  saveFlag() {
+    widget.formState.update(
+      "fixedRate",
+      (_) => typeIndex == 0,
+      ifAbsent: () => typeIndex == 0,
+    );
   }
 
   onChanged(int? value) {
     setState(() {
       typeIndex = value ?? 0;
+      saveFlag();
     });
   }
 }

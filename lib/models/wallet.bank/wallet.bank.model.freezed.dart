@@ -26,9 +26,6 @@ mixin _$WalletBankModel {
   /// 	标题
   String get title => throw _privateConstructorUsedError;
 
-  /// 	用户名
-  String get username => throw _privateConstructorUsedError;
-
   /// 	银行卡号
   String get cardNumber => throw _privateConstructorUsedError;
 
@@ -47,12 +44,6 @@ mixin _$WalletBankModel {
   /// 	户主名
   String get name => throw _privateConstructorUsedError;
 
-  /// 	是否禁用
-  bool get disabled => throw _privateConstructorUsedError;
-
-  ///
-  String get createdTime => throw _privateConstructorUsedError;
-
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $WalletBankModelCopyWith<WalletBankModel> get copyWith =>
@@ -68,15 +59,12 @@ abstract class $WalletBankModelCopyWith<$Res> {
   $Res call(
       {String reference,
       String title,
-      String username,
       String cardNumber,
       String account,
       String bank,
       String bankBranch,
       bool defaultUsed,
-      String name,
-      bool disabled,
-      String createdTime});
+      String name});
 }
 
 /// @nodoc
@@ -94,15 +82,12 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
   $Res call({
     Object? reference = null,
     Object? title = null,
-    Object? username = null,
     Object? cardNumber = null,
     Object? account = null,
     Object? bank = null,
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
-    Object? disabled = null,
-    Object? createdTime = null,
   }) {
     return _then(_value.copyWith(
       reference: null == reference
@@ -112,10 +97,6 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
               as String,
       cardNumber: null == cardNumber
           ? _value.cardNumber
@@ -140,14 +121,6 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      disabled: null == disabled
-          ? _value.disabled
-          : disabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdTime: null == createdTime
-          ? _value.createdTime
-          : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -164,15 +137,12 @@ abstract class _$$_WalletBankModelCopyWith<$Res>
   $Res call(
       {String reference,
       String title,
-      String username,
       String cardNumber,
       String account,
       String bank,
       String bankBranch,
       bool defaultUsed,
-      String name,
-      bool disabled,
-      String createdTime});
+      String name});
 }
 
 /// @nodoc
@@ -188,15 +158,12 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
   $Res call({
     Object? reference = null,
     Object? title = null,
-    Object? username = null,
     Object? cardNumber = null,
     Object? account = null,
     Object? bank = null,
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
-    Object? disabled = null,
-    Object? createdTime = null,
   }) {
     return _then(_$_WalletBankModel(
       reference: null == reference
@@ -206,10 +173,6 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
               as String,
       cardNumber: null == cardNumber
           ? _value.cardNumber
@@ -235,14 +198,6 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      disabled: null == disabled
-          ? _value.disabled
-          : disabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdTime: null == createdTime
-          ? _value.createdTime
-          : createdTime // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -253,15 +208,12 @@ class _$_WalletBankModel implements _WalletBankModel {
   const _$_WalletBankModel(
       {required this.reference,
       required this.title,
-      required this.username,
       required this.cardNumber,
       required this.account,
       required this.bank,
       required this.bankBranch,
       required this.defaultUsed,
-      required this.name,
-      required this.disabled,
-      required this.createdTime});
+      required this.name});
 
   factory _$_WalletBankModel.fromJson(Map<String, dynamic> json) =>
       _$$_WalletBankModelFromJson(json);
@@ -273,10 +225,6 @@ class _$_WalletBankModel implements _WalletBankModel {
   /// 	标题
   @override
   final String title;
-
-  /// 	用户名
-  @override
-  final String username;
 
   /// 	银行卡号
   @override
@@ -302,17 +250,9 @@ class _$_WalletBankModel implements _WalletBankModel {
   @override
   final String name;
 
-  /// 	是否禁用
-  @override
-  final bool disabled;
-
-  ///
-  @override
-  final String createdTime;
-
   @override
   String toString() {
-    return 'WalletBankModel(reference: $reference, title: $title, username: $username, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name, disabled: $disabled, createdTime: $createdTime)';
+    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name)';
   }
 
   @override
@@ -323,8 +263,6 @@ class _$_WalletBankModel implements _WalletBankModel {
             (identical(other.reference, reference) ||
                 other.reference == reference) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.username, username) ||
-                other.username == username) &&
             (identical(other.cardNumber, cardNumber) ||
                 other.cardNumber == cardNumber) &&
             (identical(other.account, account) || other.account == account) &&
@@ -333,28 +271,13 @@ class _$_WalletBankModel implements _WalletBankModel {
                 other.bankBranch == bankBranch) &&
             (identical(other.defaultUsed, defaultUsed) ||
                 other.defaultUsed == defaultUsed) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.disabled, disabled) ||
-                other.disabled == disabled) &&
-            (identical(other.createdTime, createdTime) ||
-                other.createdTime == createdTime));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      reference,
-      title,
-      username,
-      cardNumber,
-      account,
-      bank,
-      bankBranch,
-      defaultUsed,
-      name,
-      disabled,
-      createdTime);
+  int get hashCode => Object.hash(runtimeType, reference, title, cardNumber,
+      account, bank, bankBranch, defaultUsed, name);
 
   @JsonKey(ignore: true)
   @override
@@ -374,15 +297,12 @@ abstract class _WalletBankModel implements WalletBankModel {
   const factory _WalletBankModel(
       {required final String reference,
       required final String title,
-      required final String username,
       required final String cardNumber,
       required final String account,
       required final String bank,
       required final String bankBranch,
       required final bool defaultUsed,
-      required final String name,
-      required final bool disabled,
-      required final String createdTime}) = _$_WalletBankModel;
+      required final String name}) = _$_WalletBankModel;
 
   factory _WalletBankModel.fromJson(Map<String, dynamic> json) =
       _$_WalletBankModel.fromJson;
@@ -395,10 +315,6 @@ abstract class _WalletBankModel implements WalletBankModel {
 
   /// 	标题
   String get title;
-  @override
-
-  /// 	用户名
-  String get username;
   @override
 
   /// 	银行卡号
@@ -423,14 +339,6 @@ abstract class _WalletBankModel implements WalletBankModel {
 
   /// 	户主名
   String get name;
-  @override
-
-  /// 	是否禁用
-  bool get disabled;
-  @override
-
-  ///
-  String get createdTime;
   @override
   @JsonKey(ignore: true)
   _$$_WalletBankModelCopyWith<_$_WalletBankModel> get copyWith =>
