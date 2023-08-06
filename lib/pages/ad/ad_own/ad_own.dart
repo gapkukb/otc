@@ -2,21 +2,29 @@ library ad_own;
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/index.dart';
+import 'package:intl/intl.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/modal/modal.dart';
+import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/pagination/pagination.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/models/ad.my/ad.my.channel.model.dart';
 import 'package:otc/models/ad.my/ad.my.model.dart';
 import 'package:otc/models/ad.my/ad.my.taker.model.dart';
 import 'package:otc/models/pagination/pagination.model.dart';
 import 'package:otc/pages/ad/ad_own/ad_own.filters.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 import 'dart:math' as math;
+
+import 'package:qr_flutter/qr_flutter.dart';
 
 part 'ad_own.provider.dart';
 part 'ad_own.detail.dart';
@@ -117,10 +125,16 @@ class _AdOwnState extends State<AdOwn> {
                         DataCell(
                           row.takerDeals.isEmpty
                               ? const SizedBox.shrink()
-                              : const Center(
-                                  child: Icon(Icons.keyboard_arrow_right_outlined),
+                              : Align(
+                                  alignment: const Alignment(1, 0),
+                                  child: Badge(
+                                    label: Text(row.takerDeals.length.toString()),
+                                    alignment: Alignment.centerLeft,
+                                    offset: const Offset(-14, 0.5),
+                                    child: const Icon(Icons.keyboard_arrow_right_outlined),
+                                  ),
                                 ),
-                          onTap: row.takerDeals.isEmpty ? null : () => showDetail(context, row.takerDeals),
+                          onTap: row.takerDeals.isEmpty ? null : () => showDetail(context, row),
                         ),
                       ],
                     );
@@ -158,12 +172,16 @@ class _AdOwnState extends State<AdOwn> {
     });
   }
 
-  showDetail(BuildContext context, List<AdMyTakerModel> detail) async {
+  showDetail(BuildContext context, AdMyModel item) async {
     await showDialog(
       context: context,
       builder: (context) {
         return AdOwnDetail(
-          detail: detail,
+          detail: item.takerDeals,
+          channels: item.channels,
+          onRefresh: () {
+            research(pageNo);
+          },
         );
       },
     );

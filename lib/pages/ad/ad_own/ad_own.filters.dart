@@ -103,7 +103,28 @@ enum AdOwnState {
 
   final String text;
 
-  static AdOwnState getByValue(String value) {
-    return AdOwnState.values.firstWhere((element) => element.name == value);
+  static Widget getWidgetByValue(String value) {
+    try {
+      final matched = AdOwnState.values.firstWhere((element) => element.name == value);
+      if (matched == AdOwnState.NOTIFIED) {
+        return Tooltip(
+          triggerMode: TooltipTriggerMode.tap,
+          message: "买家已付款，请在倒计时结束前点击按钮进行确认。\n若倒计时结束前还未确认，损失由做市商承担",
+          child: Text(
+            matched.text,
+            style: const TextStyle(
+              color: Colors.red,
+              decoration: TextDecoration.underline,
+              decorationColor: Colors.red,
+            ),
+          ),
+        );
+      }
+      return Text(
+        matched.text,
+      );
+    } catch (e) {
+      return const SizedBox.shrink();
+    }
   }
 }

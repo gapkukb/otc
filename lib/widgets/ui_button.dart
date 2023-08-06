@@ -68,11 +68,14 @@ class UiButton extends StatelessWidget {
       textColor: getColor(themeColor),
       shape: _buildShape(context, themeColor),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      disabledColor: Colors.grey,
+      disabledTextColor: Colors.white,
       child: _buildChild(),
     );
   }
 
   Color? getbackgroundColor(Color themeColor) {
+    if (disabled) return Colors.grey;
     if (variant == UiButtonVariant.text || variant == UiButtonVariant.outline) {
       return null;
     }
@@ -80,7 +83,7 @@ class UiButton extends StatelessWidget {
   }
 
   Color? getColor(Color themeColor) {
-    if (disabled) return Colors.grey;
+    if (disabled) return null;
     if (variant == UiButtonVariant.outline) return themeColor;
     if (variant == UiButtonVariant.text) return themeColor;
     return color != Colors.white ? Colors.white : null;

@@ -16,6 +16,8 @@ class AdMyTakerModel with _$AdMyTakerModel {
 
     ///
     required String merchantCode,
+    required String overTime,
+    required int overTimeSeconds,
 
     ///
     required bool sell,

@@ -9,6 +9,7 @@ class UiNumberStepper extends StatefulWidget {
   final double step;
   final double? initValue;
   final bool disabeld;
+  final Function(double newValue) onChange;
 
   const UiNumberStepper({
     super.key,
@@ -18,6 +19,7 @@ class UiNumberStepper extends StatefulWidget {
     this.step = 1,
     this.disabeld = false,
     this.initValue,
+    required this.onChange,
   });
 
   @override
@@ -63,19 +65,6 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
               textAlign: TextAlign.center,
             ),
           );
-          // Row(
-          //   children: [
-          //     IconButton(
-          //       onPressed: decrease,
-          //       icon: const Icon(Icons.remove),
-          //     ),
-          //     Text("$_value${widget.unit}"),
-          //     IconButton(
-          //       onPressed: increase,
-          //       icon: const Icon(Icons.add),
-          //     ),
-          //   ],
-          // );
         },
       ),
     );
@@ -94,6 +83,8 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
   next() {
     _value = double.parse(_value.toStringAsFixed(2));
     _field.setValue(_value);
-    setState(() {});
+    setState(() {
+      widget.onChange(_value);
+    });
   }
 }

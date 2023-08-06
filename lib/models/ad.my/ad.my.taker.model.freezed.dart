@@ -31,6 +31,8 @@ mixin _$AdMyTakerModel {
 
   ///
   String get merchantCode => throw _privateConstructorUsedError;
+  String get overTime => throw _privateConstructorUsedError;
+  int get overTimeSeconds => throw _privateConstructorUsedError;
 
   ///
   bool get sell => throw _privateConstructorUsedError;
@@ -107,6 +109,8 @@ abstract class $AdMyTakerModelCopyWith<$Res> {
       String makerReference,
       String makerChannelReference,
       String merchantCode,
+      String overTime,
+      int overTimeSeconds,
       bool sell,
       String coin,
       num coinAmount,
@@ -146,6 +150,8 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
     Object? makerReference = null,
     Object? makerChannelReference = null,
     Object? merchantCode = null,
+    Object? overTime = null,
+    Object? overTimeSeconds = null,
     Object? sell = null,
     Object? coin = null,
     Object? coinAmount = null,
@@ -184,6 +190,14 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
           ? _value.merchantCode
           : merchantCode // ignore: cast_nullable_to_non_nullable
               as String,
+      overTime: null == overTime
+          ? _value.overTime
+          : overTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      overTimeSeconds: null == overTimeSeconds
+          ? _value.overTimeSeconds
+          : overTimeSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       sell: null == sell
           ? _value.sell
           : sell // ignore: cast_nullable_to_non_nullable
@@ -281,6 +295,8 @@ abstract class _$$_AdMyTakerModelCopyWith<$Res>
       String makerReference,
       String makerChannelReference,
       String merchantCode,
+      String overTime,
+      int overTimeSeconds,
       bool sell,
       String coin,
       num coinAmount,
@@ -318,6 +334,8 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
     Object? makerReference = null,
     Object? makerChannelReference = null,
     Object? merchantCode = null,
+    Object? overTime = null,
+    Object? overTimeSeconds = null,
     Object? sell = null,
     Object? coin = null,
     Object? coinAmount = null,
@@ -356,6 +374,14 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
           ? _value.merchantCode
           : merchantCode // ignore: cast_nullable_to_non_nullable
               as String,
+      overTime: null == overTime
+          ? _value.overTime
+          : overTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      overTimeSeconds: null == overTimeSeconds
+          ? _value.overTimeSeconds
+          : overTimeSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       sell: null == sell
           ? _value.sell
           : sell // ignore: cast_nullable_to_non_nullable
@@ -448,6 +474,8 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
       required this.makerReference,
       required this.makerChannelReference,
       required this.merchantCode,
+      required this.overTime,
+      required this.overTimeSeconds,
       required this.sell,
       required this.coin,
       required this.coinAmount,
@@ -487,6 +515,10 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
   ///
   @override
   final String merchantCode;
+  @override
+  final String overTime;
+  @override
+  final int overTimeSeconds;
 
   ///
   @override
@@ -568,7 +600,7 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
 
   @override
   String toString() {
-    return 'AdMyTakerModel(reference: $reference, makerReference: $makerReference, makerChannelReference: $makerChannelReference, merchantCode: $merchantCode, sell: $sell, coin: $coin, coinAmount: $coinAmount, makerUsername: $makerUsername, takerAccountName: $takerAccountName, takerUsername: $takerUsername, paymentMethod: $paymentMethod, state: $state, orderLevel: $orderLevel, makerPaymentAccount: $makerPaymentAccount, takerPaymentAccount: $takerPaymentAccount, moneyAmount: $moneyAmount, money: $money, rate: $rate, notifyAt: $notifyAt, notifyTimes: $notifyTimes, confirmAt: $confirmAt, confirmTimes: $confirmTimes, commission: $commission, createdTime: $createdTime)';
+    return 'AdMyTakerModel(reference: $reference, makerReference: $makerReference, makerChannelReference: $makerChannelReference, merchantCode: $merchantCode, overTime: $overTime, overTimeSeconds: $overTimeSeconds, sell: $sell, coin: $coin, coinAmount: $coinAmount, makerUsername: $makerUsername, takerAccountName: $takerAccountName, takerUsername: $takerUsername, paymentMethod: $paymentMethod, state: $state, orderLevel: $orderLevel, makerPaymentAccount: $makerPaymentAccount, takerPaymentAccount: $takerPaymentAccount, moneyAmount: $moneyAmount, money: $money, rate: $rate, notifyAt: $notifyAt, notifyTimes: $notifyTimes, confirmAt: $confirmAt, confirmTimes: $confirmTimes, commission: $commission, createdTime: $createdTime)';
   }
 
   @override
@@ -584,6 +616,10 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
                 other.makerChannelReference == makerChannelReference) &&
             (identical(other.merchantCode, merchantCode) ||
                 other.merchantCode == merchantCode) &&
+            (identical(other.overTime, overTime) ||
+                other.overTime == overTime) &&
+            (identical(other.overTimeSeconds, overTimeSeconds) ||
+                other.overTimeSeconds == overTimeSeconds) &&
             (identical(other.sell, sell) || other.sell == sell) &&
             (identical(other.coin, coin) || other.coin == coin) &&
             (identical(other.coinAmount, coinAmount) ||
@@ -629,6 +665,8 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
         makerReference,
         makerChannelReference,
         merchantCode,
+        overTime,
+        overTimeSeconds,
         sell,
         coin,
         coinAmount,
@@ -671,6 +709,8 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
       required final String makerReference,
       required final String makerChannelReference,
       required final String merchantCode,
+      required final String overTime,
+      required final int overTimeSeconds,
       required final bool sell,
       required final String coin,
       required final num coinAmount,
@@ -711,6 +751,10 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
 
   ///
   String get merchantCode;
+  @override
+  String get overTime;
+  @override
+  int get overTimeSeconds;
   @override
 
   ///

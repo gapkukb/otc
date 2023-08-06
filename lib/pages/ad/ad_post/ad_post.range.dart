@@ -89,6 +89,9 @@ class _AdPostRangeState extends State<AdPostRange> {
           min: min,
           step: 0.01,
           initValue: initValue,
+          onChange: (newValue) {
+            value = newValue;
+          },
         );
       },
       validator: widget.validator,
@@ -97,13 +100,13 @@ class _AdPostRangeState extends State<AdPostRange> {
 
   onSaved(newValue) {
     double val = 0.0;
+
     if (widget.name != null) {
       if (typeIndex == 0) {
         val = value - widget.rate;
       } else {
         val = value - widget.rate;
       }
-
       widget.formState.update(widget.name!, (_) => val, ifAbsent: () => val);
     }
   }
