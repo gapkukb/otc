@@ -63,7 +63,7 @@ class _AdHistoryState extends State<AdHistory> {
     return Scaffold(
       appBar: AdOwnFilters(
         formState: formState,
-        onCompelete: () {},
+        onSearch: () {},
       ),
       body: Consumer(
         builder: (context, ref, child) {
@@ -89,12 +89,11 @@ class _AdHistoryState extends State<AdHistory> {
                   final min = row.channels.map((e) => e.amountMin).reduce(math.min);
                   final max = row.channels.map((e) => e.amountMax).reduce(math.max);
                   return DataRow(cells: [
-                    DataCell(Text("${row.reference}\n${row.currency}/${row.changeCurrency}")),
+                    DataCell(Text("${row.reference}\n${row.coin}")),
                     DataCell(Text(row.sell ? "出售" : "购买")),
                     DataCell(Text("${row.amount}\n￥$min - ￥$max")),
-                    DataCell(Text(row.totalAmount.toString())),
-                    DataCell(Text(row.totalChangeAmount.toString())),
-                    DataCell(Text(row.rate.toString())),
+                    DataCell(Text((row.totalCoinAmount).toString())),
+                    DataCell(Text(row.totalMoneyAmount.toString())),
                     DataCell(Text(row.state)),
                     DataCell(OrderState.get(context, row.state)),
                     DataCell(

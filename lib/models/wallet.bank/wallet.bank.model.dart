@@ -28,6 +28,7 @@ class WalletBankModel with _$WalletBankModel {
 
     /// 	户主名
     required String name,
+    required bool used,
   }) = _WalletBankModel;
 
   factory WalletBankModel.fromJson(Map<String, Object?> json) => _$WalletBankModelFromJson(json);

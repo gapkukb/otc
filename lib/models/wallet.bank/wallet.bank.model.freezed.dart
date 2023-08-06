@@ -43,6 +43,7 @@ mixin _$WalletBankModel {
 
   /// 	户主名
   String get name => throw _privateConstructorUsedError;
+  bool get used => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,7 +65,8 @@ abstract class $WalletBankModelCopyWith<$Res> {
       String bank,
       String bankBranch,
       bool defaultUsed,
-      String name});
+      String name,
+      bool used});
 }
 
 /// @nodoc
@@ -88,6 +90,7 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
+    Object? used = null,
   }) {
     return _then(_value.copyWith(
       reference: null == reference
@@ -122,6 +125,10 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      used: null == used
+          ? _value.used
+          : used // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -142,7 +149,8 @@ abstract class _$$_WalletBankModelCopyWith<$Res>
       String bank,
       String bankBranch,
       bool defaultUsed,
-      String name});
+      String name,
+      bool used});
 }
 
 /// @nodoc
@@ -164,6 +172,7 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
+    Object? used = null,
   }) {
     return _then(_$_WalletBankModel(
       reference: null == reference
@@ -198,6 +207,10 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      used: null == used
+          ? _value.used
+          : used // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -213,7 +226,8 @@ class _$_WalletBankModel implements _WalletBankModel {
       required this.bank,
       required this.bankBranch,
       required this.defaultUsed,
-      required this.name});
+      required this.name,
+      required this.used});
 
   factory _$_WalletBankModel.fromJson(Map<String, dynamic> json) =>
       _$$_WalletBankModelFromJson(json);
@@ -249,10 +263,12 @@ class _$_WalletBankModel implements _WalletBankModel {
   /// 	户主名
   @override
   final String name;
+  @override
+  final bool used;
 
   @override
   String toString() {
-    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name)';
+    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name, used: $used)';
   }
 
   @override
@@ -271,13 +287,14 @@ class _$_WalletBankModel implements _WalletBankModel {
                 other.bankBranch == bankBranch) &&
             (identical(other.defaultUsed, defaultUsed) ||
                 other.defaultUsed == defaultUsed) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.used, used) || other.used == used));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, reference, title, cardNumber,
-      account, bank, bankBranch, defaultUsed, name);
+      account, bank, bankBranch, defaultUsed, name, used);
 
   @JsonKey(ignore: true)
   @override
@@ -302,7 +319,8 @@ abstract class _WalletBankModel implements WalletBankModel {
       required final String bank,
       required final String bankBranch,
       required final bool defaultUsed,
-      required final String name}) = _$_WalletBankModel;
+      required final String name,
+      required final bool used}) = _$_WalletBankModel;
 
   factory _WalletBankModel.fromJson(Map<String, dynamic> json) =
       _$_WalletBankModel.fromJson;
@@ -339,6 +357,8 @@ abstract class _WalletBankModel implements WalletBankModel {
 
   /// 	户主名
   String get name;
+  @override
+  bool get used;
   @override
   @JsonKey(ignore: true)
   _$$_WalletBankModelCopyWith<_$_WalletBankModel> get copyWith =>

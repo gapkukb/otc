@@ -33,6 +33,14 @@ class _OTCApi {
 
   /// 发布广告
   final publishAd = post("/otc/publish");
+
+  /// 下架广告
+  final stopAd = post("/otc/maker/stop");
+
+  /// 查询买-卖币广告
+  final allAdvertise = post("/otc/record/advertise/all", (Map<String, dynamic> json) {
+    return PaginationModel.fromJson(json, (item) => AdAllModel.fromJson(item as dynamic));
+  }, HttpOptions(loading: false));
 }
 
 final otcApi = _OTCApi();

@@ -1,88 +1,13 @@
-library ad_selling;
-
 import 'package:flutter/material.dart';
-import 'package:otc/components/table/table.dart';
-import 'package:otc/pages/ad/ad_buying/ad_buying.filters.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
 
-part './ad_selling.provider.dart';
-
-class AdSelling extends StatefulWidget {
+class AdSelling extends StatelessWidget {
   const AdSelling({super.key});
 
   @override
-  State<AdSelling> createState() => _AdSellingState();
-}
-
-class _AdSellingState extends State<AdSelling> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AdBuyingHeader(),
-      body: DataGrid<Employee>(
-        fetcher: (pageNo, pageSize) async {
-          // await Future.delayed(Duration(seconds: 3));
-
-          return [] as dynamic;
-        },
-        buildRow: (row) {},
-        pageSize: 50,
-        columns: [
-          DataGridColumn(
-            columnName: 'id',
-            title: "广告编号\n币种/法币",
-            getValue: (row) => row.id,
-          ),
-          DataGridColumn(
-            columnName: 'name',
-            title: "类型",
-            getValue: (row) => row.name,
-          ),
-          DataGridColumn(
-            columnName: 'designation',
-            title: "广告数量\n限额",
-            getValue: (row) => row.designation,
-          ),
-          DataGridColumn(
-            columnName: 'salary',
-            title: "已成交数量\n（USDT）",
-            getValue: (row) => row.salary,
-          ),
-          DataGridColumn(
-            columnName: 'salary',
-            title: "汇率",
-            getValue: (row) => row.salary,
-          ),
-          DataGridColumn(
-            columnName: 'salary',
-            title: "支付方式",
-            getValue: (row) => row.salary,
-          ),
-          DataGridColumn(
-            columnName: 'salary',
-            title: "状态",
-            getValue: (row) => row.salary,
-          ),
-          DataGridColumn(
-            columnName: 'salary',
-            title: "更新时间\n创建时间",
-            getValue: (row) => row.salary,
-          ),
-          DataGridColumn(
-            columnName: 'salary',
-            title: "操作",
-            getValue: (row) => row.salary,
-          ),
-        ],
-      ),
+    return const AdBuying(
+      isBuying: false,
     );
   }
-}
-
-class Employee {
-  Employee(this.id, this.name, this.designation, this.salary);
-  final int id;
-  final String name;
-  final String designation;
-  final int salary;
 }

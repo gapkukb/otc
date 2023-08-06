@@ -30,7 +30,8 @@ mixin _$AdMyModel {
   num get amount => throw _privateConstructorUsedError;
 
   ///	可用值:CNY,USD,USDT,BTC,TRX,BNB,ETH	String
-  String get currency => throw _privateConstructorUsedError;
+  Cryptocurrency get coin => throw _privateConstructorUsedError;
+  Fiatcurrency get money => throw _privateConstructorUsedError;
 
   ///		num
   num get submitAmount => throw _privateConstructorUsedError;
@@ -39,7 +40,12 @@ mixin _$AdMyModel {
   num get refRate => throw _privateConstructorUsedError;
 
   ///		num
-  num get rate => throw _privateConstructorUsedError;
+  num get currentRate => throw _privateConstructorUsedError;
+  List<String> get methods => throw _privateConstructorUsedError;
+
+  ///		num
+  num get finalRate => throw _privateConstructorUsedError;
+  num get floatOffset => throw _privateConstructorUsedError;
 
   ///		bool
   bool get fixedRate => throw _privateConstructorUsedError;
@@ -53,19 +59,16 @@ mixin _$AdMyModel {
   ///		bool
   bool get sell => throw _privateConstructorUsedError;
 
-  ///	可用值:CNY,USD,USDT,BTC,TRX,BNB,ETH	String
-  String get changeCurrency => throw _privateConstructorUsedError;
-
   ///		String
   String get createdTime => throw _privateConstructorUsedError;
 
   ///		num
-  num get totalAmount => throw _privateConstructorUsedError;
+  num get totalCoinAmount => throw _privateConstructorUsedError;
 
   ///		num
-  num get totalChangeAmount => throw _privateConstructorUsedError;
+  num get totalMoneyAmount => throw _privateConstructorUsedError;
   List<AdMyChannleModel> get channels => throw _privateConstructorUsedError;
-  List<AdMyTakerModel> get akerDeals => throw _privateConstructorUsedError;
+  List<AdMyTakerModel> get takerDeals => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -82,20 +85,23 @@ abstract class $AdMyModelCopyWith<$Res> {
       {String reference,
       String username,
       num amount,
-      String currency,
+      Cryptocurrency coin,
+      Fiatcurrency money,
       num submitAmount,
       num refRate,
-      num rate,
+      num currentRate,
+      List<String> methods,
+      num finalRate,
+      num floatOffset,
       bool fixedRate,
       int validTime,
       String state,
       bool sell,
-      String changeCurrency,
       String createdTime,
-      num totalAmount,
-      num totalChangeAmount,
+      num totalCoinAmount,
+      num totalMoneyAmount,
       List<AdMyChannleModel> channels,
-      List<AdMyTakerModel> akerDeals});
+      List<AdMyTakerModel> takerDeals});
 }
 
 /// @nodoc
@@ -114,20 +120,23 @@ class _$AdMyModelCopyWithImpl<$Res, $Val extends AdMyModel>
     Object? reference = null,
     Object? username = null,
     Object? amount = null,
-    Object? currency = null,
+    Object? coin = null,
+    Object? money = null,
     Object? submitAmount = null,
     Object? refRate = null,
-    Object? rate = null,
+    Object? currentRate = null,
+    Object? methods = null,
+    Object? finalRate = null,
+    Object? floatOffset = null,
     Object? fixedRate = null,
     Object? validTime = null,
     Object? state = null,
     Object? sell = null,
-    Object? changeCurrency = null,
     Object? createdTime = null,
-    Object? totalAmount = null,
-    Object? totalChangeAmount = null,
+    Object? totalCoinAmount = null,
+    Object? totalMoneyAmount = null,
     Object? channels = null,
-    Object? akerDeals = null,
+    Object? takerDeals = null,
   }) {
     return _then(_value.copyWith(
       reference: null == reference
@@ -142,10 +151,14 @@ class _$AdMyModelCopyWithImpl<$Res, $Val extends AdMyModel>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
+      coin: null == coin
+          ? _value.coin
+          : coin // ignore: cast_nullable_to_non_nullable
+              as Cryptocurrency,
+      money: null == money
+          ? _value.money
+          : money // ignore: cast_nullable_to_non_nullable
+              as Fiatcurrency,
       submitAmount: null == submitAmount
           ? _value.submitAmount
           : submitAmount // ignore: cast_nullable_to_non_nullable
@@ -154,9 +167,21 @@ class _$AdMyModelCopyWithImpl<$Res, $Val extends AdMyModel>
           ? _value.refRate
           : refRate // ignore: cast_nullable_to_non_nullable
               as num,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      currentRate: null == currentRate
+          ? _value.currentRate
+          : currentRate // ignore: cast_nullable_to_non_nullable
+              as num,
+      methods: null == methods
+          ? _value.methods
+          : methods // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      finalRate: null == finalRate
+          ? _value.finalRate
+          : finalRate // ignore: cast_nullable_to_non_nullable
+              as num,
+      floatOffset: null == floatOffset
+          ? _value.floatOffset
+          : floatOffset // ignore: cast_nullable_to_non_nullable
               as num,
       fixedRate: null == fixedRate
           ? _value.fixedRate
@@ -174,29 +199,25 @@ class _$AdMyModelCopyWithImpl<$Res, $Val extends AdMyModel>
           ? _value.sell
           : sell // ignore: cast_nullable_to_non_nullable
               as bool,
-      changeCurrency: null == changeCurrency
-          ? _value.changeCurrency
-          : changeCurrency // ignore: cast_nullable_to_non_nullable
-              as String,
       createdTime: null == createdTime
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      totalAmount: null == totalAmount
-          ? _value.totalAmount
-          : totalAmount // ignore: cast_nullable_to_non_nullable
+      totalCoinAmount: null == totalCoinAmount
+          ? _value.totalCoinAmount
+          : totalCoinAmount // ignore: cast_nullable_to_non_nullable
               as num,
-      totalChangeAmount: null == totalChangeAmount
-          ? _value.totalChangeAmount
-          : totalChangeAmount // ignore: cast_nullable_to_non_nullable
+      totalMoneyAmount: null == totalMoneyAmount
+          ? _value.totalMoneyAmount
+          : totalMoneyAmount // ignore: cast_nullable_to_non_nullable
               as num,
       channels: null == channels
           ? _value.channels
           : channels // ignore: cast_nullable_to_non_nullable
               as List<AdMyChannleModel>,
-      akerDeals: null == akerDeals
-          ? _value.akerDeals
-          : akerDeals // ignore: cast_nullable_to_non_nullable
+      takerDeals: null == takerDeals
+          ? _value.takerDeals
+          : takerDeals // ignore: cast_nullable_to_non_nullable
               as List<AdMyTakerModel>,
     ) as $Val);
   }
@@ -213,20 +234,23 @@ abstract class _$$_AdMyModelCopyWith<$Res> implements $AdMyModelCopyWith<$Res> {
       {String reference,
       String username,
       num amount,
-      String currency,
+      Cryptocurrency coin,
+      Fiatcurrency money,
       num submitAmount,
       num refRate,
-      num rate,
+      num currentRate,
+      List<String> methods,
+      num finalRate,
+      num floatOffset,
       bool fixedRate,
       int validTime,
       String state,
       bool sell,
-      String changeCurrency,
       String createdTime,
-      num totalAmount,
-      num totalChangeAmount,
+      num totalCoinAmount,
+      num totalMoneyAmount,
       List<AdMyChannleModel> channels,
-      List<AdMyTakerModel> akerDeals});
+      List<AdMyTakerModel> takerDeals});
 }
 
 /// @nodoc
@@ -243,20 +267,23 @@ class __$$_AdMyModelCopyWithImpl<$Res>
     Object? reference = null,
     Object? username = null,
     Object? amount = null,
-    Object? currency = null,
+    Object? coin = null,
+    Object? money = null,
     Object? submitAmount = null,
     Object? refRate = null,
-    Object? rate = null,
+    Object? currentRate = null,
+    Object? methods = null,
+    Object? finalRate = null,
+    Object? floatOffset = null,
     Object? fixedRate = null,
     Object? validTime = null,
     Object? state = null,
     Object? sell = null,
-    Object? changeCurrency = null,
     Object? createdTime = null,
-    Object? totalAmount = null,
-    Object? totalChangeAmount = null,
+    Object? totalCoinAmount = null,
+    Object? totalMoneyAmount = null,
     Object? channels = null,
-    Object? akerDeals = null,
+    Object? takerDeals = null,
   }) {
     return _then(_$_AdMyModel(
       reference: null == reference
@@ -271,10 +298,14 @@ class __$$_AdMyModelCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
+      coin: null == coin
+          ? _value.coin
+          : coin // ignore: cast_nullable_to_non_nullable
+              as Cryptocurrency,
+      money: null == money
+          ? _value.money
+          : money // ignore: cast_nullable_to_non_nullable
+              as Fiatcurrency,
       submitAmount: null == submitAmount
           ? _value.submitAmount
           : submitAmount // ignore: cast_nullable_to_non_nullable
@@ -283,9 +314,21 @@ class __$$_AdMyModelCopyWithImpl<$Res>
           ? _value.refRate
           : refRate // ignore: cast_nullable_to_non_nullable
               as num,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      currentRate: null == currentRate
+          ? _value.currentRate
+          : currentRate // ignore: cast_nullable_to_non_nullable
+              as num,
+      methods: null == methods
+          ? _value._methods
+          : methods // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      finalRate: null == finalRate
+          ? _value.finalRate
+          : finalRate // ignore: cast_nullable_to_non_nullable
+              as num,
+      floatOffset: null == floatOffset
+          ? _value.floatOffset
+          : floatOffset // ignore: cast_nullable_to_non_nullable
               as num,
       fixedRate: null == fixedRate
           ? _value.fixedRate
@@ -303,29 +346,25 @@ class __$$_AdMyModelCopyWithImpl<$Res>
           ? _value.sell
           : sell // ignore: cast_nullable_to_non_nullable
               as bool,
-      changeCurrency: null == changeCurrency
-          ? _value.changeCurrency
-          : changeCurrency // ignore: cast_nullable_to_non_nullable
-              as String,
       createdTime: null == createdTime
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      totalAmount: null == totalAmount
-          ? _value.totalAmount
-          : totalAmount // ignore: cast_nullable_to_non_nullable
+      totalCoinAmount: null == totalCoinAmount
+          ? _value.totalCoinAmount
+          : totalCoinAmount // ignore: cast_nullable_to_non_nullable
               as num,
-      totalChangeAmount: null == totalChangeAmount
-          ? _value.totalChangeAmount
-          : totalChangeAmount // ignore: cast_nullable_to_non_nullable
+      totalMoneyAmount: null == totalMoneyAmount
+          ? _value.totalMoneyAmount
+          : totalMoneyAmount // ignore: cast_nullable_to_non_nullable
               as num,
       channels: null == channels
           ? _value._channels
           : channels // ignore: cast_nullable_to_non_nullable
               as List<AdMyChannleModel>,
-      akerDeals: null == akerDeals
-          ? _value._akerDeals
-          : akerDeals // ignore: cast_nullable_to_non_nullable
+      takerDeals: null == takerDeals
+          ? _value._takerDeals
+          : takerDeals // ignore: cast_nullable_to_non_nullable
               as List<AdMyTakerModel>,
     ));
   }
@@ -338,22 +377,26 @@ class _$_AdMyModel implements _AdMyModel {
       {required this.reference,
       required this.username,
       required this.amount,
-      required this.currency,
+      required this.coin,
+      required this.money,
       required this.submitAmount,
       required this.refRate,
-      required this.rate,
+      required this.currentRate,
+      required final List<String> methods,
+      required this.finalRate,
+      required this.floatOffset,
       required this.fixedRate,
       required this.validTime,
       required this.state,
       required this.sell,
-      required this.changeCurrency,
       required this.createdTime,
-      required this.totalAmount,
-      required this.totalChangeAmount,
+      required this.totalCoinAmount,
+      required this.totalMoneyAmount,
       required final List<AdMyChannleModel> channels,
-      required final List<AdMyTakerModel> akerDeals})
-      : _channels = channels,
-        _akerDeals = akerDeals;
+      required final List<AdMyTakerModel> takerDeals})
+      : _methods = methods,
+        _channels = channels,
+        _takerDeals = takerDeals;
 
   factory _$_AdMyModel.fromJson(Map<String, dynamic> json) =>
       _$$_AdMyModelFromJson(json);
@@ -372,7 +415,9 @@ class _$_AdMyModel implements _AdMyModel {
 
   ///	可用值:CNY,USD,USDT,BTC,TRX,BNB,ETH	String
   @override
-  final String currency;
+  final Cryptocurrency coin;
+  @override
+  final Fiatcurrency money;
 
   ///		num
   @override
@@ -384,7 +429,20 @@ class _$_AdMyModel implements _AdMyModel {
 
   ///		num
   @override
-  final num rate;
+  final num currentRate;
+  final List<String> _methods;
+  @override
+  List<String> get methods {
+    if (_methods is EqualUnmodifiableListView) return _methods;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_methods);
+  }
+
+  ///		num
+  @override
+  final num finalRate;
+  @override
+  final num floatOffset;
 
   ///		bool
   @override
@@ -402,21 +460,17 @@ class _$_AdMyModel implements _AdMyModel {
   @override
   final bool sell;
 
-  ///	可用值:CNY,USD,USDT,BTC,TRX,BNB,ETH	String
-  @override
-  final String changeCurrency;
-
   ///		String
   @override
   final String createdTime;
 
   ///		num
   @override
-  final num totalAmount;
+  final num totalCoinAmount;
 
   ///		num
   @override
-  final num totalChangeAmount;
+  final num totalMoneyAmount;
   final List<AdMyChannleModel> _channels;
   @override
   List<AdMyChannleModel> get channels {
@@ -425,17 +479,17 @@ class _$_AdMyModel implements _AdMyModel {
     return EqualUnmodifiableListView(_channels);
   }
 
-  final List<AdMyTakerModel> _akerDeals;
+  final List<AdMyTakerModel> _takerDeals;
   @override
-  List<AdMyTakerModel> get akerDeals {
-    if (_akerDeals is EqualUnmodifiableListView) return _akerDeals;
+  List<AdMyTakerModel> get takerDeals {
+    if (_takerDeals is EqualUnmodifiableListView) return _takerDeals;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_akerDeals);
+    return EqualUnmodifiableListView(_takerDeals);
   }
 
   @override
   String toString() {
-    return 'AdMyModel(reference: $reference, username: $username, amount: $amount, currency: $currency, submitAmount: $submitAmount, refRate: $refRate, rate: $rate, fixedRate: $fixedRate, validTime: $validTime, state: $state, sell: $sell, changeCurrency: $changeCurrency, createdTime: $createdTime, totalAmount: $totalAmount, totalChangeAmount: $totalChangeAmount, channels: $channels, akerDeals: $akerDeals)';
+    return 'AdMyModel(reference: $reference, username: $username, amount: $amount, coin: $coin, money: $money, submitAmount: $submitAmount, refRate: $refRate, currentRate: $currentRate, methods: $methods, finalRate: $finalRate, floatOffset: $floatOffset, fixedRate: $fixedRate, validTime: $validTime, state: $state, sell: $sell, createdTime: $createdTime, totalCoinAmount: $totalCoinAmount, totalMoneyAmount: $totalMoneyAmount, channels: $channels, takerDeals: $takerDeals)';
   }
 
   @override
@@ -448,52 +502,60 @@ class _$_AdMyModel implements _AdMyModel {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
+            (identical(other.coin, coin) || other.coin == coin) &&
+            (identical(other.money, money) || other.money == money) &&
             (identical(other.submitAmount, submitAmount) ||
                 other.submitAmount == submitAmount) &&
             (identical(other.refRate, refRate) || other.refRate == refRate) &&
-            (identical(other.rate, rate) || other.rate == rate) &&
+            (identical(other.currentRate, currentRate) ||
+                other.currentRate == currentRate) &&
+            const DeepCollectionEquality().equals(other._methods, _methods) &&
+            (identical(other.finalRate, finalRate) ||
+                other.finalRate == finalRate) &&
+            (identical(other.floatOffset, floatOffset) ||
+                other.floatOffset == floatOffset) &&
             (identical(other.fixedRate, fixedRate) ||
                 other.fixedRate == fixedRate) &&
             (identical(other.validTime, validTime) ||
                 other.validTime == validTime) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.sell, sell) || other.sell == sell) &&
-            (identical(other.changeCurrency, changeCurrency) ||
-                other.changeCurrency == changeCurrency) &&
             (identical(other.createdTime, createdTime) ||
                 other.createdTime == createdTime) &&
-            (identical(other.totalAmount, totalAmount) ||
-                other.totalAmount == totalAmount) &&
-            (identical(other.totalChangeAmount, totalChangeAmount) ||
-                other.totalChangeAmount == totalChangeAmount) &&
+            (identical(other.totalCoinAmount, totalCoinAmount) ||
+                other.totalCoinAmount == totalCoinAmount) &&
+            (identical(other.totalMoneyAmount, totalMoneyAmount) ||
+                other.totalMoneyAmount == totalMoneyAmount) &&
             const DeepCollectionEquality().equals(other._channels, _channels) &&
             const DeepCollectionEquality()
-                .equals(other._akerDeals, _akerDeals));
+                .equals(other._takerDeals, _takerDeals));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      reference,
-      username,
-      amount,
-      currency,
-      submitAmount,
-      refRate,
-      rate,
-      fixedRate,
-      validTime,
-      state,
-      sell,
-      changeCurrency,
-      createdTime,
-      totalAmount,
-      totalChangeAmount,
-      const DeepCollectionEquality().hash(_channels),
-      const DeepCollectionEquality().hash(_akerDeals));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        reference,
+        username,
+        amount,
+        coin,
+        money,
+        submitAmount,
+        refRate,
+        currentRate,
+        const DeepCollectionEquality().hash(_methods),
+        finalRate,
+        floatOffset,
+        fixedRate,
+        validTime,
+        state,
+        sell,
+        createdTime,
+        totalCoinAmount,
+        totalMoneyAmount,
+        const DeepCollectionEquality().hash(_channels),
+        const DeepCollectionEquality().hash(_takerDeals)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -514,20 +576,23 @@ abstract class _AdMyModel implements AdMyModel {
       {required final String reference,
       required final String username,
       required final num amount,
-      required final String currency,
+      required final Cryptocurrency coin,
+      required final Fiatcurrency money,
       required final num submitAmount,
       required final num refRate,
-      required final num rate,
+      required final num currentRate,
+      required final List<String> methods,
+      required final num finalRate,
+      required final num floatOffset,
       required final bool fixedRate,
       required final int validTime,
       required final String state,
       required final bool sell,
-      required final String changeCurrency,
       required final String createdTime,
-      required final num totalAmount,
-      required final num totalChangeAmount,
+      required final num totalCoinAmount,
+      required final num totalMoneyAmount,
       required final List<AdMyChannleModel> channels,
-      required final List<AdMyTakerModel> akerDeals}) = _$_AdMyModel;
+      required final List<AdMyTakerModel> takerDeals}) = _$_AdMyModel;
 
   factory _AdMyModel.fromJson(Map<String, dynamic> json) =
       _$_AdMyModel.fromJson;
@@ -547,7 +612,9 @@ abstract class _AdMyModel implements AdMyModel {
   @override
 
   ///	可用值:CNY,USD,USDT,BTC,TRX,BNB,ETH	String
-  String get currency;
+  Cryptocurrency get coin;
+  @override
+  Fiatcurrency get money;
   @override
 
   ///		num
@@ -559,7 +626,15 @@ abstract class _AdMyModel implements AdMyModel {
   @override
 
   ///		num
-  num get rate;
+  num get currentRate;
+  @override
+  List<String> get methods;
+  @override
+
+  ///		num
+  num get finalRate;
+  @override
+  num get floatOffset;
   @override
 
   ///		bool
@@ -578,24 +653,20 @@ abstract class _AdMyModel implements AdMyModel {
   bool get sell;
   @override
 
-  ///	可用值:CNY,USD,USDT,BTC,TRX,BNB,ETH	String
-  String get changeCurrency;
-  @override
-
   ///		String
   String get createdTime;
   @override
 
   ///		num
-  num get totalAmount;
+  num get totalCoinAmount;
   @override
 
   ///		num
-  num get totalChangeAmount;
+  num get totalMoneyAmount;
   @override
   List<AdMyChannleModel> get channels;
   @override
-  List<AdMyTakerModel> get akerDeals;
+  List<AdMyTakerModel> get takerDeals;
   @override
   @JsonKey(ignore: true)
   _$$_AdMyModelCopyWith<_$_AdMyModel> get copyWith =>

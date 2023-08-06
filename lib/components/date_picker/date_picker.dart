@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/date_time.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -80,7 +81,9 @@ class _DatePickerState extends State<DatePicker> {
                         showActionButtons: true,
                         cancelText: "取消",
                         confirmText: "确定",
-                        onCancel: () {},
+                        onCancel: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
                         onSelectionChanged: (dateTime) {
                           final value = dateFormatter.format(dateTime.value as DateTime);
                           text = value;

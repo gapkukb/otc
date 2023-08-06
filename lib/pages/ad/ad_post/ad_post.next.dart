@@ -129,6 +129,12 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
                       isBuying: isBuying,
                       data: item,
                       editable: false,
+                      onDelete: (item) {
+                        setState(() {
+                          item.selected = false;
+                          payments.remove(item);
+                        });
+                      },
                     );
                   },
                 ),

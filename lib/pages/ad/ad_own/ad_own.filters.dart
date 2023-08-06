@@ -6,12 +6,12 @@ import 'package:otc/constants/currency.dart';
 
 class AdOwnFilters extends PreferredSize {
   final Map<String, dynamic> formState;
-  final Function() onCompelete;
+  final Function() onSearch;
 
   AdOwnFilters({
     super.key,
     required this.formState,
-    required this.onCompelete,
+    required this.onSearch,
   }) : super(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
@@ -36,12 +36,13 @@ class AdOwnFilters extends PreferredSize {
                     height: 56,
                     child: Dropdown(
                       labelText: "类型",
-                      name: "type",
-                      initialValue: 0,
+                      name: "sell",
+                      formState: formState,
+                      initialValue: "all",
                       data: [
-                        DropdownItem(title: "全部", value: 0),
-                        DropdownItem(title: "购买", value: 1),
-                        DropdownItem(title: "出售", value: 2),
+                        DropdownItem(title: "全部", value: "all"),
+                        DropdownItem(title: "购买", value: false),
+                        DropdownItem(title: "出售", value: true),
                       ],
                     ),
                   ),
@@ -50,33 +51,59 @@ class AdOwnFilters extends PreferredSize {
                     width: 150,
                     height: 56,
                     child: Dropdown(
-                      labelText: "全部状态",
-                      name: "status",
-                      initialValue: 0,
-                      data: [
-                        DropdownItem(title: "全部", value: 0),
-                        DropdownItem(title: "已取消", value: 1),
-                        DropdownItem(title: "卖家待付款", value: 2),
-                        DropdownItem(title: "卖家已付款", value: 3),
-                        DropdownItem(title: "买家待付款", value: 4),
-                        DropdownItem(title: "买家已付款", value: 5),
-                        DropdownItem(title: "审核中", value: 6),
-                      ],
-                    ),
+                        labelText: "状态",
+                        name: "state",
+                        initialValue: "all",
+                        formState: formState,
+                        data: AdOwnState.values
+                            .map(
+                              (e) => DropdownItem(title: e.text, value: e.name),
+                            )
+                            .toList()
+                          ..insert(
+                            0,
+                            DropdownItem(title: "全部", value: "all"),
+                          )),
                   ),
                   DatePicker(
                     labelText: "开始日期",
+                    formState: formState,
+                    name: "minDate",
                     maxDate: DateTime.now(),
                     minDate: DateTime(1970),
                   ),
                   DatePicker(
                     labelText: "结束日期",
+                    formState: formState,
+                    name: "maxDate",
                     maxDate: DateTime.now(),
                     minDate: DateTime(1970),
                   ),
+
+                  TextButton.icon(
+                    onPressed: onSearch,
+                    icon: const Text("搜索"),
+                    label: const Icon(Icons.search_outlined),
+                  )
                 ],
               ),
             ),
           ),
         );
+}
+
+enum AdOwnState {
+  PENDING("待付款"),
+  NOTIFIED("已通知付款"),
+  PAID("已完成付款"),
+  BLOCKING("挂起中"),
+  CANCELED("已取消");
+
+  const AdOwnState(this.text);
+
+  final String text;
+
+  getByValue(String value) {
+    return AdOwnState.values.firstWhere((element) => element.name == value);
+  }
 }

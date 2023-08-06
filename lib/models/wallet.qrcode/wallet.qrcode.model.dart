@@ -29,6 +29,7 @@ class WalletQrcodeModel with _$WalletQrcodeModel {
 
     /// 是否默认使用
     required bool defaultUse,
+    required bool used,
   }) = _WalletQrcodeModel;
 
   factory WalletQrcodeModel.fromJson(Map<String, Object?> json) => _$WalletQrcodeModelFromJson(json);

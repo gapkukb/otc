@@ -4,6 +4,7 @@ class AdPostPaymentTemplate extends StatelessWidget {
   final bool isBuying;
   final bool? editable;
   final PaymentItem data;
+  final Function(PaymentItem item)? onDelete;
   final Function(bool selected)? onSelectedChange;
   const AdPostPaymentTemplate({
     super.key,
@@ -11,6 +12,7 @@ class AdPostPaymentTemplate extends StatelessWidget {
     required this.data,
     this.onSelectedChange,
     required this.isBuying,
+    this.onDelete,
   });
 
   @override
@@ -47,7 +49,7 @@ class AdPostPaymentTemplate extends StatelessWidget {
                             child: const Icon(Icons.edit_note_outlined),
                           )
                         : GestureDetector(
-                            onTap: onDelete,
+                            onTap: _delete,
                             child: SizedBox(
                               width: 32,
                               child: Stack(
@@ -174,12 +176,12 @@ class AdPostPaymentTemplate extends StatelessWidget {
     );
   }
 
-  onDelete() {
+  _delete() {
     Modal.confirm(
       content: "确认删除该收款方式?",
       okButtonText: "删除",
       okButtonVariant: UiButtonVariant.filled,
-      onOk: () {},
+      onOk: () => onDelete?.call(data),
     );
   }
 }

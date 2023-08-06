@@ -37,7 +37,11 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
         ],
         data: (data) {
           if (data.isEmpty) {
-            return [const UiEmptyView()];
+            return [
+              const UiEmptyView(
+                title: "当前无可用的收款方式",
+              )
+            ];
           }
           return [
             SizedBox(

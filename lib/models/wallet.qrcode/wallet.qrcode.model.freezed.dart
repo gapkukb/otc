@@ -43,6 +43,7 @@ mixin _$WalletQrcodeModel {
 
   /// 是否默认使用
   bool get defaultUse => throw _privateConstructorUsedError;
+  bool get used => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,7 +65,8 @@ abstract class $WalletQrcodeModelCopyWith<$Res> {
       String account,
       PaymentMethods paymentMethod,
       String name,
-      bool defaultUse});
+      bool defaultUse,
+      bool used});
 }
 
 /// @nodoc
@@ -88,6 +90,7 @@ class _$WalletQrcodeModelCopyWithImpl<$Res, $Val extends WalletQrcodeModel>
     Object? paymentMethod = null,
     Object? name = null,
     Object? defaultUse = null,
+    Object? used = null,
   }) {
     return _then(_value.copyWith(
       reference: null == reference
@@ -122,6 +125,10 @@ class _$WalletQrcodeModelCopyWithImpl<$Res, $Val extends WalletQrcodeModel>
           ? _value.defaultUse
           : defaultUse // ignore: cast_nullable_to_non_nullable
               as bool,
+      used: null == used
+          ? _value.used
+          : used // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -142,7 +149,8 @@ abstract class _$$_WalletQrcodeModelCopyWith<$Res>
       String account,
       PaymentMethods paymentMethod,
       String name,
-      bool defaultUse});
+      bool defaultUse,
+      bool used});
 }
 
 /// @nodoc
@@ -164,6 +172,7 @@ class __$$_WalletQrcodeModelCopyWithImpl<$Res>
     Object? paymentMethod = null,
     Object? name = null,
     Object? defaultUse = null,
+    Object? used = null,
   }) {
     return _then(_$_WalletQrcodeModel(
       reference: null == reference
@@ -198,6 +207,10 @@ class __$$_WalletQrcodeModelCopyWithImpl<$Res>
           ? _value.defaultUse
           : defaultUse // ignore: cast_nullable_to_non_nullable
               as bool,
+      used: null == used
+          ? _value.used
+          : used // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -213,7 +226,8 @@ class _$_WalletQrcodeModel implements _WalletQrcodeModel {
       required this.account,
       required this.paymentMethod,
       required this.name,
-      required this.defaultUse});
+      required this.defaultUse,
+      required this.used});
 
   factory _$_WalletQrcodeModel.fromJson(Map<String, dynamic> json) =>
       _$$_WalletQrcodeModelFromJson(json);
@@ -249,10 +263,12 @@ class _$_WalletQrcodeModel implements _WalletQrcodeModel {
   /// 是否默认使用
   @override
   final bool defaultUse;
+  @override
+  final bool used;
 
   @override
   String toString() {
-    return 'WalletQrcodeModel(reference: $reference, title: $title, username: $username, content: $content, account: $account, paymentMethod: $paymentMethod, name: $name, defaultUse: $defaultUse)';
+    return 'WalletQrcodeModel(reference: $reference, title: $title, username: $username, content: $content, account: $account, paymentMethod: $paymentMethod, name: $name, defaultUse: $defaultUse, used: $used)';
   }
 
   @override
@@ -271,13 +287,14 @@ class _$_WalletQrcodeModel implements _WalletQrcodeModel {
                 other.paymentMethod == paymentMethod) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.defaultUse, defaultUse) ||
-                other.defaultUse == defaultUse));
+                other.defaultUse == defaultUse) &&
+            (identical(other.used, used) || other.used == used));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, reference, title, username,
-      content, account, paymentMethod, name, defaultUse);
+      content, account, paymentMethod, name, defaultUse, used);
 
   @JsonKey(ignore: true)
   @override
@@ -303,7 +320,8 @@ abstract class _WalletQrcodeModel implements WalletQrcodeModel {
       required final String account,
       required final PaymentMethods paymentMethod,
       required final String name,
-      required final bool defaultUse}) = _$_WalletQrcodeModel;
+      required final bool defaultUse,
+      required final bool used}) = _$_WalletQrcodeModel;
 
   factory _WalletQrcodeModel.fromJson(Map<String, dynamic> json) =
       _$_WalletQrcodeModel.fromJson;
@@ -340,6 +358,8 @@ abstract class _WalletQrcodeModel implements WalletQrcodeModel {
 
   /// 是否默认使用
   bool get defaultUse;
+  @override
+  bool get used;
   @override
   @JsonKey(ignore: true)
   _$$_WalletQrcodeModelCopyWith<_$_WalletQrcodeModel> get copyWith =>

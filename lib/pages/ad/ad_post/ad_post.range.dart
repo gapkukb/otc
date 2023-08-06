@@ -32,7 +32,7 @@ class _AdPostRangeState extends State<AdPostRange> {
   @override
   void didUpdateWidget(covariant AdPostRange oldWidget) {
     super.didUpdateWidget(oldWidget);
-    value = value = widget.rate;
+    value = widget.rate;
   }
 
   @override
@@ -96,11 +96,15 @@ class _AdPostRangeState extends State<AdPostRange> {
   }
 
   onSaved(newValue) {
+    double val = 0.0;
     if (widget.name != null) {
-      if (value > 1) {
-        value = value - widget.rate;
+      if (typeIndex == 0) {
+        val = value - widget.rate;
+      } else {
+        val = value - widget.rate;
       }
-      widget.formState.update(widget.name!, (_) => value, ifAbsent: () => value);
+
+      widget.formState.update(widget.name!, (_) => val, ifAbsent: () => val);
     }
   }
 

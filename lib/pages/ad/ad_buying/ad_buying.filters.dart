@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
-import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
-import 'package:otc/pages/ad/ad_post/ad_post.dart';
-import 'package:otc/router/router.dart';
-import 'package:otc/widgets/ui_button.dart';
+import 'package:otc/components/payment_channel/payment_channel.dart';
+import 'package:otc/constants/currency.dart';
 
-class AdBuyingHeader extends PreferredSize {
+class AdBuyingFilter extends PreferredSize {
   final Map<String, dynamic> formState;
+  final Function() onSearch;
+  final Function(int time) onAutoChange;
+  final int value;
 
-  AdBuyingHeader({
+  AdBuyingFilter({
     super.key,
     required this.formState,
+    required this.onSearch,
+    required this.onAutoChange,
+    required this.value,
     // required this.onCompelete,
   }) : super(
           preferredSize: const Size.fromHeight(80),
@@ -29,66 +32,95 @@ class AdBuyingHeader extends PreferredSize {
                       SizedBox(
                         width: 150,
                         height: 56,
-                        child: CurrencySelector(
-                          name: "name",
-                          formState: formState,
-                        ),
-                      ),
-                      //交易类型
-                      SizedBox(
-                        width: 150,
-                        height: 56,
                         child: Dropdown(
-                          labelText: "交易类型",
-                          name: "",
-                          data: [
-                            DropdownItem(title: "购买", value: 0),
-                            DropdownItem(title: "出售", value: 1),
-                          ],
-                        ),
+                            labelText: "法币",
+                            name: "money",
+                            formState: formState,
+                            initialValue: Fiatcurrency.CNY.name,
+                            props: PopupProps.menu(
+                              disabledItemFn: (item) => item.value != Fiatcurrency.CNY.name,
+                            ),
+                            data: Fiatcurrency.values.map((item) {
+                              return DropdownItem(
+                                title: item.text,
+                                value: item.name,
+                              );
+                            }).toList()),
                       ),
                       // 交易方式
                       SizedBox(
                         width: 150,
                         height: 56,
                         child: Dropdown(
-                          labelText: "全部状态",
-                          name: "",
-                          data: [
-                            DropdownItem(title: "已上架", value: 0),
-                            DropdownItem(title: "卖家待支付", value: 1),
-                          ],
+                          labelText: "支付方式",
+                          name: "paymentMethod",
+                          formState: formState,
+                          initialValue: "all",
+                          data: PaymentMethods.values.map((payment) {
+                            return DropdownItem(
+                              title: payment.text,
+                              value: payment.value,
+                            );
+                          }).toList()
+                            ..insert(
+                              0,
+                              DropdownItem(
+                                title: "全部",
+                                value: "all",
+                              ),
+                            ),
                         ),
                       ),
-                      DatePicker(
-                        labelText: "开始日期",
-                        maxDate: DateTime.now(),
-                        minDate: DateTime(1970),
+                      SizedBox(
+                        width: 150,
+                        height: 56,
+                        child: CurrencySelector(
+                          name: "coin",
+                          initialValue: Cryptocurrency.USDT.name,
+                          formState: formState,
+                        ),
                       ),
-                      DatePicker(
-                        labelText: "结束日期",
-                        maxDate: DateTime.now(),
-                        minDate: DateTime(1970),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      UiButton.text(
-                        onPressed: () {},
-                        label: "历史广告",
-                      ),
-                      UiButton(
-                        label: "发布新广告",
-                        onPressed: () {
-                          GoRouter.of(navigatorKey.currentContext!).pushNamed(
-                            Routes.adPost,
-                            extra: AdPostType.buying,
-                          );
-                        },
+                      FilledButton.icon(
+                        onPressed: onSearch,
+                        label: const Icon(Icons.search_outlined),
+                        icon: Text("筛选"),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    width: 100,
+                    // height: 60,
+
+                    child: DropdownButton(
+                      value: value,
+                      underline: const SizedBox.shrink(),
+                      icon: const SizedBox.shrink(),
+                      iconSize: 0,
+                      items: [
+                        DropdownMenuItem(
+                          value: 0,
+                          child: const Text("暂不处理"),
+                          onTap: () => onAutoChange(0),
+                        ),
+                        DropdownMenuItem(
+                          value: 5,
+                          child: const Text("5秒自动刷新"),
+                          onTap: () => onAutoChange(5),
+                        ),
+                        DropdownMenuItem(
+                          value: 10,
+                          child: const Text("10秒自动刷新"),
+                          onTap: () => onAutoChange(10),
+                        ),
+                        DropdownMenuItem(
+                          value: 20,
+                          child: const Text("20秒自动刷新"),
+                          onTap: () => onAutoChange(20),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
                 ],
               ),
             ),

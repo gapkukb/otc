@@ -1,61 +1,57 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ad.my.model.dart';
+part of 'ad.all.model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AdMyModel _$$_AdMyModelFromJson(Map<String, dynamic> json) => _$_AdMyModel(
+AdAllModel _$AdAllModelFromJson(Map<String, dynamic> json) => AdAllModel(
       reference: json['reference'] as String,
       username: json['username'] as String,
+      nickname: json['nickname'] as String,
+      avatar: json['avatar'] as String,
       amount: json['amount'] as num,
       coin: $enumDecode(_$CryptocurrencyEnumMap, json['coin']),
       money: $enumDecode(_$FiatcurrencyEnumMap, json['money']),
       submitAmount: json['submitAmount'] as num,
       refRate: json['refRate'] as num,
       currentRate: json['currentRate'] as num,
-      methods:
-          (json['methods'] as List<dynamic>).map((e) => e as String).toList(),
       finalRate: json['finalRate'] as num,
       floatOffset: json['floatOffset'] as num,
       fixedRate: json['fixedRate'] as bool,
       validTime: json['validTime'] as int,
       state: json['state'] as String,
       sell: json['sell'] as bool,
+      makerTimes: json['makerTimes'] as int,
+      makerSuccessTimes: json['makerSuccessTimes'] as int,
+      methods:
+          (json['methods'] as List<dynamic>).map((e) => e as String).toList(),
       createdTime: json['createdTime'] as String,
-      totalCoinAmount: json['totalCoinAmount'] as num,
-      totalMoneyAmount: json['totalMoneyAmount'] as num,
-      channels: (json['channels'] as List<dynamic>)
-          .map((e) => AdMyChannleModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      takerDeals: (json['takerDeals'] as List<dynamic>)
-          .map((e) => AdMyTakerModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
-Map<String, dynamic> _$$_AdMyModelToJson(_$_AdMyModel instance) =>
+Map<String, dynamic> _$AdAllModelToJson(AdAllModel instance) =>
     <String, dynamic>{
       'reference': instance.reference,
       'username': instance.username,
+      'nickname': instance.nickname,
+      'avatar': instance.avatar,
       'amount': instance.amount,
       'coin': _$CryptocurrencyEnumMap[instance.coin]!,
       'money': _$FiatcurrencyEnumMap[instance.money]!,
       'submitAmount': instance.submitAmount,
       'refRate': instance.refRate,
       'currentRate': instance.currentRate,
-      'methods': instance.methods,
       'finalRate': instance.finalRate,
       'floatOffset': instance.floatOffset,
       'fixedRate': instance.fixedRate,
       'validTime': instance.validTime,
       'state': instance.state,
       'sell': instance.sell,
+      'makerTimes': instance.makerTimes,
+      'makerSuccessTimes': instance.makerSuccessTimes,
+      'methods': instance.methods,
       'createdTime': instance.createdTime,
-      'totalCoinAmount': instance.totalCoinAmount,
-      'totalMoneyAmount': instance.totalMoneyAmount,
-      'channels': instance.channels,
-      'takerDeals': instance.takerDeals,
     };
 
 const _$CryptocurrencyEnumMap = {

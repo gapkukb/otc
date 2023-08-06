@@ -10,6 +10,7 @@ import 'package:otc/models/wallet.transfer.history/wallet.transfer.history.model
 import '../http/http.dart';
 import '../models/user/user.model.dart';
 import '../models/otc/otc.model.dart';
+import '../models/ad.all/ad.all.model.dart';
 import '../models/wallet.blockchain.history/wallet.blockchain.history.model.dart';
 import '../models/pagination/pagination.model.dart';
 import '../http/http.datatype.dart';

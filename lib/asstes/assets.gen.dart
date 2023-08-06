@@ -1975,6 +1975,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/alipay.svg
   SvgGenImage get alipay => const SvgGenImage('assets/images/alipay.svg');
 
+  /// File path: assets/images/default_avatar.png
+  AssetGenImage get defaultAvatar =>
+      const AssetGenImage('assets/images/default_avatar.png');
+
   /// File path: assets/images/empty.png
   AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
 
@@ -2052,6 +2056,7 @@ class $AssetsImagesGen {
         waveHeader,
         adCloseButton,
         alipay,
+        defaultAvatar,
         empty,
         image1,
         image11,

@@ -13,7 +13,7 @@ final adPostPaymentProvider = FutureProvider<List<PaymentItem>>((ref) async {
   final result = await Future.wait<List<PaymentItem>>([
     apis.otc.qrcode().then((value) {
       final result = value.cast<Map<String, dynamic>>().map(WalletQrcodeModel.fromJson).toList();
-      final paymentItems = result.map((item) {
+      final paymentItems = result.where((element) => !element.used).map((item) {
         final isAlipay = item.paymentMethod == PaymentMethods.alipay;
 
         return PaymentItem(
@@ -35,6 +35,7 @@ final adPostPaymentProvider = FutureProvider<List<PaymentItem>>((ref) async {
     apis.otc.bankcard().then((value) {
       final result = value.cast<Map<String, dynamic>>().map(WalletBankModel.fromJson).toList();
       final paymentItems = result
+          .where((element) => !element.used)
           .map(
             (item) => PaymentItem(
               outMin: otc.bankcardPayoutMax.toDouble(),

@@ -1,14 +1,30 @@
+import 'dart:async';
+import 'dart:developer';
+import 'dart:math';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/components/avatar/avatar.dart';
+import 'package:otc/components/mix_text/mix_text.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/components/pagination/pagination.dart';
+import 'package:otc/components/payment_channel/payment_channel.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.filters.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.provider.dart';
-import 'package:otc/utils/date_time.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
 class AdBuying extends StatefulWidget {
-  const AdBuying({super.key});
+  final bool isBuying;
+  const AdBuying({
+    super.key,
+    this.isBuying = true,
+  });
 
   @override
   State<AdBuying> createState() => _AdBuyingState();
@@ -21,103 +37,198 @@ class _AdBuyingState extends State<AdBuying> {
   int pageCount = 1;
   int pageNo = 1;
   final pageSize = 50;
+  Timer? timer;
+  int value = 0;
 
   @override
   void initState() {
     super.initState();
-
     updateFilters();
+    inspect(filters);
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    timer?.cancel();
   }
 
   updateFilters() {
-    final begin = dateFormatter.format(DateTime.now().subtract(Duration(days: formState["datetime"] ?? 7)));
     filters.addAll({
-      "sell": formState["sell"] ?? true,
-      "currency": formState["currency"] ?? Cryptocurrency.USDT.name,
-      "state": formState["state"] ?? "UNKNOWN",
+      "sell": !widget.isBuying,
+      "coin": Cryptocurrency.USDT.name,
+      "money": Fiatcurrency.CNY.name,
       "page": pageNo,
       "pageSize": pageSize,
-      "begin": "$begin 00:00:00",
-      "end": "${dateFormatter.format(DateTime.now())} 23:59:59",
+      "paymentMethod": formState['paymentMethod'] == "all" ? null : formState['paymentMethod'],
+    });
+  }
+
+  autoRefresh(int seconds) {
+    timer = Timer.periodic(Duration(seconds: seconds), (timer) {
+      updateFilters();
+      provider.refresh(adBuyingProvider(filters));
     });
   }
 
   @override
   Widget build(context) {
-    return Scaffold(
-      appBar: AdBuyingHeader(
-        formState: formState,
+    return Form(
+      key: formKey,
+      child: Scaffold(
+        appBar: AdBuyingFilter(
+          formState: formState,
+          value: value,
+          onSearch: () {
+            formKey.currentState!.save();
+            updateFilters();
+            setState(() {
+              pageNo = 1;
+              provider.refresh(adBuyingProvider(filters));
+            });
+          },
+          onAutoChange: (time) {
+            timer?.cancel();
+            if (time != 0) {
+              autoRefresh(time);
+            }
+            setState(() {
+              value = time;
+            });
+          },
+        ),
+        body: Consumer(
+          builder: (context, ref, child) {
+            final provider = ref.watch(
+              adBuyingProvider(filters),
+            );
+
+            return provider.when(
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              error: (_, __) => Text(_.toString() + __.toString()),
+              data: (data) {
+                pageCount = data.pages;
+                if (data.records.isEmpty) {
+                  return const UiEmptyView(
+                    title: "暂无更多广告",
+                  );
+                }
+                return Stack(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: DataTable2(
+                        dataRowHeight: 70,
+                        columns: const [
+                          DataColumn2(label: Text("广告主")),
+                          DataColumn2(
+                              label: MixText(
+                            child: "价格",
+                            small: "从低到高",
+                            smallStyle: Font.miniGrey,
+                          )),
+                          DataColumn2(label: Text("限额/数量")),
+                          DataColumn2(label: Text("支付方式"), fixedWidth: 120),
+                          DataColumn2(label: Text("操作"), fixedWidth: 100),
+                        ],
+                        columnSpacing: 4,
+                        // dividerThickness: 0.001,
+                        empty: provider.isLoading
+                            ? null
+                            : const UiEmptyView(
+                                iconSize: 140,
+                                title: "未找到交易记录",
+                              ),
+                        rows: data.records.map<DataRow>((row) {
+                          final amount = row.submitAmount - row.amount;
+                          final methods = row.methods.map((method) => PaymentMethods.getByValue(method));
+
+                          return DataRow(cells: [
+                            DataCell(ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: Avatar(
+                                avatar: row.avatar,
+                              ),
+                              title: Text(row.nickname),
+                              subtitle: SizedBox(
+                                height: 24,
+                                child: Row(
+                                  children: [
+                                    Text("${row.makerSuccessTimes}成交量"),
+                                    const VerticalDivider(
+                                      width: 17,
+                                      thickness: 1,
+                                      indent: 4,
+                                      endIndent: 4,
+                                    ),
+                                    Text("${(row.makerSuccessTimes / max(row.makerTimes, 1) * 100)}%成交率"),
+                                  ],
+                                ),
+                              ),
+                            )),
+                            DataCell(Text("${row.finalRate} CNY")),
+                            DataCell(Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("$amount CNY"),
+                                const Text("￥0.00-￥9999999.99"),
+                              ],
+                            )),
+                            DataCell(Tooltip(
+                              message: methods.map((e) => e.text).join(","),
+                              triggerMode: TooltipTriggerMode.tap,
+                              child: Wrap(
+                                spacing: 8,
+                                children: methods.map((e) => e.icon).toList(),
+                              ),
+                            )),
+                            DataCell(UiButton(
+                              onPressed: () {
+                                Modal.alert(
+                                  content: "您所在的ip暂不支持买卖数字货币的功能。",
+                                  okButtonText: "已知晓",
+                                );
+                              },
+                              label: widget.isBuying ? "购买USDT" : "出售USDT",
+                            )),
+                          ]);
+                        }).toList(),
+                      ),
+                    ),
+                    if (provider.isLoading)
+                      const Positioned(
+                        child: Material(
+                          color: Colors.white30,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      )
+                  ],
+                );
+              },
+            );
+          },
+        ),
+        bottomNavigationBar: Padding(
+          padding: Pads.yAxisSm,
+          child: Pagination(
+            pageCount: pageCount,
+            pageNo: 1,
+            // disabled: loading,
+            onChange: (current) {
+              setState(() {
+                pageNo = current;
+                updateFilters();
+                return provider.refresh(adBuyingProvider(filters));
+              });
+            },
+          ),
+        ),
       ),
     );
-
-    //   final provider = ref.watch(
-    //     adBuyingProvider(filters),
-    //   );
-
-    //   return provider.when(
-    //     loading: () => const Center(
-    //       child: CircularProgressIndicator(),
-    //     ),
-    //     error: (_, __) => Text(_.toString() + __.toString()),
-    //     data: (data) {
-    //       pageCount = data.pages;
-    //       return Stack(
-    //         children: [
-    //           SizedBox(
-    //             width: double.infinity,
-    //             child: DataTable2(
-    //               columns: const [
-    //                 DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 160),
-    //                 DataColumn2(label: Text("类型")),
-    //                 DataColumn2(label: Text("广告数量\n限额")),
-    //                 DataColumn2(label: Text("汇率")),
-    //                 DataColumn2(label: Text("支付方式")),
-    //                 DataColumn2(label: Text("状态")),
-    //                 DataColumn2(label: Text("更新时间\n创建时间")),
-    //                 DataColumn2(label: Text("操作")),
-    //               ],
-    //               columnSpacing: 4,
-    //               dividerThickness: 0.001,
-    //               empty: provider.isLoading
-    //                   ? null
-    //                   : const UiEmptyView(
-    //                       iconSize: 140,
-    //                       title: "未找到交易记录",
-    //                     ),
-    //               rows: data.records.map((row) {
-    //                 return DataRow(cells: [
-    //                   DataCell(Text(row.createdTime)),
-    //                   DataCell(Text(row.deposit ? "充值" : "提币")),
-    //                   DataCell(Text(row.currency)),
-    //                   DataCell(Text(row.amount.decimalize())),
-    //                   DataCell(Text(row.amount.decimalize())),
-    //                   DataCell(Text(row.amount.decimalize())),
-    //                   DataCell(Text(row.amount.decimalize())),
-    //                   DataCell(Text(row.amount.decimalize())),
-    //                 ]);
-    //               }).toList(),
-    //             ),
-    //           ),
-    //           if (provider.isLoading)
-    //             const Positioned(
-    //               child: Material(
-    //                 color: Colors.white30,
-    //                 child: Center(
-    //                   child: CircularProgressIndicator(),
-    //                 ),
-    //               ),
-    //             )
-    //         ],
-    //       );
-    //     },
-    //   );
   }
-}
-
-class Employee {
-  Employee(this.id, this.name, this.designation, this.salary);
-  final int id;
-  final String name;
-  final String designation;
-  final int salary;
 }
