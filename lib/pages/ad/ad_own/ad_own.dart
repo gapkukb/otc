@@ -1,13 +1,12 @@
 library ad_own;
 
-import 'dart:developer';
-
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/pagination/pagination.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/components/payment_channel/payment_channel.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/models/ad.my/ad.my.model.dart';
 import 'package:otc/models/ad.my/ad.my.taker.model.dart';
@@ -23,7 +22,11 @@ part 'ad_own.provider.dart';
 part 'ad_own.detail.dart';
 
 class AdOwn extends StatefulWidget {
-  const AdOwn({super.key});
+  final bool running;
+  const AdOwn({
+    super.key,
+    this.running = true,
+  });
 
   @override
   State<AdOwn> createState() => _AdOwnState();
@@ -53,7 +56,7 @@ class _AdOwnState extends State<AdOwn> {
       "pageSize": pageSize,
       "begin": formState["minDate"] == null ? null : formState["minDate"] + " 00:00:00",
       "end": formState["maxDate"] == null ? null : formState["maxDate"] + " 23:59:59",
-      "makerOrderState": "RUNNING"
+      "makerOrderState": widget.running ? "RUNNING" : "STOPPED"
     });
   }
 
@@ -112,8 +115,12 @@ class _AdOwnState extends State<AdOwn> {
                           },
                         )),
                         DataCell(
-                          const Icon(Icons.keyboard_arrow_right_outlined),
-                          onTap: () => showDetail(context, row.takerDeals),
+                          row.takerDeals.isEmpty
+                              ? const SizedBox.shrink()
+                              : const Center(
+                                  child: Icon(Icons.keyboard_arrow_right_outlined),
+                                ),
+                          onTap: row.takerDeals.isEmpty ? null : () => showDetail(context, row.takerDeals),
                         ),
                       ],
                     );
@@ -155,7 +162,9 @@ class _AdOwnState extends State<AdOwn> {
     await showDialog(
       context: context,
       builder: (context) {
-        return AdOwnDetail(detail: detail);
+        return AdOwnDetail(
+          detail: detail,
+        );
       },
     );
   }

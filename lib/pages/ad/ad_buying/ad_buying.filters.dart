@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/pages/ad/ad_post/ad_post.dart';
+import 'package:otc/router/router.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 class AdBuyingFilter extends PreferredSize {
   final Map<String, dynamic> formState;
   final Function() onSearch;
   final Function(int time) onAutoChange;
   final int value;
+  final bool isBuying;
 
   AdBuyingFilter({
     super.key,
@@ -16,6 +21,7 @@ class AdBuyingFilter extends PreferredSize {
     required this.onSearch,
     required this.onAutoChange,
     required this.value,
+    required this.isBuying,
     // required this.onCompelete,
   }) : super(
           preferredSize: const Size.fromHeight(80),
@@ -87,39 +93,59 @@ class AdBuyingFilter extends PreferredSize {
                       )
                     ],
                   ),
-                  SizedBox(
-                    width: 100,
-                    // height: 60,
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        // height: 60,
 
-                    child: DropdownButton(
-                      value: value,
-                      underline: const SizedBox.shrink(),
-                      icon: const SizedBox.shrink(),
-                      iconSize: 0,
-                      items: [
-                        DropdownMenuItem(
-                          value: 0,
-                          child: const Text("暂不处理"),
-                          onTap: () => onAutoChange(0),
+                        child: DropdownButton(
+                          value: value,
+                          underline: const SizedBox.shrink(),
+                          icon: const SizedBox.shrink(),
+                          iconSize: 0,
+                          items: [
+                            DropdownMenuItem(
+                              value: 0,
+                              child: const Text("暂不处理"),
+                              onTap: () => onAutoChange(0),
+                            ),
+                            DropdownMenuItem(
+                              value: 5,
+                              child: const Text("5秒自动刷新"),
+                              onTap: () => onAutoChange(5),
+                            ),
+                            DropdownMenuItem(
+                              value: 10,
+                              child: const Text("10秒自动刷新"),
+                              onTap: () => onAutoChange(10),
+                            ),
+                            DropdownMenuItem(
+                              value: 20,
+                              child: const Text("20秒自动刷新"),
+                              onTap: () => onAutoChange(20),
+                            ),
+                          ],
+                          onChanged: (value) {},
                         ),
-                        DropdownMenuItem(
-                          value: 5,
-                          child: const Text("5秒自动刷新"),
-                          onTap: () => onAutoChange(5),
-                        ),
-                        DropdownMenuItem(
-                          value: 10,
-                          child: const Text("10秒自动刷新"),
-                          onTap: () => onAutoChange(10),
-                        ),
-                        DropdownMenuItem(
-                          value: 20,
-                          child: const Text("20秒自动刷新"),
-                          onTap: () => onAutoChange(20),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
+                      ),
+                      UiButton.text(
+                        onPressed: () {},
+                        label: "历史广告",
+                      ),
+                      UiButton(
+                        label: "发布新广告",
+                        onPressed: () async {
+                          final result = await GoRouter.of(navigatorKey.currentContext!).pushNamed(
+                            Routes.adPost,
+                            extra: isBuying ? AdPostType.buying : AdPostType.selling,
+                          );
+                          if (result != null) {
+                            onSearch();
+                          }
+                        },
+                      )
+                    ],
                   ),
                 ],
               ),

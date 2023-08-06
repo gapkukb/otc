@@ -103,7 +103,7 @@ enum AdOwnState {
 
   final String text;
 
-  getByValue(String value) {
+  static AdOwnState getByValue(String value) {
     return AdOwnState.values.firstWhere((element) => element.name == value);
   }
 }

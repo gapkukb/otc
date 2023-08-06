@@ -40,8 +40,8 @@ final adPostPaymentProvider = FutureProvider<List<PaymentItem>>((ref) async {
             (item) => PaymentItem(
               outMin: otc.bankcardPayoutMax.toDouble(),
               outMax: otc.bankcardPayoutMax.toDouble(),
-              inMin: otc.bankcardPayoutMax.toDouble(),
-              inMax: otc.bankcardPayoutMax.toDouble(),
+              inMin: otc.bankcardReceiptMin.toDouble(),
+              inMax: otc.bankcardReceiptMax.toDouble(),
               paymentMethod: PaymentMethods.bankCard,
               account: item.cardNumber,
               title: item.title,

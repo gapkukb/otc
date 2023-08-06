@@ -28,6 +28,7 @@ class AdMyTakerModel with _$AdMyTakerModel {
 
     ///
     required String makerUsername,
+    required String? takerAccountName,
 
     ///
     required String takerUsername,
@@ -57,19 +58,19 @@ class AdMyTakerModel with _$AdMyTakerModel {
     required num rate,
 
     ///
-    required String notifyAt,
+    required String? notifyAt,
 
     ///
-    required int notifyTimes,
+    required int? notifyTimes,
 
     ///
-    required String confirmAt,
+    required String? confirmAt,
 
     ///
-    required int confirmTimes,
+    required int? confirmTimes,
 
     ///
-    required num commission,
+    required num? commission,
 
     ///
     required String createdTime,

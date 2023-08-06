@@ -68,8 +68,8 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
             "channels": payments
                 .map((payment) => {
                       "reference": payment.reference,
-                      "min": isBuying ? payment.inMin : payment.outMin,
-                      "max": isBuying ? payment.inMax : payment.outMax,
+                      "min": isBuying ? payment.outMin : payment.inMin,
+                      "max": isBuying ? payment.outMax : payment.inMax,
                       "title": payment.title,
                     })
                 .toList()
@@ -143,10 +143,10 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
             Dropdown(
               name: "validTime",
               formState: widget.formState,
-              initialValue: 15,
+              initialValue: 15 * 60,
               data: [
-                DropdownItem(title: "15分钟支付时效", value: 15),
-                DropdownItem(title: "30分钟支付时效", value: 30),
+                DropdownItem(title: "15分钟支付时效", value: 15 * 60),
+                DropdownItem(title: "30分钟支付时效", value: 30 * 60),
               ],
             )
           ];

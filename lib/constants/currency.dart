@@ -20,6 +20,10 @@ enum Fiatcurrency {
 
   final String text;
   final String symbol;
+
+  static Fiatcurrency? getByName(String name) {
+    return Fiatcurrency.values.firstWhere((element) => element.name == name);
+  }
 }
 
 enum Cryptocurrency {

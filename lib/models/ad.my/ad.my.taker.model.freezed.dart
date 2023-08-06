@@ -43,6 +43,7 @@ mixin _$AdMyTakerModel {
 
   ///
   String get makerUsername => throw _privateConstructorUsedError;
+  String? get takerAccountName => throw _privateConstructorUsedError;
 
   ///
   String get takerUsername => throw _privateConstructorUsedError;
@@ -72,19 +73,19 @@ mixin _$AdMyTakerModel {
   num get rate => throw _privateConstructorUsedError;
 
   ///
-  String get notifyAt => throw _privateConstructorUsedError;
+  String? get notifyAt => throw _privateConstructorUsedError;
 
   ///
-  int get notifyTimes => throw _privateConstructorUsedError;
+  int? get notifyTimes => throw _privateConstructorUsedError;
 
   ///
-  String get confirmAt => throw _privateConstructorUsedError;
+  String? get confirmAt => throw _privateConstructorUsedError;
 
   ///
-  int get confirmTimes => throw _privateConstructorUsedError;
+  int? get confirmTimes => throw _privateConstructorUsedError;
 
   ///
-  num get commission => throw _privateConstructorUsedError;
+  num? get commission => throw _privateConstructorUsedError;
 
   ///
   String get createdTime => throw _privateConstructorUsedError;
@@ -110,6 +111,7 @@ abstract class $AdMyTakerModelCopyWith<$Res> {
       String coin,
       num coinAmount,
       String makerUsername,
+      String? takerAccountName,
       String takerUsername,
       String paymentMethod,
       String state,
@@ -119,11 +121,11 @@ abstract class $AdMyTakerModelCopyWith<$Res> {
       num moneyAmount,
       String money,
       num rate,
-      String notifyAt,
-      int notifyTimes,
-      String confirmAt,
-      int confirmTimes,
-      num commission,
+      String? notifyAt,
+      int? notifyTimes,
+      String? confirmAt,
+      int? confirmTimes,
+      num? commission,
       String createdTime});
 }
 
@@ -148,6 +150,7 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
     Object? coin = null,
     Object? coinAmount = null,
     Object? makerUsername = null,
+    Object? takerAccountName = freezed,
     Object? takerUsername = null,
     Object? paymentMethod = null,
     Object? state = null,
@@ -157,11 +160,11 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
     Object? moneyAmount = null,
     Object? money = null,
     Object? rate = null,
-    Object? notifyAt = null,
-    Object? notifyTimes = null,
-    Object? confirmAt = null,
-    Object? confirmTimes = null,
-    Object? commission = null,
+    Object? notifyAt = freezed,
+    Object? notifyTimes = freezed,
+    Object? confirmAt = freezed,
+    Object? confirmTimes = freezed,
+    Object? commission = freezed,
     Object? createdTime = null,
   }) {
     return _then(_value.copyWith(
@@ -197,6 +200,10 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
           ? _value.makerUsername
           : makerUsername // ignore: cast_nullable_to_non_nullable
               as String,
+      takerAccountName: freezed == takerAccountName
+          ? _value.takerAccountName
+          : takerAccountName // ignore: cast_nullable_to_non_nullable
+              as String?,
       takerUsername: null == takerUsername
           ? _value.takerUsername
           : takerUsername // ignore: cast_nullable_to_non_nullable
@@ -233,26 +240,26 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
               as num,
-      notifyAt: null == notifyAt
+      notifyAt: freezed == notifyAt
           ? _value.notifyAt
           : notifyAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      notifyTimes: null == notifyTimes
+              as String?,
+      notifyTimes: freezed == notifyTimes
           ? _value.notifyTimes
           : notifyTimes // ignore: cast_nullable_to_non_nullable
-              as int,
-      confirmAt: null == confirmAt
+              as int?,
+      confirmAt: freezed == confirmAt
           ? _value.confirmAt
           : confirmAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      confirmTimes: null == confirmTimes
+              as String?,
+      confirmTimes: freezed == confirmTimes
           ? _value.confirmTimes
           : confirmTimes // ignore: cast_nullable_to_non_nullable
-              as int,
-      commission: null == commission
+              as int?,
+      commission: freezed == commission
           ? _value.commission
           : commission // ignore: cast_nullable_to_non_nullable
-              as num,
+              as num?,
       createdTime: null == createdTime
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
@@ -278,6 +285,7 @@ abstract class _$$_AdMyTakerModelCopyWith<$Res>
       String coin,
       num coinAmount,
       String makerUsername,
+      String? takerAccountName,
       String takerUsername,
       String paymentMethod,
       String state,
@@ -287,11 +295,11 @@ abstract class _$$_AdMyTakerModelCopyWith<$Res>
       num moneyAmount,
       String money,
       num rate,
-      String notifyAt,
-      int notifyTimes,
-      String confirmAt,
-      int confirmTimes,
-      num commission,
+      String? notifyAt,
+      int? notifyTimes,
+      String? confirmAt,
+      int? confirmTimes,
+      num? commission,
       String createdTime});
 }
 
@@ -314,6 +322,7 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
     Object? coin = null,
     Object? coinAmount = null,
     Object? makerUsername = null,
+    Object? takerAccountName = freezed,
     Object? takerUsername = null,
     Object? paymentMethod = null,
     Object? state = null,
@@ -323,11 +332,11 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
     Object? moneyAmount = null,
     Object? money = null,
     Object? rate = null,
-    Object? notifyAt = null,
-    Object? notifyTimes = null,
-    Object? confirmAt = null,
-    Object? confirmTimes = null,
-    Object? commission = null,
+    Object? notifyAt = freezed,
+    Object? notifyTimes = freezed,
+    Object? confirmAt = freezed,
+    Object? confirmTimes = freezed,
+    Object? commission = freezed,
     Object? createdTime = null,
   }) {
     return _then(_$_AdMyTakerModel(
@@ -363,6 +372,10 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
           ? _value.makerUsername
           : makerUsername // ignore: cast_nullable_to_non_nullable
               as String,
+      takerAccountName: freezed == takerAccountName
+          ? _value.takerAccountName
+          : takerAccountName // ignore: cast_nullable_to_non_nullable
+              as String?,
       takerUsername: null == takerUsername
           ? _value.takerUsername
           : takerUsername // ignore: cast_nullable_to_non_nullable
@@ -399,26 +412,26 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
               as num,
-      notifyAt: null == notifyAt
+      notifyAt: freezed == notifyAt
           ? _value.notifyAt
           : notifyAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      notifyTimes: null == notifyTimes
+              as String?,
+      notifyTimes: freezed == notifyTimes
           ? _value.notifyTimes
           : notifyTimes // ignore: cast_nullable_to_non_nullable
-              as int,
-      confirmAt: null == confirmAt
+              as int?,
+      confirmAt: freezed == confirmAt
           ? _value.confirmAt
           : confirmAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      confirmTimes: null == confirmTimes
+              as String?,
+      confirmTimes: freezed == confirmTimes
           ? _value.confirmTimes
           : confirmTimes // ignore: cast_nullable_to_non_nullable
-              as int,
-      commission: null == commission
+              as int?,
+      commission: freezed == commission
           ? _value.commission
           : commission // ignore: cast_nullable_to_non_nullable
-              as num,
+              as num?,
       createdTime: null == createdTime
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
@@ -439,6 +452,7 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
       required this.coin,
       required this.coinAmount,
       required this.makerUsername,
+      required this.takerAccountName,
       required this.takerUsername,
       required this.paymentMethod,
       required this.state,
@@ -489,6 +503,8 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
   ///
   @override
   final String makerUsername;
+  @override
+  final String? takerAccountName;
 
   ///
   @override
@@ -528,23 +544,23 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
 
   ///
   @override
-  final String notifyAt;
+  final String? notifyAt;
 
   ///
   @override
-  final int notifyTimes;
+  final int? notifyTimes;
 
   ///
   @override
-  final String confirmAt;
+  final String? confirmAt;
 
   ///
   @override
-  final int confirmTimes;
+  final int? confirmTimes;
 
   ///
   @override
-  final num commission;
+  final num? commission;
 
   ///
   @override
@@ -552,7 +568,7 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
 
   @override
   String toString() {
-    return 'AdMyTakerModel(reference: $reference, makerReference: $makerReference, makerChannelReference: $makerChannelReference, merchantCode: $merchantCode, sell: $sell, coin: $coin, coinAmount: $coinAmount, makerUsername: $makerUsername, takerUsername: $takerUsername, paymentMethod: $paymentMethod, state: $state, orderLevel: $orderLevel, makerPaymentAccount: $makerPaymentAccount, takerPaymentAccount: $takerPaymentAccount, moneyAmount: $moneyAmount, money: $money, rate: $rate, notifyAt: $notifyAt, notifyTimes: $notifyTimes, confirmAt: $confirmAt, confirmTimes: $confirmTimes, commission: $commission, createdTime: $createdTime)';
+    return 'AdMyTakerModel(reference: $reference, makerReference: $makerReference, makerChannelReference: $makerChannelReference, merchantCode: $merchantCode, sell: $sell, coin: $coin, coinAmount: $coinAmount, makerUsername: $makerUsername, takerAccountName: $takerAccountName, takerUsername: $takerUsername, paymentMethod: $paymentMethod, state: $state, orderLevel: $orderLevel, makerPaymentAccount: $makerPaymentAccount, takerPaymentAccount: $takerPaymentAccount, moneyAmount: $moneyAmount, money: $money, rate: $rate, notifyAt: $notifyAt, notifyTimes: $notifyTimes, confirmAt: $confirmAt, confirmTimes: $confirmTimes, commission: $commission, createdTime: $createdTime)';
   }
 
   @override
@@ -574,6 +590,8 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
                 other.coinAmount == coinAmount) &&
             (identical(other.makerUsername, makerUsername) ||
                 other.makerUsername == makerUsername) &&
+            (identical(other.takerAccountName, takerAccountName) ||
+                other.takerAccountName == takerAccountName) &&
             (identical(other.takerUsername, takerUsername) ||
                 other.takerUsername == takerUsername) &&
             (identical(other.paymentMethod, paymentMethod) ||
@@ -615,6 +633,7 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
         coin,
         coinAmount,
         makerUsername,
+        takerAccountName,
         takerUsername,
         paymentMethod,
         state,
@@ -656,6 +675,7 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
       required final String coin,
       required final num coinAmount,
       required final String makerUsername,
+      required final String? takerAccountName,
       required final String takerUsername,
       required final String paymentMethod,
       required final String state,
@@ -665,11 +685,11 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
       required final num moneyAmount,
       required final String money,
       required final num rate,
-      required final String notifyAt,
-      required final int notifyTimes,
-      required final String confirmAt,
-      required final int confirmTimes,
-      required final num commission,
+      required final String? notifyAt,
+      required final int? notifyTimes,
+      required final String? confirmAt,
+      required final int? confirmTimes,
+      required final num? commission,
       required final String createdTime}) = _$_AdMyTakerModel;
 
   factory _AdMyTakerModel.fromJson(Map<String, dynamic> json) =
@@ -707,6 +727,8 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
 
   ///
   String get makerUsername;
+  @override
+  String? get takerAccountName;
   @override
 
   ///
@@ -746,23 +768,23 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
   @override
 
   ///
-  String get notifyAt;
+  String? get notifyAt;
   @override
 
   ///
-  int get notifyTimes;
+  int? get notifyTimes;
   @override
 
   ///
-  String get confirmAt;
+  String? get confirmAt;
   @override
 
   ///
-  int get confirmTimes;
+  int? get confirmTimes;
   @override
 
   ///
-  num get commission;
+  num? get commission;
   @override
 
   ///

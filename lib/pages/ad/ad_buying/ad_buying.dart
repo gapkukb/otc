@@ -79,6 +79,7 @@ class _AdBuyingState extends State<AdBuying> {
         appBar: AdBuyingFilter(
           formState: formState,
           value: value,
+          isBuying: widget.isBuying,
           onSearch: () {
             formKey.currentState!.save();
             updateFilters();
@@ -142,7 +143,6 @@ class _AdBuyingState extends State<AdBuying> {
                                 title: "未找到交易记录",
                               ),
                         rows: data.records.map<DataRow>((row) {
-                          final amount = row.submitAmount - row.amount;
                           final methods = row.methods.map((method) => PaymentMethods.getByValue(method));
 
                           return DataRow(cells: [
@@ -173,7 +173,7 @@ class _AdBuyingState extends State<AdBuying> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("$amount CNY"),
+                                Text("${(row.amount * row.finalRate).toStringAsFixed(2)} CNY"),
                                 const Text("￥0.00-￥9999999.99"),
                               ],
                             )),

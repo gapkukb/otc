@@ -37,6 +37,9 @@ class _OTCApi {
   /// 下架广告
   final stopAd = post("/otc/maker/stop");
 
+  /// 确认发放
+  final confirm = post("/otc/taker/confirm");
+
   /// 查询买-卖币广告
   final allAdvertise = post("/otc/record/advertise/all", (Map<String, dynamic> json) {
     return PaginationModel.fromJson(json, (item) => AdAllModel.fromJson(item as dynamic));

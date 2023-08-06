@@ -72,7 +72,7 @@ Future<bool?> adPostSubmit(BuildContext context, List<Widget> icons, Map<String,
                         const Text("支付时效", style: Font.miniGrey),
                         const Gap.mini(),
                         Text(
-                          "${payload['validTime']}分钟",
+                          "${(payload['validTime'] / 60 as double).toInt()}分钟",
                           style: Font.smallBold,
                         ),
                       ],
