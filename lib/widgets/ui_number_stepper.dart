@@ -4,13 +4,15 @@ import 'package:otc/theme/text_theme.dart';
 
 class UiNumberStepper extends StatefulWidget {
   final String unit;
+  final String? name;
   final double max;
   final double min;
   final double step;
   final double? initValue;
   final bool disabeld;
   final bool? isDense;
-  final Function(double newValue) onChange;
+  final Map<String, dynamic>? formState;
+  final Function(double newValue)? onChange;
 
   const UiNumberStepper({
     super.key,
@@ -21,7 +23,9 @@ class UiNumberStepper extends StatefulWidget {
     this.disabeld = false,
     this.isDense,
     this.initValue,
-    required this.onChange,
+    this.onChange,
+    this.name,
+    this.formState,
   });
 
   @override
@@ -39,15 +43,33 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
   }
 
   @override
+  void didUpdateWidget(covariant UiNumberStepper oldWidget) {
+    _value = widget.initValue ?? widget.min;
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: widget.disabeld,
       child: FormField(
+        onSaved: (__) {
+          if (widget.name != null) {
+            widget.formState?.update(
+              widget.name!,
+              (_) => _value,
+              ifAbsent: () => _value,
+            );
+          }
+        },
         builder: (field) {
           _field = field;
           return InputDecorator(
             decoration: InputDecoration(
+              enabled: !widget.disabeld,
               isDense: widget.isDense,
+              filled: widget.disabeld,
+              fillColor: Colors.grey.shade100.withOpacity(0.6),
               prefixIcon: IconButton(
                 onPressed: decrease,
                 icon: const Icon(Icons.remove),
@@ -60,7 +82,7 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
             ),
             child: Text(
               "$_value${widget.unit}",
-              style: Font.medium,
+              style: widget.disabeld == true ? Font.mediumGrey : Font.medium,
               textAlign: TextAlign.center,
             ),
           );
@@ -83,7 +105,7 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
     _value = double.parse(_value.toStringAsFixed(2));
     _field.setValue(_value);
     setState(() {
-      widget.onChange(_value);
+      widget.onChange?.call(_value);
     });
   }
 }
