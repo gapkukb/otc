@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
+import 'package:otc/pages/merchant/dashboard/model.dart';
+import 'package:otc/pages/merchant/dashboard/provider.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 const _style = TextStyle(
@@ -12,25 +15,24 @@ const _style2 = TextStyle(
   fontWeight: FontWeight.normal,
 );
 
-class DashboardOverview extends StatefulWidget {
+class DashboardOverview extends ConsumerWidget {
   const DashboardOverview({super.key});
 
   @override
-  State<DashboardOverview> createState() => _DashboardOverviewState();
-}
+  Widget build(context, ref) {
+    // ref.read(dashboradProvider.notifier).update();
+    final data = ref.watch(dashboradProvider);
+    final List<Map<String, dynamic>> items = [
+      {"label": "银行卡佣金比例", "value": data.bankcardRate, "unit": "%"},
+      {"label": "支付宝佣金比例", "value": data.aliRate, "unit": "%"},
+      {"label": "微信佣金比例", "value": data.wechatRate, "unit": "%"},
+      {"label": "下级人数", "value": data.subordinates},
+      {"label": "昨日收益", "value": data.yesterdayCommission, "unit": "USDT"},
+      {"label": "昨日成交量", "value": data.yesterdaySuccess},
+      {"label": "总收益", "value": data.totalCommission, "unit": "USDT"},
+      {"label": "总成交量", "value": data.totalSuccess},
+    ];
 
-class _DashboardOverviewState extends State<DashboardOverview> {
-  List<Map<String, dynamic>> items = [
-    {"label": "佣金比例", "value": "39999", "unit": "%"},
-    {"label": "下级人数", "value": "39999"},
-    {"label": "昨日收益", "value": "39999", "unit": "USDT"},
-    {"label": "昨日成交量", "value": "39999"},
-    {"label": "总收益", "value": "39999", "unit": "USDT"},
-    {"label": "总成交量", "value": "39999"},
-  ];
-
-  @override
-  Widget build(BuildContext context) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -45,55 +47,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
             mainAxisSpacing: 8,
           ),
           itemBuilder: (context, index) {
-            if (index == 0) return _buildBalance(context);
-            final i = (index - 1) * 2;
+            final i = index * 2;
             return _buildItem(items[i], items[i + 1]);
           },
-        ),
-      ),
-    );
-  }
-
-  _buildBalance(BuildContext context) {
-    return Card(
-      color: Theme.of(context).primaryColor,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 32,
-          vertical: 16,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "佣金余额",
-              style: const TextStyle(color: Colors.white),
-            ),
-            Row(
-              children: [
-                Text(
-                  "300.00",
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Colors.white),
-                ),
-                const Spacer(),
-                // UiButton(
-                //   shape: UiButtonShape.rounded,
-                //   label: "划转",
-                //   color: Colors.white,
-                //   labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                //   onPressed: () {},
-                // ),
-                // const SizedBox(width: 8),
-                // UiButton(
-                //   variant: UiButtonVariant.outline,
-                //   shape: UiButtonShape.rounded,
-                //   label: "划转记录",
-                //   color: Colors.white,
-                //   onPressed: () {},
-                // ),
-              ],
-            )
-          ],
         ),
       ),
     );

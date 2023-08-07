@@ -116,8 +116,8 @@ final List<RouteBase> routes = [
         ],
       ),
       ShellRoute(
-        navigatorKey: agentLayoutKey,
-        builder: agentLayout,
+        navigatorKey: merchantLayoutKey,
+        builder: merchantLayout,
         routes: [
           AuthRoute(
             path: Routes.merchantDashboard,
@@ -125,15 +125,15 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.merchantIncome,
-            page: const AgentIncome(),
+            page: const MerchantIncome(),
           ),
           AuthRoute(
             path: Routes.merchantSetting,
             page: const MerchantSetting(),
           ),
           AuthRoute(
-            path: Routes.merchantHierarchy,
-            page: const AgentHierarchy(),
+            path: Routes.merchantInvitation,
+            page: const MerchantInvitation(),
           ),
         ],
       ),

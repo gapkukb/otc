@@ -4,9 +4,8 @@ import 'package:otc/components/layout/layout.menu.dart';
 import 'package:otc/components/layout/layout.menu.item.dart';
 import 'package:otc/components/layout/layout.menu.sub.dart';
 import 'package:otc/router/router.dart';
-import 'package:otc/theme/padding.dart';
 
-ShellRouteBuilder agentLayout = (context, state, child) {
+ShellRouteBuilder merchantLayout = (context, state, child) {
   return Material(
     color: const Color(0xffF8F9FA),
     child: Row(
@@ -28,7 +27,7 @@ ShellRouteBuilder agentLayout = (context, state, child) {
                   ),
                   LayoutMenuItem(
                     name: "下级邀请码",
-                    path: Routes.merchantHierarchy,
+                    path: Routes.merchantInvitation,
                   ),
                   LayoutMenuItem(
                     name: "佣金比例设置",

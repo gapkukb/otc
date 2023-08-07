@@ -1,26 +1,29 @@
 import 'dart:convert';
 
-class AgentSettingModel {
+class MerchantSettingModel {
   final int id;
   final String username;
-  final int wechatLv1;
-  final int alipayLv1;
-  final int bankCardLv1;
-  final int wechatLv2;
-  final int alipayLv2;
-  final int bankCardLv2;
-  final int wechatLv3;
-  final int alipayLv3;
-  final int bankCardLv3;
-  final int wechatLv4;
-  final int alipayLv4;
-  final int bankCardLv4;
-  final int alipayTotal;
-  final int wechatTotal;
-  final int bankcardTotal;
+  final double wechatLv1;
+  final double alipayLv1;
+  final double bankCardLv1;
+  final double wechatLv2;
+  final double alipayLv2;
+  final double bankCardLv2;
+  final double wechatLv3;
+  final double alipayLv3;
+  final double bankCardLv3;
+  final double wechatLv4;
+  final double alipayLv4;
+  final double bankCardLv4;
+  final double alipayTotal;
+  final double wechatTotal;
+  final double bankcardTotal;
+  final double alipayMakerRate;
+  final double wechatMakerRate;
+  final double bankcardMakerRate;
   final String createdTime;
 
-  AgentSettingModel({
+  MerchantSettingModel({
     required this.id,
     required this.username,
     required this.wechatLv1,
@@ -38,30 +41,36 @@ class AgentSettingModel {
     required this.alipayTotal,
     required this.wechatTotal,
     required this.bankcardTotal,
+    required this.alipayMakerRate,
+    required this.wechatMakerRate,
+    required this.bankcardMakerRate,
     required this.createdTime,
   });
 
-  AgentSettingModel copyWith({
+  MerchantSettingModel copyWith({
     int? id,
     String? username,
-    int? wechatLv1,
-    int? alipayLv1,
-    int? bankCardLv1,
-    int? wechatLv2,
-    int? alipayLv2,
-    int? bankCardLv2,
-    int? wechatLv3,
-    int? alipayLv3,
-    int? bankCardLv3,
-    int? wechatLv4,
-    int? alipayLv4,
-    int? bankCardLv4,
-    int? alipayTotal,
-    int? wechatTotal,
-    int? bankcardTotal,
+    double? wechatLv1,
+    double? alipayLv1,
+    double? bankCardLv1,
+    double? wechatLv2,
+    double? alipayLv2,
+    double? bankCardLv2,
+    double? wechatLv3,
+    double? alipayLv3,
+    double? bankCardLv3,
+    double? wechatLv4,
+    double? alipayLv4,
+    double? bankCardLv4,
+    double? alipayTotal,
+    double? wechatTotal,
+    double? bankcardTotal,
+    double? alipayMakerRate,
+    double? wechatMakerRate,
+    double? bankcardMakerRate,
     String? createdTime,
   }) =>
-      AgentSettingModel(
+      MerchantSettingModel(
         id: id ?? this.id,
         username: username ?? this.username,
         wechatLv1: wechatLv1 ?? this.wechatLv1,
@@ -79,16 +88,17 @@ class AgentSettingModel {
         alipayTotal: alipayTotal ?? this.alipayTotal,
         wechatTotal: wechatTotal ?? this.wechatTotal,
         bankcardTotal: bankcardTotal ?? this.bankcardTotal,
+        alipayMakerRate: alipayMakerRate ?? this.alipayMakerRate,
+        wechatMakerRate: wechatMakerRate ?? this.wechatMakerRate,
+        bankcardMakerRate: bankcardMakerRate ?? this.bankcardMakerRate,
         createdTime: createdTime ?? this.createdTime,
       );
 
-  factory AgentSettingModel.fromRawJson(String str) =>
-      AgentSettingModel.fromJson(json.decode(str));
+  factory MerchantSettingModel.fromRawJson(String str) => MerchantSettingModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory AgentSettingModel.fromJson(Map<String, dynamic> json) =>
-      AgentSettingModel(
+  factory MerchantSettingModel.fromJson(Map<String, dynamic> json) => MerchantSettingModel(
         id: json["id"],
         username: json["username"],
         wechatLv1: json["wechatLv1"],
@@ -106,6 +116,9 @@ class AgentSettingModel {
         alipayTotal: json["alipayTotal"],
         wechatTotal: json["wechatTotal"],
         bankcardTotal: json["bankcardTotal"],
+        alipayMakerRate: json["alipayMakerRate"],
+        wechatMakerRate: json["wechatMakerRate"],
+        bankcardMakerRate: json["bankcardMakerRate"],
         createdTime: json["createdTime"],
       );
 
@@ -127,6 +140,9 @@ class AgentSettingModel {
         "alipayTotal": alipayTotal,
         "wechatTotal": wechatTotal,
         "bankcardTotal": bankcardTotal,
+        "alipayMakerRate": alipayMakerRate,
+        "wechatMakerRate": wechatMakerRate,
+        "bankcardMakerRate": bankcardMakerRate,
         "createdTime": createdTime,
       };
 }

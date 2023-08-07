@@ -17,7 +17,9 @@ class _OTCApi {
   final getCommissionRate = get("/commission/rate");
 
   /// 佣金明细
-  final commissionDeals = post("/commission/deals/page");
+  final commissionDeals = post("/commission/deals/page", (Map<String, dynamic> json) {
+    return PaginationModel.fromJson(json, (item) => MerchantIncomeModel.fromJson(item as dynamic));
+  }, HttpOptions(loading: false));
 
   /// 邀请明细
   final commissionInvPage = post("/commission/inv-detail/page");

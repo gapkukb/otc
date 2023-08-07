@@ -1,106 +1,133 @@
+import 'dart:developer';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:otc/components/currency_selector/currency_selector.dart';
-import 'package:otc/components/date_picker/date_picker.dart';
-import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/pagination/pagination.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
+import 'package:otc/pages/merchant/income/provider.dart';
+import 'package:otc/providers/provider.dart';
+import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_empty_view.dart';
+import './filters.dart';
 
-class AgentIncome extends StatefulWidget {
-  const AgentIncome({super.key});
+class MerchantIncome extends ConsumerStatefulWidget {
+  const MerchantIncome({
+    super.key,
+  });
 
   @override
-  State<AgentIncome> createState() => _AgentIncomeState();
+  ConsumerState<MerchantIncome> createState() => _MerchantIncomeState();
 }
 
-class _AgentIncomeState extends State<AgentIncome> {
+class _MerchantIncomeState extends ConsumerState<MerchantIncome> {
+  final Map<String, dynamic> formState = {};
+  Map<String, dynamic> filters = {};
+  final formKey = GlobalKey<FormState>();
+  int pageCount = 1;
+  int pageNo = 1;
+  final pageSize = 50;
+
+  @override
+  void initState() {
+    super.initState();
+
+    updateFilters();
+  }
+
+  updateFilters() {
+    filters.addAll({
+      ...formState,
+      "in": formState['in'] == false ? null : formState['in'],
+      "page": pageNo,
+      "pageSize": pageSize,
+      "begin": formState["minDate"] == null ? null : formState["minDate"] + " 00:00:00",
+      "end": formState["maxDate"] == null ? null : formState["maxDate"] + " 23:59:59",
+    });
+
+    inspect(filters);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          clipBehavior: Clip.none,
-          title: UnconstrainedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 24),
-              child: Form(
-                child: Wrap(
-                  spacing: 16,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      height: 56,
-                      child: CurrencySelector(name: "name"),
-                    ),
-                    SizedBox(
-                      width: 150,
-                      height: 56,
-                      child: Dropdown(
-                        labelText: "交易类型",
-                        name: "",
-                        data: [
-                          DropdownItem(title: "购买", value: 0),
-                          DropdownItem(title: "出售", value: 1),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 150,
-                      height: 56,
-                      child: Dropdown(
-                        labelText: "交易方式",
-                        name: "",
-                        data: PaymentMethods.values.map((channel) {
-                          return DropdownItem(title: channel.text, value: 0);
-                        }).toList(),
-                      ),
-                    ),
-                    DatePicker(
-                      labelText: "开始日期",
-                      maxDate: DateTime.now(),
-                      minDate: DateTime(1970),
-                    ),
-                    DatePicker(
-                      labelText: "结束日期",
-                      maxDate: DateTime.now(),
-                      minDate: DateTime(1970),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+    return Form(
+      key: formKey,
+      child: Scaffold(
+        appBar: MerchantIncomeFilters(
+          formState: formState,
+          onSearch: () {
+            research(1);
+          },
         ),
-      ),
-      body: Container(
-        child: DataTable2(
-          dividerThickness: 0.01,
-          columnSpacing: 2,
-          fixedTopRows: 1,
-          columns: const [
-            DataColumn2(label: Text("广告编号")),
-            DataColumn2(label: Text("类型")),
-            DataColumn2(label: Text("已成交数量")),
-            DataColumn2(label: Text("已成交价格")),
-            DataColumn2(label: Text("汇率")),
-            DataColumn2(label: Text("支付方式")),
-            DataColumn2(label: Text("更新时间")),
-            DataColumn2(label: Text("佣金比例")),
-            DataColumn2(label: Text("佣金数量")),
-          ],
-          rows: List.generate(
-            10,
-            (index) => DataRow(
-              cells: List.generate(
-                9,
-                (index) => DataCell(
-                  PaymentMethods.fromType(0).widget,
-                ),
+        body: Consumer(
+          builder: (context, ref, child) {
+            final provider = ref.watch(merchantIncomeProvider(filters));
+            return provider.when(
+              data: (data) {
+                pageCount = data.pages;
+                return DataTable2(
+                  headingTextStyle: Font.miniGrey,
+                  columns: const [
+                    DataColumn2(label: Text("订单编号"), fixedWidth: 220),
+                    DataColumn2(label: Text("类型")),
+                    DataColumn2(label: Text("已成交数量")),
+                    DataColumn2(label: Text("已成交价格")),
+                    DataColumn2(label: Text("汇率")),
+                    DataColumn2(label: Text("支付方式")),
+                    DataColumn2(label: Text("更新时间"), fixedWidth: 160),
+                    DataColumn2(label: Text("佣金比例")),
+                    DataColumn2(label: Text("佣金数量")),
+                  ],
+                  columnSpacing: 4,
+                  dataRowHeight: 60,
+                  // dividerThickness: 0.001,
+                  empty: provider.isLoading ? null : const UiEmptyView(),
+                  rows: data.records.map((row) {
+                    return DataRow(
+                      cells: [
+                        DataCell(Text(row.reference)),
+                        DataCell(Text(row.sell ? "出售" : "购买")),
+                        DataCell(Text(row.takerCoinAmount.toString())),
+                        DataCell(Text(row.takerMoneyAmount.toString())),
+                        DataCell(Text("出售")),
+                        DataCell(Text(PaymentMethods.getByValue(row.paymentMethod).text)),
+                        DataCell(Text(row.createdTime)),
+                        DataCell(Text(row.rate.toString())),
+                        DataCell(Text(row.deservedReward.toString())),
+                      ],
+                    );
+                  }).toList(),
+                );
+              },
+              error: (err, stack) {
+                return Text(err.toString() + stack.toString());
+              },
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
+            );
+          },
+        ),
+        bottomNavigationBar: Padding(
+          padding: Pads.yAxisSm,
+          child: Pagination(
+            pageCount: pageCount,
+            pageNo: pageNo,
+            // disabled: loading,
+            onChange: research,
           ),
         ),
       ),
     );
+  }
+
+  research(int currentPage) {
+    formKey.currentState!.save();
+    setState(() {
+      pageNo = currentPage;
+      updateFilters();
+      return provider.refresh(merchantIncomeProvider(filters));
+    });
   }
 }

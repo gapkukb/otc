@@ -51,7 +51,7 @@ class Routes {
   // 代理系统
   static const merchantDashboard = "/merchant_dashboard";
   static const merchantIncome = "/merchant_income";
-  static const merchantHierarchy = "/merchant_hierarchy";
+  static const merchantInvitation = "/merchant_invitation";
   static const merchantSetting = "/merchant_setting";
 
   // 广告

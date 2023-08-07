@@ -9,6 +9,7 @@ class UiNumberStepper extends StatefulWidget {
   final double step;
   final double? initValue;
   final bool disabeld;
+  final bool? isDense;
   final Function(double newValue) onChange;
 
   const UiNumberStepper({
@@ -18,6 +19,7 @@ class UiNumberStepper extends StatefulWidget {
     this.max = double.infinity,
     this.step = 1,
     this.disabeld = false,
+    this.isDense,
     this.initValue,
     required this.onChange,
   });
@@ -45,10 +47,7 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
           _field = field;
           return InputDecorator(
             decoration: InputDecoration(
-              // constraints: const BoxConstraints(
-              //   minHeight: 56,
-              //   maxHeight: 56,
-              // ),
+              isDense: widget.isDense,
               prefixIcon: IconButton(
                 onPressed: decrease,
                 icon: const Icon(Icons.remove),

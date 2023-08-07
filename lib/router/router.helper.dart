@@ -5,7 +5,7 @@ final appLayoutKey = GlobalKey<NavigatorState>();
 final userLayoutKey = GlobalKey<NavigatorState>();
 final orderLayoutKey = GlobalKey<NavigatorState>();
 final walletLayoutKey = GlobalKey<NavigatorState>();
-final agentLayoutKey = GlobalKey<NavigatorState>();
+final merchantLayoutKey = GlobalKey<NavigatorState>();
 final advertiseLayoutKey = GlobalKey<NavigatorState>();
 
 CustomTransitionPage modalPage(Widget child, [bool? barrierDismissible]) {
