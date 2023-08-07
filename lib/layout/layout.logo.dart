@@ -21,7 +21,7 @@ class LayoutLogo extends StatelessWidget {
         SerialTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<SerialTapGestureRecognizer>(SerialTapGestureRecognizer.new, (SerialTapGestureRecognizer instance) {
           instance.onSerialTapDown = (SerialTapDownDetails details) {
             if (details.count == 4) {
-              context.go(Routes.agentDashboard);
+              context.go(Routes.merchantDashboard);
             } else if (details.count == 1) {
               context.go(Routes.home);
             }

@@ -20,6 +20,7 @@ import 'package:otc/pages/ad/ad_own/ad_own.filters.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/date_time.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 import 'dart:math' as math;
@@ -86,6 +87,7 @@ class _AdOwnState extends State<AdOwn> {
               data: (data) {
                 pageCount = data.pages;
                 return DataTable2(
+                  headingTextStyle: Font.miniGrey,
                   columns: const [
                     DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 220),
                     DataColumn2(label: Text("类型")),

@@ -49,10 +49,10 @@ class Routes {
   static const doneFutureOrder = "/done_future_order";
 
   // 代理系统
-  static const agentDashboard = "/agent_system_dashboard";
-  static const agentIncome = "/agent_system_income";
-  static const agentHierarchy = "/agent_system_hierarchy";
-  static const agentSetting = "/agent_system_setting";
+  static const merchantDashboard = "/merchant_dashboard";
+  static const merchantIncome = "/merchant_income";
+  static const merchantHierarchy = "/merchant_hierarchy";
+  static const merchantSetting = "/merchant_setting";
 
   // 广告
   static const adBuying = "/ad_buying";

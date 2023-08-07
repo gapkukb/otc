@@ -51,6 +51,7 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
             width: constraints.maxWidth * 0.8,
             height: constraints.maxHeight * 0.8,
             child: DataTable2(
+              headingTextStyle: Font.miniGrey,
               columns: const [
                 DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 200),
                 DataColumn2(label: Text("类型")),
@@ -77,7 +78,7 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
   stateButton(BuildContext context, AdMyTakerModel row, int index) {
     if (row.state == AdOwnState.NOTIFIED.name) {
       return CountdownTimer(
-        endTime: DateFormat("yyyy-MM-dd").parse(row.overTime).millisecondsSinceEpoch,
+        endTime: dateFormatter.parse(row.overTime).millisecondsSinceEpoch,
         widgetBuilder: (context, time) {
           final timeText = time == null ? "" : "\n${addZero(time.hours)}:${addZero(time.min)}:${addZero(time.sec)}";
           final channel = widget.channels.firstWhere((element) => element.reference == row.makerChannelReference);

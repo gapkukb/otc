@@ -1,7 +1,5 @@
 library ad_post;
 
-import 'dart:developer';
-import 'dart:math';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +23,7 @@ import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/number.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
 import 'package:otc/widgets/ui_empty_view.dart';

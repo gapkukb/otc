@@ -122,14 +122,10 @@ class _AdBuyingState extends State<AdBuying> {
                       width: double.infinity,
                       child: DataTable2(
                         dataRowHeight: 70,
+                        headingTextStyle: Font.miniGrey,
                         columns: const [
                           DataColumn2(label: Text("广告主")),
-                          DataColumn2(
-                              label: MixText(
-                            child: "价格",
-                            small: "从低到高",
-                            smallStyle: Font.miniGrey,
-                          )),
+                          DataColumn2(label: Text("价格")),
                           DataColumn2(label: Text("限额/数量")),
                           DataColumn2(label: Text("支付方式"), fixedWidth: 120),
                           DataColumn2(label: Text("操作"), fixedWidth: 100),

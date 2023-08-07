@@ -120,19 +120,19 @@ final List<RouteBase> routes = [
         builder: agentLayout,
         routes: [
           AuthRoute(
-            path: Routes.agentDashboard,
+            path: Routes.merchantDashboard,
             page: const AgentDashboard(),
           ),
           AuthRoute(
-            path: Routes.agentIncome,
+            path: Routes.merchantIncome,
             page: const AgentIncome(),
           ),
           AuthRoute(
-            path: Routes.agentSetting,
-            page: const AgentSetting(),
+            path: Routes.merchantSetting,
+            page: const MerchantSetting(),
           ),
           AuthRoute(
-            path: Routes.agentHierarchy,
+            path: Routes.merchantHierarchy,
             page: const AgentHierarchy(),
           ),
         ],

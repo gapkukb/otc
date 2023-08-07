@@ -20,19 +20,19 @@ ShellRouteBuilder agentLayout = (context, state, child) {
                 items: [
                   LayoutMenuItem(
                     name: "仪表盘",
-                    path: Routes.agentDashboard,
+                    path: Routes.merchantDashboard,
                   ),
                   LayoutMenuItem(
                     name: "佣金明细",
-                    path: Routes.agentIncome,
+                    path: Routes.merchantIncome,
                   ),
                   LayoutMenuItem(
                     name: "下级邀请码",
-                    path: Routes.agentHierarchy,
+                    path: Routes.merchantHierarchy,
                   ),
                   LayoutMenuItem(
                     name: "佣金比例设置",
-                    path: Routes.agentSetting,
+                    path: Routes.merchantSetting,
                   ),
                 ],
               ),

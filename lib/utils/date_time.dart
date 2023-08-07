@@ -6,4 +6,12 @@ extension ForMatter on DateTime {
   String format() {
     return dateFormatter.format(this);
   }
+
+  DateTime? parse(String dateTimeString) {
+    try {
+      return dateFormatter.parse(dateTimeString);
+    } catch (e) {
+      return null;
+    }
+  }
 }

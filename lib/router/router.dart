@@ -60,11 +60,11 @@ import 'package:otc/pages/wallet/wallet_history/wallet_history.dart';
 import 'package:otc/pages/wallet/wallet_spot/wallet_spot.dart';
 import 'package:otc/pages/wallet/wallet.detail/wallet.detail.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.dart';
-import 'package:otc/pages/agent/layout/layout.dart';
-import 'package:otc/pages/agent/dashboard/dashboard.dart';
-import 'package:otc/pages/agent/agent_setting/agent_setting.dart';
-import 'package:otc/pages/agent/income/income.dart';
-import 'package:otc/pages/agent/agent_system_Hierarchy/agent_system_Hierarchy.dart';
+import 'package:otc/pages/merchant/layout/layout.dart';
+import 'package:otc/pages/merchant/dashboard/dashboard.dart';
+import 'package:otc/pages/merchant/agent_setting/agent_setting.dart';
+import 'package:otc/pages/merchant/income/income.dart';
+import 'package:otc/pages/merchant/agent_system_Hierarchy/agent_system_Hierarchy.dart';
 import 'package:otc/pages/account/register/register.dart';
 import 'package:otc/pages/terms/terms.dart';
 import 'package:otc/utils/navigator.dart';
@@ -78,7 +78,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.adOwn,
+  initialLocation: Routes.merchantDashboard,
   debugLogDiagnostics: true,
 
   redirect: (context, state) {
