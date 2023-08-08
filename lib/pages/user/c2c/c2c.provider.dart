@@ -18,10 +18,10 @@ class C2CModel {
   });
   late final String username;
   late final Range range;
-  late final int registerDays;
-  late final int firstTradeDays;
-  late final int historyTradeUsers;
-  late final int commissionTotal;
+  late final num registerDays;
+  late final num firstTradeDays;
+  late final num historyTradeUsers;
+  late final num commissionTotal;
   late final RangeStat rangeStat;
   late final HistoryStat historyStat;
 
@@ -90,18 +90,18 @@ class RangeStat {
     required this.makerNotifyTime,
     required this.makerConfirmTime,
   });
-  late final int takerBuyCount;
-  late final int takerSellCount;
-  late final int takerBugSuccessCount;
-  late final int takerSellSuccessCount;
-  late final int takerNotifyTime;
-  late final int takerConfirmTime;
-  late final int makerBuyCount;
-  late final int makerSellCount;
-  late final int makerSellSuccessCount;
-  late final int makerBugSuccessCount;
-  late final int makerNotifyTime;
-  late final int makerConfirmTime;
+  late final num takerBuyCount;
+  late final num takerSellCount;
+  late final num takerBugSuccessCount;
+  late final num takerSellSuccessCount;
+  late final num takerNotifyTime;
+  late final num takerConfirmTime;
+  late final num makerBuyCount;
+  late final num makerSellCount;
+  late final num makerSellSuccessCount;
+  late final num makerBugSuccessCount;
+  late final num makerNotifyTime;
+  late final num makerConfirmTime;
 
   RangeStat.fromJson(Map<String, dynamic> json) {
     takerBuyCount = json['takerBuyCount'];
@@ -151,18 +151,18 @@ class HistoryStat {
     required this.makerNotifyTime,
     required this.makerConfirmTime,
   });
-  late final int takerBuyCount;
-  late final int takerSellCount;
-  late final int takerBugSuccessCount;
-  late final int takerSellSuccessCount;
-  late final int takerNotifyTime;
-  late final int takerConfirmTime;
-  late final int makerBuyCount;
-  late final int makerSellCount;
-  late final int makerSellSuccessCount;
-  late final int makerBugSuccessCount;
-  late final int makerNotifyTime;
-  late final int makerConfirmTime;
+  late final num takerBuyCount;
+  late final num takerSellCount;
+  late final num takerBugSuccessCount;
+  late final num takerSellSuccessCount;
+  late final num takerNotifyTime;
+  late final num takerConfirmTime;
+  late final num makerBuyCount;
+  late final num makerSellCount;
+  late final num makerSellSuccessCount;
+  late final num makerBugSuccessCount;
+  late final num makerNotifyTime;
+  late final num makerConfirmTime;
 
   HistoryStat.fromJson(Map<String, dynamic> json) {
     takerBuyCount = json['takerBuyCount'];
