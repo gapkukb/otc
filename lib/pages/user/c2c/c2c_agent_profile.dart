@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/pages/user/c2c/c2c.provider.dart';
+import 'package:otc/providers/user.provider.dart';
 import 'package:otc/utils/responsive.dart';
 
 class C2cAgentProfile extends StatefulWidget {
@@ -32,6 +33,8 @@ class _C2cAgentProfileState extends State<C2cAgentProfile> {
         child: Consumer(
           builder: (context, ref, child) {
             final future = ref.watch(c2cProvider);
+            final user = ref.watch(userStatsProvider);
+
             return future.when(
               data: (data) {
                 final range = data.rangeStat;
@@ -85,7 +88,7 @@ class _C2cAgentProfileState extends State<C2cAgentProfile> {
                   },
                   {
                     "label": "总做市佣金",
-                    "value": 0,
+                    "value": user.commissionTotal,
                     "unit": "USDT",
                   },
                   {
