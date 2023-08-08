@@ -29,7 +29,7 @@ class _User {
   final modifyNickname = post("/customer/modify/nickname");
 
   /// 申请成为maker(做市商)
-  final applyMaker = post("/customer/maker/apply");
+  final applyMaker = get("/customer/maker/apply");
 
   /// 获取kyc信息
   final getKyc = post("/customer/kyc");

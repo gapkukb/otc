@@ -29,6 +29,7 @@ _$_UserBaseModel _$$_UserBaseModelFromJson(Map<String, dynamic> json) =>
       locked: json['locked'] as bool,
       createdTime: json['createdTime'] as String,
       maker: json['maker'] as bool?,
+      makerState: $enumDecodeNullable(_$AuditEnumMap, json['makerState']),
       hasPaymentPassword: json['hasPaymentPassword'] as bool,
     );
 
@@ -55,5 +56,12 @@ Map<String, dynamic> _$$_UserBaseModelToJson(_$_UserBaseModel instance) =>
       'locked': instance.locked,
       'createdTime': instance.createdTime,
       'maker': instance.maker,
+      'makerState': _$AuditEnumMap[instance.makerState],
       'hasPaymentPassword': instance.hasPaymentPassword,
     };
+
+const _$AuditEnumMap = {
+  Audit.PENDING: 'PENDING',
+  Audit.PASS: 'PASS',
+  Audit.REJECT: 'REJECT',
+};

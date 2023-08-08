@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_base.model.freezed.dart';
 part 'user_base.model.g.dart';
@@ -27,9 +28,20 @@ class UserBaseModel with _$UserBaseModel {
     required bool locked,
     required String createdTime,
     required bool? maker,
+    required Audit? makerState,
     required bool hasPaymentPassword,
   }) = _UserBaseModel;
 
-  factory UserBaseModel.fromJson(Map<String, Object?> json) =>
-      _$UserBaseModelFromJson(json);
+  factory UserBaseModel.fromJson(Map<String, Object?> json) => _$UserBaseModelFromJson(json);
+}
+
+enum Audit {
+  PENDING("审核中"),
+  PASS("已认证"),
+  REJECT("重新申请"),
+  ;
+
+  const Audit(this.text);
+
+  final String text;
 }

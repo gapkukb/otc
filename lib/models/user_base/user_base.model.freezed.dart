@@ -42,6 +42,7 @@ mixin _$UserBaseModel {
   bool get locked => throw _privateConstructorUsedError;
   String get createdTime => throw _privateConstructorUsedError;
   bool? get maker => throw _privateConstructorUsedError;
+  Audit? get makerState => throw _privateConstructorUsedError;
   bool get hasPaymentPassword => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -78,6 +79,7 @@ abstract class $UserBaseModelCopyWith<$Res> {
       bool locked,
       String createdTime,
       bool? maker,
+      Audit? makerState,
       bool hasPaymentPassword});
 }
 
@@ -115,6 +117,7 @@ class _$UserBaseModelCopyWithImpl<$Res, $Val extends UserBaseModel>
     Object? locked = null,
     Object? createdTime = null,
     Object? maker = freezed,
+    Object? makerState = freezed,
     Object? hasPaymentPassword = null,
   }) {
     return _then(_value.copyWith(
@@ -202,6 +205,10 @@ class _$UserBaseModelCopyWithImpl<$Res, $Val extends UserBaseModel>
           ? _value.maker
           : maker // ignore: cast_nullable_to_non_nullable
               as bool?,
+      makerState: freezed == makerState
+          ? _value.makerState
+          : makerState // ignore: cast_nullable_to_non_nullable
+              as Audit?,
       hasPaymentPassword: null == hasPaymentPassword
           ? _value.hasPaymentPassword
           : hasPaymentPassword // ignore: cast_nullable_to_non_nullable
@@ -240,6 +247,7 @@ abstract class _$$_UserBaseModelCopyWith<$Res>
       bool locked,
       String createdTime,
       bool? maker,
+      Audit? makerState,
       bool hasPaymentPassword});
 }
 
@@ -275,6 +283,7 @@ class __$$_UserBaseModelCopyWithImpl<$Res>
     Object? locked = null,
     Object? createdTime = null,
     Object? maker = freezed,
+    Object? makerState = freezed,
     Object? hasPaymentPassword = null,
   }) {
     return _then(_$_UserBaseModel(
@@ -362,6 +371,10 @@ class __$$_UserBaseModelCopyWithImpl<$Res>
           ? _value.maker
           : maker // ignore: cast_nullable_to_non_nullable
               as bool?,
+      makerState: freezed == makerState
+          ? _value.makerState
+          : makerState // ignore: cast_nullable_to_non_nullable
+              as Audit?,
       hasPaymentPassword: null == hasPaymentPassword
           ? _value.hasPaymentPassword
           : hasPaymentPassword // ignore: cast_nullable_to_non_nullable
@@ -395,6 +408,7 @@ class _$_UserBaseModel implements _UserBaseModel {
       required this.locked,
       required this.createdTime,
       required this.maker,
+      required this.makerState,
       required this.hasPaymentPassword});
 
   factory _$_UserBaseModel.fromJson(Map<String, dynamic> json) =>
@@ -444,11 +458,13 @@ class _$_UserBaseModel implements _UserBaseModel {
   @override
   final bool? maker;
   @override
+  final Audit? makerState;
+  @override
   final bool hasPaymentPassword;
 
   @override
   String toString() {
-    return 'UserBaseModel(id: $id, username: $username, email: $email, phone: $phone, regIp: $regIp, regServerName: $regServerName, regReferer: $regReferer, regDevice: $regDevice, emailValid: $emailValid, googleSecretValid: $googleSecretValid, idValid: $idValid, phoneValid: $phoneValid, nickname: $nickname, avatar: $avatar, disabled: $disabled, type: $type, invitationCode: $invitationCode, lockedUntil: $lockedUntil, locked: $locked, createdTime: $createdTime, maker: $maker, hasPaymentPassword: $hasPaymentPassword)';
+    return 'UserBaseModel(id: $id, username: $username, email: $email, phone: $phone, regIp: $regIp, regServerName: $regServerName, regReferer: $regReferer, regDevice: $regDevice, emailValid: $emailValid, googleSecretValid: $googleSecretValid, idValid: $idValid, phoneValid: $phoneValid, nickname: $nickname, avatar: $avatar, disabled: $disabled, type: $type, invitationCode: $invitationCode, lockedUntil: $lockedUntil, locked: $locked, createdTime: $createdTime, maker: $maker, makerState: $makerState, hasPaymentPassword: $hasPaymentPassword)';
   }
 
   @override
@@ -489,6 +505,8 @@ class _$_UserBaseModel implements _UserBaseModel {
             (identical(other.createdTime, createdTime) ||
                 other.createdTime == createdTime) &&
             (identical(other.maker, maker) || other.maker == maker) &&
+            (identical(other.makerState, makerState) ||
+                other.makerState == makerState) &&
             (identical(other.hasPaymentPassword, hasPaymentPassword) ||
                 other.hasPaymentPassword == hasPaymentPassword));
   }
@@ -518,6 +536,7 @@ class _$_UserBaseModel implements _UserBaseModel {
         locked,
         createdTime,
         maker,
+        makerState,
         hasPaymentPassword
       ]);
 
@@ -558,6 +577,7 @@ abstract class _UserBaseModel implements UserBaseModel {
       required final bool locked,
       required final String createdTime,
       required final bool? maker,
+      required final Audit? makerState,
       required final bool hasPaymentPassword}) = _$_UserBaseModel;
 
   factory _UserBaseModel.fromJson(Map<String, dynamic> json) =
@@ -605,6 +625,8 @@ abstract class _UserBaseModel implements UserBaseModel {
   String get createdTime;
   @override
   bool? get maker;
+  @override
+  Audit? get makerState;
   @override
   bool get hasPaymentPassword;
   @override

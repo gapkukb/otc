@@ -22,16 +22,20 @@ class SidebarMenu extends StatefulWidget {
 class _SidebarMenuState extends State<SidebarMenu> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: Pads.xAxisSm,
-      width: widget.width,
-      child: ListView.builder(
-        physics: const RangeMaintainingScrollPhysics(),
-        itemCount: widget.items.length,
-        itemBuilder: (context, index) {
-          final item = widget.items[index];
-          return item;
-        },
+    return Card(
+      child: SizedBox(
+        width: widget.width,
+        child: Padding(
+          padding: Pads.xAxisSm,
+          child: ListView.builder(
+            physics: const RangeMaintainingScrollPhysics(),
+            itemCount: widget.items.length,
+            itemBuilder: (context, index) {
+              final item = widget.items[index];
+              return item;
+            },
+          ),
+        ),
       ),
     );
   }

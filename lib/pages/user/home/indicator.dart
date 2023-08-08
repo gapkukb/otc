@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class Indicator extends StatefulWidget {
-  double value;
-  Size size;
-  Color safeColor;
-  Color dangerColor;
-  Color warningColor;
-  double lineWidth;
-  double lineHeight;
-  int scaleCount;
-  double max;
+  final double value;
+  final Size size;
+  final Color safeColor;
+  final Color dangerColor;
+  final Color warningColor;
+  final double lineWidth;
+  final double lineHeight;
+  final int scaleCount;
+  final double max;
 
-  Function(
+  final Function(
     Canvas canvas,
     Size size,
   ) renderText;
 
-  Indicator({
+  const Indicator({
     super.key,
     this.value = 0,
     this.size = const Size(108, 108),

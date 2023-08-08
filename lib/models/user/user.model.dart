@@ -13,8 +13,7 @@ class UserModel with _$UserModel {
     required KycModel? kyc,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, Object?> json) =>
-      _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, Object?> json) => _$UserModelFromJson(json);
 }
 
 UserModel fakerUser() {
@@ -41,6 +40,7 @@ UserModel fakerUser() {
       locked: false,
       createdTime: "",
       maker: false,
+      makerState: null,
       hasPaymentPassword: false,
     ),
     stats: UserStatsModel(

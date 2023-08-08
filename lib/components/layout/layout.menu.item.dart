@@ -60,6 +60,7 @@ class LayoutMenuItem extends ListTile {
 
   @override
   Widget build(BuildContext context) {
+    final selected = (GoRouter.of(context).location == path || GoRouter.of(context).location == pathname);
     return ListTile(
       key: key,
       autofocus: autofocus,
@@ -81,7 +82,7 @@ class LayoutMenuItem extends ListTile {
       mouseCursor: mouseCursor,
       onFocusChange: onFocusChange,
       onLongPress: onLongPress,
-      selected: (GoRouter.of(context).location == path || GoRouter.of(context).location == pathname),
+      selected: selected,
       selectedColor: selectedColor,
       selectedTileColor: selectedTileColor,
       shape: shape,
@@ -92,7 +93,11 @@ class LayoutMenuItem extends ListTile {
       textColor: textColor,
       tileColor: tileColor,
       titleAlignment: titleAlignment,
-      titleTextStyle: titleTextStyle,
+      titleTextStyle: TextStyle(
+        fontSize: 14,
+        color: Colors.black,
+        fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+      ),
       trailing: trailing,
       visualDensity: visualDensity,
       onTap: () {

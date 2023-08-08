@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:otc/theme/theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:otc/providers/otc.provider.dart';
 
-class RebateProportion extends StatelessWidget {
+class RebateProportion extends ConsumerWidget {
   const RebateProportion({super.key});
 
-  static List<Map<String, dynamic>> items = [
-    {
-      "label": "银行卡佣金比例",
-      "value": "3.00%",
-    },
-    {
-      "label": "支付宝佣金比例",
-      "value": "3.00%",
-    },
-    {
-      "label": "微信佣金比例",
-      "value": "3.00%",
-    }
-  ];
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final otc = ref.read(otcProvider);
+    final List<Map<String, dynamic>> items = [
+      {
+        "label": "银行卡佣金比例",
+        "value": "${otc.bankcardReceiptMin}%",
+      },
+      {
+        "label": "支付宝佣金比例",
+        "value": "${otc.aliReceiptMin}%",
+      },
+      {
+        "label": "微信佣金比例",
+        "value": "${otc.wechatReceiptMin}%",
+      }
+    ];
     return Card(
       child: Container(
         height: 72,

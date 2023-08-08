@@ -79,7 +79,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.merchantSetting,
+  initialLocation: Routes.rebate,
   debugLogDiagnostics: true,
 
   redirect: (context, state) {

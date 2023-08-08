@@ -5,7 +5,7 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
-import 'package:otc/models/kyc/kyc.model.dart';
+import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
@@ -13,7 +13,6 @@ import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
-import 'package:otc/widgets/ui_chip.dart';
 import 'package:otc/widgets/ui_flex.dart';
 
 class Merchant extends ConsumerWidget {
@@ -28,7 +27,7 @@ class Merchant extends ConsumerWidget {
     ];
   }
 
-  List<_Item> get futures {
+  List<_Item> get features {
     return [
       _Item(
         "广告发布权限",
@@ -48,8 +47,32 @@ class Merchant extends ConsumerWidget {
     ];
   }
 
+  Widget stateButton(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userBaseProvider);
+
+    if (user.makerState == Audit.PENDING) {
+      return const MaterialButton(
+        onPressed: null,
+        disabledColor: Colors.orange,
+        disabledTextColor: Colors.white,
+        child: Text("审核中"),
+      );
+    }
+    if (user.makerState == Audit.PASS) {
+      return const MaterialButton(
+        onPressed: null,
+        disabledColor: Colors.green,
+        disabledTextColor: Colors.white,
+        child: Text("已认证"),
+      );
+    }
+
+    return applyButton(context, ref, user.makerState == null ? "立即申请" : "重新申请");
+  }
+
   @override
   Widget build(BuildContext context, ref) {
+    final user = ref.watch(userBaseProvider);
     return Material(
       color: Colors.grey.shade50,
       child: SingleChildScrollView(
@@ -69,65 +92,56 @@ class Merchant extends ConsumerWidget {
               style: Font.largeGrey,
             ),
             const SizedBox(height: 32),
-            applyButton(context, ref),
-            const MaterialButton(
-              onPressed: null,
-              disabledColor: Colors.orange,
-              disabledTextColor: Colors.white,
-              child: Text("审核中"),
-            ),
-            const MaterialButton(
-              onPressed: null,
-              disabledColor: Colors.green,
-              disabledTextColor: Colors.white,
-              child: Text("已认证"),
-            ),
+            stateButton(context, ref),
             const SizedBox(height: 48),
-            const Panel(
-              title: "欢迎加入Maoerduo商户联盟",
-              child: Padding(
-                padding: Pads.md,
-                child: Text("您可以享受到以下服务。"),
-              ),
-            ),
-            const Panel(
-              title: "信息上传成功",
-              child: Padding(
-                padding: Pads.md,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("平台会在48小时内审核完毕"),
-                    Text("审核通过后，您将获得以下权益！"),
-                  ],
+            if (user.makerState == Audit.PASS)
+              const Panel(
+                title: "欢迎加入Maoerduo商户联盟",
+                child: Padding(
+                  padding: Pads.md,
+                  child: Text("您可以享受到以下服务。"),
                 ),
               ),
-            ),
-            Panel(
-              title: "申请条件",
-              child: Padding(
-                padding: Pads.md,
-                child: Wrap(
-                  children: items
-                      .map(
-                        (e) => FractionallySizedBox(
-                          widthFactor: context.responsive(1, md: 0.5),
-                          child: Padding(
-                            padding: Pads.xs,
-                            child: Text(
-                              e,
-                              style: Font.mediumBold,
+            if (user.makerState == Audit.PENDING)
+              const Panel(
+                title: "信息上传成功",
+                child: Padding(
+                  padding: Pads.md,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("平台会在48小时内审核完毕"),
+                      Text("审核通过后，您将获得以下权益！"),
+                    ],
+                  ),
+                ),
+              ),
+            if (user.makerState == null || user.makerState == Audit.REJECT)
+              Panel(
+                title: "申请条件",
+                child: Padding(
+                  padding: Pads.md,
+                  child: Wrap(
+                    children: items
+                        .map(
+                          (e) => FractionallySizedBox(
+                            widthFactor: context.responsive(1, md: 0.5),
+                            child: Padding(
+                              padding: Pads.xs,
+                              child: Text(
+                                e,
+                                style: Font.mediumBold,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
-            ),
             UiFlex(
-              children: futures.map((item) {
+              children: features.map((item) {
                 return Card(
                   child: Padding(
                     padding: Pads.lg,
@@ -156,9 +170,9 @@ class Merchant extends ConsumerWidget {
     );
   }
 
-  Widget applyButton(BuildContext context, WidgetRef ref) {
+  Widget applyButton(BuildContext context, WidgetRef ref, String? text) {
     return UiButton(
-      label: "立即申请",
+      label: text,
       size: UiButtonSize.medium,
       onPressed: () async {
         final kyc = ref.read(kycProvider);
@@ -192,6 +206,7 @@ class Merchant extends ConsumerWidget {
           );
         } else {
           await apis.user.applyMaker();
+          ref.read(userProvider.notifier).updateUser();
         }
       },
     );

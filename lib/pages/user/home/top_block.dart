@@ -49,7 +49,7 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                   title: const Text("安全等级"),
                   trailing: const Icon(Icons.keyboard_arrow_right),
                   onTap: () {
-                    context.goNamed(Routes.security);
+                    context.push(Routes.security);
                   },
                 ),
                 const Divider(

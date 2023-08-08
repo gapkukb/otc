@@ -36,6 +36,7 @@ class UiButton extends StatelessWidget {
   final EdgeInsets? padding;
   final TextStyle? labelStyle;
   final double? minWidth;
+  final double? height;
 
   const UiButton({
     super.key,
@@ -54,6 +55,7 @@ class UiButton extends StatelessWidget {
     this.padding,
     this.labelStyle,
     this.minWidth,
+    this.height,
   });
 
   @override
@@ -63,7 +65,7 @@ class UiButton extends StatelessWidget {
       padding: padding ?? _pad[size],
       minWidth: fullWidth ? double.infinity : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
       onPressed: disabled ? null : onPressed,
-      height: _size[size],
+      height: height ?? _size[size],
       color: getbackgroundColor(themeColor),
       textColor: getColor(themeColor),
       shape: _buildShape(context, themeColor),
@@ -108,7 +110,13 @@ class UiButton extends StatelessWidget {
   }
 
   Widget _buildChild() {
-    Icon? $icon = icon ?? (iconData == null ? null : Icon(iconData));
+    Icon? $icon = icon ??
+        (iconData == null
+            ? null
+            : Icon(
+                iconData,
+                size: height == null ? null : height! / 1.5,
+              ));
     Widget? $text = child ??
         (label == null
             ? null
@@ -177,6 +185,7 @@ class UiButton extends StatelessWidget {
     this.minWidth,
     this.padding,
     this.shape,
+    this.height,
     this.variant = UiButtonVariant.text,
   });
 }

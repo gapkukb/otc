@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/pages/user/rebate/rebate_statics.helper.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/number.dart';
 
 final List<Map<String, dynamic>> tabItems = [
@@ -9,25 +12,20 @@ final List<Map<String, dynamic>> tabItems = [
   {"label": "平均付款时间", "value": 3},
 ];
 
-class RebateStatics extends StatefulWidget {
+class RebateStatics extends ConsumerWidget {
   const RebateStatics({super.key});
 
   @override
-  State<RebateStatics> createState() => _RebateStaticsState();
-}
+  Widget build(context, ref) {
+    final data = ref.watch(rebateStaticsProvider);
+    final style = Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.grey);
 
-class _RebateStaticsState extends State<RebateStatics> {
-  final List<Map<String, dynamic>> items = [
-    {"label": "全部", "value": tabItems},
-    {"label": "昨天", "value": tabItems},
-    {"label": "本周", "value": tabItems},
-    {"label": "本月", "value": tabItems},
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final style =
-        Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.grey);
+    final List<Map<String, dynamic>> items = [
+      {"label": "全部", "value": 0},
+      {"label": "昨天", "value": 1},
+      {"label": "近7天", "value": 2},
+      {"label": "近30天", "value": 3},
+    ];
 
     return DefaultTabController(
       length: items.length,
@@ -66,23 +64,27 @@ class _RebateStaticsState extends State<RebateStatics> {
           width: double.infinity,
           height: 130,
           child: TabBarView(
-            children: items.map((e) => _buildTabBody(e['value'])).toList(),
+            children: items.map((item) {
+              final current = data[item['value'] as int];
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
+                child: Row(
+                  children: [
+                    _buildTabBodyItem("佣金收益", "${current.commissionTotal} USDT"),
+                    _buildTabBodyItem("开始做市的好友", current.markerFriends.toString()),
+                    _buildTabBodyItem("好友", current.friends.toString()),
+                  ],
+                ),
+              );
+            }).toList(),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildTabBody(List<Map<String, dynamic>> item) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
-      child: Row(
-        children: item.map((e) => _buildTabBodyItem(e)).toList(),
-      ),
-    );
-  }
-
-  Widget _buildTabBodyItem(Map<String, dynamic> item) {
+  Widget _buildTabBodyItem(String label, String value) {
     return Expanded(
       child: Card(
         color: Colors.grey.shade200,
@@ -93,15 +95,12 @@ class _RebateStaticsState extends State<RebateStatics> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                item['label'],
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(color: Colors.grey),
+                label,
+                style: Font.miniGrey,
               ),
               Text(
-                (item['value'] as num).decimalize(),
-                style: Theme.of(context).textTheme.titleLarge,
+                value,
+                style: Font.x3largeBold,
               ),
             ],
           ),
