@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/asstes/assets.gen.dart';
+import 'package:otc/models/otc/otc.model.dart';
 import 'package:otc/models/user/user.model.dart';
+import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -15,10 +17,15 @@ class HomeTop extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     final user = ref.watch(userProvider);
+    final otc = ref.watch(otcProvider);
 
     if (context.md) {
       return Column(
-        children: [Assets.images.topBanner.image(), const SizedBox(height: 32), _buildText(context, user)],
+        children: [
+          Assets.images.topBanner.image(),
+          const SizedBox(height: 32),
+          _buildText(context, user, otc),
+        ],
       );
     }
 
@@ -33,11 +40,11 @@ class HomeTop extends ConsumerWidget {
           alignment: Alignment.centerRight,
         ),
       ),
-      child: _buildText(context, user),
+      child: _buildText(context, user, otc),
     );
   }
 
-  _buildText(BuildContext context, UserModel? user) {
+  _buildText(BuildContext context, UserModel? user, OtcModel otc) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: context.responsive(
@@ -53,7 +60,7 @@ class HomeTop extends ConsumerWidget {
           height: 8,
         ),
         Text(
-          "参与做市商扶持计划，可获得xx%成交额返佣",
+          "参与做市商扶持计划，可获得${otc.lowestCommission}%成交额返佣",
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 24),

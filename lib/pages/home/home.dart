@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otc/components/cell/cell.dart';
-import 'package:otc/components/gap/gap.dart';
-import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/layout/layout.footer.dart';
 import 'package:otc/pages/home/home_advantage.dart';
 import 'package:otc/pages/home/home_carousel.dart';
@@ -11,9 +8,6 @@ import 'package:otc/pages/home/home_marqueer.dart';
 import 'package:otc/pages/home/home_services.dart';
 import 'package:otc/pages/home/home_top.dart';
 import 'package:otc/theme/text_theme.dart';
-import 'package:otc/utils/string.dart';
-import 'package:otc/widgets/ui_chip.dart';
-import 'package:otc/widgets/ui_clipboard.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

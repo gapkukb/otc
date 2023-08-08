@@ -92,7 +92,7 @@ class _C2cAgentProfileState extends State<C2cAgentProfile> {
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: _items.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             height: context.responsive(56, lg: 94),
