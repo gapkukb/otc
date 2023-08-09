@@ -16,6 +16,7 @@ import 'package:otc/pages/ad/ad_buying/ad_buying.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/number.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
@@ -159,7 +160,7 @@ class _AdBuyingState extends State<AdBuying> {
                                       indent: 4,
                                       endIndent: 4,
                                     ),
-                                    Text("${(row.makerSuccessTimes / max(row.makerTimes, 1) * 100)}%成交率"),
+                                    Text("${(row.makerSuccessTimes / max(row.makerTimes, 1) * 100).decimalize()}%成交率"),
                                   ],
                                 ),
                               ),

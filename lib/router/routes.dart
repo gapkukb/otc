@@ -278,4 +278,8 @@ final List<RouteBase> routes = [
     path: Routes.terms,
     page: const Terms(),
   ),
+  ModalRoute(
+    path: Routes.notice,
+    page: const NoticeWindow(),
+  ),
 ];

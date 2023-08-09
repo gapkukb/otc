@@ -7,6 +7,7 @@ import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_clipboard.dart';
 
 class UserTopBlock extends ConsumerStatefulWidget {
   const UserTopBlock({super.key});
@@ -93,9 +94,13 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
                 user.nickname,
                 style: Font.mediumBold,
               ),
-              subtitle: Text(
-                "用户ID：${user.username}",
-                style: Font.smallGrey,
+              subtitle: UiClipboard(
+                text: user.username,
+                iconSize: 14,
+                child: Text(
+                  "用户ID：${user.username}",
+                  style: Font.smallGrey,
+                ),
               ),
             ),
             Text(

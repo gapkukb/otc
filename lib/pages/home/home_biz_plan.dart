@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/components/auth_button/auth_button.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -12,7 +15,7 @@ class HomeBizPlan extends StatelessWidget {
       children: [
         const SizedBox(height: 148),
         const Text(
-          "XXXXXX做市商扶持计划",
+          "Maoerduo做市商扶持计划",
           textAlign: TextAlign.center,
           style: Font.x6largeBold,
         ),
@@ -27,12 +30,16 @@ class HomeBizPlan extends StatelessWidget {
         const SizedBox(height: 48),
         SizedBox(
           height: 48,
-          child: UiButton(
-            shape: UiButtonShape.rounded,
-            onPressed: () {},
-            iconData: Icons.keyboard_arrow_right,
-            label: "加入商家联盟",
-            iconOnRight: true,
+          child: AuthButton(
+            child: UiButton(
+              shape: UiButtonShape.rounded,
+              iconData: Icons.keyboard_arrow_right,
+              label: "加入做市商联盟",
+              iconOnRight: true,
+              onPressed: () {
+                context.push(Routes.auth);
+              },
+            ),
           ),
         ),
         const SizedBox(height: 96),

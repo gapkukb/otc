@@ -93,6 +93,9 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                       const Gap.small(),
                       TextFormFieldPassword(
                         formState: _formState,
+                        onFieldSubmitted: (_) {
+                          login();
+                        },
                       ),
                       const Gap.small(),
                       UiButton(

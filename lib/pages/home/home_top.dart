@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/asstes/assets.gen.dart';
+import 'package:otc/components/auth_button/auth_button.dart';
 import 'package:otc/models/otc/otc.model.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/otc.provider.dart';
@@ -64,15 +65,17 @@ class HomeTop extends ConsumerWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 24),
-        UiButton(
-          label: "查看详情",
-          iconData: Icons.keyboard_arrow_right_outlined,
-          iconOnRight: true,
-          size: UiButtonSize.medium,
-          color: const Color(0xff2D68FE),
-          onPressed: () {
-            context.push(Routes.merchantDashboard);
-          },
+        AuthButton(
+          child: UiButton(
+            label: "查看详情",
+            iconData: Icons.keyboard_arrow_right_outlined,
+            iconOnRight: true,
+            size: UiButtonSize.medium,
+            color: const Color(0xff2D68FE),
+            onPressed: () {
+              context.push(Routes.merchantDashboard);
+            },
+          ),
         ),
       ],
     );

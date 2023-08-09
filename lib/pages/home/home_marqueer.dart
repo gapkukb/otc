@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:otc/components/auth_button/auth_button.dart';
+import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class HomeMarqueer extends StatefulWidget {
@@ -40,13 +43,17 @@ class _HomeMarqueerState extends State<HomeMarqueer> {
             width: 19,
             thickness: 1,
           ),
-          UiButton(
-            variant: UiButtonVariant.text,
-            size: UiButtonSize.mini,
-            label: "查看更多",
-            iconData: Icons.keyboard_arrow_right,
-            iconOnRight: true,
-            onPressed: () {},
+          AuthButton(
+            child: UiButton(
+              variant: UiButtonVariant.text,
+              size: UiButtonSize.mini,
+              label: "查看更多",
+              iconData: Icons.keyboard_arrow_right,
+              iconOnRight: true,
+              onPressed: () {
+                context.push(Routes.notice);
+              },
+            ),
           ),
         ],
       ),
