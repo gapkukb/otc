@@ -1,5 +1,4 @@
 import 'package:data_table_2/data_table_2.dart';
-import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,45 +6,14 @@ import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_ax
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
 import 'package:otc/constants/currency.dart';
-import 'package:otc/global/global.dart';
-import 'package:otc/models/currency.dart';
 import 'package:otc/models/wallet.balance/wallet.balance.dart';
-import 'package:otc/pages/async_builder/async_builder.dart';
 import 'package:otc/providers/coin.provider.dart';
-import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/utils/predication.dart';
-import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_chip.dart';
-import 'package:otc/widgets/ui_empty_view.dart';
-import 'package:otc/widgets/ui_flex.dart';
-
-bool ifUsdt(String currencyName) {
-  if (currencyName == CurrencyCollection.USDT.name) {
-    return true;
-  }
-  Modal.alert(content: "此功能正在紧急修复中。");
-  return false;
-}
-
-bool ifNotKYC1(int kyc) {
-  if (kyc == 1) {
-    Modal.confirm(
-      title: "交易资格",
-      content: "您必须完成至少初级KYC认证才能开启该功能。",
-      okButtonText: "去认证",
-      onOk: () {
-        GoRouter.of(navigatorKey.currentContext!).go('/topup');
-      },
-    );
-    return false;
-  }
-
-  return true;
-}
 
 class WalletFunds extends ConsumerStatefulWidget {
   const WalletFunds({super.key});
@@ -226,7 +194,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
             ),
             children: const [
               TextSpan(
-                text: " usdt",
+                text: " USD",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,

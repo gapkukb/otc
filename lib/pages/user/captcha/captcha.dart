@@ -1,11 +1,8 @@
 library captha;
 
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/gap/gap.dart';
@@ -38,7 +35,7 @@ class Captcha extends StatefulWidget {
     this.switchable,
     this.legend,
     this.user,
-  });
+  }) : assert(user != null || preferredDevice != null);
 
   @override
   State<Captcha> createState() => _CaptchaState();
@@ -78,7 +75,7 @@ class _CaptchaState extends State<Captcha> {
     // 但是要判断用户是否开启此模式
     // 优先级依照枚举排序 f2a->phone->email,
     device = widget.preferredDevice ?? CaptchaDevice.f2a;
-    device = supportedModes.contains(device) ? device : widget.preferredDevice!;
+    device = supportedModes.contains(device) ? device : supportedModes[0];
   }
 
   String get description {
@@ -176,13 +173,13 @@ class _CaptchaState extends State<Captcha> {
                 return value?.length == 6 ? null : "谷歌验证码为6位数字";
               },
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                suffixIcon: UiButton(
-                  variant: UiButtonVariant.text,
-                  label: "粘贴",
-                  onPressed: paste,
-                ),
-              ),
+              // decoration: InputDecoration(
+              //   suffixIcon: UiButton(
+              //     variant: UiButtonVariant.text,
+              //     label: "粘贴",
+              //     onPressed: paste,
+              //   ),
+              // ),
             )
           else
             CodeField(

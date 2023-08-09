@@ -137,7 +137,7 @@ class _WalletSpotState extends ConsumerState<WalletSpot> {
             ),
             children: const [
               TextSpan(
-                text: " usdt",
+                text: " USD",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,

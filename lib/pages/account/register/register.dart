@@ -136,7 +136,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                       text: '我已经阅读并且同意',
                       children: [
                         TextSpan(
-                          text: 'Mybit使用条款',
+                          text: 'Maoerduo使用条款',
                           style: const TextStyle(
                             color: Color(0xff7951F9),
                           ),

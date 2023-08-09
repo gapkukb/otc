@@ -13,7 +13,7 @@ ShellRouteBuilder userLayout = (context, state, child) {
         const SidebarMenu(
           items: [
             LayoutMenuSub(
-              title: "钱包",
+              title: "用户中心",
               underline: false,
               items: [
                 LayoutMenuItem(

@@ -74,28 +74,16 @@ class _CodeFieldState extends State<CodeField> {
       name: widget.name,
       formState: widget.formState,
       validator: widget.validator,
-      keyboardType: widget.onlyNumber
-          ? const TextInputType.numberWithOptions(decimal: false)
-          : null,
+      keyboardType: widget.onlyNumber ? const TextInputType.numberWithOptions(decimal: false) : null,
       decoration: InputDecoration(
-          label: Text(
-              widget.labelText ?? "请输入${widget.maxLength.toString()}位数验证码"),
-          border: const OutlineInputBorder(),
-          suffixIcon: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              UiButton.text(
-                label: "粘贴",
-                minWidth: 60,
-                onPressed: paste,
-              ),
-              CountdownButton(
-                disabled: widget.disabled,
-                controller: widget.controller,
-                onPressed: widget.onPressed,
-              ),
-            ],
-          )),
+        label: Text(widget.labelText ?? "请输入${widget.maxLength.toString()}位数验证码"),
+        border: const OutlineInputBorder(),
+        suffixIcon: CountdownButton(
+          disabled: widget.disabled,
+          controller: widget.controller,
+          onPressed: widget.onPressed,
+        ),
+      ),
     );
   }
 }

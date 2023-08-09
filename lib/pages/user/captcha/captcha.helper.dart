@@ -42,22 +42,18 @@ enum CaptchaSession {
     String? account,
   ) {
     switch (this) {
-      case boundDevice:
-        return apis.user.validateBindDevice({
-          "device": device,
-          "captcha": captcha,
-        });
       case addF2A:
         return apis.user.validateF2A({
           "device": device,
           "captcha": captcha,
         });
-      case CaptchaSession.boundFunds:
+      case boundFunds:
         return apis.user.updatePayPwd({
           "device": device,
         });
-      case CaptchaSession.forget:
-      case CaptchaSession.register:
+      case boundDevice:
+      case forget:
+      case register:
         return apis.security.validateOpenCaptcha({
           "session": value,
           "device": device.value,

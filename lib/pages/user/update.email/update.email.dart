@@ -1,6 +1,4 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/code_field/code_field.dart';
@@ -9,6 +7,7 @@ import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
+import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
 
@@ -55,14 +54,22 @@ class _UpdateEmailState extends State<UpdateEmail> {
         okButtonText: "完成",
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
-            await apis.security.validateCaptcha({
+            final token = await apis.security.validateOpenCaptcha({
               "session": CaptchaSession.boundDevice.value,
               "device": CaptchaDevice.email.value,
               "captcha": captchaController.text,
+              "account": controller.text,
             });
-            ProviderContainer().read(userProvider.notifier).updateUser();
+
+            await apis.user.bindDevice({
+              "account": controller.text,
+              "boundToken": token,
+              "boundDevice": CaptchaDevice.email.value,
+            });
+
+            provider.read(userProvider.notifier).updateUser();
             context.pop();
-            Modal.showText(text: "邮箱设置成功");
+            Modal.showText(text: "邮箱修改成功");
           }
         },
         children: [
@@ -93,7 +100,6 @@ class _UpdateEmailState extends State<UpdateEmail> {
               try {
                 await apis.user.sendCaptchaWithLogout({
                   "session": CaptchaSession.boundDevice.value,
-                  "username": global.user.base.username,
                   "device": CaptchaDevice.email.value,
                   "account": controller.text,
                 });

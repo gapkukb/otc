@@ -71,7 +71,7 @@ class RebateStatics extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
                 child: Row(
                   children: [
-                    _buildTabBodyItem("佣金收益", "${current.commissionTotal} USDT"),
+                    _buildTabBodyItem("佣金收益", "${current.commissionTotal} USD"),
                     _buildTabBodyItem("开始做市的好友", current.markerFriends.toString()),
                     _buildTabBodyItem("好友", current.friends.toString()),
                   ],

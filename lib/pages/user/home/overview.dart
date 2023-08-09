@@ -14,9 +14,9 @@ class Overview extends ConsumerWidget {
   Widget build(context, ref) {
     final stats = ref.watch(balanceProvider);
     final List<dynamic> items = [
-      {"label": "账户余额", "value": stats.balance, "unit": "USDT"},
-      {"label": "可用余额", "value": stats.valid, "unit": "USDT"},
-      {"label": "冻结余额", "value": stats.freezed, "unit": "USDT"},
+      {"label": "账户余额", "value": stats.balance, "unit": "USD"},
+      {"label": "可用余额", "value": stats.valid, "unit": "USD"},
+      {"label": "冻结余额", "value": stats.freezed, "unit": "USD"},
     ];
     return Flex(
       direction: context.responsive(
