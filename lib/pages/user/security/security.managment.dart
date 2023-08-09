@@ -4,8 +4,9 @@ class SecurityManagment extends StatelessWidget {
   final UserBaseModel user;
   const SecurityManagment({super.key, required this.user});
 
-  List<_Item> _items(BuildContext context) {
-    return [
+  @override
+  Widget build(BuildContext context) {
+    final items = [
       _Item(
         typeId: 0,
         name: "登录密码",
@@ -32,11 +33,7 @@ class SecurityManagment extends StatelessWidget {
         ),
       ),
     ];
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    final items = _items(context);
     return Panel(
       title: "安全管理",
       child: Padding(

@@ -44,6 +44,7 @@ class _F2AState extends State<F2A> {
         await apis.user.bindF2A({"value": _controller.text});
         context.read(userProvider.notifier).updateUser();
         context.pop();
+        Modal.showText(text: "谷歌验证器绑定成功");
       },
       children: [
         const Text(
@@ -146,8 +147,7 @@ class _F2AState extends State<F2A> {
           child: Row(
             children: [
               QrImageView(
-                data:
-                    "otpauth://totp/maoerduo:${global.user!.base.username}?secret=${widget.text}",
+                data: "otpauth://totp/maoerduo:${global.user!.base.username}?secret=${widget.text}",
                 version: QrVersions.auto,
                 size: 86,
                 padding: const EdgeInsets.all(2),
@@ -162,8 +162,7 @@ class _F2AState extends State<F2A> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade700),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
                       ),
                       child: ListTile(
                         contentPadding: const EdgeInsets.only(left: 16),

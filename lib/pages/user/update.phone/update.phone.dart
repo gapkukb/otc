@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/code_field/code_field.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/components/text_form_field_email/text_form_field_email.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
+import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/theme/text_theme.dart';
 
@@ -54,12 +55,20 @@ class _UpdatePhoneState extends State<UpdatePhone> {
         onCompelete: (_) async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            await apis.user.validateBindDevice({
+            final token = await apis.security.validateOpenCaptcha({
               ..._formState,
+              "session": CaptchaSession.boundDevice.value,
               "device": CaptchaDevice.phone.value,
             });
-            ProviderContainer().read(userProvider.notifier).updateUser();
+            await apis.user.bindDevice({
+              "account": controller.text,
+              "boundToken": token,
+              "boundDevice": CaptchaDevice.phone.value,
+            });
+
+            provider.read(userProvider.notifier).updateUser();
             context.pop();
+            Modal.showText(text: "邮箱修改成功");
           }
         },
         children: [
@@ -74,7 +83,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
           ),
           const SizedBox(height: 24),
           TextFormFieldPhone(
-            name: "device",
+            name: "account",
             formState: _formState,
             controller: controller,
             labelText: "新手机",
@@ -92,7 +101,6 @@ class _UpdatePhoneState extends State<UpdatePhone> {
               try {
                 await apis.user.sendCaptchaWithLogout({
                   "session": CaptchaSession.boundDevice.value,
-                  "username": global.user.base.username,
                   "device": CaptchaDevice.phone.value,
                   "account": controller.text,
                 });

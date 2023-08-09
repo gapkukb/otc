@@ -6,20 +6,16 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
+import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 
 part './auth.helper.dart';
 
-class UserAuth extends ConsumerStatefulWidget {
+class UserAuth extends ConsumerWidget {
   const UserAuth({super.key});
 
-  @override
-  ConsumerState<UserAuth> createState() => _UserAuthState();
-}
-
-class _UserAuthState extends ConsumerState<UserAuth> {
   static const List<Map<String, dynamic>> statusText = [
     {"text": "审核中", "color": Colors.red},
     {"text": "已完成认证", "color": Colors.green},
@@ -27,41 +23,38 @@ class _UserAuthState extends ConsumerState<UserAuth> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final user = ref.read(userBaseProvider);
     final kyc = ref.watch(kycProvider);
 
-    final List<dynamic> items = [
-      {
-        "level": "初级认证",
-        "status": kyc?.lv1Status ?? KycStatus.reject,
-        "title": "提币限额2000 USDT1每日",
-        // "title": "法币限额50000 USDT 每日，提币限额2000 USDT1每日",
-        "precondition": true,
-        "subtitle": "要求：1.姓名    2.年龄    3.身份证",
-        "onTap": (BuildContext context) {
-          context.push(Routes.authPrimary);
-        }
-      },
-      {
-        "level": "中级认证",
-        "status": kyc?.lv2Status ?? KycStatus.reject,
-        "title": "法币限额 200000 USDT 每日，提币限额 5000 USDT 每日",
-        "precondition": kyc?.lv1Status == KycStatus.pass,
-        "subtitle": "要求：1.手持身份证照片",
-        "onTap": (BuildContext context) {
-          context.pushNamed(Routes.authJunior);
-        }
-      },
-      {
-        "level": "高级认证",
-        "status": kyc?.lv3Status ?? KycStatus.reject,
-        "title": "无限额法币交易，提币限额 10000 USDT 每日",
-        "subtitle": "要求：1.手持身份证照片视频",
-        "precondition": kyc?.lv2Status == KycStatus.pass,
-        "onTap": (BuildContext context) {
-          context.pushNamed(Routes.authSenior);
-        }
-      },
+    final level = AuthLevel.getByName(
+      kyc?.lv1Status == KycStatus.pass,
+      kyc?.lv2Status == KycStatus.pass,
+      kyc?.lv3Status == KycStatus.pass,
+    );
+
+    final List<_Item> items = [
+      _Item(
+          level: AuthLevel.kyc1,
+          status: kyc?.lv3Status ?? KycStatus.reject,
+          precondition: true,
+          onTap: (BuildContext context) {
+            context.push(Routes.authPrimary);
+          }),
+      _Item(
+          level: AuthLevel.kyc2,
+          status: kyc?.lv2Status ?? KycStatus.reject,
+          precondition: kyc?.lv1Status == KycStatus.pass,
+          onTap: (BuildContext context) {
+            context.push(Routes.authJunior);
+          }),
+      _Item(
+          level: AuthLevel.kyc3,
+          status: kyc?.lv1Status ?? KycStatus.reject,
+          precondition: kyc?.lv2Status == KycStatus.pass,
+          onTap: (BuildContext context) {
+            context.push(Routes.authSenior);
+          }),
     ];
 
     return Material(
@@ -71,14 +64,13 @@ class _UserAuthState extends ConsumerState<UserAuth> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildBasement(),
+            _buildBasement(context, user, level),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: items.length,
-              // separatorBuilder: (context, index) => const SizedBox(height: 0),
-              itemBuilder: (context, index) {
-                return _buildCard(items[index]);
+              itemBuilder: (_, index) {
+                return _buildCard(context, items[index]);
               },
             )
           ],
@@ -87,10 +79,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
     );
   }
 
-  Card _buildBasement() {
-    final user = ref.read(userBaseProvider);
-    final kyc = ref.read(kycProvider);
-
+  Card _buildBasement(BuildContext context, UserBaseModel user, AuthLevel level) {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -117,11 +106,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  _buildKycStatus(
-                    kyc?.lv1Status == KycStatus.pass,
-                    kyc?.lv2Status == KycStatus.pass,
-                    kyc?.lv3Status == KycStatus.pass,
-                  ),
+                  _buildKycStatus(context, level),
                 ],
               ),
             ),
@@ -136,8 +121,8 @@ class _UserAuthState extends ConsumerState<UserAuth> {
                   ),
                   const SizedBox(height: 16),
                   _buildItem("数字货币充值限额", "无限额", true),
-                  _buildItem("数字货币提币限额", "0 USDT 每日", true),
-                  _buildItem("法币充值&提现限额", "0 USDT 每日", true),
+                  _buildItem("数字货币提币限额", "${level.withdrawLimit} USDT 每日", true),
+                  _buildItem("法币充值&提现限额", "${level.transferLimit} USDT 每日", true),
                   _buildItem("C2C交易限额", "无限额", true),
                 ],
               ),
@@ -148,48 +133,21 @@ class _UserAuthState extends ConsumerState<UserAuth> {
     );
   }
 
-  _buildItem(String label, String value, [bool? style]) {
-    return Cell(
-      height: 30,
-      titleText: label,
-      trailingText: value,
-      trailingTextStyle: style == true ? Font.smallGrey : null,
-    );
-  }
-
-  _buildKycStatus(bool level1, level2, level3) {
-    String text = "未认证";
-    if (level3) {
-      text = "高级认证";
-    } else if (level2) {
-      text = "中级认证";
-    } else if (level1) {
-      text = "初级认证";
-    }
-    return Chip(
-      label: Text(text),
-      backgroundColor: text == "未认证" ? Theme.of(context).disabledColor : Theme.of(context).primaryColor,
-      labelStyle: const TextStyle(color: Colors.white),
-      side: const BorderSide(color: Colors.transparent),
-      shape: const StadiumBorder(),
-    );
-  }
-
-  _buildCard(dynamic item) {
-    final enble = (item['status'] == null || item['status'] == KycStatus.reject) && item["precondition"];
-    final config = statusText[(item['status'] as KycStatus).index];
+  _buildCard(BuildContext context, _Item item) {
+    final enable = item.status == KycStatus.reject && item.precondition;
+    final config = statusText[item.status.index];
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      color: enble ? null : Colors.grey.shade100,
+      color: enable ? null : Colors.grey.shade100,
       child: ListTile(
-        onTap: enble ? () => item['onTap'](context) : null,
+        onTap: enable ? () => item.onTap(context) : null,
         isThreeLine: true,
         contentPadding: const EdgeInsets.only(left: 8),
         leading: SizedBox(
           width: 24,
           child: Checkbox(
-            value: item['status'] == KycStatus.pass,
+            value: item.status == KycStatus.pass,
             onChanged: null,
           ),
         ),
@@ -197,14 +155,14 @@ class _UserAuthState extends ConsumerState<UserAuth> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              item['level'],
+              item.level.title,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey.shade700,
               ),
             ),
             Text(
-              item['title'],
+              "提币限额 ${item.level.withdrawLimit} USDT 每日，平台转账限额 ${item.level.transferLimit} USDT 每日",
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -214,7 +172,7 @@ class _UserAuthState extends ConsumerState<UserAuth> {
           ],
         ),
         subtitle: Text(
-          item['subtitle'],
+          item.level.requirement,
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey.shade700,
@@ -235,4 +193,38 @@ class _UserAuthState extends ConsumerState<UserAuth> {
       ),
     );
   }
+
+  _buildItem(String label, String value, [bool? style]) {
+    return Cell(
+      height: 30,
+      titleText: label,
+      trailingText: value,
+      trailingTextStyle: style == true ? Font.smallGrey : null,
+    );
+  }
+
+  _buildKycStatus(BuildContext context, AuthLevel level) {
+    final theme = Theme.of(context);
+    return Chip(
+      label: Text(level.title),
+      backgroundColor: level == AuthLevel.kyc0 ? theme.disabledColor : theme.primaryColor,
+      labelStyle: const TextStyle(color: Colors.white),
+      side: const BorderSide(color: Colors.transparent),
+      shape: const StadiumBorder(),
+    );
+  }
+}
+
+class _Item {
+  final AuthLevel level;
+  final KycStatus status;
+  final bool precondition;
+  final Function onTap;
+
+  const _Item({
+    required this.level,
+    required this.status,
+    required this.precondition,
+    required this.onTap,
+  });
 }

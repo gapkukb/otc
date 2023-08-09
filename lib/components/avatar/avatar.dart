@@ -16,6 +16,6 @@ class Avatar extends CircleAvatar {
   }) : super(
           backgroundColor: Colors.grey.withOpacity(0.2),
           foregroundImage: (avatar == null || avatar.isEmpty) ? null : NetworkImage("$fileUrl/$avatar"),
-          child: (avatar == null || avatar.isEmpty) ? const Icon(Icons.account_circle_outlined) : null,
+          child: (avatar == null || avatar.isEmpty) ? Image.asset("assets/images/default_avatar.png") : null,
         );
 }
