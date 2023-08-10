@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/number.dart';
+import 'package:otc/utils/predication.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -38,9 +39,15 @@ class Overview extends ConsumerWidget {
               child: UiButton(
                 variant: UiButtonVariant.outline,
                 size: UiButtonSize.medium,
-                label: "提现",
-                onPressed: () {
-                  context.push(Routes.withdrawal);
+                label: "提币",
+                onPressed: () async {
+                  if (await predication(types: [
+                    Predication.phone,
+                    Predication.kyc1,
+                    Predication.funds,
+                  ])) {
+                    context.push(Routes.withdrawal);
+                  }
                 },
               ),
             ),

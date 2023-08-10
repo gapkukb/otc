@@ -7,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/global/global.dart';
+import 'package:otc/models/kyc/kyc.model.dart';
+import 'package:otc/providers/bank.provider.dart';
 import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
@@ -49,7 +51,10 @@ class _AppState extends ConsumerState<App> {
         ..updateUser()
         ..timerRefreshToken();
       ref.read(walletProvider.notifier).updateWallet();
-      ref.read(otcProvider.notifier).updateOTC();
+
+      if (ref.read(kycProvider)?.lv1Status == KycStatus.pass) {
+        ref.read(otcProvider.notifier).updateOTC();
+      }
     }
 
     theme.addListener(themeHandle);

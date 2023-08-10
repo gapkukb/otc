@@ -17,7 +17,8 @@ _$_WalletQrcodeModel _$$_WalletQrcodeModelFromJson(Map<String, dynamic> json) =>
           $enumDecode(_$PaymentMethodsEnumMap, json['paymentMethod']),
       name: json['name'] as String,
       defaultUse: json['defaultUse'] as bool,
-      used: json['used'] as bool,
+      used: json['used'] as bool?,
+      disabled: json['disabled'] as bool?,
     );
 
 Map<String, dynamic> _$$_WalletQrcodeModelToJson(
@@ -32,6 +33,7 @@ Map<String, dynamic> _$$_WalletQrcodeModelToJson(
       'name': instance.name,
       'defaultUse': instance.defaultUse,
       'used': instance.used,
+      'disabled': instance.disabled,
     };
 
 const _$PaymentMethodsEnumMap = {

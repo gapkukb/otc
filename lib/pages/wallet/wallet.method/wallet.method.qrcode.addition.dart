@@ -1,9 +1,8 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/gap/gap.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/upload/upload.dart';
 import 'package:otc/pages/wallet/wallet.method/bank.provider.dart';
@@ -52,7 +51,8 @@ class _WalletMethodQRcodeAdditionState extends State<WalletMethodQRcodeAddition>
             });
 
             await apis.wallet.addQRcode(_formState);
-
+            context.pop(true);
+            Modal.showText(text: "添加成功");
             provider.refresh(qrcodeProvider(widget.addType));
           }
         },
@@ -78,8 +78,8 @@ class _WalletMethodQRcodeAdditionState extends State<WalletMethodQRcodeAddition>
           ),
           const Gap.small(),
           UiTextFormField(
-            formState: _formState,
             name: "title",
+            formState: _formState,
             maxLength: 20,
             labelText: "备注",
             validator: (value) {
@@ -87,19 +87,17 @@ class _WalletMethodQRcodeAdditionState extends State<WalletMethodQRcodeAddition>
             },
           ),
           Upload(
-            name: "qrcode",
             titles: const ["收款二维码（选填）"],
             controller: controller,
             itemSize: 150,
             max: 1,
-            formStore: _formState,
             validator: (files) {
               return files.isEmpty ? "请上传二维码" : null;
             },
           ),
           const SizedBox(height: 16),
           const Text(
-            "温馨提示：当您出售数字货币时，您选择的收款方式将向买方展示，请确认信息填写准确无误。",
+            "温馨提示：上传的二维码是账号二维码，非收款二维码。\n微信和支付宝交易最好先加好友再进行交易。",
             style: Font.miniGrey,
           )
         ],

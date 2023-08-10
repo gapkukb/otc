@@ -1,13 +1,11 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/pages/wallet/wallet.method/bank.provider.dart';
 import 'package:otc/providers/provider.dart';
-import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
@@ -22,7 +20,7 @@ class WalletMethodBank extends ConsumerWidget {
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      error: (err, stack) => Text('Error: $err'),
+      error: (err, stack) => Text(err.toString() + stack.toString()),
       data: (items) {
         return DataTable2(
           columnSpacing: 8,
@@ -55,7 +53,7 @@ class WalletMethodBank extends ConsumerWidget {
                     label: "删除",
                     onPressed: () {
                       Modal.confirm(
-                        content: "确认要删除改收款地址吗",
+                        content: "确认要删除该收款地址吗",
                         onOk: () async {
                           await apis.wallet.deleteBankCard({"reference": item.reference});
                           provider.refresh(bankProvider);

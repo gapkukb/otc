@@ -70,7 +70,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
       },
     },
     {
-      "child": "提现",
+      "child": "提币",
       "onPressed": (BuildContext context) async {
         if (await predication(types: [Predication.kyc1])) {
           context.push(Routes.withdrawal);
@@ -78,7 +78,7 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
       },
     },
     {
-      "child": "站内转账",
+      "child": "平台转账",
       "variant": UiButtonVariant.outline,
       "onPressed": (BuildContext context) {
         context.push(Routes.transfer);

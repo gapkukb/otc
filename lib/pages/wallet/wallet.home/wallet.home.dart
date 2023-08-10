@@ -69,7 +69,7 @@ class WalletHome extends ConsumerWidget {
         },
       },
       {
-        "child": "提现",
+        "child": "提币",
         "variant": UiButtonVariant.outline,
         "onPressed": () async {
           if (await predication(types: [Predication.kyc1])) {
@@ -78,7 +78,7 @@ class WalletHome extends ConsumerWidget {
         },
       },
       {
-        "child": "站内转账",
+        "child": "平台转账",
         "variant": UiButtonVariant.outline,
         "onPressed": () {
           context.push(Routes.transfer);
@@ -213,13 +213,13 @@ class WalletHome extends ConsumerWidget {
           ),
         ),
         DataCell(
-          Text("${(item['balance'] as num).decimalize()} USDT"),
+          Text("${(item['balance'] as num).decimalize()} USD"),
         ),
         DataCell(
-          Text("${(item['validBalance'] as num).decimalize()} USDT"),
+          Text("${(item['validBalance'] as num).decimalize()} USD"),
         ),
         DataCell(
-          Text("${(item['invalidBalance'] as num).decimalize()} USDT"),
+          Text("${(item['invalidBalance'] as num).decimalize()} USD"),
         ),
         DataCell(
           UiButton(

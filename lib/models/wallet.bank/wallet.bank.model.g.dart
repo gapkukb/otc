@@ -16,7 +16,8 @@ _$_WalletBankModel _$$_WalletBankModelFromJson(Map<String, dynamic> json) =>
       bankBranch: json['bankBranch'] as String,
       defaultUsed: json['defaultUsed'] as bool,
       name: json['name'] as String,
-      used: json['used'] as bool,
+      disabled: json['disabled'] as bool?,
+      used: json['used'] as bool?,
     );
 
 Map<String, dynamic> _$$_WalletBankModelToJson(_$_WalletBankModel instance) =>
@@ -29,5 +30,6 @@ Map<String, dynamic> _$$_WalletBankModelToJson(_$_WalletBankModel instance) =>
       'bankBranch': instance.bankBranch,
       'defaultUsed': instance.defaultUsed,
       'name': instance.name,
+      'disabled': instance.disabled,
       'used': instance.used,
     };

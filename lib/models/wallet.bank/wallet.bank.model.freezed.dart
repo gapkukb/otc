@@ -43,7 +43,8 @@ mixin _$WalletBankModel {
 
   /// 	户主名
   String get name => throw _privateConstructorUsedError;
-  bool get used => throw _privateConstructorUsedError;
+  bool? get disabled => throw _privateConstructorUsedError;
+  bool? get used => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -66,7 +67,8 @@ abstract class $WalletBankModelCopyWith<$Res> {
       String bankBranch,
       bool defaultUsed,
       String name,
-      bool used});
+      bool? disabled,
+      bool? used});
 }
 
 /// @nodoc
@@ -90,7 +92,8 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
-    Object? used = null,
+    Object? disabled = freezed,
+    Object? used = freezed,
   }) {
     return _then(_value.copyWith(
       reference: null == reference
@@ -125,10 +128,14 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      used: null == used
+      disabled: freezed == disabled
+          ? _value.disabled
+          : disabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      used: freezed == used
           ? _value.used
           : used // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ) as $Val);
   }
 }
@@ -150,7 +157,8 @@ abstract class _$$_WalletBankModelCopyWith<$Res>
       String bankBranch,
       bool defaultUsed,
       String name,
-      bool used});
+      bool? disabled,
+      bool? used});
 }
 
 /// @nodoc
@@ -172,7 +180,8 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
-    Object? used = null,
+    Object? disabled = freezed,
+    Object? used = freezed,
   }) {
     return _then(_$_WalletBankModel(
       reference: null == reference
@@ -207,10 +216,14 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      used: null == used
+      disabled: freezed == disabled
+          ? _value.disabled
+          : disabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      used: freezed == used
           ? _value.used
           : used // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -227,6 +240,7 @@ class _$_WalletBankModel implements _WalletBankModel {
       required this.bankBranch,
       required this.defaultUsed,
       required this.name,
+      required this.disabled,
       required this.used});
 
   factory _$_WalletBankModel.fromJson(Map<String, dynamic> json) =>
@@ -264,11 +278,13 @@ class _$_WalletBankModel implements _WalletBankModel {
   @override
   final String name;
   @override
-  final bool used;
+  final bool? disabled;
+  @override
+  final bool? used;
 
   @override
   String toString() {
-    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name, used: $used)';
+    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name, disabled: $disabled, used: $used)';
   }
 
   @override
@@ -288,13 +304,15 @@ class _$_WalletBankModel implements _WalletBankModel {
             (identical(other.defaultUsed, defaultUsed) ||
                 other.defaultUsed == defaultUsed) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.disabled, disabled) ||
+                other.disabled == disabled) &&
             (identical(other.used, used) || other.used == used));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, reference, title, cardNumber,
-      account, bank, bankBranch, defaultUsed, name, used);
+      account, bank, bankBranch, defaultUsed, name, disabled, used);
 
   @JsonKey(ignore: true)
   @override
@@ -320,7 +338,8 @@ abstract class _WalletBankModel implements WalletBankModel {
       required final String bankBranch,
       required final bool defaultUsed,
       required final String name,
-      required final bool used}) = _$_WalletBankModel;
+      required final bool? disabled,
+      required final bool? used}) = _$_WalletBankModel;
 
   factory _WalletBankModel.fromJson(Map<String, dynamic> json) =
       _$_WalletBankModel.fromJson;
@@ -358,7 +377,9 @@ abstract class _WalletBankModel implements WalletBankModel {
   /// 	户主名
   String get name;
   @override
-  bool get used;
+  bool? get disabled;
+  @override
+  bool? get used;
   @override
   @JsonKey(ignore: true)
   _$$_WalletBankModelCopyWith<_$_WalletBankModel> get copyWith =>

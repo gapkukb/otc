@@ -43,10 +43,10 @@ class _Wallet {
   final getAllQRcode = post<List<dynamic>>("/customer/qrcode/list");
 
   /// 新增二维码
-  final addQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/add");
+  final addQRcode = post("/customer/qrcode/add");
 
   /// 新增二维码
-  final deleteQRcode = post<List<Map<String, dynamic>>>("/customer/qrcode/delete");
+  final deleteQRcode = post("/customer/qrcode/delete");
 
   /// 查询用户所有地址簿
   final getAddressBook = get("/customer/address-book/list");
@@ -74,6 +74,9 @@ class _Wallet {
 
   /// 使用地址簿-申请提款
   final withdrawWithBook = post("/payment/withdraw/apply/with-book");
+
+  /// 所有支持的银行
+  final supportedBanks = get("/customer/bankcard/support");
 }
 
 final walletApi = _Wallet();

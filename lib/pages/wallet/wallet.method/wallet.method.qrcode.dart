@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/modal/modal.dart';
+import 'package:otc/constants/base_url.dart';
 import 'package:otc/models/wallet.qrcode/wallet.qrcode.model.dart';
 import 'package:otc/pages/wallet/wallet.method/bank.provider.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class WalletQRcode extends ConsumerStatefulWidget {
   final AddType addType;
@@ -39,7 +39,7 @@ class _WalletQRcodeState extends ConsumerState<WalletQRcode> {
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      error: (err, stack) => Text('Error: $err'),
+      error: (err, stack) => Text(err.toString() + stack.toString()),
       data: (items) {
         return DataTable2(
           columnSpacing: 8,
@@ -78,22 +78,21 @@ class _WalletQRcodeState extends ConsumerState<WalletQRcode> {
                             return AlertDialog(
                               alignment: Alignment.center,
                               content: SizedBox(
-                                width: 300,
-                                height: 300,
-                                child: QrImageView(
-                                  data: "widget.qrcode",
-                                  // size: 300,
+                                width: 400,
+                                height: 400,
+                                child: Image.network(
+                                  fileUrl + item.content,
+                                  height: 400,
                                 ),
                               ),
                             );
                           },
                         );
                       },
-                      QrImageView(
-                        data: "widget.qrcode",
-                        size: 100,
+                      Image.network(
+                        fileUrl + item.content,
+                        height: 36,
                       ),
-                      // Image.network(baseUrl + '/' + item.content),
                     ),
                     DataCell(
                       UiButton(
@@ -102,10 +101,10 @@ class _WalletQRcodeState extends ConsumerState<WalletQRcode> {
                         label: "删除",
                         onPressed: () {
                           Modal.confirm(
-                            content: "确认要删除改收款地址吗",
+                            content: "确认要删除该收款地址吗",
                             onOk: () async {
                               await apis.wallet.deleteQRcode({"reference": item.reference});
-                              provider.refresh(bankProvider);
+                              provider.refresh(qrcodeProvider(widget.addType));
                             },
                           );
                         },
@@ -118,68 +117,6 @@ class _WalletQRcodeState extends ConsumerState<WalletQRcode> {
           empty: const UiEmptyView(),
         );
       },
-    );
-  }
-
-  createOverlay(BuildContext context) {
-    _overlayEntry = OverlayEntry(
-      builder: (context) {
-        return GestureDetector(
-          onTap: () {
-            _overlayEntry!.remove();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            color: Colors.transparent,
-            child: Positioned(
-              left: 0,
-              child: SizedBox(
-                width: 300,
-                height: 300,
-                child: QrImageView(
-                  data: "widget.qrcode",
-                  size: 100,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-
-    Overlay.of(context).insert(_overlayEntry!);
-  }
-}
-
-class _Qrcode extends StatefulWidget {
-  final String qrcode;
-  const _Qrcode({
-    super.key,
-    required this.qrcode,
-  });
-
-  @override
-  State<_Qrcode> createState() => _QrcodeState();
-}
-
-class _QrcodeState extends State<_Qrcode> {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        QrImageView(
-          data: widget.qrcode,
-          size: 100,
-        ),
-        Positioned(
-          width: 300,
-          height: 300,
-          child: QrImageView(
-            data: widget.qrcode,
-            size: 300,
-          ),
-        )
-      ],
     );
   }
 }

@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/constants/banks.dart';
 import 'package:otc/pages/wallet/wallet.method/bank.provider.dart';
+import 'package:otc/providers/bank.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_chip.dart';
+import 'package:otc/widgets/ui_empty_view.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class WalletMethodBankAddition extends StatefulWidget {
@@ -37,8 +43,9 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
               "account": _formState['cardNumber'],
               ..._formState,
             });
-            provider.refresh(bankProvider);
             context.pop(true);
+            Modal.showText(text: "添加成功");
+            provider.refresh(bankProvider);
           }
         },
         children: [
@@ -48,6 +55,30 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
             decoration: const InputDecoration(label: Text("姓名"), hintText: "请输入银行卡户主姓名"),
             validator: (value) {
               return value!.trim().isNotEmpty ? null : "姓名不能为空";
+            },
+          ),
+          const SizedBox(height: 16),
+          Consumer(
+            builder: (context, ref, child) {
+              final future = ref.watch(banksProvider);
+              return Dropdown(
+                formState: _formState,
+                name: "bank",
+                labelText: "开户银行",
+                searchHintText: "请输入银行名称或银行代码",
+                asyncItems: (text) async {
+                  final Completer<List<DropdownItem>> completer = Completer();
+                  future.whenData((value) => {
+                        completer.complete(value.map((val) {
+                          return DropdownItem(title: val['name']!, value: val['code'], trailing: val['code']);
+                        }).toList())
+                      });
+                  return await completer.future;
+                },
+                validator: (value) {
+                  return value == null ? "请选择开户行" : null;
+                },
+              );
             },
           ),
           const SizedBox(height: 16),
@@ -61,35 +92,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
               hintText: "请输入银行账号/卡号",
             ),
             validator: (value) {
-              return value!.trim().isNotEmpty ? null : "银行卡号不能为空";
-            },
-          ),
-          const SizedBox(height: 16),
-          Dropdown(
-            formState: _formState,
-            name: "bank",
-            labelText: "开户银行",
-            searchHintText: "请输入银行名称或银行代码",
-            data: Banks.values
-                .map(
-                  (e) => DropdownItem(
-                    title: e.chinese,
-                    trailing: e.name,
-                    value: e.name,
-                  ),
-                )
-                .toList(),
-          ),
-          const SizedBox(height: 16),
-          UiTextFormField(
-            name: "title",
-            formState: _formState,
-            decoration: const InputDecoration(
-              label: Text("备注"),
-              hintText: "添加备注方便您更容易甄别银行卡信息",
-            ),
-            validator: (value) {
-              return value!.trim().isNotEmpty ? null : "银行卡号不能为空";
+              return value!.isNotEmpty ? null : "请填写银行卡号";
             },
           ),
           const SizedBox(height: 16),
@@ -97,7 +100,19 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
             name: "bankBranch",
             formState: _formState,
             decoration: const InputDecoration(
-              label: Text("开户支行（选填）"),
+              label: Text("开户支行"),
+            ),
+            validator: (value) {
+              return value!.isNotEmpty ? null : "请填写开户支行";
+            },
+          ),
+          const SizedBox(height: 16),
+          UiTextFormField(
+            name: "title",
+            formState: _formState,
+            decoration: const InputDecoration(
+              label: Text("备注（选填）"),
+              hintText: "添加备注方便您更容易甄别银行卡信息",
             ),
           ),
           const SizedBox(height: 16),
@@ -119,7 +134,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "秘钥可用于找回谷歌验证器，请勿透露给他人并妥善备份保存",
+                  "请确保添加您的银行卡号以进行即时付款。请勿包含其他银行或付款方式的详细信息。您必须添加所选银行的付款/收款信息。",
                   style: Font.miniGrey,
                 )
               ],

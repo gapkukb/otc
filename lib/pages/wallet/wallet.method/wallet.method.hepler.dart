@@ -27,7 +27,7 @@ void Function() verify(BuildContext context, FutureOr Function() then) {
         title: "交易资格",
         content: "您必须完成手机绑定才能使用此功能。",
         onOk: () {
-          context.push(Routes.updatePhone);
+          context.push(Routes.security);
         },
       );
       return;
@@ -38,7 +38,7 @@ void Function() verify(BuildContext context, FutureOr Function() then) {
         title: "交易资格",
         content: "您必须完成至少KYC1级别的身份认证才能使用此功能。",
         onOk: () {
-          context.push(Routes.authPrimary);
+          context.push(Routes.auth);
         },
       );
       return;
