@@ -39,7 +39,6 @@ class SecurityAuthrization extends StatelessWidget {
           label: user.googleSecretValid ? "修改" : "绑定",
           onPressed: () async {
             final String code = await apis.user.applyF2A();
-            print(code);
             await context.pushNamed(Routes.f2a, extra: code);
           },
         ),

@@ -8,6 +8,7 @@ import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/number.dart';
+import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class WalletHome extends ConsumerWidget {
@@ -70,8 +71,10 @@ class WalletHome extends ConsumerWidget {
       {
         "child": "提现",
         "variant": UiButtonVariant.outline,
-        "onPressed": () {
-          context.push(Routes.withdrawal);
+        "onPressed": () async {
+          if (await predication(types: [Predication.kyc1])) {
+            context.push(Routes.withdrawal);
+          }
         },
       },
       {

@@ -21,6 +21,7 @@ import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/navigator.dart';
+import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 
 class Withdrawal extends StatefulWidget {
@@ -42,16 +43,6 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
-    //用户未完成身份认证，进入该页面，会出现弹框提示。
-    if (global.user.kyc?.lv1Status != KycStatus.pass) {
-      Modal.confirm(
-        content: "您必须完成初级身份认证或以上才可以使用提币功能",
-        okButtonText: "去认证",
-        onOk: () {
-          navigatorKey.currentContext!.go("/");
-        },
-      );
-    }
     super.initState();
   }
 

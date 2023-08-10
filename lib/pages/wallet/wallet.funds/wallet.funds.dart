@@ -71,8 +71,10 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
     },
     {
       "child": "提现",
-      "onPressed": (BuildContext context) {
-        context.push(Routes.withdrawal);
+      "onPressed": (BuildContext context) async {
+        if (await predication(types: [Predication.kyc1])) {
+          context.push(Routes.withdrawal);
+        }
       },
     },
     {
