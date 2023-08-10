@@ -5,9 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
-import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/router/router.dart';
-import 'package:otc/utils/navigator.dart';
 
 enum AddType {
   bank("BANK_CARD_TRANSFER", "银行卡"),
@@ -29,7 +27,7 @@ void Function() verify(BuildContext context, FutureOr Function() then) {
         title: "交易资格",
         content: "您必须完成手机绑定才能使用此功能。",
         onOk: () {
-          context.goNamed(Routes.updatePhone);
+          context.push(Routes.updatePhone);
         },
       );
       return;
@@ -40,7 +38,7 @@ void Function() verify(BuildContext context, FutureOr Function() then) {
         title: "交易资格",
         content: "您必须完成至少KYC1级别的身份认证才能使用此功能。",
         onOk: () {
-          context.goNamed(Routes.authPrimary);
+          context.push(Routes.authPrimary);
         },
       );
       return;

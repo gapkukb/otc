@@ -177,22 +177,22 @@ class Merchant extends ConsumerWidget {
       onPressed: () async {
         final kyc = ref.read(kycProvider);
         final balance = ref.read(balanceProvider);
-        if (balance.balance < 500) {
-          Modal.confirm(
-            title: "商户申请",
-            content: "您的账户余额不足500 USDT，请先充值。",
-            okButtonText: "充币",
-            onOk: () {
-              context.go(Routes.recharge);
-            },
-          );
-        } else if (kyc?.lv1Status == null) {
+        if (kyc?.lv1Status == null) {
           Modal.confirm(
             title: "商户申请",
             content: "您需要先完成初级或以上身份认证，请先认证",
             okButtonText: "去认证",
             onOk: () {
               context.go(Routes.auth);
+            },
+          );
+        } else if (balance.balance < 500) {
+          Modal.confirm(
+            title: "商户申请",
+            content: "您的账户余额不足500 USDT，请先充值。",
+            okButtonText: "充币",
+            onOk: () {
+              context.go(Routes.recharge);
             },
           );
         } else if ((await apis.wallet.getAllBankCards()).isEmpty) {
