@@ -66,7 +66,7 @@ class _CaptchaState extends State<Captcha> {
   }
 
   List<CaptchaDevice> get supportedModes {
-    if (widget.user == null) return [widget.preferredDevice!];
+    if (widget.account != null) return [widget.preferredDevice!];
     return CaptchaDevice.values.where((mode) => mode.isValid(widget.user?.base)).toList();
   }
 

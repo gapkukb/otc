@@ -1,5 +1,4 @@
-library auth;
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,11 +6,10 @@ import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
+import 'package:otc/pages/user/auth/auth.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
-
-part './auth.helper.dart';
 
 class UserAuth extends ConsumerWidget {
   const UserAuth({super.key});
@@ -26,37 +24,62 @@ class UserAuth extends ConsumerWidget {
   Widget build(context, ref) {
     final user = ref.read(userBaseProvider);
     final kyc = ref.watch(kycProvider);
-
-    final level = AuthLevel.getByName(
-      kyc?.lv1Status == KycStatus.pass,
-      kyc?.lv2Status == KycStatus.pass,
-      kyc?.lv3Status == KycStatus.pass,
-    );
+    final conf = ref.watch(kycConfigurationProvider);
 
     final List<_Item> items = [
       _Item(
-          level: AuthLevel.kyc1,
-          status: kyc?.lv3Status ?? KycStatus.reject,
-          precondition: true,
-          onTap: (BuildContext context) {
-            context.push(Routes.authPrimary);
-          }),
+        status: KycStatus.reject,
+        precondition: true,
+        withdrawLimit: 0,
+        transferLimit: 0,
+        title: "未认证",
+        requirement: "要求：1.姓名 2.年龄 3.身份证",
+        onTap: (BuildContext context) {
+          context.push(Routes.authPrimary);
+        },
+      ),
       _Item(
-          level: AuthLevel.kyc2,
-          status: kyc?.lv2Status ?? KycStatus.reject,
-          precondition: kyc?.lv1Status == KycStatus.pass,
-          onTap: (BuildContext context) {
-            context.push(Routes.authJunior);
-          }),
+        status: kyc?.lv1Status ?? KycStatus.reject,
+        precondition: true,
+        withdrawLimit: conf.dailyWithdrawKycLv1,
+        transferLimit: conf.dailyTransferKycLv1,
+        title: "初级认证",
+        requirement: "要求：1.姓名 2.年龄 3.身份证",
+        onTap: (BuildContext context) {
+          context.push(Routes.authPrimary);
+        },
+      ),
       _Item(
-          level: AuthLevel.kyc3,
-          status: kyc?.lv1Status ?? KycStatus.reject,
-          precondition: kyc?.lv2Status == KycStatus.pass,
-          onTap: (BuildContext context) {
-            context.push(Routes.authSenior);
-          }),
+        status: kyc?.lv2Status ?? KycStatus.reject,
+        precondition: kyc?.lv1Status == KycStatus.pass,
+        withdrawLimit: conf.dailyWithdrawKycLv2,
+        transferLimit: conf.dailyTransferKycLv2,
+        title: "中级认证",
+        requirement: "要求：1.手持身份证照片",
+        onTap: (BuildContext context) {
+          context.push(Routes.authJunior);
+        },
+      ),
+      _Item(
+        status: kyc?.lv3Status ?? KycStatus.reject,
+        precondition: kyc?.lv2Status == KycStatus.pass,
+        withdrawLimit: conf.dailyWithdrawKycLv3,
+        transferLimit: conf.dailyTransferKycLv3,
+        title: "高级认证",
+        requirement: "要求：1.手持身份证照片视频",
+        onTap: (BuildContext context) {
+          context.push(Routes.authSenior);
+        },
+      ),
     ];
 
+    final index = <bool>[
+      kyc?.lv1Status == KycStatus.pass,
+      kyc?.lv2Status == KycStatus.pass,
+      kyc?.lv3Status == KycStatus.pass,
+    ].indexWhere((element) => element == true);
+    final level = items[index + 1];
+    inspect(level);
     return Material(
       color: Colors.grey.shade50,
       child: SingleChildScrollView(
@@ -68,9 +91,9 @@ class UserAuth extends ConsumerWidget {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: items.length,
+              itemCount: items.length - 1,
               itemBuilder: (_, index) {
-                return _buildCard(context, items[index]);
+                return _buildCard(context, items[index + 1]);
               },
             )
           ],
@@ -79,7 +102,7 @@ class UserAuth extends ConsumerWidget {
     );
   }
 
-  Card _buildBasement(BuildContext context, UserBaseModel user, AuthLevel level) {
+  Card _buildBasement(BuildContext context, UserBaseModel user, _Item level) {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -155,14 +178,14 @@ class UserAuth extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              item.level.title,
+              item.title,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey.shade700,
               ),
             ),
             Text(
-              "提币限额 ${item.level.withdrawLimit} USDT 每日，平台转账限额 ${item.level.transferLimit} USDT 每日",
+              "提币限额 ${item.withdrawLimit} USDT 每日，平台转账限额 ${item.transferLimit} USDT 每日",
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -172,7 +195,7 @@ class UserAuth extends ConsumerWidget {
           ],
         ),
         subtitle: Text(
-          item.level.requirement,
+          item.requirement,
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey.shade700,
@@ -203,11 +226,11 @@ class UserAuth extends ConsumerWidget {
     );
   }
 
-  _buildKycStatus(BuildContext context, AuthLevel level) {
+  _buildKycStatus(BuildContext context, _Item level) {
     final theme = Theme.of(context);
     return Chip(
       label: Text(level.title),
-      backgroundColor: level == AuthLevel.kyc0 ? theme.disabledColor : theme.primaryColor,
+      backgroundColor: level.status == KycStatus.reject ? theme.disabledColor : theme.primaryColor,
       labelStyle: const TextStyle(color: Colors.white),
       side: const BorderSide(color: Colors.transparent),
       shape: const StadiumBorder(),
@@ -216,15 +239,21 @@ class UserAuth extends ConsumerWidget {
 }
 
 class _Item {
-  final AuthLevel level;
   final KycStatus status;
   final bool precondition;
   final Function onTap;
+  final num withdrawLimit;
+  final num transferLimit;
+  final String title;
+  final String requirement;
 
   const _Item({
-    required this.level,
     required this.status,
     required this.precondition,
     required this.onTap,
+    required this.withdrawLimit,
+    required this.transferLimit,
+    required this.title,
+    required this.requirement,
   });
 }

@@ -206,8 +206,10 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
         ..._formState,
       };
       await apis.user.register(payload);
-      await provider.read(userProvider.notifier).login(username: _formState['account'], password: _formState['password']);
-      rate = await apis.otc.getCommissionRate();
+      await provider.read(userProvider.notifier).login(
+            username: _formState['account'],
+            password: _formState['password'],
+          );
       setState(() {
         _successful = true;
       });

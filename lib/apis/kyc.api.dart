@@ -9,6 +9,9 @@ class _KycApi {
 
   /// 申请高级认证
   final authLv3 = post("/customer/kyc/apply/auth/lv3");
+
+  /// Kyc配置信息
+  final fetchConfig = get("/customer/kyc/setting");
 }
 
 final kycApi = _KycApi();

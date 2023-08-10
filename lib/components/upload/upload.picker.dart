@@ -39,7 +39,7 @@ class UploadPicker extends StatefulWidget {
 
 class _UploadPickerState extends State<UploadPicker> {
   XFile? file;
-  late VideoPlayerController? _controller;
+  VideoPlayerController? _controller;
 
   @override
   void initState() {

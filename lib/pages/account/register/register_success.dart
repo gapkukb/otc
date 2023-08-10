@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
-class RegisterSuccess extends StatelessWidget {
+class RegisterSuccess extends ConsumerWidget {
   final double rate;
   const RegisterSuccess({
     super.key,
@@ -11,7 +13,9 @@ class RegisterSuccess extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final otc = ref.watch(otcProvider);
+
     return SizedBox(
       height: 400,
       child: Column(
@@ -24,7 +28,7 @@ class RegisterSuccess extends StatelessWidget {
           ),
           // const SizedBox(height: 32),
           Text(
-            "全国招商计划正在火热进行中，加入做市商联盟可以获得高额返佣。每笔成交的星级订单，可获得不低于 $rate% 的返佣！！！",
+            "全国招商计划正在火热进行中，加入做市商联盟可以获得高额返佣。每笔成交的星级订单，可获得不低于${otc.lowestCommission}% 的返佣！！！",
             style: Theme.of(context).textTheme.labelLarge,
           ),
 
