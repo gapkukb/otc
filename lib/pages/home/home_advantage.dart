@@ -11,22 +11,22 @@ class HomeAdvantage extends StatelessWidget {
       {
         "image": Assets.images.image9.provider(),
         "title": "易于使用",
-        "subTitle": "选择XXX，实现投资自由",
+        "subTitle": "选择Maoerduo，实现投资自由",
       },
       {
         "image": Assets.images.image6.provider(),
         "title": "最高佣金",
-        "subTitle": "选择XXX，实现投资自由",
+        "subTitle": "全行业最高的做市佣金",
       },
       {
         "image": Assets.images.image7.provider(),
         "title": "全天候客服",
-        "subTitle": "选择XXX，实现投资自由",
+        "subTitle": "我们永远在此守候，竭诚为您服务",
       },
       {
         "image": Assets.images.image8.provider(),
         "title": "绝对安全",
-        "subTitle": "选择XXX，实现投资自由",
+        "subTitle": "为您提供安全可靠的交易环境",
       },
     ];
   }
@@ -37,7 +37,7 @@ class HomeAdvantage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Text(
-          "选择XXX的理由",
+          "选择Maoerduo的理由",
           style: Font.x6largeBold,
         ),
         const SizedBox(height: 96),
@@ -45,8 +45,7 @@ class HomeAdvantage extends StatelessWidget {
           itemCount: datalist.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate:
-              const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             crossAxisCount: 4,
             height: 420,
             // crossAxisSpacing: 32,

@@ -40,7 +40,7 @@ class HomeCarousel extends StatelessWidget {
               color: Colors.amber,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: item['image'].image(fit: BoxFit.cover),
+            child: Image.asset("assets/images/image_1.png"),
           ),
           onTap: () {},
         );

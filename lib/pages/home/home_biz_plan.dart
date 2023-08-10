@@ -5,6 +5,8 @@ import 'package:otc/components/auth_button/auth_button.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeBizPlan extends StatelessWidget {
   const HomeBizPlan({super.key});
@@ -30,16 +32,16 @@ class HomeBizPlan extends StatelessWidget {
         const SizedBox(height: 48),
         SizedBox(
           height: 48,
-          child: AuthButton(
-            child: UiButton(
-              shape: UiButtonShape.rounded,
-              iconData: Icons.keyboard_arrow_right,
-              label: "加入做市商联盟",
-              iconOnRight: true,
-              onPressed: () {
-                context.push(Routes.auth);
-              },
-            ),
+          child: UiButton(
+            shape: UiButtonShape.rounded,
+            iconData: Icons.keyboard_arrow_right,
+            label: "加入做市商联盟",
+            iconOnRight: true,
+            minWidth: 180,
+            onPressed: () {
+              final Uri _url = Uri.parse('https://flutter.dev');
+              launchUrl(_url);
+            },
           ),
         ),
         const SizedBox(height: 96),
@@ -104,7 +106,7 @@ class HomeBizPlan extends StatelessWidget {
       {
         "icon": Icons.attractions_outlined,
         "title": "0手续费发广告",
-        "description": "XXX在全球开展商户扶植计划，支持0手续费发布购买或出售广告。",
+        "description": "Maoerduo在全球开展商户扶植计划，支持0手续费发布购买或出售广告。",
       },
       {
         "icon": Icons.show_chart,

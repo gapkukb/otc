@@ -46,16 +46,15 @@ class _HomeServicesState extends State<HomeServices> {
     },
     {
       "title": "安全稳定",
-      "description":
-          "Mybit C2C采用T+1提现机制，对商家严格管理，风控大数据筛选排查可疑交易，确保平台资金安全，用户能安全交易。",
+      "description": "Maoerduo C2C采用T+1提现机制，对商家严格管理，风控大数据筛选排查可疑交易，确保平台资金安全，用户能安全交易。",
     },
     {
       "title": "佣金收益",
-      "description": "业界首创，Mybit商户独享。商户每完成一笔合法的星级订单，就可以享受到佣金分成。",
+      "description": "业界首创，Maoerduo商户独享。商户每完成一笔合法的星级订单，就可以享受到佣金分成。",
     },
     {
       "title": "简单方便",
-      "description": "Mybit用户友好型的界面设计让购买数字货币变得简单轻松",
+      "description": "Maoerduo用户友好型的界面设计让购买数字货币变得简单轻松",
     },
   ];
   item() {}
@@ -73,10 +72,7 @@ class _HomeServicesState extends State<HomeServices> {
             width: 40,
             height: 56,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color(0xff2D68FE),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(100)),
+            decoration: BoxDecoration(color: const Color(0xff2D68FE), shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(100)),
             child: Text(
               (index + 1).toString().padLeft(2, '0'),
               style: const TextStyle(

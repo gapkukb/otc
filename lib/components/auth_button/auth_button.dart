@@ -16,7 +16,7 @@ class AuthButton extends ConsumerWidget {
     final authed = ref.watch(authProvider);
 
     if (authed) return child;
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         context.push(Routes.login);
       },

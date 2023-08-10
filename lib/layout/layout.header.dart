@@ -103,12 +103,14 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
       UiButton(
         label: "登录",
         variant: UiButtonVariant.text,
+        size: UiButtonSize.medium,
         onPressed: () {
           _router.push(Routes.login);
         },
       ),
       UiButton(
         label: "注册",
+        size: UiButtonSize.medium,
         onPressed: () {
           _router.push(Routes.register);
         },

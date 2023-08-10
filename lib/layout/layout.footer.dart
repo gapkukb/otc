@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:otc/asstes/assets.gen.dart';
+import 'package:otc/components/logo/logo.dart';
 import 'package:otc/router/router.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,15 +27,16 @@ class LayoutFooter extends StatelessWidget {
 
   Widget our() {
     return ConstrainedBox(
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
         maxWidth: 334,
         minWidth: 0,
       ),
-      child: Column(
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset("assets/images/logo.png"),
-          const Text(
-            "Mybit 是一支总部位于新加坡，经过专业训练的计算机科学家和网络工程师组成的团队。我们致力于让您的交易更快，更安全。我们努力改善您的交易体验，让您尽享自由和安全：避免追踪、洗钱、及隐私泄漏。©2022 mybit.com",
+          Logo(),
+          Text(
+            "Maoerduo 是一支总部位于新加坡，经过专业训练的计算机科学家和网络工程师组成的团队。我们致力于让您的交易更快，更安全。我们努力改善您的交易体验，让您尽享自由和安全：避免追踪、洗钱、及隐私泄漏。©2022 mybit.com",
             style: TextStyle(),
           ),
         ],

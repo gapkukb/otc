@@ -8,11 +8,11 @@ part './dark_theme.dart';
 var brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
 class _Theme with ChangeNotifier {
-  int _mode = global.prefs.getInt("theme") ??
-      (brightness == Brightness.light
-          ? ThemeMode.light.index
-          : ThemeMode.dark.index);
-
+  // int _mode = global.prefs.getInt("theme") ??
+  //     (brightness == Brightness.light
+  //         ? ThemeMode.light.index
+  //         : ThemeMode.dark.index);
+  int _mode = ThemeMode.light.index;
   _Theme() {
     _presist();
   }
@@ -26,9 +26,7 @@ class _Theme with ChangeNotifier {
   // }
 
   toggleTheme() {
-    _mode = _mode == ThemeMode.light.index
-        ? ThemeMode.dark.index
-        : ThemeMode.light.index;
+    _mode = _mode == ThemeMode.light.index ? ThemeMode.dark.index : ThemeMode.light.index;
 
     notifyListeners();
     _presist();
