@@ -77,6 +77,9 @@ class _Wallet {
 
   /// 所有支持的银行
   final supportedBanks = get("/customer/bankcard/support");
+
+  /// 存取最小值
+  final transferLimit = get("/payment/limit");
 }
 
 final walletApi = _Wallet();

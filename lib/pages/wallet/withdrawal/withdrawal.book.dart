@@ -39,7 +39,10 @@ class _WithdrawalBookState extends State<WithdrawalBook> {
         Cell(
           height: 32,
           titleText: "提币地址",
-          trailingText: address,
+          trailing: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(address),
+          ),
         ),
         Cell(
           height: 32,

@@ -9,6 +9,7 @@ import 'package:otc/utils/formatter.dart';
 class AmountInput extends UiTextFormField {
   final Cryptocurrency coin;
   final double? maxAmount;
+  final double? minAmount;
   final String? hintText;
 
   AmountInput({
@@ -19,6 +20,7 @@ class AmountInput extends UiTextFormField {
     super.controller,
     required this.coin,
     this.maxAmount,
+    this.minAmount,
     this.hintText,
     super.onChanged,
   }) : super(
@@ -53,8 +55,13 @@ class AmountInput extends UiTextFormField {
               if (val == null) {
                 return "您的输入格式不正确";
               }
+
               if (maxAmount != null && val > maxAmount) {
-                return "请不要输入大于可用余额的数量";
+                return "最大提币额度：$maxAmount USDT";
+              }
+
+              if (minAmount != null && val < minAmount) {
+                return "最小提币额度：$minAmount USDT";
               }
               return null;
             });

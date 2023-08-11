@@ -6,7 +6,7 @@ import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
-import 'package:otc/pages/user/auth/auth.provider.dart';
+import 'package:otc/providers/kyc_configuration.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';

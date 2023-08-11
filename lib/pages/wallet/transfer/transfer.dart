@@ -95,35 +95,11 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
   }
 
   apply(BuildContext context) async {
-    if (global.user.kyc?.lv1Status != KycStatus.pass) {
-      Modal.confirm(
-        okButtonText: "去认证",
-        title: "交易资格",
-        content: "您必须完成至少KYC1级别的身份认证才能使用此功能。",
-        onOk: () {
-          context.push(Routes.authPrimary);
-        },
-      );
-      return;
-    }
-    if (!global.user.base.hasPaymentPassword) {
-      Modal.alert(
-        title: "提币提醒",
-        content: "您尚未设置资金密码",
-        okButtonText: "去设置",
-        onOk: () {
-          context
-            ..pop()
-            ..push(Routes.updateFundsPwd);
-        },
-      );
-      return;
-    }
     if (!await predication(
       context: context,
       types: [
-        Predication.funds,
         Predication.kyc1,
+        Predication.funds,
       ],
     )) {
       return;

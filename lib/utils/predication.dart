@@ -38,11 +38,9 @@ FutureOr<bool> predication({
       Modal.alert(
         title: "提币提醒",
         content: "您尚未设置资金密码",
-        okButtonText: "去设置",
+        okButtonText: "去开启",
         onOk: () {
-          ctx
-            ..pop()
-            ..push(Routes.updateFundsPwd);
+          ctx.push(Routes.updateFundsPwd);
         },
       );
       return false;

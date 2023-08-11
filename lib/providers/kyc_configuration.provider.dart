@@ -2,17 +2,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'dart:convert';
 
-class KycConfigurationNotifier extends StateNotifier<AuthConfigurationModel> {
-  KycConfigurationNotifier() : super(AuthConfigurationModel()) {
-    apis.kyc.fetchConfig().then((value) => state = AuthConfigurationModel.fromJson(value));
+class KycConfigurationNotifier extends StateNotifier<KycConfigurationModel> {
+  KycConfigurationNotifier() : super(KycConfigurationModel()) {
+    apis.kyc.fetchConfig().then((value) => state = KycConfigurationModel.fromJson(value));
   }
 }
 
-final kycConfigurationProvider = StateNotifierProvider<KycConfigurationNotifier, AuthConfigurationModel>((ref) {
+final kycConfigurationProvider = StateNotifierProvider<KycConfigurationNotifier, KycConfigurationModel>((ref) {
   return KycConfigurationNotifier();
 });
 
-class AuthConfigurationModel {
+class KycConfigurationModel {
   final num dailyWithdrawKycLv1;
   final num dailyWithdrawKycLv2;
   final num dailyWithdrawKycLv3;
@@ -20,7 +20,7 @@ class AuthConfigurationModel {
   final num dailyTransferKycLv2;
   final num dailyTransferKycLv3;
 
-  AuthConfigurationModel({
+  KycConfigurationModel({
     this.dailyWithdrawKycLv1 = 0,
     this.dailyWithdrawKycLv2 = 0,
     this.dailyWithdrawKycLv3 = 0,
@@ -29,7 +29,7 @@ class AuthConfigurationModel {
     this.dailyTransferKycLv3 = 0,
   });
 
-  AuthConfigurationModel copyWith({
+  KycConfigurationModel copyWith({
     num? dailyWithdrawKycLv1,
     num? dailyWithdrawKycLv2,
     num? dailyWithdrawKycLv3,
@@ -37,7 +37,7 @@ class AuthConfigurationModel {
     num? dailyTransferKycLv2,
     num? dailyTransferKycLv3,
   }) =>
-      AuthConfigurationModel(
+      KycConfigurationModel(
         dailyWithdrawKycLv1: dailyWithdrawKycLv1 ?? this.dailyWithdrawKycLv1,
         dailyWithdrawKycLv2: dailyWithdrawKycLv2 ?? this.dailyWithdrawKycLv2,
         dailyWithdrawKycLv3: dailyWithdrawKycLv3 ?? this.dailyWithdrawKycLv3,
@@ -46,11 +46,11 @@ class AuthConfigurationModel {
         dailyTransferKycLv3: dailyTransferKycLv3 ?? this.dailyTransferKycLv3,
       );
 
-  factory AuthConfigurationModel.fromRawJson(String str) => AuthConfigurationModel.fromJson(json.decode(str));
+  factory KycConfigurationModel.fromRawJson(String str) => KycConfigurationModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory AuthConfigurationModel.fromJson(Map<String, dynamic> json) => AuthConfigurationModel(
+  factory KycConfigurationModel.fromJson(Map<String, dynamic> json) => KycConfigurationModel(
         dailyWithdrawKycLv1: json["dailyWithdrawKycLv1"],
         dailyWithdrawKycLv2: json["dailyWithdrawKycLv2"],
         dailyWithdrawKycLv3: json["dailyWithdrawKycLv3"],

@@ -1951,6 +1951,19 @@ class $AssetsCoinsGen {
       ];
 }
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/MicrosoftYaHei.ttf
+  String get microsoftYaHei => 'assets/fonts/MicrosoftYaHei.ttf';
+
+  /// File path: assets/fonts/PingFangSC.ttf
+  String get pingFangSC => 'assets/fonts/PingFangSC.ttf';
+
+  /// List of all assets
+  List<String> get values => [microsoftYaHei, pingFangSC];
+}
+
 class $AssetsHtmlsGen {
   const $AssetsHtmlsGen();
 
@@ -2096,6 +2109,7 @@ class Assets {
   Assets._();
 
   static const $AssetsCoinsGen coins = $AssetsCoinsGen();
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsHtmlsGen htmls = $AssetsHtmlsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsJsonsGen jsons = $AssetsJsonsGen();
