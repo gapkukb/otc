@@ -6,7 +6,6 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/avatar/avatar.dart';
-import 'package:otc/components/mix_text/mix_text.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/pagination/pagination.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';

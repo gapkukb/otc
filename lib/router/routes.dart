@@ -157,6 +157,10 @@ final List<RouteBase> routes = [
             path: Routes.adHistory,
             page: const AdHistory(),
           ),
+          AuthRoute(
+            path: Routes.course,
+            page: const Course(),
+          ),
         ],
       ),
     ],

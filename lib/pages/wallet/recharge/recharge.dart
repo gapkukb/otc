@@ -45,7 +45,7 @@ class _RechargeState extends ConsumerState<Recharge> {
         maxWidth: 600,
         iconData: Icons.wallet,
         filledButton: true,
-        okButtonText: "充值",
+        showOkButton: false,
         children: [
           Container(
             color: Colors.grey.shade100,
@@ -102,6 +102,9 @@ class _RechargeState extends ConsumerState<Recharge> {
                 ),
                 error: (err, trace) => Text(err.toString() + trace.toString()),
                 data: (data) {
+                  if (data == null) {
+                    return const SizedBox.shrink();
+                  }
                   address = data;
                   if (address == "") return const SizedBox.shrink();
                   return Column(

@@ -111,7 +111,7 @@ class HomeBizPlan extends StatelessWidget {
       {
         "icon": Icons.show_chart,
         "title": "佣金收益",
-        "description": "每完成一笔星级订单，做市商都会获得一次返佣奖励。",
+        "description": "每完成一笔订单，做市商都会获得一次返佣奖励。",
       },
       {
         "icon": Icons.volunteer_activism_outlined,

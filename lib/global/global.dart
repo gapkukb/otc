@@ -56,15 +56,14 @@ class _Global {
 
   updateAuthorization(String? newValue) {
     final String key = keys.authorization;
-
     authorization = newValue;
+    http.updateHeader(key, newValue);
 
     if (newValue == null) {
       prefs.remove(key);
     } else {
       prefs.setString(key, newValue);
     }
-    http.updateHeader(key, newValue);
   }
 
   updateCaptchaToken(String? newValue) {

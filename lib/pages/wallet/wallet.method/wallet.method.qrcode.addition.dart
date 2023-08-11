@@ -87,7 +87,7 @@ class _WalletMethodQRcodeAdditionState extends State<WalletMethodQRcodeAddition>
             },
           ),
           Upload(
-            titles: const ["收款二维码（选填）"],
+            titles: const ["收款二维码"],
             controller: controller,
             itemSize: 150,
             max: 1,

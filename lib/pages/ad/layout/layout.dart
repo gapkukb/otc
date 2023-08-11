@@ -33,6 +33,10 @@ ShellRouteBuilder advertiseLayout = (context, state, child) {
                     name: "历史广告",
                     path: Routes.adHistory,
                   ),
+                  LayoutMenuItem(
+                    name: "如何使用C2C",
+                    path: Routes.course,
+                  ),
                 ],
               ),
             ],

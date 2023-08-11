@@ -1988,6 +1988,30 @@ class $AssetsImagesGen {
   /// File path: assets/images/alipay.svg
   SvgGenImage get alipay => const SvgGenImage('assets/images/alipay.svg');
 
+  /// File path: assets/images/course_1.png
+  AssetGenImage get course1 =>
+      const AssetGenImage('assets/images/course_1.png');
+
+  /// File path: assets/images/course_2.png
+  AssetGenImage get course2 =>
+      const AssetGenImage('assets/images/course_2.png');
+
+  /// File path: assets/images/course_3.png
+  AssetGenImage get course3 =>
+      const AssetGenImage('assets/images/course_3.png');
+
+  /// File path: assets/images/course_4.png
+  AssetGenImage get course4 =>
+      const AssetGenImage('assets/images/course_4.png');
+
+  /// File path: assets/images/course_5.png
+  AssetGenImage get course5 =>
+      const AssetGenImage('assets/images/course_5.png');
+
+  /// File path: assets/images/course_6.png
+  AssetGenImage get course6 =>
+      const AssetGenImage('assets/images/course_6.png');
+
   /// File path: assets/images/default_avatar.png
   AssetGenImage get defaultAvatar =>
       const AssetGenImage('assets/images/default_avatar.png');
@@ -2069,6 +2093,12 @@ class $AssetsImagesGen {
         waveHeader,
         adCloseButton,
         alipay,
+        course1,
+        course2,
+        course3,
+        course4,
+        course5,
+        course6,
         defaultAvatar,
         empty,
         image1,

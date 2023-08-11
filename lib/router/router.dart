@@ -67,6 +67,7 @@ import 'package:otc/pages/merchant/income/income.dart';
 
 import 'package:otc/pages/account/register/register.dart';
 import 'package:otc/pages/terms/terms.dart';
+import 'package:otc/pages/course/course.dart';
 import 'package:otc/utils/navigator.dart';
 
 import '../layout/layout.dart';
@@ -78,7 +79,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.rebate,
+  initialLocation: Routes.course,
   debugLogDiagnostics: true,
 
   redirect: (context, state) {
