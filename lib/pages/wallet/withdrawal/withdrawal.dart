@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ import 'package:otc/constants/currency.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.book.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.order.dart';
 import 'package:otc/providers/lowest_limit.provider.dart';
-import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
@@ -57,7 +55,6 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final lowestLimit = ref.watch(lowestLimitProvider);
-    final otc = ref.watch(otcProvider);
     final balance = ref.watch(balanceProvider);
 
     return Form(

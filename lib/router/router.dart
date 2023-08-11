@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
-import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
 import 'package:otc/pages/ad/ad_history/ad_history.dart';
 import 'package:otc/pages/ad/ad_own/ad_own.dart';

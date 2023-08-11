@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/modal/modal.dart';
@@ -12,6 +11,7 @@ enum Predication {
   phone,
   email,
   funds,
+  captcha,
 }
 
 FutureOr<bool> predication({
@@ -57,6 +57,14 @@ FutureOr<bool> predication({
         },
       );
       return false;
+    }
+  }
+
+  if (types.contains(Predication.captcha)) {
+    if (global.captchaTokenExpire.compareTo(DateTime.now()) < 0) {
+      final result = await ctx.push(Routes.captcha);
+
+      return result != null;
     }
   }
 

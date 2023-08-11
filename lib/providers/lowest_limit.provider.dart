@@ -1,6 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
-
 import 'package:otc/apis/apis.dart';
 
 class LowestLimitNotifier extends StateNotifier<LowestLimitModel> {
@@ -24,17 +22,20 @@ class LowestLimitModel {
     this.minWithdraw = 0,
     this.minDeposit = 0,
     this.maxWithdrawDaily = 0,
+    this.maxTransferDaily = 0,
   });
 
   final num minWithdraw;
   final num minDeposit;
   final num maxWithdrawDaily;
+  final num maxTransferDaily;
 
   factory LowestLimitModel.fromJson(Map<String, dynamic> json) {
     return LowestLimitModel(
       minWithdraw: json["minWithdraw"],
       minDeposit: json["minDeposit"],
       maxWithdrawDaily: json["maxWithdrawDaily"],
+      maxTransferDaily: json["maxTransferDaily"],
     );
   }
 }

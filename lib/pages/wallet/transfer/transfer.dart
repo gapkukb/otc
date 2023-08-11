@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,13 +10,10 @@ import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/constants/currency.dart';
-import 'package:otc/global/global.dart';
-import 'package:otc/models/kyc/kyc.model.dart';
+import 'package:otc/providers/lowest_limit.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
-import 'package:otc/router/router.dart';
 import 'package:otc/utils/navigator.dart';
-import 'package:otc/utils/number.dart';
 import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
@@ -30,26 +29,14 @@ class WalletTransfer extends ConsumerStatefulWidget {
 }
 
 class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTickerProviderStateMixin {
-  late final TextEditingController controller;
   final _formKey = GlobalKey<FormState>();
 
   final Map<String, dynamic> formState = {};
 
   @override
-  void initState() {
-    controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final wallet = ref.watch(walletProvider);
+    final balance = ref.watch(balanceProvider);
+    final lowestLimit = ref.watch(lowestLimitProvider);
     return Form(
       key: _formKey,
       child: ModalPageTemplate(
@@ -80,13 +67,13 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
             coin: Cryptocurrency.USDT,
             name: "amount",
             formState: formState,
-            controller: controller,
-            maxAmount: wallet.balance.usdt.toDouble(),
+            maxAmount: min(balance.valid, lowestLimit.maxTransferDaily.toDouble()),
+            minAmount: lowestLimit.minWithdraw.toDouble(),
           ),
           const Gap.small(),
           Align(
             alignment: AlignmentDirectional.centerEnd,
-            child: Text("${wallet.balance.usdt.decimalize()} USDT 可用"),
+            child: Text("${balance.valid} USDT 可用"),
           ),
         ],
         // TransferOrder(),

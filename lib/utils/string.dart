@@ -1,4 +1,3 @@
-import 'package:otc/regexp/regexp.dart';
 
 extension WordBreakUtil on String {
   String get breakWord {

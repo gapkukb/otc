@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +7,6 @@ import 'package:otc/pages/wallet/wallet_history/wallet_history.provider.dart';
 import 'package:otc/pages/wallet/wallet_history/wallet_history_platform_filter.dart';
 import 'package:otc/utils/date_time.dart';
 import 'package:otc/utils/number.dart';
-import 'package:otc/widgets/ui_clipboard.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
 class WalletHistoryPlatform extends ConsumerStatefulWidget {
@@ -110,8 +107,8 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryPlatform>
                             DataCell(Text(row.incomne ? "充值" : "提币")),
                             DataCell(Text(row.currency)),
                             DataCell(Text(row.amount.decimalize())),
-                            DataCell(Text(row.fromUsername)),
                             DataCell(Text(row.toUsername)),
+                            DataCell(Text(row.fromUsername)),
                           ]);
                         }).toList(),
                       ),

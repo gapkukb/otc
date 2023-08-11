@@ -24,11 +24,12 @@ class SecurityManagment extends StatelessWidget {
         name: "资金密码",
         value: "",
         description: "用于保护账户安全",
-        action: UiButton.text(
+        action: SecurityButton(
+          context: context,
           label: user.hasPaymentPassword ? "修改" : "开启",
-          onPressed: () async {
+          onTap: () async {
             await context.pushNamed(Routes.updateFundsPwd);
-            ProviderContainer().read(userProvider.notifier).updateUser();
+            provider.read(userProvider.notifier).updateUser();
           },
         ),
       ),
