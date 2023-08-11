@@ -53,7 +53,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
     final double min = rate - 0.1;
 
     return ModalPageTemplate(
-      legend: "发布新广告",
+      title: "发布新广告",
       iconData: Icons.ads_click_outlined,
       okButtonText: "下一步",
       onCompelete: (context) {

@@ -8,7 +8,6 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:otc/generated/l10n.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
-import 'package:otc/providers/bank.provider.dart';
 import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
