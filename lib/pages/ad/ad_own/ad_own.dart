@@ -106,6 +106,7 @@ class _AdOwnState extends State<AdOwn> {
                     final min = row.channels.map((e) => e.amountMin).reduce(math.min);
                     final max = row.channels.map((e) => e.amountMax).reduce(math.max);
                     final badge = row.takerDeals.where((element) => element.state == AdOwnState.NOTIFIED.name).length;
+
                     return DataRow(
                       cells: [
                         DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
