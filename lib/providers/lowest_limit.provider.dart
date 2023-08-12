@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/providers/wallet.provider.dart';
 
 class LowestLimitNotifier extends StateNotifier<LowestLimitModel> {
   LowestLimitNotifier() : super(LowestLimitModel()) {
@@ -38,4 +41,21 @@ class LowestLimitModel {
       maxTransferDaily: json["maxTransferDaily"],
     );
   }
+}
+
+final withdrawLimitProvider = Provider<WithdrawLimitModel>((ref) {
+  final balance = ref.watch(balanceProvider);
+  final lowestLimit = ref.watch(lowestLimitProvider);
+
+  return WithdrawLimitModel(
+    lowestLimit.minWithdraw.toDouble(),
+    min(balance.valid, lowestLimit.maxTransferDaily.toDouble()),
+  );
+});
+
+class WithdrawLimitModel {
+  final double min;
+  final double max;
+
+  const WithdrawLimitModel(this.min, this.max);
 }

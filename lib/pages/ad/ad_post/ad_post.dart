@@ -1,11 +1,14 @@
 library ad_post;
 
+import 'dart:math' as math;
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
+import 'package:otc/components/amount_input/amount_input.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/gap/gap.dart';
@@ -19,7 +22,9 @@ import 'package:otc/http/http.dart';
 import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/models/wallet.qrcode/wallet.qrcode.model.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
+import 'package:otc/providers/lowest_limit.provider.dart';
 import 'package:otc/providers/otc.provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';

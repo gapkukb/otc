@@ -35,7 +35,7 @@ class AmountInput extends UiTextFormField {
                     minWidth: 50,
                     size: UiButtonSize.small,
                     onPressed: () {
-                      if (controller != null) {
+                      if (controller != null && maxAmount != null) {
                         controller.text = maxAmount.toString();
                         controller.selection = TextSelection.fromPosition(
                           TextPosition(offset: controller.text.length),

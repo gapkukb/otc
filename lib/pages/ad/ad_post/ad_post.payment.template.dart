@@ -6,6 +6,7 @@ class AdPostPaymentTemplate extends StatelessWidget {
   final PaymentItem data;
   final Function(PaymentItem item)? onDelete;
   final Function(bool selected)? onSelectedChange;
+  final Function(double min, double max)? onLimitChange;
   const AdPostPaymentTemplate({
     super.key,
     this.editable,
@@ -13,6 +14,7 @@ class AdPostPaymentTemplate extends StatelessWidget {
     this.onSelectedChange,
     required this.isBuying,
     this.onDelete,
+    this.onLimitChange,
   });
 
   @override
@@ -26,50 +28,71 @@ class AdPostPaymentTemplate extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4),
         child: Material(
-          color: activebale ? const Color(0xfff8f5ff) : Colors.grey.shade100,
+          color: activebale ? Colors.blue.shade50 : Colors.grey.shade100,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Material(
-                color: activebale ? const Color(0xfff0ecfe) : Colors.grey.shade300,
+                color: activebale ? Colors.blue.shade100 : Colors.grey.shade300,
                 child: DefaultTextStyle(
                   style: Font.miniGrey,
-                  child: Cell(
-                    padding: Pads.leftXs,
-                    align: MainAxisAlignment.spaceBetween,
-                    titleText: "默认订单限制 $min CNY ~ $max CNY",
-                    height: 32,
-                    trailing: editable == true
-                        ? GestureDetector(
-                            onTap: () async {
-                              final result = await onEdit(context, min, max);
-                              if (result?.isNotEmpty == true) {}
-                            },
-                            child: const Icon(Icons.edit_note_outlined),
-                          )
-                        : GestureDetector(
-                            onTap: _delete,
-                            child: SizedBox(
-                              width: 32,
-                              child: Stack(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/ad_close_button.svg",
-                                    fit: BoxFit.cover,
-                                  ),
-                                  const Align(
-                                    alignment: Alignment(0.5, 0),
-                                    child: Icon(
-                                      Icons.close,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                  )
-                                ],
-                              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: Pads.xAxisXs,
+                            child: Text(
+                              "默认订单限制 $min CNY ~ $max CNY",
+                              textAlign: TextAlign.left,
+                              style: Font.mini,
                             ),
                           ),
+                        ),
+                      ),
+                      editable == true
+                          ? GestureDetector(
+                              onTap: () async {
+                                final result = await onEdit(context, min, max);
+                                if (result?.isNotEmpty == true) {
+                                  onLimitChange?.call(result!["min"]!, result["max"]!);
+                                }
+                              },
+                              child: const Icon(Icons.edit_note_outlined),
+                            )
+                          : GestureDetector(
+                              onTap: _delete,
+                              child: SizedBox(
+                                width: 32,
+                                child: Stack(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/images/ad_close_button.svg",
+                                      fit: BoxFit.cover,
+                                    ),
+                                    const Positioned(
+                                      left: 0,
+                                      right: 0,
+                                      top: 0,
+                                      bottom: 0,
+                                      child: Align(
+                                        alignment: Alignment(0.5, 0),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                    ],
                   ),
                 ),
               ),
@@ -116,13 +139,18 @@ class AdPostPaymentTemplate extends StatelessWidget {
             legend: "",
             title: "修改订单限制",
             iconData: Icons.wallet,
-            maxWidth: 300,
+            maxWidth: 500,
             onCompelete: (context) {
               formKey.currentState!.save();
-              if ((double.tryParse(formState['max']!) ?? 0) - (double.tryParse(formState['min']!) ?? 0) < 0) {
+              final $max = double.tryParse(formState['max']!) ?? 0;
+              final $min = double.tryParse(formState['min']!) ?? 0;
+              if ($max - $min < 0) {
                 Modal.showText(text: "最大值不可小于最小值");
               } else {
-                context.pop(formState);
+                context.pop({
+                  "min": $min,
+                  "max": $max,
+                });
               }
             },
             children: [

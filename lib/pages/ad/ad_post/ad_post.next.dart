@@ -114,7 +114,7 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
               )
             else
               SizedBox(
-                height: height - 500,
+                height: math.min(height - 400, 400),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
                     crossAxisCount: 2,

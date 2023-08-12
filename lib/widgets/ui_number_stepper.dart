@@ -72,7 +72,10 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
               fillColor: Colors.grey.shade100.withOpacity(0.6),
               prefixIcon: IconButton(
                 onPressed: decrease,
-                icon: const Icon(Icons.remove),
+                icon: Icon(
+                  Icons.remove,
+                  color: Colors.black.withAlpha(200),
+                ),
               ),
               suffixIcon: IconButton(
                 onPressed: increase,

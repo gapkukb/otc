@@ -18,6 +18,8 @@ class AdPostPrev extends ConsumerStatefulWidget {
 
 class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProviderStateMixin {
   late final TabController controller;
+  final amountController = TextEditingController();
+  int signal = 0;
   @override
   void initState() {
     controller = TabController(
@@ -25,6 +27,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
       vsync: this,
       initialIndex: widget.type == AdPostType.selling ? 0 : 1,
     );
+    signal = controller.index;
     apis.otc
         .rate(
             null,
@@ -43,6 +46,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
   @override
   void dispose() {
     controller.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
@@ -73,12 +77,18 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
             indicatorSize: TabBarIndicatorSize.tab,
             isScrollable: true,
             dividerColor: Colors.transparent,
+            onTap: (value) {
+              setState(() {
+                signal = value;
+              });
+            },
             tabs: const [
               Tab(text: "出售"),
               Tab(text: "购买"),
             ],
           ),
         ),
+        Text(controller.index.toString()),
         const Divider(height: 1),
         const Gap.small(),
         Card(
@@ -142,12 +152,26 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
         ),
         const Gap.mini(),
         Text("可设定的价格区间是${min.toStringAsFixed(2)}~${max.toStringAsFixed(2)}", style: Font.smallGrey),
-        UiTextFormField(
-          labelText: "请输入${widget.type == AdPostType.selling ? "出售" : "购买"}数量",
-          name: "amount",
-          formState: widget.formState,
-          validator: (value) {
-            return value?.isEmpty == true ? "请输入数量" : null;
+        const Gap.small(),
+        Consumer(
+          builder: (context, ref, child) {
+            final isSelling = signal == 0;
+            final withdrawLimit = ref.watch(withdrawLimitProvider);
+            return isSelling
+                ? AmountInput(
+                    controller: amountController,
+                    labelText: "请输入出售数量",
+                    coin: Cryptocurrency.USDT,
+                    name: "amount",
+                    formState: widget.formState,
+                    maxAmount: isSelling ? withdrawLimit.max : null,
+                    minAmount: isSelling ? withdrawLimit.min : null,
+                  )
+                : UiTextFormField(
+                    labelText: "请输入购买数量",
+                    name: "amount",
+                    formState: widget.formState,
+                  );
           },
         ),
       ],
