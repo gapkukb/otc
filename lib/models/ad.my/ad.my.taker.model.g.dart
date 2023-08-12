@@ -12,7 +12,7 @@ _$_AdMyTakerModel _$$_AdMyTakerModelFromJson(Map<String, dynamic> json) =>
       makerReference: json['makerReference'] as String,
       makerChannelReference: json['makerChannelReference'] as String,
       merchantCode: json['merchantCode'] as String,
-      overTime: json['overTime'] as String,
+      overTime: json['overTime'] as String?,
       overTimeSeconds: json['overTimeSeconds'] as int,
       sell: json['sell'] as bool,
       coin: json['coin'] as String,

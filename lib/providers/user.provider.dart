@@ -5,6 +5,7 @@ import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
 
 class UserNotifier extends StateNotifier<UserModel> {
   UserNotifier() : super(global.user);
@@ -31,6 +32,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     updateShouldNotify(state, user);
     state = user;
     provider.read(authProvider.notifier).state = true;
+    provider.read(walletProvider.notifier).updateWallet();
     return user;
   }
 

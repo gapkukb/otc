@@ -97,7 +97,7 @@ class _AppState extends ConsumerState<App> {
         return X.current.title;
       },
       debugShowCheckedModeBanner: false,
-      themeMode: theme.mode,
+      themeMode: ThemeMode.light,
       theme: lightTheme,
       darkTheme: darkTheme,
     );

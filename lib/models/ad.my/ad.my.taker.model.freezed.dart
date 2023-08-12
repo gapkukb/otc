@@ -31,7 +31,7 @@ mixin _$AdMyTakerModel {
 
   ///
   String get merchantCode => throw _privateConstructorUsedError;
-  String get overTime => throw _privateConstructorUsedError;
+  String? get overTime => throw _privateConstructorUsedError;
   int get overTimeSeconds => throw _privateConstructorUsedError;
 
   ///
@@ -109,7 +109,7 @@ abstract class $AdMyTakerModelCopyWith<$Res> {
       String makerReference,
       String makerChannelReference,
       String merchantCode,
-      String overTime,
+      String? overTime,
       int overTimeSeconds,
       bool sell,
       String coin,
@@ -150,7 +150,7 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
     Object? makerReference = null,
     Object? makerChannelReference = null,
     Object? merchantCode = null,
-    Object? overTime = null,
+    Object? overTime = freezed,
     Object? overTimeSeconds = null,
     Object? sell = null,
     Object? coin = null,
@@ -190,10 +190,10 @@ class _$AdMyTakerModelCopyWithImpl<$Res, $Val extends AdMyTakerModel>
           ? _value.merchantCode
           : merchantCode // ignore: cast_nullable_to_non_nullable
               as String,
-      overTime: null == overTime
+      overTime: freezed == overTime
           ? _value.overTime
           : overTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       overTimeSeconds: null == overTimeSeconds
           ? _value.overTimeSeconds
           : overTimeSeconds // ignore: cast_nullable_to_non_nullable
@@ -295,7 +295,7 @@ abstract class _$$_AdMyTakerModelCopyWith<$Res>
       String makerReference,
       String makerChannelReference,
       String merchantCode,
-      String overTime,
+      String? overTime,
       int overTimeSeconds,
       bool sell,
       String coin,
@@ -334,7 +334,7 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
     Object? makerReference = null,
     Object? makerChannelReference = null,
     Object? merchantCode = null,
-    Object? overTime = null,
+    Object? overTime = freezed,
     Object? overTimeSeconds = null,
     Object? sell = null,
     Object? coin = null,
@@ -374,10 +374,10 @@ class __$$_AdMyTakerModelCopyWithImpl<$Res>
           ? _value.merchantCode
           : merchantCode // ignore: cast_nullable_to_non_nullable
               as String,
-      overTime: null == overTime
+      overTime: freezed == overTime
           ? _value.overTime
           : overTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       overTimeSeconds: null == overTimeSeconds
           ? _value.overTimeSeconds
           : overTimeSeconds // ignore: cast_nullable_to_non_nullable
@@ -516,7 +516,7 @@ class _$_AdMyTakerModel implements _AdMyTakerModel {
   @override
   final String merchantCode;
   @override
-  final String overTime;
+  final String? overTime;
   @override
   final int overTimeSeconds;
 
@@ -709,7 +709,7 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
       required final String makerReference,
       required final String makerChannelReference,
       required final String merchantCode,
-      required final String overTime,
+      required final String? overTime,
       required final int overTimeSeconds,
       required final bool sell,
       required final String coin,
@@ -752,7 +752,7 @@ abstract class _AdMyTakerModel implements AdMyTakerModel {
   ///
   String get merchantCode;
   @override
-  String get overTime;
+  String? get overTime;
   @override
   int get overTimeSeconds;
   @override

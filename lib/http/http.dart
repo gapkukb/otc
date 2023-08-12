@@ -1,13 +1,12 @@
 library http;
 
+import 'dart:async';
 import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:otc/components/modal/modal.dart';
-import 'package:otc/pages/account/login/login.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/regexp/regexp.dart';
