@@ -3,7 +3,6 @@ library ad_own;
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
-import 'package:intl/intl.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/modal/modal.dart';
@@ -97,7 +96,7 @@ class _AdOwnState extends State<AdOwn> {
                     DataColumn2(label: Text("状态")),
                     DataColumn2(label: Text("创建时间"), fixedWidth: 160),
                     DataColumn2(label: Text("操作")),
-                    DataColumn2(label: Text(""), fixedWidth: 60),
+                    DataColumn2(label: Text(""), fixedWidth: 40),
                   ],
                   columnSpacing: 4,
                   dataRowHeight: 60,
@@ -192,6 +191,7 @@ class _AdOwnState extends State<AdOwn> {
 
 stateButton(BuildContext context, String state, String reference, Function onStopped) {
   final runing = UiButton(
+    size: UiButtonSize.small,
     onPressed: () {
       Modal.confirm(
         title: "确认下架广告",
@@ -208,10 +208,51 @@ stateButton(BuildContext context, String state, String reference, Function onSto
     label: "下架",
   );
 
+  final stopped = Wrap(
+    spacing: 8,
+    children: [
+      UiButton(
+        size: UiButtonSize.small,
+        minWidth: 0,
+        onPressed: () {
+          Modal.confirm(
+            title: "重新上架",
+            content: "是否重新上架此订单",
+            onOk: () async {
+              await apis.otc.stopAd({
+                "reference": reference,
+              });
+
+              onStopped();
+            },
+          );
+        },
+        label: "上架",
+      ),
+      UiButton(
+        size: UiButtonSize.small,
+        onPressed: () {
+          Modal.confirm(
+            title: "再来一单",
+            content: "复制此订单配置并创建新的订单",
+            onOk: () async {
+              await apis.otc.stopAd({
+                "reference": reference,
+              });
+
+              onStopped();
+            },
+          );
+        },
+        label: "再来一单",
+      ),
+    ],
+  );
+
   if (state == "RUNNING") {
     return runing;
   }
-  return const SizedBox.shrink();
+  return stopped;
 }
 
 String getStateText(String state) {
