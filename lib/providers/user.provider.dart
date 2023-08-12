@@ -46,6 +46,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     state = newState;
     global.updateUser(state);
     global.updateAuthorization(null);
+    global.updateCaptchaToken(null);
     _timer?.cancel();
     provider.read(authProvider.notifier).state = false;
   }

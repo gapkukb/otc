@@ -61,7 +61,7 @@ FutureOr<bool> predication({
   }
 
   if (types.contains(Predication.captcha)) {
-    if (global.captchaTokenExpire.isAfter(DateTime.now())) {
+    if (global.captchaTokenExpire.isBefore(DateTime.now())) {
       final result = await ctx.push(Routes.captcha);
 
       return result != null;
