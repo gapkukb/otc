@@ -75,7 +75,7 @@ class _Global {
       prefs.remove(keys.captchaTokenExpire);
     } else {
       prefs.setString(key, newValue);
-      // 后台15分钟过期，前端设置14分之过期，尽量确保不走接口触发验证逻辑
+      // 后台15分钟过期，前端设置14分钟过期，尽量确保触发接口的验证逻辑
       captchaTokenExpire = DateTime.now().add(const Duration(minutes: 14));
       prefs.setInt(keys.captchaTokenExpire, captchaTokenExpire.millisecondsSinceEpoch);
     }
