@@ -168,6 +168,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
                     minAmount: isSelling ? withdrawLimit.min : null,
                   )
                 : UiTextFormField(
+                    keyboardType: TextInputType.number,
                     labelText: "请输入购买数量",
                     name: "amount",
                     formState: widget.formState,

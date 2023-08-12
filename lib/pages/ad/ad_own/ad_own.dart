@@ -105,7 +105,7 @@ class _AdOwnState extends State<AdOwn> {
                   rows: data.records.map((row) {
                     final min = row.channels.map((e) => e.amountMin).reduce(math.min);
                     final max = row.channels.map((e) => e.amountMax).reduce(math.max);
-
+                    final badge = row.takerDeals.where((element) => element.state == AdOwnState.NOTIFIED.name).length;
                     return DataRow(
                       cells: [
                         DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
@@ -124,18 +124,17 @@ class _AdOwnState extends State<AdOwn> {
                           },
                         )),
                         DataCell(
-                          row.takerDeals.isEmpty
-                              ? const SizedBox.shrink()
-                              : Align(
-                                  alignment: const Alignment(1, 0),
-                                  child: Badge(
-                                    label: Text(row.takerDeals.length.toString()),
-                                    alignment: Alignment.centerLeft,
-                                    offset: const Offset(-14, 0.5),
-                                    child: const Icon(Icons.keyboard_arrow_right_outlined),
-                                  ),
-                                ),
-                          onTap: row.takerDeals.isEmpty ? null : () => showDetail(context, row),
+                          Align(
+                            alignment: const Alignment(1, 0),
+                            child: Badge(
+                              isLabelVisible: badge > 0,
+                              label: Text(badge.toString()),
+                              alignment: Alignment.centerLeft,
+                              offset: const Offset(-14, 0.5),
+                              child: const Icon(Icons.keyboard_arrow_right_outlined),
+                            ),
+                          ),
+                          onTap: () => showDetail(context, row),
                         ),
                       ],
                     );
