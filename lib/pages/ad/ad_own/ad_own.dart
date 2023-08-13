@@ -92,6 +92,7 @@ class _AdOwnState extends State<AdOwn> {
                     const DataColumn2(label: Text("类型")),
                     const DataColumn2(label: Text("广告数量\n限额"), fixedWidth: 200),
                     const DataColumn2(label: Text("已成交数量")),
+                    const DataColumn2(label: Text("剩余数量")),
                     const DataColumn2(label: Text("已成交价格")),
                     const DataColumn2(label: Text("支付方式")),
                     const DataColumn2(label: Text("状态")),
@@ -119,6 +120,7 @@ class _AdOwnState extends State<AdOwn> {
                         DataCell(Text(row.sell ? "出售" : "购买")),
                         DataCell(Text("${row.submitAmount} USDT\n￥$min - ￥$max")),
                         DataCell(Text(row.totalCoinAmount.toString())),
+                        DataCell(Text(row.amount.toString())),
                         DataCell(Text(row.totalMoneyAmount.toString())),
                         DataCell(Tooltip(
                           triggerMode: TooltipTriggerMode.tap,
