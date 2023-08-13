@@ -1,0 +1,10 @@
+[
+  {
+    "family": "IconFont",
+    "fonts": [
+      {
+        "asset": "assets/fonts/iconfont.ttf"
+      }
+    ]
+  }
+]
