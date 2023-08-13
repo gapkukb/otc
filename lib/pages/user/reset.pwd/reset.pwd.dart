@@ -77,7 +77,6 @@ class _ResetPwdState extends State<ResetPwd> with SingleTickerProviderStateMixin
                   name: "newPwd",
                   formState: formState,
                   controller: controller,
-                  autofocus: true,
                 ),
                 const SizedBox(height: 24),
                 UiTextFormField(

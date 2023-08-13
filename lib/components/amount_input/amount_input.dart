@@ -8,6 +8,7 @@ import 'package:otc/utils/formatter.dart';
 enum AmountInputType {
   transfer("转账"),
   widthraw("提币"),
+  ad("广告"),
   ;
 
   const AmountInputType(this.text);
@@ -68,11 +69,11 @@ class AmountInput extends UiTextFormField {
               }
 
               if (maxAmount != null && val > maxAmount) {
-                return "最大${amountInputType.text}额度：$maxAmount USDT";
+                return "最大${amountInputType.text}数量：$maxAmount USDT";
               }
 
               if (minAmount != null && val < minAmount) {
-                return "最小${amountInputType.text}额度：$minAmount USDT";
+                return "最小${amountInputType.text}数量：$minAmount USDT";
               }
               return null;
             });

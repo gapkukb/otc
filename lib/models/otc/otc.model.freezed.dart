@@ -83,6 +83,12 @@ mixin _$OtcModel {
   /// 最低返佣额度
   num get lowestCommission => throw _privateConstructorUsedError;
 
+  ///maker单最低限额
+  num get makerMin => throw _privateConstructorUsedError;
+
+  ///Maker单的最高限额
+  num get makerMax => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $OtcModelCopyWith<OtcModel> get copyWith =>
@@ -115,7 +121,9 @@ abstract class $OtcModelCopyWith<$Res> {
       num bankcardPayoutDaily,
       num wechatPayoutDaily,
       num aliPayoutDaily,
-      num lowestCommission});
+      num lowestCommission,
+      num makerMin,
+      num makerMax});
 }
 
 /// @nodoc
@@ -152,6 +160,8 @@ class _$OtcModelCopyWithImpl<$Res, $Val extends OtcModel>
     Object? wechatPayoutDaily = null,
     Object? aliPayoutDaily = null,
     Object? lowestCommission = null,
+    Object? makerMin = null,
+    Object? makerMax = null,
   }) {
     return _then(_value.copyWith(
       enabled: null == enabled
@@ -238,6 +248,14 @@ class _$OtcModelCopyWithImpl<$Res, $Val extends OtcModel>
           ? _value.lowestCommission
           : lowestCommission // ignore: cast_nullable_to_non_nullable
               as num,
+      makerMin: null == makerMin
+          ? _value.makerMin
+          : makerMin // ignore: cast_nullable_to_non_nullable
+              as num,
+      makerMax: null == makerMax
+          ? _value.makerMax
+          : makerMax // ignore: cast_nullable_to_non_nullable
+              as num,
     ) as $Val);
   }
 }
@@ -270,7 +288,9 @@ abstract class _$$_OtcModelCopyWith<$Res> implements $OtcModelCopyWith<$Res> {
       num bankcardPayoutDaily,
       num wechatPayoutDaily,
       num aliPayoutDaily,
-      num lowestCommission});
+      num lowestCommission,
+      num makerMin,
+      num makerMax});
 }
 
 /// @nodoc
@@ -305,6 +325,8 @@ class __$$_OtcModelCopyWithImpl<$Res>
     Object? wechatPayoutDaily = null,
     Object? aliPayoutDaily = null,
     Object? lowestCommission = null,
+    Object? makerMin = null,
+    Object? makerMax = null,
   }) {
     return _then(_$_OtcModel(
       enabled: null == enabled
@@ -391,6 +413,14 @@ class __$$_OtcModelCopyWithImpl<$Res>
           ? _value.lowestCommission
           : lowestCommission // ignore: cast_nullable_to_non_nullable
               as num,
+      makerMin: null == makerMin
+          ? _value.makerMin
+          : makerMin // ignore: cast_nullable_to_non_nullable
+              as num,
+      makerMax: null == makerMax
+          ? _value.makerMax
+          : makerMax // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -419,7 +449,9 @@ class _$_OtcModel implements _OtcModel {
       required this.bankcardPayoutDaily,
       required this.wechatPayoutDaily,
       required this.aliPayoutDaily,
-      required this.lowestCommission});
+      required this.lowestCommission,
+      required this.makerMin,
+      required this.makerMax});
 
   factory _$_OtcModel.fromJson(Map<String, dynamic> json) =>
       _$$_OtcModelFromJson(json);
@@ -508,9 +540,17 @@ class _$_OtcModel implements _OtcModel {
   @override
   final num lowestCommission;
 
+  ///maker单最低限额
+  @override
+  final num makerMin;
+
+  ///Maker单的最高限额
+  @override
+  final num makerMax;
+
   @override
   String toString() {
-    return 'OtcModel(enabled: $enabled, kycLevel: $kycLevel, bankcardReceiptMin: $bankcardReceiptMin, bankcardReceiptMax: $bankcardReceiptMax, bankcardReceiptDaily: $bankcardReceiptDaily, wechatReceiptMin: $wechatReceiptMin, wechatReceiptMax: $wechatReceiptMax, wechatReceiptDaily: $wechatReceiptDaily, aliReceiptMin: $aliReceiptMin, aliReceiptMax: $aliReceiptMax, aliReceiptDaily: $aliReceiptDaily, bankcardPayoutMin: $bankcardPayoutMin, bankcardPayoutMax: $bankcardPayoutMax, wechatPayoutMin: $wechatPayoutMin, wechatPayoutMax: $wechatPayoutMax, aliPayoutMin: $aliPayoutMin, aliPayoutMax: $aliPayoutMax, bankcardPayoutDaily: $bankcardPayoutDaily, wechatPayoutDaily: $wechatPayoutDaily, aliPayoutDaily: $aliPayoutDaily, lowestCommission: $lowestCommission)';
+    return 'OtcModel(enabled: $enabled, kycLevel: $kycLevel, bankcardReceiptMin: $bankcardReceiptMin, bankcardReceiptMax: $bankcardReceiptMax, bankcardReceiptDaily: $bankcardReceiptDaily, wechatReceiptMin: $wechatReceiptMin, wechatReceiptMax: $wechatReceiptMax, wechatReceiptDaily: $wechatReceiptDaily, aliReceiptMin: $aliReceiptMin, aliReceiptMax: $aliReceiptMax, aliReceiptDaily: $aliReceiptDaily, bankcardPayoutMin: $bankcardPayoutMin, bankcardPayoutMax: $bankcardPayoutMax, wechatPayoutMin: $wechatPayoutMin, wechatPayoutMax: $wechatPayoutMax, aliPayoutMin: $aliPayoutMin, aliPayoutMax: $aliPayoutMax, bankcardPayoutDaily: $bankcardPayoutDaily, wechatPayoutDaily: $wechatPayoutDaily, aliPayoutDaily: $aliPayoutDaily, lowestCommission: $lowestCommission, makerMin: $makerMin, makerMax: $makerMax)';
   }
 
   @override
@@ -558,7 +598,11 @@ class _$_OtcModel implements _OtcModel {
             (identical(other.aliPayoutDaily, aliPayoutDaily) ||
                 other.aliPayoutDaily == aliPayoutDaily) &&
             (identical(other.lowestCommission, lowestCommission) ||
-                other.lowestCommission == lowestCommission));
+                other.lowestCommission == lowestCommission) &&
+            (identical(other.makerMin, makerMin) ||
+                other.makerMin == makerMin) &&
+            (identical(other.makerMax, makerMax) ||
+                other.makerMax == makerMax));
   }
 
   @JsonKey(ignore: true)
@@ -585,7 +629,9 @@ class _$_OtcModel implements _OtcModel {
         bankcardPayoutDaily,
         wechatPayoutDaily,
         aliPayoutDaily,
-        lowestCommission
+        lowestCommission,
+        makerMin,
+        makerMax
       ]);
 
   @JsonKey(ignore: true)
@@ -624,7 +670,9 @@ abstract class _OtcModel implements OtcModel {
       required final num bankcardPayoutDaily,
       required final num wechatPayoutDaily,
       required final num aliPayoutDaily,
-      required final num lowestCommission}) = _$_OtcModel;
+      required final num lowestCommission,
+      required final num makerMin,
+      required final num makerMax}) = _$_OtcModel;
 
   factory _OtcModel.fromJson(Map<String, dynamic> json) = _$_OtcModel.fromJson;
 
@@ -712,6 +760,14 @@ abstract class _OtcModel implements OtcModel {
 
   /// 最低返佣额度
   num get lowestCommission;
+  @override
+
+  ///maker单最低限额
+  num get makerMin;
+  @override
+
+  ///Maker单的最高限额
+  num get makerMax;
   @override
   @JsonKey(ignore: true)
   _$$_OtcModelCopyWith<_$_OtcModel> get copyWith =>

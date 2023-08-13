@@ -24,7 +24,6 @@ class _ResetPwdNextState extends State<ResetPwdNext> {
           TextFormFieldPassword(
             labelText: "新密码",
             controller: _controller,
-            autofocus: true,
           ),
           const SizedBox(height: 24),
           UiTextFormField(

@@ -38,7 +38,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
       "deposit": formState["deposit"] ?? true,
       "currency": formState["currency"] ?? Cryptocurrency.USDT.name,
       "reference": formState["reference"],
-      "confirmed": formState["confirmed"] ?? "UNKNOWN",
+      "confirmed": formState["confirmed"] == "" ? null : formState["confirmed"],
       "page": pageNo,
       "pageSize": pageSize,
       "begin": "$begin 00:00:00",

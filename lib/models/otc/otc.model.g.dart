@@ -28,6 +28,8 @@ _$_OtcModel _$$_OtcModelFromJson(Map<String, dynamic> json) => _$_OtcModel(
       wechatPayoutDaily: json['wechatPayoutDaily'] as num,
       aliPayoutDaily: json['aliPayoutDaily'] as num,
       lowestCommission: json['lowestCommission'] as num,
+      makerMin: json['makerMin'] as num,
+      makerMax: json['makerMax'] as num,
     );
 
 Map<String, dynamic> _$$_OtcModelToJson(_$_OtcModel instance) =>
@@ -53,4 +55,6 @@ Map<String, dynamic> _$$_OtcModelToJson(_$_OtcModel instance) =>
       'wechatPayoutDaily': instance.wechatPayoutDaily,
       'aliPayoutDaily': instance.aliPayoutDaily,
       'lowestCommission': instance.lowestCommission,
+      'makerMin': instance.makerMin,
+      'makerMax': instance.makerMax,
     };

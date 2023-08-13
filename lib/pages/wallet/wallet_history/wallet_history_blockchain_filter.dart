@@ -83,9 +83,9 @@ class _WalletHistoryBlockchainFilterState extends State<WalletHistoryBlockchainF
               name: "confirmed",
               labelText: "状态",
               formState: widget.formState,
-              initialValue: "UNKNOWN",
+              initialValue: "",
               data: [
-                DropdownItem(title: "全部", value: "UNKNOWN"),
+                DropdownItem(title: "全部", value: ""),
                 DropdownItem(title: "已完成", value: "YES"),
                 DropdownItem(title: "待确认", value: "NO"),
               ],

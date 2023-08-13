@@ -50,8 +50,9 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final rate = ref.watch(rateProvider);
+    final otc = ref.watch(otcProvider);
+    final balance = ref.watch(balanceProvider);
     final isSelling = signal == 0;
-    final withdrawLimit = ref.watch(withdrawLimitProvider);
     final double max = rate + 0.1;
     final double min = rate - 0.1;
 
@@ -154,13 +155,14 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
         const Gap.small(),
         isSelling
             ? AmountInput(
+                amountInputType: AmountInputType.ad,
                 controller: amountController,
                 labelText: "请输入出售数量",
                 coin: Cryptocurrency.USDT,
                 name: "amount",
                 formState: widget.formState,
-                maxAmount: isSelling ? withdrawLimit.max : null,
-                minAmount: isSelling ? withdrawLimit.min : null,
+                maxAmount: math.min(otc.makerMax.toDouble(), balance.valid),
+                minAmount: otc.makerMin.toDouble(),
               )
             : UiTextFormField(
                 keyboardType: TextInputType.number,
