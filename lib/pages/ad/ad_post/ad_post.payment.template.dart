@@ -20,8 +20,8 @@ class AdPostPaymentTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activebale = data.selected && editable == true;
-    final min = isBuying ? data.inMin : data.outMin;
-    final max = isBuying ? data.inMax : data.outMax;
+    final min = isBuying ? data.outMin : data.inMin;
+    final max = isBuying ? data.outMax : data.inMax;
 
     return GestureDetector(
       onTap: editable == true ? () => onSelectedChange?.call(!data.selected) : null,

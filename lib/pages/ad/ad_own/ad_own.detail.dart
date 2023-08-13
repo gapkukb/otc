@@ -4,12 +4,14 @@ class AdOwnDetail extends StatefulWidget {
   final List<AdMyTakerModel> detail;
   final List<AdMyChannleModel> channels;
   final Function() onRefresh;
+  final bool running;
 
   const AdOwnDetail({
     super.key,
     required this.detail,
     required this.onRefresh,
     required this.channels,
+    required this.running,
   });
 
   @override
@@ -43,7 +45,7 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
               DataCell(Text(row.takerAccountName.toString())),
               DataCell(AdOwnState.getWidgetByValue(row.state)),
               DataCell(Text(row.createdTime)),
-              DataCell(stateButton(context, row, index)),
+              if (widget.running) DataCell(stateButton(context, row, index)),
             ]);
             rows.add(rowWidget);
           }
@@ -52,17 +54,17 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
             height: constraints.maxHeight * 0.8,
             child: DataTable2(
               headingTextStyle: Font.miniGrey,
-              columns: const [
-                DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 200),
-                DataColumn2(label: Text("类型")),
-                DataColumn2(label: Text("已成交数量")),
-                DataColumn2(label: Text("已成交价格")),
-                DataColumn2(label: Text("汇率")),
-                DataColumn2(label: Text("支付方式")),
-                DataColumn2(label: Text("买方姓名")),
-                DataColumn2(label: Text("状态")),
-                DataColumn2(label: Text("创建时间"), fixedWidth: 180),
-                DataColumn2(label: Text("操作"), fixedWidth: 150),
+              columns: [
+                const DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 200),
+                const DataColumn2(label: Text("类型")),
+                const DataColumn2(label: Text("已成交数量")),
+                const DataColumn2(label: Text("已成交价格")),
+                const DataColumn2(label: Text("汇率")),
+                const DataColumn2(label: Text("支付方式")),
+                const DataColumn2(label: Text("买方姓名")),
+                const DataColumn2(label: Text("状态")),
+                const DataColumn2(label: Text("创建时间"), fixedWidth: 180),
+                if (widget.running) const DataColumn2(label: Text("操作"), fixedWidth: 150),
               ],
               columnSpacing: 4,
               dataRowHeight: 60,

@@ -58,14 +58,14 @@ enum PaymentMethods {
         return Icon(
           const IconData(0xe611, fontFamily: "IconFont", matchTextDirection: true),
           size: size,
-          color: color,
+          color: color ?? Colors.blue,
         );
 
       case 1:
         return Icon(
           const IconData(0xe8db, fontFamily: "IconFont", matchTextDirection: true),
           size: size,
-          color: color ?? Colors.blue,
+          color: color ?? Colors.green,
         );
 
       default:

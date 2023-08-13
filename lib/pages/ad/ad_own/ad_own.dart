@@ -87,16 +87,21 @@ class _AdOwnState extends State<AdOwn> {
                 pageCount = data.pages;
                 return DataTable2(
                   headingTextStyle: Font.miniGrey,
-                  columns: const [
-                    DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 220),
-                    DataColumn2(label: Text("类型")),
-                    DataColumn2(label: Text("广告数量\n限额"), fixedWidth: 200),
-                    DataColumn2(label: Text("已成交数量")),
-                    DataColumn2(label: Text("已成交价格")),
-                    DataColumn2(label: Text("状态")),
-                    DataColumn2(label: Text("创建时间"), fixedWidth: 160),
-                    DataColumn2(label: Text("操作")),
-                    DataColumn2(label: Text(""), fixedWidth: 40),
+                  columns: [
+                    const DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 220),
+                    const DataColumn2(label: Text("类型")),
+                    const DataColumn2(label: Text("广告数量\n限额"), fixedWidth: 200),
+                    const DataColumn2(label: Text("已成交数量")),
+                    const DataColumn2(label: Text("已成交价格")),
+                    const DataColumn2(label: Text("支付方式")),
+                    const DataColumn2(label: Text("状态")),
+                    const DataColumn2(label: Text("创建时间"), fixedWidth: 160),
+                    if (widget.running)
+                      const DataColumn2(
+                        label: Text("操作"),
+                        fixedWidth: 120,
+                      ),
+                    const DataColumn2(label: Text(""), fixedWidth: 40),
                   ],
                   columnSpacing: 4,
                   dataRowHeight: 60,
@@ -106,7 +111,7 @@ class _AdOwnState extends State<AdOwn> {
                     final min = row.channels.map((e) => e.amountMin).reduce(math.min);
                     final max = row.channels.map((e) => e.amountMax).reduce(math.max);
                     final badge = row.takerDeals.where((element) => element.state == AdOwnState.NOTIFIED.name).length;
-
+                    final pays = row.takerDeals.map((element) => element.paymentMethod).toSet();
                     return DataRow(
                       cells: [
                         DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
@@ -114,16 +119,26 @@ class _AdOwnState extends State<AdOwn> {
                         DataCell(Text("${row.submitAmount} USDT\n￥$min - ￥$max")),
                         DataCell(Text(row.totalCoinAmount.toString())),
                         DataCell(Text(row.totalMoneyAmount.toString())),
+                        DataCell(Tooltip(
+                          triggerMode: TooltipTriggerMode.tap,
+                          message: pays.map((e) => PaymentMethods.getByValue(e).text).join(","),
+                          child: Wrap(
+                            children: pays.map((pay) {
+                              return PaymentMethods.getByValue(pay).getIcon(32);
+                            }).toList(),
+                          ),
+                        )),
                         DataCell(Text(getStateText(row.state))),
                         DataCell(Text(row.createdTime)),
-                        DataCell(stateButton(
-                          context,
-                          row.state,
-                          row.reference,
-                          () {
-                            return ref.refresh(adOwnProvider(filters));
-                          },
-                        )),
+                        if (widget.running)
+                          DataCell(stateButton(
+                            context,
+                            row.state,
+                            row.reference,
+                            () {
+                              return ref.refresh(adOwnProvider(filters));
+                            },
+                          )),
                         DataCell(
                           Align(
                             alignment: const Alignment(1, 0),
@@ -180,6 +195,7 @@ class _AdOwnState extends State<AdOwn> {
         return AdOwnDetail(
           detail: item.takerDeals,
           channels: item.channels,
+          running: widget.running,
           onRefresh: () {
             research(pageNo);
           },
@@ -189,76 +205,71 @@ class _AdOwnState extends State<AdOwn> {
   }
 }
 
-stateButton(BuildContext context, String state, String reference, Function onStopped) {
-  final runing = UiButton(
-    size: UiButtonSize.small,
+stateButton(BuildContext context, String state, String reference, Function onStateChange) {
+  final stop = UiButton(
+    size: UiButtonSize.mini,
+    minWidth: 48,
     onPressed: () {
       Modal.confirm(
         title: "确认下架广告",
-        content: "下架后您的广告将不再被用户看见，\n正在进行中的订单无法被下架。",
+        content: "下架后退还您被冻结的USDT，\n正在进行中的订单无法被下架。",
         onOk: () async {
           await apis.otc.stopAd({
             "reference": reference,
           });
-
-          onStopped();
+          onStateChange();
         },
       );
     },
     label: "下架",
   );
-
-  final stopped = Wrap(
-    spacing: 8,
-    children: [
-      UiButton(
-        size: UiButtonSize.small,
-        minWidth: 0,
-        onPressed: () {
-          Modal.confirm(
-            title: "重新上架",
-            content: "是否重新上架此订单",
-            onOk: () async {
-              await apis.otc.stopAd({
-                "reference": reference,
-              });
-
-              onStopped();
-            },
-          );
+  final pause = UiButton(
+    size: UiButtonSize.mini,
+    minWidth: 48,
+    onPressed: () {
+      Modal.confirm(
+        title: "确认暂停广告",
+        content: "暂停广告，在此期间您不会接收到新的订单",
+        onOk: () async {
+          await apis.otc.pauseAd({
+            "reference": reference,
+          });
+          onStateChange();
         },
-        label: "上架",
-      ),
-      UiButton(
-        size: UiButtonSize.small,
-        onPressed: () {
-          Modal.confirm(
-            title: "再来一单",
-            content: "复制此订单配置并创建新的订单",
-            onOk: () async {
-              await apis.otc.stopAd({
-                "reference": reference,
-              });
-
-              onStopped();
-            },
-          );
-        },
-        label: "再来一单",
-      ),
-    ],
+      );
+    },
+    label: "暂停",
   );
 
-  if (state == "RUNNING") {
-    return runing;
-  }
-  return stopped;
+  final resume = UiButton(
+    size: UiButtonSize.mini,
+    minWidth: 48,
+    onPressed: () {
+      Modal.confirm(
+        title: "确认开启广告",
+        content: "开启广告，您可以接收新的订单",
+        onOk: () async {
+          await apis.otc.restartAd({
+            "reference": reference,
+          });
+          onStateChange();
+        },
+      );
+    },
+    label: "开启",
+  );
+  return Wrap(
+    spacing: 4,
+    children: state == "RUNNING" ? [stop, pause] : [stop, resume],
+  );
 }
 
 String getStateText(String state) {
   switch (state) {
     case "RUNNING":
       return "已上架";
+    case "PAUSE":
+      return "已暂停";
     default:
       return "已下架";
   }
