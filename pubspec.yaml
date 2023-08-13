@@ -126,12 +126,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    # - family: iconFont
-    #   fonts:
-    #     - asset: assets/fonts/iconfont.ttf
+    - family: IconFont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
+
     - family: Noto
       fonts:
         - asset: assets/fonts/PingFangSC.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

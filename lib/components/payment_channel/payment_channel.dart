@@ -52,14 +52,28 @@ enum PaymentMethods {
             : Colors.blue;
   }
 
-  SvgPicture get icon {
+  Icon getIcon([double? size, Color? color]) {
     switch (type) {
       case 0:
-        return Assets.images.unionpay.svg(width: 24);
+        return Icon(
+          const IconData(0xe611, fontFamily: "IconFont", matchTextDirection: true),
+          size: size,
+          color: color,
+        );
+
       case 1:
-        return Assets.images.wechat.svg(width: 24);
+        return Icon(
+          const IconData(0xe8db, fontFamily: "IconFont", matchTextDirection: true),
+          size: size,
+          color: color ?? Colors.blue,
+        );
+
       default:
-        return Assets.images.alipay.svg(width: 24);
+        return Icon(
+          const IconData(0xe666, fontFamily: "IconFont", matchTextDirection: true),
+          size: size,
+          color: color ?? Colors.blue,
+        );
     }
   }
 

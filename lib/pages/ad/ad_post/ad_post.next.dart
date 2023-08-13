@@ -52,14 +52,16 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
         if (widget.formKey.currentState!.validate()) {
           widget.formKey.currentState!.save();
           final List<String> keys = [];
-          final List<SvgPicture> icons = [];
+          final List<Icon> icons = [];
 
           for (var method in payments) {
             if (keys.contains(method.paymentMethod.value)) {
               continue;
             }
             keys.add(method.paymentMethod.value);
-            icons.add(method.paymentMethod.icon);
+            icons.add(
+              method.paymentMethod.getIcon(),
+            );
           }
           final isBuying = widget.type == AdPostType.buying;
 

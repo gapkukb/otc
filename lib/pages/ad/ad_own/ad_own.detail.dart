@@ -197,7 +197,7 @@ class PaymentCard extends StatelessWidget {
                     width: 60,
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: payment.icon,
+                      child: payment.getIcon(),
                     ),
                   ),
                   const SizedBox(width: 16),
