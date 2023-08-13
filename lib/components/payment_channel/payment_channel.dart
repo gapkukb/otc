@@ -53,7 +53,7 @@ enum PaymentMethods {
   }
 
   Image icon([int? size]) {
-    final s = size ?? 32;
+    final s = size ?? 24;
     switch (type) {
       case 0:
         return Assets.images.unionpay.image(cacheWidth: s);

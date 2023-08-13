@@ -111,7 +111,8 @@ class _AdOwnState extends State<AdOwn> {
                     final min = row.channels.map((e) => e.amountMin).reduce(math.min);
                     final max = row.channels.map((e) => e.amountMax).reduce(math.max);
                     final badge = row.takerDeals.where((element) => element.state == AdOwnState.NOTIFIED.name).length;
-                    final pays = row.takerDeals.map((element) => element.paymentMethod).toSet();
+                    final pays = row.channels.map((element) => element.paymentMethod);
+
                     return DataRow(
                       cells: [
                         DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
@@ -121,10 +122,11 @@ class _AdOwnState extends State<AdOwn> {
                         DataCell(Text(row.totalMoneyAmount.toString())),
                         DataCell(Tooltip(
                           triggerMode: TooltipTriggerMode.tap,
-                          message: pays.map((e) => PaymentMethods.getByValue(e).text).join(","),
+                          message: pays.map((pay) => pay.text).join(","),
                           child: Wrap(
+                            spacing: 4,
                             children: pays.map((pay) {
-                              return PaymentMethods.getByValue(pay).icon(32);
+                              return pay.icon(32);
                             }).toList(),
                           ),
                         )),
