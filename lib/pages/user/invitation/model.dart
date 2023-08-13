@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 class UserInvitationModel {
-  final int id;
+  final num id;
   final String username;
   final String invCode;
   final bool used;
   final String user;
-  final String usedTime;
+  final String? usedTime;
   final String type;
-  final int bankcardRate;
-  final int alipayRate;
-  final int wechatRate;
+  final num bankcardRate;
+  final num alipayRate;
+  final num wechatRate;
   final String creator;
   final String createdTime;
 
@@ -30,16 +30,16 @@ class UserInvitationModel {
   });
 
   UserInvitationModel copyWith({
-    int? id,
+    num? id,
     String? username,
     String? invCode,
     bool? used,
     String? user,
     String? usedTime,
     String? type,
-    int? bankcardRate,
-    int? alipayRate,
-    int? wechatRate,
+    num? bankcardRate,
+    num? alipayRate,
+    num? wechatRate,
     String? creator,
     String? createdTime,
   }) =>

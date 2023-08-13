@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/widgets/ui_clipboard.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 import './filters.dart';
 import './provider.dart';
@@ -51,6 +52,7 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
         body: Consumer(
           builder: (context, ref, child) {
             final provider = ref.watch(merchantInvitationProvider(filters));
+            int i = 0;
             return provider.when(
               data: (data) {
                 return DataTable2(
@@ -58,7 +60,7 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
                   columns: const [
                     DataColumn2(label: Text("序号"), fixedWidth: 220),
                     DataColumn2(label: Text("邀请码")),
-                    DataColumn2(label: Text("邀请链接")),
+                    // DataColumn2(label: Text("邀请链接")),
                     DataColumn2(label: Text("状态")),
                     DataColumn2(label: Text("银行卡佣金")),
                     DataColumn2(label: Text("支付宝佣金")),
@@ -70,17 +72,21 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
                   // dividerThickness: 0.001,
                   empty: provider.isLoading ? null : const UiEmptyView(),
                   rows: data.records.map((row) {
+                    i++;
                     return DataRow(
                       cells: [
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
-                        DataCell(Text("出售")),
+                        DataCell(Text(i.toString())),
+                        DataCell(UiClipboard(
+                          text: row.invCode,
+                          iconSize: 16,
+                          child: Text(row.invCode),
+                        )),
+                        // DataCell(Text(row.creator)),
+                        DataCell(Text(row.used ? "已使用" : "未使用")),
+                        DataCell(Text("${row.bankcardRate * 100}%")),
+                        DataCell(Text("${row.alipayRate * 100}%")),
+                        DataCell(Text("${row.wechatRate * 100}%")),
+                        DataCell(Text(row.username)),
                       ],
                     );
                   }).toList(),
