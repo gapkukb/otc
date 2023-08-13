@@ -99,7 +99,7 @@ class AdPostPaymentTemplate extends StatelessWidget {
               Cell(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 title: UiChip(
-                  iconWidget: data.paymentMethod.getIcon(),
+                  iconWidget: data.paymentMethod.icon(),
                   text: data.paymentMethod.text,
                   textStyle: Font.mediumBold,
                 ),

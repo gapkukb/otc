@@ -178,7 +178,7 @@ class _AdBuyingState extends State<AdBuying> {
                               triggerMode: TooltipTriggerMode.tap,
                               child: Wrap(
                                 spacing: 8,
-                                children: methods.map((e) => e.getIcon(32)).toList(),
+                                children: methods.map((e) => e.icon(32)).toList(),
                               ),
                             )),
                             DataCell(UiButton(

@@ -52,7 +52,7 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
         if (widget.formKey.currentState!.validate()) {
           widget.formKey.currentState!.save();
           final List<String> keys = [];
-          final List<Icon> icons = [];
+          final List<Image> icons = [];
 
           for (var method in payments) {
             if (keys.contains(method.paymentMethod.value)) {
@@ -60,7 +60,7 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
             }
             keys.add(method.paymentMethod.value);
             icons.add(
-              method.paymentMethod.getIcon(),
+              method.paymentMethod.icon(),
             );
           }
           final isBuying = widget.type == AdPostType.buying;

@@ -124,7 +124,7 @@ class _AdOwnState extends State<AdOwn> {
                           message: pays.map((e) => PaymentMethods.getByValue(e).text).join(","),
                           child: Wrap(
                             children: pays.map((pay) {
-                              return PaymentMethods.getByValue(pay).getIcon(32);
+                              return PaymentMethods.getByValue(pay).icon(32);
                             }).toList(),
                           ),
                         )),

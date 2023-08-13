@@ -1988,8 +1988,8 @@ class $AssetsImagesGen {
   SvgGenImage get adCloseButton =>
       const SvgGenImage('assets/images/ad_close_button.svg');
 
-  /// File path: assets/images/alipay.svg
-  SvgGenImage get alipay => const SvgGenImage('assets/images/alipay.svg');
+  /// File path: assets/images/alipay.png
+  AssetGenImage get alipay => const AssetGenImage('assets/images/alipay.png');
 
   /// File path: assets/images/course_1.png
   AssetGenImage get course1 =>
@@ -2085,11 +2085,12 @@ class $AssetsImagesGen {
   AssetGenImage get topBanner =>
       const AssetGenImage('assets/images/top-banner.png');
 
-  /// File path: assets/images/unionpay.svg
-  SvgGenImage get unionpay => const SvgGenImage('assets/images/unionpay.svg');
+  /// File path: assets/images/unionpay.png
+  AssetGenImage get unionpay =>
+      const AssetGenImage('assets/images/unionpay.png');
 
-  /// File path: assets/images/wechat.svg
-  SvgGenImage get wechat => const SvgGenImage('assets/images/wechat.svg');
+  /// File path: assets/images/wechat.png
+  AssetGenImage get wechat => const AssetGenImage('assets/images/wechat.png');
 
   /// List of all assets
   List<dynamic> get values => [
