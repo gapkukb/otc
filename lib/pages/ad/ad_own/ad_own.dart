@@ -1,5 +1,7 @@
 library ad_own;
 
+import 'dart:async';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
@@ -47,12 +49,24 @@ class _AdOwnState extends State<AdOwn> {
   int pageCount = 1;
   int pageNo = 1;
   final pageSize = 50;
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
-
+    timer = Timer.periodic(
+      const Duration(seconds: 10),
+      (timer) {
+        provider.refresh(adOwnProvider(filters));
+      },
+    );
     updateFilters();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    timer.cancel();
   }
 
   updateFilters() {
@@ -122,16 +136,18 @@ class _AdOwnState extends State<AdOwn> {
                         DataCell(Text(row.totalCoinAmount.toString())),
                         DataCell(Text(row.amount.toString())),
                         DataCell(Text(row.totalMoneyAmount.toString())),
-                        DataCell(Tooltip(
-                          triggerMode: TooltipTriggerMode.tap,
-                          message: pays.map((pay) => pay.text).join(","),
-                          child: Wrap(
-                            spacing: 4,
-                            children: pays.map((pay) {
-                              return pay.icon(32);
-                            }).toList(),
-                          ),
-                        )),
+                        // DataCell(Tooltip(
+                        //   triggerMode: TooltipTriggerMode.tap,
+                        //   message: pays.map((pay) => pay.text).join(","),
+                        //   child: Wrap(
+                        //     spacing: 4,
+                        //     children: pays.map((pay) {
+                        //       return pay.icon(32);
+                        //     }).toList(),
+                        //   ),
+                        // )),
+
+                        DataCell(Text(pays.map((pay) => pay.text).join(","))),
                         DataCell(Text(getStateText(row.state))),
                         DataCell(Text(row.createdTime)),
                         if (widget.running)

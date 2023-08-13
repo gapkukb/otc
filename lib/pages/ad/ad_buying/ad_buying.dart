@@ -173,14 +173,15 @@ class _AdBuyingState extends State<AdBuying> {
                                 const Text("￥0.00-￥9999999.99"),
                               ],
                             )),
-                            DataCell(Tooltip(
-                              message: methods.map((e) => e.text).join(","),
-                              triggerMode: TooltipTriggerMode.tap,
-                              child: Wrap(
-                                spacing: 8,
-                                children: methods.map((e) => e.icon(24)).toList(),
-                              ),
-                            )),
+                            DataCell(Text(methods.map((e) => e.text).join(","))),
+                            // DataCell(Tooltip(
+                            //   message: methods.map((e) => e.text).join(","),
+                            //   triggerMode: TooltipTriggerMode.tap,
+                            //   child: Wrap(
+                            //     spacing: 8,
+                            //     children: methods.map((e) => e.icon(24)).toList(),
+                            //   ),
+                            // )),
                             DataCell(UiButton(
                               onPressed: () {
                                 Modal.alert(
