@@ -10,6 +10,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: IconFont
+  static const String iconFont = 'IconFont';
+
   /// Font family: Noto
   static const String noto = 'Noto';
 }

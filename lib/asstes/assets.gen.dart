@@ -1960,8 +1960,11 @@ class $AssetsFontsGen {
   /// File path: assets/fonts/PingFangSC.ttf
   String get pingFangSC => 'assets/fonts/PingFangSC.ttf';
 
+  /// File path: assets/fonts/iconfont.ttf
+  String get iconfont => 'assets/fonts/iconfont.ttf';
+
   /// List of all assets
-  List<String> get values => [microsoftYaHei, pingFangSC];
+  List<String> get values => [microsoftYaHei, pingFangSC, iconfont];
 }
 
 class $AssetsHtmlsGen {

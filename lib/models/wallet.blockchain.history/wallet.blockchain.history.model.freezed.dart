@@ -30,7 +30,7 @@ mixin _$WalletBlockchainHistoryModel {
   String get toAddress => throw _privateConstructorUsedError;
   num get transactionIndex => throw _privateConstructorUsedError;
   String get transactionHash => throw _privateConstructorUsedError;
-  String get confirmed => throw _privateConstructorUsedError;
+  String? get confirmed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +56,7 @@ abstract class $WalletBlockchainHistoryModelCopyWith<$Res> {
       String toAddress,
       num transactionIndex,
       String transactionHash,
-      String confirmed});
+      String? confirmed});
 }
 
 /// @nodoc
@@ -82,7 +82,7 @@ class _$WalletBlockchainHistoryModelCopyWithImpl<$Res,
     Object? toAddress = null,
     Object? transactionIndex = null,
     Object? transactionHash = null,
-    Object? confirmed = null,
+    Object? confirmed = freezed,
   }) {
     return _then(_value.copyWith(
       reference: null == reference
@@ -121,10 +121,10 @@ class _$WalletBlockchainHistoryModelCopyWithImpl<$Res,
           ? _value.transactionHash
           : transactionHash // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmed: null == confirmed
+      confirmed: freezed == confirmed
           ? _value.confirmed
           : confirmed // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -148,7 +148,7 @@ abstract class _$$_WalletBlockchainHistoryModelCopyWith<$Res>
       String toAddress,
       num transactionIndex,
       String transactionHash,
-      String confirmed});
+      String? confirmed});
 }
 
 /// @nodoc
@@ -173,7 +173,7 @@ class __$$_WalletBlockchainHistoryModelCopyWithImpl<$Res>
     Object? toAddress = null,
     Object? transactionIndex = null,
     Object? transactionHash = null,
-    Object? confirmed = null,
+    Object? confirmed = freezed,
   }) {
     return _then(_$_WalletBlockchainHistoryModel(
       reference: null == reference
@@ -212,10 +212,10 @@ class __$$_WalletBlockchainHistoryModelCopyWithImpl<$Res>
           ? _value.transactionHash
           : transactionHash // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmed: null == confirmed
+      confirmed: freezed == confirmed
           ? _value.confirmed
           : confirmed // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -257,7 +257,7 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
   @override
   final String transactionHash;
   @override
-  final String confirmed;
+  final String? confirmed;
 
   @override
   String toString() {
@@ -331,7 +331,7 @@ abstract class _WalletBlockchainHistoryModel
       required final String toAddress,
       required final num transactionIndex,
       required final String transactionHash,
-      required final String confirmed}) = _$_WalletBlockchainHistoryModel;
+      required final String? confirmed}) = _$_WalletBlockchainHistoryModel;
 
   factory _WalletBlockchainHistoryModel.fromJson(Map<String, dynamic> json) =
       _$_WalletBlockchainHistoryModel.fromJson;
@@ -355,7 +355,7 @@ abstract class _WalletBlockchainHistoryModel
   @override
   String get transactionHash;
   @override
-  String get confirmed;
+  String? get confirmed;
   @override
   @JsonKey(ignore: true)
   _$$_WalletBlockchainHistoryModelCopyWith<_$_WalletBlockchainHistoryModel>

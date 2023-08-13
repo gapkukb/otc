@@ -18,7 +18,7 @@ _$_WalletBlockchainHistoryModel _$$_WalletBlockchainHistoryModelFromJson(
       toAddress: json['toAddress'] as String,
       transactionIndex: json['transactionIndex'] as num,
       transactionHash: json['transactionHash'] as String,
-      confirmed: json['confirmed'] as String,
+      confirmed: json['confirmed'] as String?,
     );
 
 Map<String, dynamic> _$$_WalletBlockchainHistoryModelToJson(
