@@ -1,7 +1,5 @@
 part of ad_post;
 
-final _key = GlobalKey();
-
 class AdPostPrev extends ConsumerStatefulWidget {
   final Map<String, dynamic> formState;
   final Function(bool isBuying) onCompelete;
@@ -146,7 +144,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
         const Gap.medium(),
         const Text("价格类型", style: Font.smallGrey),
         AdPostRange(
-          key: _key,
+          key: ValueKey(rate),
           rate: rate,
           name: "floatOffset",
           formState: widget.formState,

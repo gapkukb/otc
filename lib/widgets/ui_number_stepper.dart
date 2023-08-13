@@ -43,12 +43,6 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
   }
 
   @override
-  void didUpdateWidget(covariant UiNumberStepper oldWidget) {
-    _value = widget.initValue ?? widget.min;
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: widget.disabeld,

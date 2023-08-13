@@ -31,7 +31,7 @@ Future<bool?> adPostSubmit(BuildContext context, List<Widget> icons, Map<String,
                   ),
                   _Cell(
                     titleText: "成交单价",
-                    trailingText: "${(payload['refRate'] as double).decimalize()} ${payload['coin']}",
+                    trailingText: "${((payload['refRate'] + payload['floatOffset']) as double).decimalize()} ${payload['coin']}",
                   ),
                   _Cell(
                     titleText: "数量",

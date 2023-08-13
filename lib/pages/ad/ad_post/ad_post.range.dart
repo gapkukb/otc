@@ -80,23 +80,21 @@ class _AdPostRangeState extends State<AdPostRange> {
   }
 
   Widget buildSingle(double max, double min, double initValue) {
-    return RepaintBoundary(
-      child: FormField(
-        // key: ValueKey(typeIndex),
-        onSaved: onSaved,
-        builder: (field) {
-          return UiNumberStepper(
-            max: max,
-            min: min,
-            step: 0.01,
-            initValue: initValue,
-            onChange: (newValue) {
-              value = newValue;
-            },
-          );
-        },
-        validator: widget.validator,
-      ),
+    return FormField(
+      key: ValueKey(typeIndex),
+      onSaved: onSaved,
+      builder: (field) {
+        return UiNumberStepper(
+          max: max,
+          min: min,
+          step: 0.01,
+          initValue: initValue,
+          onChange: (newValue) {
+            value = newValue;
+          },
+        );
+      },
+      validator: widget.validator,
     );
   }
 
