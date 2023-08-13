@@ -66,7 +66,10 @@ class _AddressSelectorState extends State<AddressSelector> {
             iconData: Icons.add,
             label: "添加地址",
             onPressed: () {
-              context.push(Routes.walletMethod);
+              context
+                ..pop()
+                ..pop()
+                ..push(Routes.walletMethod, extra: 1);
             },
           ),
         ],

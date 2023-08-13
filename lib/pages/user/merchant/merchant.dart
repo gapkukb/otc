@@ -5,6 +5,7 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
@@ -177,7 +178,7 @@ class Merchant extends ConsumerWidget {
       onPressed: () async {
         final kyc = ref.read(kycProvider);
         final balance = ref.read(balanceProvider);
-        if (kyc?.lv1Status == null) {
+        if (kyc?.lv1Status == null || kyc?.lv1Status == KycStatus.pending) {
           Modal.confirm(
             title: "商户申请",
             content: "您需要先完成初级或以上身份认证，请先认证",

@@ -64,7 +64,7 @@ class _AdOwnState extends State<AdOwn> {
       "pageSize": pageSize,
       "begin": formState["minDate"] == null ? null : formState["minDate"] + " 00:00:00",
       "end": formState["maxDate"] == null ? null : formState["maxDate"] + " 23:59:59",
-      "makerOrderState": widget.running ? "RUNNING" : "STOPPED"
+      "stopped": widget.running ? false : true,
     });
   }
 

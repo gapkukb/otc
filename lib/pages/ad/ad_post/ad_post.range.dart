@@ -80,21 +80,23 @@ class _AdPostRangeState extends State<AdPostRange> {
   }
 
   Widget buildSingle(double max, double min, double initValue) {
-    return FormField(
-      key: ValueKey(typeIndex),
-      onSaved: onSaved,
-      builder: (field) {
-        return UiNumberStepper(
-          max: max,
-          min: min,
-          step: 0.01,
-          initValue: initValue,
-          onChange: (newValue) {
-            value = newValue;
-          },
-        );
-      },
-      validator: widget.validator,
+    return RepaintBoundary(
+      child: FormField(
+        // key: ValueKey(typeIndex),
+        onSaved: onSaved,
+        builder: (field) {
+          return UiNumberStepper(
+            max: max,
+            min: min,
+            step: 0.01,
+            initValue: initValue,
+            onChange: (newValue) {
+              value = newValue;
+            },
+          );
+        },
+        validator: widget.validator,
+      ),
     );
   }
 
@@ -105,9 +107,9 @@ class _AdPostRangeState extends State<AdPostRange> {
       if (typeIndex == 0) {
         val = value - widget.rate;
       } else {
-        val = value - widget.rate;
+        val = value;
       }
-      widget.formState.update(widget.name!, (_) => val.decimalize(), ifAbsent: () => val.decimalize());
+      widget.formState.update(widget.name!, (_) => val, ifAbsent: () => val);
     }
   }
 

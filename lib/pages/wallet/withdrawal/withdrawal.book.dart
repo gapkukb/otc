@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/address_selector/address_selector.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/components/gap/gap.dart';
-import "dart:developer";
 
 class WithdrawalBook extends StatefulWidget {
   final Map<String, dynamic> formState;

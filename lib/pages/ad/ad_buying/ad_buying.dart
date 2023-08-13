@@ -55,7 +55,7 @@ class _AdBuyingState extends State<AdBuying> {
 
   updateFilters() {
     filters.addAll({
-      "sell": !widget.isBuying,
+      "sell": widget.isBuying,
       "coin": Cryptocurrency.USDT.name,
       "money": Fiatcurrency.CNY.name,
       "page": pageNo,

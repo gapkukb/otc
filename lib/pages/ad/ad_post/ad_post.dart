@@ -24,7 +24,6 @@ import 'package:otc/models/wallet.qrcode/wallet.qrcode.model.dart';
 import 'package:otc/pages/wallet/wallet.method/wallet.method.hepler.dart';
 import 'package:otc/providers/lowest_limit.provider.dart';
 import 'package:otc/providers/otc.provider.dart';
-import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -48,10 +47,8 @@ enum AdPostType {
 }
 
 class AdPost extends StatefulWidget {
-  final AdPostType type;
   const AdPost({
     super.key,
-    this.type = AdPostType.buying,
   });
 
   @override
@@ -74,7 +71,6 @@ class _AdPostState extends State<AdPost> with SingleTickerProviderStateMixin {
       child: !isNext
           ? AdPostPrev(
               formState: formState,
-              type: widget.type,
               onCompelete: _onCompelete,
             )
           : AdPostNext(

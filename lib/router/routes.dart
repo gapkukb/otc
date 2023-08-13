@@ -262,7 +262,7 @@ final List<RouteBase> routes = [
   ),
   ModalRoute(
     path: Routes.adPost,
-    statePage: (context, state) => AdPost(type: state.extra as AdPostType),
+    page: const AdPost(),
   ),
   ModalRoute(
     path: Routes.transfer,
