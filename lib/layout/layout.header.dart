@@ -94,7 +94,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
             _router.go(Routes.order);
           },
         ),
-        const NoticeAppbar(),
+        // const NoticeAppbar(),
         const LayoutProfile(userName: "user"),
       ];
     }

@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
                 SizedBox(height: 196),
                 HomeAdvantage(),
                 SizedBox(height: 96),
-                LayoutFooter(),
+                // LayoutFooter(),
               ],
             ),
           ),

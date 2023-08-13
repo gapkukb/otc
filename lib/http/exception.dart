@@ -95,7 +95,7 @@ class HttpException extends _Exception {
               case 400:
                 return HttpException(statusCode, "请求语法出错");
               case 401:
-                var timer = Timer(const Duration(microseconds: 100), () {
+                Timer(const Duration(microseconds: 100), () {
                   provider.read(userProvider.notifier).logout();
                   final router = GoRouter.of(navigatorKey.currentContext!);
                   while (router.canPop()) {
@@ -105,7 +105,7 @@ class HttpException extends _Exception {
                     ..go(Routes.home)
                     ..push(Routes.login);
                 });
-                timer.cancel();
+
                 return HttpException(statusCode, "会话已失效，请重新登录");
               case 403:
                 return HttpException(statusCode, "您的权限不足，服务器拒绝执行");
