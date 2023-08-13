@@ -59,10 +59,10 @@ enum PaymentMethods {
         return Assets.images.unionpay.image(cacheWidth: s);
 
       case 1:
-        return Assets.images.alipay.image(cacheWidth: s);
+        return Assets.images.wechat.image(cacheWidth: s);
 
       default:
-        return Assets.images.wechat.image(cacheWidth: s);
+        return Assets.images.alipay.image(cacheWidth: s);
     }
   }
 
