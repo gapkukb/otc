@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
   final formKey = GlobalKey<FormState>();
   Protocal? protocal;
 
-  num fee = 10;
+  num fee = 0;
 
   @override
   void initState() {
@@ -56,7 +57,6 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
   Widget build(BuildContext context) {
     final lowestLimit = ref.watch(lowestLimitProvider);
     final balance = ref.watch(balanceProvider);
-
     return Form(
       key: formKey,
       child: ModalPageTemplate(
@@ -80,7 +80,7 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
                 );
               },
             );
-            if (!next) return;
+            if (next == null) return;
             final data = await openCaptchaWindow(CaptchaWindowOptions(
               legend: "安全验证",
               context: context,
@@ -146,6 +146,11 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
                 BlockchainSelector(
                   name: "blockchain",
                   formState: formState,
+                  onChanged: (selectedItem) {
+                    setState(() {
+                      fee = lowestLimit.gas[selectedItem!.value] ?? 0;
+                    });
+                  },
                   validator: (value) {
                     protocal = value?.extra;
                     return value == null ? "请选择转账网络" : null;
@@ -163,9 +168,19 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
             WithdrawalBook(
               formState: formState,
               name: "book",
+              onChange: (address, coin) {
+                setState(() {
+                  fee = lowestLimit.gas[coin] ?? 0;
+                  formState.addAll({
+                    "wallet": address,
+                    "blockchain": coin,
+                  });
+                });
+              },
             ),
           const Gap.medium(),
           AmountInput(
+            controller: TextEditingController(),
             coin: Cryptocurrency.USDT,
             labelText: "提币数量 可用余额:${balance.valid}",
             // hintText: "${} USDT可用",

@@ -16,6 +16,7 @@ class LayoutLogo extends StatelessWidget {
     );
 
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       child: RawGestureDetector(
         gestures: {
           SerialTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<SerialTapGestureRecognizer>(SerialTapGestureRecognizer.new, (SerialTapGestureRecognizer instance) {

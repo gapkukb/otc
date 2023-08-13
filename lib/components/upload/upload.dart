@@ -116,6 +116,11 @@ class _UploadState extends State<Upload> {
 
 class UploadController extends ChangeNotifier {
   late final List<XFile> items;
+  final MediaType? mediaType;
+
+  UploadController({
+    this.mediaType,
+  });
 
   @override
   void dispose() {
@@ -140,6 +145,7 @@ class UploadController extends ChangeNotifier {
         "file": result.toList(),
       });
     }();
-    return (await apis.app.uploadImage(formData)).cast<String>();
+
+    return (await (mediaType == MediaType.video ? apis.app.uploadVideo(formData) : apis.app.uploadImage(formData))).cast<String>();
   }
 }

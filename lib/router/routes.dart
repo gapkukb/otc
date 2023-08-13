@@ -47,6 +47,10 @@ final List<RouteBase> routes = [
             path: Routes.rebate,
             page: const UserRebate(),
           ),
+          AuthRoute(
+            path: Routes.userInvitation,
+            page: const UserInvitation(),
+          ),
         ],
       ),
       ShellRoute(
@@ -133,7 +137,7 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.merchantInvitation,
-            page: const MerchantInvitation(),
+            page: const UserInvitation(),
           ),
         ],
       ),

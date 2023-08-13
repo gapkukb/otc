@@ -7,14 +7,13 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
-import 'package:otc/constants/banks.dart';
 import 'package:otc/pages/wallet/wallet.method/bank.provider.dart';
 import 'package:otc/providers/bank.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_chip.dart';
-import 'package:otc/widgets/ui_empty_view.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
+import 'dart:math' as math;
 
 class WalletMethodBankAddition extends StatefulWidget {
   const WalletMethodBankAddition({super.key});
@@ -92,7 +91,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
               hintText: "请输入银行账号/卡号",
             ),
             validator: (value) {
-              return value!.isNotEmpty ? null : "请填写银行卡号";
+              return value!.length >= 16 && value.length <= 19 ? null : "银行卡号输入有误";
             },
           ),
           const SizedBox(height: 16),
@@ -111,7 +110,7 @@ class _WalletMethodBankAdditionState extends State<WalletMethodBankAddition> {
             name: "title",
             formState: _formState,
             decoration: const InputDecoration(
-              label: Text("备注（选填）"),
+              label: Text("备注"),
               hintText: "添加备注方便您更容易甄别银行卡信息",
             ),
           ),

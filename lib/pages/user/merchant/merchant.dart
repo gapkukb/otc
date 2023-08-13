@@ -192,7 +192,7 @@ class Merchant extends ConsumerWidget {
             content: "您的账户余额不足500 USDT，请先充值。",
             okButtonText: "充币",
             onOk: () {
-              context.go(Routes.recharge);
+              context.push(Routes.recharge);
             },
           );
         } else if ((await apis.wallet.getAllBankCards()).isEmpty) {

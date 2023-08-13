@@ -73,7 +73,7 @@ class HomeTop extends ConsumerWidget {
             size: UiButtonSize.medium,
             color: const Color(0xff2D68FE),
             onPressed: () {
-              context.push(Routes.merchantDashboard);
+              context.go(Routes.merchant);
             },
           ),
         ),

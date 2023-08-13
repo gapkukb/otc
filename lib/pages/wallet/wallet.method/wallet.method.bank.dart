@@ -44,7 +44,7 @@ class WalletMethodBank extends ConsumerWidget {
               cells: [
                 DataCell(Text(item.name)),
                 DataCell(Text(item.cardNumber)),
-                DataCell(Text(item.bank)),
+                DataCell(Text(item.bankCnName)),
                 DataCell(Text(item.bankBranch)),
                 DataCell(
                   UiButton(

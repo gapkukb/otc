@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -53,47 +54,35 @@ class ModalPageTemplate extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ListTile(
-                //   contentPadding: const EdgeInsets.all(0),
-                //   title: Padding(
-                //     padding: const EdgeInsets.only(bottom: 8.0),
-                //     child: Text(
-                //       legend,
-                //       style: const TextStyle(
-                //         color: Color(0xff7C7C7C),
-                //       ),
-                //     ),
-                //   ),
-                //   subtitle: title == null
-                //       ? null
-                //       : Padding(
-                //           padding: const EdgeInsets.only(top: 24),
-                //           child: Text(
-                //             title!,
-                //             style: Font.largeBold,
-                //           ),
-                //         ),
-                //   trailing: Opacity(
-                //     opacity: 0.2,
-                //     child: icon ??
-                //         Icon(
-                //           iconData,
-                //           size: 40,
-                //         ),
-                //   ),
-                // ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: SizedBox(
-                    height: 48,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        title!,
-                        style: Font.largeBold,
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        height: 48,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            title!,
+                            style: Font.largeBold,
+                          ),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: IconButton(
+                          constraints: const BoxConstraints(
+                            maxWidth: 48,
+                            maxHeight: 48,
+                          ),
+                          onPressed: () {
+                            context.pop();
+                          },
+                          icon: const Icon(Icons.close_outlined, size: 24),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 const Divider(height: 33, thickness: 1),

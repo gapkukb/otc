@@ -77,9 +77,10 @@ class UserAuth extends ConsumerWidget {
       kyc?.lv1Status == KycStatus.pass,
       kyc?.lv2Status == KycStatus.pass,
       kyc?.lv3Status == KycStatus.pass,
-    ].indexWhere((element) => element == true);
+    ].lastIndexWhere((element) => element == true);
+
     final level = items[index + 1];
-    inspect(level);
+
     return Material(
       color: Colors.grey.shade50,
       child: SingleChildScrollView(

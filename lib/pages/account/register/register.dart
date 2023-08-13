@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -79,9 +77,31 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          "注册账号",
-          style: Theme.of(context).textTheme.headlineSmall,
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            SizedBox(
+              height: 48,
+              width: double.infinity,
+              child: Text(
+                "注册账号",
+                style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Positioned(
+              right: -12,
+              top: -12,
+              width: 48,
+              height: 48,
+              child: IconButton(
+                onPressed: () {
+                  context.pop();
+                },
+                icon: const Icon(Icons.close_outlined),
+              ),
+            )
+          ],
         ),
         const SizedBox(height: 32),
         TabBar(

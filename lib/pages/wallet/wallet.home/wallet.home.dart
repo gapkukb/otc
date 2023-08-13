@@ -72,7 +72,11 @@ class WalletHome extends ConsumerWidget {
         "child": "提币",
         "variant": UiButtonVariant.outline,
         "onPressed": () async {
-          if (await predication(types: [Predication.kyc1])) {
+          if (await predication(types: [
+            Predication.phone,
+            Predication.kyc1,
+            Predication.funds,
+          ])) {
             context.push(Routes.withdrawal);
           }
         },

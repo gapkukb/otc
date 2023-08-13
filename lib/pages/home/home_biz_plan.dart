@@ -39,8 +39,7 @@ class HomeBizPlan extends StatelessWidget {
             iconOnRight: true,
             minWidth: 180,
             onPressed: () {
-              final Uri _url = Uri.parse('https://flutter.dev');
-              launchUrl(_url);
+              context.go(Routes.merchant);
             },
           ),
         ),

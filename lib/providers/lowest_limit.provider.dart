@@ -26,12 +26,19 @@ class LowestLimitModel {
     this.minDeposit = 0,
     this.maxWithdrawDaily = 0,
     this.maxTransferDaily = 0,
+    this.gas = const {
+      "ETH": 0,
+      "BTC": 0,
+      "BSC": 0,
+      "TRON": 0,
+    },
   });
 
   final num minWithdraw;
   final num minDeposit;
   final num maxWithdrawDaily;
   final num maxTransferDaily;
+  final Map<String, num> gas;
 
   factory LowestLimitModel.fromJson(Map<String, dynamic> json) {
     return LowestLimitModel(
@@ -39,6 +46,7 @@ class LowestLimitModel {
       minDeposit: json["minDeposit"],
       maxWithdrawDaily: json["maxWithdrawDaily"],
       maxTransferDaily: json["maxTransferDaily"],
+      gas: (json["gas"] as Map).cast(),
     );
   }
 }

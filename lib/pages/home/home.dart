@@ -30,8 +30,8 @@ class _HomeState extends State<Home> {
             child: const Column(
               children: [
                 HomeTop(),
-                HomeMarqueer(),
-                SizedBox(height: 16),
+                // HomeMarqueer(),
+                // SizedBox(height: 16),
                 HomeCarousel(),
                 SizedBox(height: 56),
                 // Text(

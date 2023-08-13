@@ -7,16 +7,16 @@ import 'package:otc/widgets/ui_empty_view.dart';
 import './filters.dart';
 import './provider.dart';
 
-class UserInvitation extends ConsumerStatefulWidget {
-  const UserInvitation({
+class MerchantInvitation extends ConsumerStatefulWidget {
+  const MerchantInvitation({
     super.key,
   });
 
   @override
-  ConsumerState<UserInvitation> createState() => _MerchantIncomeState();
+  ConsumerState<MerchantInvitation> createState() => _MerchantIncomeState();
 }
 
-class _MerchantIncomeState extends ConsumerState<UserInvitation> {
+class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
   final Map<String, dynamic> formState = {};
   Map<String, dynamic> filters = {};
   final formKey = GlobalKey<FormState>();
@@ -50,7 +50,8 @@ class _MerchantIncomeState extends ConsumerState<UserInvitation> {
         ),
         body: Consumer(
           builder: (context, ref, child) {
-            final provider = ref.watch(merchantInvitationProvider(filters));
+            final provider = ref.watch(userInvitationProvider(filters));
+            int i = 0;
             return provider.when(
               data: (data) {
                 return DataTable2(
@@ -70,9 +71,10 @@ class _MerchantIncomeState extends ConsumerState<UserInvitation> {
                   // dividerThickness: 0.001,
                   empty: provider.isLoading ? null : const UiEmptyView(),
                   rows: data.records.map((row) {
+                    i++;
                     return DataRow(
                       cells: [
-                        DataCell(Text("出售")),
+                        DataCell(Text(i.toString())),
                         DataCell(Text("出售")),
                         DataCell(Text("出售")),
                         DataCell(Text("出售")),
@@ -103,7 +105,7 @@ class _MerchantIncomeState extends ConsumerState<UserInvitation> {
     formKey.currentState!.save();
     setState(() {
       updateFilters();
-      return provider.refresh(merchantInvitationProvider(filters));
+      return provider.refresh(userInvitationProvider(filters));
     });
   }
 }

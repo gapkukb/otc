@@ -6,6 +6,7 @@ import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
+import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
 
@@ -44,17 +45,17 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
           height: 228,
           child: Card(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListTile(
-                  // isThreeLine: true,
-                  title: const Text("安全等级"),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    context.push(Routes.security);
-                  },
+                const Padding(
+                  padding: Pads.sm,
+                  child: Text(
+                    "安全等级",
+                    style: Font.medium,
+                  ),
                 ),
                 const Divider(
-                  height: 2,
+                  height: 1,
                 ),
                 Expanded(
                   child: Center(

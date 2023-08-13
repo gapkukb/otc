@@ -63,6 +63,8 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
           ),
           const Gap.small(),
           AmountInput(
+            controller: TextEditingController(),
+            amountInputType: AmountInputType.transfer,
             labelText: "转账数量",
             coin: Cryptocurrency.USDT,
             name: "amount",

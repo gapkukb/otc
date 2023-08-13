@@ -134,6 +134,7 @@ class _CaptchaState extends State<Captcha> {
               labelText: "资金密码",
               maxLength: 6,
               keyboardType: TextInputType.number,
+              obscureText: true,
               validator: (value) {
                 return value?.length == 6 ? null : "资金密码为6位数字";
               },

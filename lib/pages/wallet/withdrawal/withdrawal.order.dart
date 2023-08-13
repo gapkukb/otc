@@ -24,19 +24,7 @@ class WithdrawalOrder extends StatelessWidget {
       iconData: Icons.wallet,
       filledButton: true,
       onCompelete: (context) async {
-        if (!global.user.base.hasPaymentPassword) {
-          // 提币异常3 - 没有开启资金密码时
-          Modal.confirm(
-            content: "您必须开启资金密码后才可以使用提币功能。",
-            okButtonText: "去开启",
-            onOk: () {
-              context.pop(false);
-              context.push(Routes.setting);
-            },
-          );
-        } else {
-          context.pop(true);
-        }
+        context.pop(true);
       },
       children: [
         Container(
@@ -49,7 +37,7 @@ class WithdrawalOrder extends StatelessWidget {
               const Text("您将收到", style: Font.smallGrey),
               const Gap.mini(),
               MixText(
-                child: formState['amount'],
+                child: (double.parse(formState['amount']) - formState['fee']).toString(),
                 style: Font.x2largeBold,
                 small: " USDT",
               ),

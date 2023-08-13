@@ -73,32 +73,32 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-      leading: icon == null
-          ? null
-          : Material(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(4),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(icon),
+    return SelectionContainer.disabled(
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
+        leading: icon == null
+            ? null
+            : Material(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(4),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(icon),
+                ),
               ),
-            ),
-      title: Text(
-        title,
-        style: Font.small,
+        title: Text(
+          title,
+          style: Font.small,
+        ),
+        subtitle: subtitle == null
+            ? null
+            : Text(
+                subtitle!,
+                style: Font.miniGrey,
+              ),
+        trailing: showArrow == true ? const Icon(Icons.keyboard_arrow_right_outlined) : trailing,
       ),
-      subtitle: subtitle == null
-          ? null
-          : Text(
-              subtitle!,
-              style: Font.miniGrey,
-            ),
-      trailing: showArrow == true
-          ? const Icon(Icons.keyboard_arrow_right_outlined)
-          : trailing,
     );
   }
 }

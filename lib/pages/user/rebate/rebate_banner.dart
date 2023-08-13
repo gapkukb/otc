@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
+import 'package:otc/pages/user/rebate/rebate.provider.dart';
 import 'package:otc/providers/otc.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
@@ -14,8 +15,9 @@ class RebateBanner extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final otc = ref.read(otcProvider);
     final user = ref.read(userBaseProvider);
+    final rabate = ref.watch(rabateProvider);
+
     return Card(
       child: Container(
         height: 387,
@@ -38,7 +40,7 @@ class RebateBanner extends ConsumerWidget {
               style: Theme.of(context).textTheme.displaySmall,
             ),
             Text(
-              "挂单成交额度${otc.lowestCommission}%的佣金",
+              "挂单成交额度${rabate.bankCardTransfer * 100}%的佣金",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Colors.red),
             ),
             const SizedBox(height: 32),
@@ -60,7 +62,7 @@ class RebateBanner extends ConsumerWidget {
                   label: "邀请好友",
                   onPressed: () {
                     if (ref.read(kycAuthProvider)) {
-                      context.go(Routes.merchant);
+                      context.go(Routes.userInvitation);
                     } else {
                       Modal.confirm(
                         title: "商户申请",

@@ -120,12 +120,14 @@ class UiButton extends StatelessWidget {
     Widget? $text = child ??
         (label == null
             ? null
-            : Text(
-                label!,
-                style: labelStyle ??
-                    TextStyle(
-                      fontSize: _fontSize[size],
-                    ),
+            : SelectionContainer.disabled(
+                child: Text(
+                  label!,
+                  style: labelStyle ??
+                      TextStyle(
+                        fontSize: _fontSize[size],
+                      ),
+                ),
               ));
 
     if ($icon != null && $text != null) {

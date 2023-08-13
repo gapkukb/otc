@@ -7,10 +7,12 @@ import "dart:developer";
 class WithdrawalBook extends StatefulWidget {
   final Map<String, dynamic> formState;
   final String name;
+  final Function(String address, String coin) onChange;
   const WithdrawalBook({
     super.key,
     required this.formState,
     required this.name,
+    required this.onChange,
   });
 
   @override
@@ -30,8 +32,9 @@ class _WithdrawalBookState extends State<WithdrawalBook> {
           formState: widget.formState,
           onChanged: (selectedItem) {
             setState(() {
-              address = selectedItem!.value;
+              address = selectedItem!.extra;
               blockchain = selectedItem.subtitle!;
+              widget.onChange(address, blockchain);
             });
           },
         ),
@@ -39,10 +42,7 @@ class _WithdrawalBookState extends State<WithdrawalBook> {
         Cell(
           height: 32,
           titleText: "提币地址",
-          trailing: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(address),
-          ),
+          trailing: Text(address),
         ),
         Cell(
           height: 32,

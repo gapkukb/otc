@@ -66,7 +66,7 @@ class _AddressSelectorState extends State<AddressSelector> {
             iconData: Icons.add,
             label: "添加地址",
             onPressed: () {
-              context.push(Routes.walletMethodCryptoAddition);
+              context.push(Routes.walletMethod);
             },
           ),
         ],
@@ -78,8 +78,8 @@ class _AddressSelectorState extends State<AddressSelector> {
             title: item.remark,
             subtitle: item.blockchain.name,
             subtitleStyle: Font.miniGrey,
-            value: item.wallet,
-            extra: item.reference,
+            value: item.reference,
+            extra: item.wallet,
             trailingWidget: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,7 +74,11 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
     {
       "child": "提币",
       "onPressed": (BuildContext context) async {
-        if (await predication(types: [Predication.kyc1])) {
+        if (await predication(types: [
+          Predication.phone,
+          Predication.kyc1,
+          Predication.funds,
+        ])) {
           context.push(Routes.withdrawal);
         }
       },
@@ -215,6 +221,10 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
       error: (_, __) => const SizedBox.shrink(),
       loading: () => const SizedBox.shrink(),
       data: (coins) {
+        final Iterable<Coin> rows = coins.map((coin) => Coin(
+              coin: coin,
+              detail: wallet.detail.firstWhere((element) => element.currency == coin.name),
+            ));
         return DataTable(
           columnSpacing: 8,
           horizontalMargin: 8,
@@ -232,8 +242,10 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
               fixedWidth: 120,
             ),
           ],
-          rows: coins.map((coin) {
-            final Detail? current = wallet.detail.firstWhere((element) => element.currency == coin.name);
+          rows: rows.map((row) {
+            final coin = row.coin;
+            final detail = row.detail;
+
             return DataRow(
               cells: [
                 DataCell(
@@ -245,9 +257,9 @@ class _WalletFundsState extends ConsumerState<WalletFunds> {
                     text: coin.name,
                   ),
                 ),
-                DataCell(Text((current?.balance ?? 0).decimalize())),
-                DataCell(Text((current?.canUsd ?? 0).decimalize())),
-                DataCell(Text(((current?.balance ?? 0) - (current?.canUsd ?? 0)).decimalize())),
+                DataCell(Text((detail.balance).decimalize())),
+                DataCell(Text((detail.canUsd).decimalize())),
+                DataCell(Text(((detail.balance) - (detail.canUsd)).decimalize())),
                 DataCell(
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -289,5 +301,14 @@ class _Item {
   _Item({
     required this.name,
     required this.hanlder,
+  });
+}
+
+class Coin {
+  final Cryptocurrency coin;
+  final Detail detail;
+  const Coin({
+    required this.coin,
+    required this.detail,
   });
 }
