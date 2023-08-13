@@ -130,7 +130,6 @@ class _CaptchaState extends State<Captcha> {
             UiTextFormField(
               formState: formState,
               name: "payPassword",
-              autofocus: true,
               labelText: "资金密码",
               maxLength: 6,
               keyboardType: TextInputType.number,
@@ -164,7 +163,6 @@ class _CaptchaState extends State<Captcha> {
           const Gap.small(),
           if (device == CaptchaDevice.f2a)
             UiTextFormField(
-              autofocus: session != CaptchaSession.funds,
               name: "code",
               formState: formState,
               labelText: "谷歌验证码",

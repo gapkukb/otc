@@ -38,6 +38,7 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
   final Map<String, dynamic> formState = {};
   final formKey = GlobalKey<FormState>();
   Protocal? protocal;
+  final amountController = TextEditingController();
 
   num fee = 0;
 
@@ -50,6 +51,7 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
   @override
   void dispose() {
     controller.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
@@ -180,7 +182,7 @@ class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProvid
             ),
           const Gap.medium(),
           AmountInput(
-            controller: TextEditingController(),
+            controller: amountController,
             coin: Cryptocurrency.USDT,
             labelText: "提币数量 可用余额:${balance.valid}",
             // hintText: "${} USDT可用",

@@ -30,8 +30,14 @@ class WalletTransfer extends ConsumerStatefulWidget {
 
 class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-
+  final amountController = TextEditingController();
   final Map<String, dynamic> formState = {};
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +69,7 @@ class _WalletTransferState extends ConsumerState<WalletTransfer> with SingleTick
           ),
           const Gap.small(),
           AmountInput(
-            controller: TextEditingController(),
+            controller: amountController,
             amountInputType: AmountInputType.transfer,
             labelText: "转账数量",
             coin: Cryptocurrency.USDT,
