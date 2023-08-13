@@ -109,7 +109,7 @@ class _FeeState extends State<Fee> {
                     text: data['label'],
                     style: const TextStyle(
                       fontSize: 10,
-                      letterSpacing: kIsWeb ? 2 : 1,
+                      letterSpacing: kIsWeb ? 2 : 0,
                     ),
                   ),
                 ],
