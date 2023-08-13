@@ -66,6 +66,11 @@ class _User {
 
   /// 忘记密码
   final forgotPwd = post("/customer/safety/open/forget");
+
+  /// 佣金 邀请码列表
+  final commissionInvcode = post("/commission/inv-code/page", (Map<String, dynamic> json) {
+    return PaginationModel.fromJson(json, (item) => UserInvitationModel.fromJson(item as dynamic));
+  }, HttpOptions(loading: false));
 }
 
 final userApi = _User();

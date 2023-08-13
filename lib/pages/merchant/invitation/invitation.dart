@@ -7,16 +7,16 @@ import 'package:otc/widgets/ui_empty_view.dart';
 import './filters.dart';
 import './provider.dart';
 
-class UserInvitation extends ConsumerStatefulWidget {
-  const UserInvitation({
+class MerchantInvitation extends ConsumerStatefulWidget {
+  const MerchantInvitation({
     super.key,
   });
 
   @override
-  ConsumerState<UserInvitation> createState() => _MerchantIncomeState();
+  ConsumerState<MerchantInvitation> createState() => _MerchantIncomeState();
 }
 
-class _MerchantIncomeState extends ConsumerState<UserInvitation> {
+class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
   final Map<String, dynamic> formState = {};
   Map<String, dynamic> filters = {};
   final formKey = GlobalKey<FormState>();

@@ -11,6 +11,7 @@ class _AppApi {
     null,
     HttpOptions(loading: false),
   );
+  final defaultRate = get("/public/default-rate");
 
   // final upload = http.post<String>(
   //   "/file/upload/image",

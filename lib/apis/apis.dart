@@ -10,7 +10,7 @@ import 'package:otc/models/wallet.transfer.history/wallet.transfer.history.model
 import 'package:otc/pages/merchant/income/model.dart';
 import 'package:otc/pages/merchant/invitation/model.dart';
 import 'package:otc/pages/merchant/setting/model.dart';
-import 'package:otc/pages/user/rebate/rebate_details.model.dart';
+import 'package:otc/pages/user/invitation/model.dart';
 import '../http/http.dart';
 import '../models/user/user.model.dart';
 import '../models/otc/otc.model.dart';

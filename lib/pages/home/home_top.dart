@@ -5,7 +5,7 @@ import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/auth_button/auth_button.dart';
 import 'package:otc/models/otc/otc.model.dart';
 import 'package:otc/models/user/user.model.dart';
-import 'package:otc/providers/otc.provider.dart';
+import 'package:otc/pages/home/home.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -17,15 +17,14 @@ class HomeTop extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final user = ref.watch(userProvider);
-    final otc = ref.watch(otcProvider);
+    final home = ref.watch(homeProvider);
 
     if (context.md) {
       return Column(
         children: [
           Assets.images.topBanner.image(),
           const SizedBox(height: 32),
-          _buildText(context, user, otc),
+          _buildText(context, home),
         ],
       );
     }
@@ -41,11 +40,11 @@ class HomeTop extends ConsumerWidget {
           alignment: Alignment.centerRight,
         ),
       ),
-      child: _buildText(context, user, otc),
+      child: _buildText(context, home),
     );
   }
 
-  _buildText(BuildContext context, UserModel? user, OtcModel otc) {
+  _buildText(BuildContext context, HomeModel home) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: context.responsive(
@@ -61,7 +60,7 @@ class HomeTop extends ConsumerWidget {
           height: 8,
         ),
         Text(
-          "参与做市商扶持计划，可获得${otc.lowestCommission}%成交额返佣",
+          "参与做市商扶持计划，可获得${home.defaultRate * 100}%成交额返佣",
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 24),

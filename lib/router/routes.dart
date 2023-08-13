@@ -137,7 +137,7 @@ final List<RouteBase> routes = [
           ),
           AuthRoute(
             path: Routes.merchantInvitation,
-            page: const UserInvitation(),
+            page: const MerchantInvitation(),
           ),
         ],
       ),

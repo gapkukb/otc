@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
-import 'package:otc/components/payment_channel/payment_channel.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
-class MerchantInvitationFilters extends PreferredSize {
+class UserInvitationFilters extends PreferredSize {
   final Map<String, dynamic> formState;
   final Function() onSearch;
 
-  MerchantInvitationFilters({
+  UserInvitationFilters({
     super.key,
     required this.formState,
     required this.onSearch,
@@ -38,9 +36,9 @@ class MerchantInvitationFilters extends PreferredSize {
                       labelText: "类型",
                       name: "used",
                       formState: formState,
-                      initialValue: null,
+                      initialValue: "",
                       data: [
-                        DropdownItem(title: "全部", value: null),
+                        DropdownItem(title: "全部", value: ""),
                         DropdownItem(title: "已使用", value: true),
                         DropdownItem(title: "未使用", value: false),
                       ],

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,16 +9,16 @@ import 'package:otc/widgets/ui_empty_view.dart';
 import './filters.dart';
 import './provider.dart';
 
-class MerchantInvitation extends ConsumerStatefulWidget {
-  const MerchantInvitation({
+class UserInvitation extends ConsumerStatefulWidget {
+  const UserInvitation({
     super.key,
   });
 
   @override
-  ConsumerState<MerchantInvitation> createState() => _MerchantIncomeState();
+  ConsumerState<UserInvitation> createState() => _UserInvitationState();
 }
 
-class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
+class _UserInvitationState extends ConsumerState<UserInvitation> {
   final Map<String, dynamic> formState = {};
   Map<String, dynamic> filters = {};
   final formKey = GlobalKey<FormState>();
@@ -30,11 +32,13 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
 
   updateFilters() {
     filters.addAll({
-      ...filters,
+      "used": filters["used"] == "" ? null : filters["used"],
       "code": filters["code"] == "" ? null : filters["code"],
       "page": 1,
       "pageSize": 50,
     });
+
+    inspect(filters);
   }
 
   @override
@@ -42,7 +46,7 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
     return Form(
       key: formKey,
       child: Scaffold(
-        appBar: MerchantInvitationFilters(
+        appBar: UserInvitationFilters(
           formState: formState,
           onSearch: () {
             research(1);

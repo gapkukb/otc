@@ -27,6 +27,7 @@ import 'package:otc/pages/order/pending.spot.order/pending.spot.order.dart';
 import 'package:otc/pages/user/auth/auth_junior.dart';
 import 'package:otc/pages/user/auth/auth_primary.dart';
 import 'package:otc/pages/user/auth/auth_senior.dart';
+import 'package:otc/pages/user/invitation/invitation.dart';
 import 'package:otc/pages/user/merchant/merchant.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
