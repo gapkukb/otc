@@ -56,21 +56,21 @@ enum PaymentMethods {
     switch (type) {
       case 0:
         return Icon(
-          const IconData(0xe611, fontFamily: "IconFont", matchTextDirection: true),
+          const IconData(0xe611, fontFamily: "IconFont"),
           size: size,
           color: color ?? Colors.blue,
         );
 
       case 1:
         return Icon(
-          const IconData(0xe8db, fontFamily: "IconFont", matchTextDirection: true),
+          const IconData(0xe8db, fontFamily: "IconFont"),
           size: size,
           color: color ?? Colors.green,
         );
 
       default:
         return Icon(
-          const IconData(0xe666, fontFamily: "IconFont", matchTextDirection: true),
+          const IconData(0xe666, fontFamily: "IconFont"),
           size: size,
           color: color ?? Colors.blue,
         );
