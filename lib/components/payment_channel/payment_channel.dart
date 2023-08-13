@@ -55,11 +55,7 @@ enum PaymentMethods {
   Icon getIcon([double? size, Color? color]) {
     switch (type) {
       case 0:
-        return Icon(
-          const IconData(0xe611, fontFamily: "IconFont"),
-          size: size,
-          color: color ?? Colors.blue,
-        );
+        return Assets.images.alipay;
 
       case 1:
         return Icon(
