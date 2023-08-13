@@ -80,7 +80,7 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
   stateButton(BuildContext context, AdMyTakerModel row, int index) {
     if (row.state == AdOwnState.NOTIFIED.name) {
       return CountdownTimer(
-        endTime: row.overTime == null ? null : dateFormatter.parse(row.overTime!).millisecondsSinceEpoch,
+        endTime: DateTime.now().millisecondsSinceEpoch + row.overTimeSeconds * 1000,
         widgetBuilder: (context, time) {
           final timeText = time == null ? "" : "\n${addZero(time.hours)}:${addZero(time.min)}:${addZero(time.sec)}";
           final channel = widget.channels.firstWhere((element) => element.reference == row.makerChannelReference);
@@ -147,8 +147,6 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
       "reference": row.reference,
       "receipted": receipted,
     });
-
-    data['overTime'] = 0;
 
     setState(() {
       rowsData.replaceRange(index, index + 1, [AdMyTakerModel.fromJson(data)]);
