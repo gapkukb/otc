@@ -14,7 +14,7 @@ _$_WalletBlockchainHistoryModel _$$_WalletBlockchainHistoryModelFromJson(
       deposit: json['deposit'] as bool,
       currency: json['currency'] as String,
       amount: json['amount'] as num,
-      fromAddress: json['fromAddress'] as String,
+      fromAddress: json['fromAddress'] as String?,
       toAddress: json['toAddress'] as String,
       transactionIndex: json['transactionIndex'] as num,
       transactionHash: json['transactionHash'] as String,

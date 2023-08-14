@@ -108,7 +108,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                             DataCell(UiClipboard(
                               text: row.fromAddress,
                               iconSize: 16,
-                              child: Text(maskText(row.fromAddress)),
+                              child: Text(maskText(row.fromAddress ?? "")),
                             )),
                             DataCell(UiClipboard(
                               text: row.toAddress,

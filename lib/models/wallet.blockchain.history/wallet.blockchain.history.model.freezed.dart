@@ -26,7 +26,7 @@ mixin _$WalletBlockchainHistoryModel {
   bool get deposit => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
-  String get fromAddress => throw _privateConstructorUsedError;
+  String? get fromAddress => throw _privateConstructorUsedError;
   String get toAddress => throw _privateConstructorUsedError;
   num get transactionIndex => throw _privateConstructorUsedError;
   String get transactionHash => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $WalletBlockchainHistoryModelCopyWith<$Res> {
       bool deposit,
       String currency,
       num amount,
-      String fromAddress,
+      String? fromAddress,
       String toAddress,
       num transactionIndex,
       String transactionHash,
@@ -78,7 +78,7 @@ class _$WalletBlockchainHistoryModelCopyWithImpl<$Res,
     Object? deposit = null,
     Object? currency = null,
     Object? amount = null,
-    Object? fromAddress = null,
+    Object? fromAddress = freezed,
     Object? toAddress = null,
     Object? transactionIndex = null,
     Object? transactionHash = null,
@@ -105,10 +105,10 @@ class _$WalletBlockchainHistoryModelCopyWithImpl<$Res,
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      fromAddress: null == fromAddress
+      fromAddress: freezed == fromAddress
           ? _value.fromAddress
           : fromAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       toAddress: null == toAddress
           ? _value.toAddress
           : toAddress // ignore: cast_nullable_to_non_nullable
@@ -144,7 +144,7 @@ abstract class _$$_WalletBlockchainHistoryModelCopyWith<$Res>
       bool deposit,
       String currency,
       num amount,
-      String fromAddress,
+      String? fromAddress,
       String toAddress,
       num transactionIndex,
       String transactionHash,
@@ -169,7 +169,7 @@ class __$$_WalletBlockchainHistoryModelCopyWithImpl<$Res>
     Object? deposit = null,
     Object? currency = null,
     Object? amount = null,
-    Object? fromAddress = null,
+    Object? fromAddress = freezed,
     Object? toAddress = null,
     Object? transactionIndex = null,
     Object? transactionHash = null,
@@ -196,10 +196,10 @@ class __$$_WalletBlockchainHistoryModelCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      fromAddress: null == fromAddress
+      fromAddress: freezed == fromAddress
           ? _value.fromAddress
           : fromAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       toAddress: null == toAddress
           ? _value.toAddress
           : toAddress // ignore: cast_nullable_to_non_nullable
@@ -249,7 +249,7 @@ class _$_WalletBlockchainHistoryModel implements _WalletBlockchainHistoryModel {
   @override
   final num amount;
   @override
-  final String fromAddress;
+  final String? fromAddress;
   @override
   final String toAddress;
   @override
@@ -327,7 +327,7 @@ abstract class _WalletBlockchainHistoryModel
       required final bool deposit,
       required final String currency,
       required final num amount,
-      required final String fromAddress,
+      required final String? fromAddress,
       required final String toAddress,
       required final num transactionIndex,
       required final String transactionHash,
@@ -347,7 +347,7 @@ abstract class _WalletBlockchainHistoryModel
   @override
   num get amount;
   @override
-  String get fromAddress;
+  String? get fromAddress;
   @override
   String get toAddress;
   @override
