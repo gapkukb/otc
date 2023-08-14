@@ -56,22 +56,13 @@ enum PaymentMethods {
     final s = size ?? 24;
     switch (type) {
       case 0:
-        return Image.asset(
-          "assets/images/unionpay.png",
-          cacheWidth: s,
-        );
+        return Assets.images.unionpay.image(cacheWidth: s);
 
       case 1:
-        return Image.asset(
-          "assets/images/alipay.png",
-          cacheWidth: s,
-        );
+        return Assets.images.wechat.image(cacheWidth: s);
 
       default:
-        return Image.asset(
-          "assets/images/wechat.png",
-          cacheWidth: s,
-        );
+        return Assets.images.alipay.image(cacheWidth: s);
     }
   }
 

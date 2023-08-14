@@ -152,6 +152,8 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
       rowsData.replaceRange(index, index + 1, [AdMyTakerModel.fromJson(data)]);
       widget.onRefresh();
     });
+
+    Modal.showText(text: receipted ? "交易完成" : "交易取消");
   }
 
   String addZero(num? n) {

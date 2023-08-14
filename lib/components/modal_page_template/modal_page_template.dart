@@ -41,72 +41,74 @@ class ModalPageTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: maxWidth,
-            // maxHeight: MediaQuery.of(context).size.height - 100,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        height: 48,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            title!,
-                            style: Font.largeBold,
+    return SelectionArea(
+      child: Center(
+        child: Card(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: maxWidth,
+              // maxHeight: MediaQuery.of(context).size.height - 100,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Stack(
+                      children: [
+                        SizedBox(
+                          height: 48,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              title!,
+                              style: Font.largeBold,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        child: IconButton(
-                          constraints: const BoxConstraints(
-                            maxWidth: 48,
-                            maxHeight: 48,
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child: IconButton(
+                            constraints: const BoxConstraints(
+                              maxWidth: 48,
+                              maxHeight: 48,
+                            ),
+                            onPressed: () {
+                              context.pop();
+                            },
+                            icon: const Icon(Icons.close_outlined, size: 24),
                           ),
-                          onPressed: () {
-                            context.pop();
-                          },
-                          icon: const Icon(Icons.close_outlined, size: 24),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(height: 33, thickness: 1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height - 260,
+                        )
+                      ],
                     ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: children,
+                  ),
+                  const Divider(height: 33, thickness: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height - 260,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: children,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: _buildActions(context),
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: _buildActions(context),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
