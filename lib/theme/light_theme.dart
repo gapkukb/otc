@@ -5,7 +5,7 @@ ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     fontFamily: "PingFangSC",
     scaffoldBackgroundColor: Colors.white,
-    primaryColor: Colors.purple,
+    primaryColor: const Color(0xff522AD4),
     primaryColorLight: Colors.purple.shade100,
     primaryColorDark: Colors.deepPurple,
     cardTheme: CardTheme(

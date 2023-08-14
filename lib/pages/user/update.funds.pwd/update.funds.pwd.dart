@@ -47,7 +47,6 @@ class _UpdateFundsPwdState extends State<UpdateFundsPwd> {
             name: "newPwd",
             formState: _formState,
             obscureText: true,
-            autofocus: true,
             labelText: "资金密码为6位数字",
             maxLength: 6,
             maxLines: 1,

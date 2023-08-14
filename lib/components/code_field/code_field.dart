@@ -33,7 +33,7 @@ class CodeField extends StatefulWidget {
     this.target = "",
     this.labelText,
     this.onlyNumber = true,
-    this.autofocus = true,
+    this.autofocus = false,
     this.disabled = true,
     this.formState,
     this.name,
