@@ -32,6 +32,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
   FocusNode focusNode = FocusNode();
   OverlayEntry? overlayEntry;
   late Widget box;
+  bool obscureText = true;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
   Widget build(BuildContext context) {
     return UiTextFormField(
       focusNode: focusNode,
-      obscureText: true,
+      obscureText: obscureText,
       maxLines: 1,
       labelText: widget.labelText,
       name: widget.name ?? "password",
@@ -70,6 +71,26 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
       controller: widget.controller,
       autofocus: widget.autofocus,
       onFieldSubmitted: widget.onFieldSubmitted,
+      decoration: InputDecoration(
+        suffixIcon: IconButton(
+          icon: obscureText
+              ? const Icon(
+                  Icons.visibility_outlined,
+                  size: 24,
+                  color: Colors.black,
+                )
+              : const Icon(
+                  Icons.visibility_off_outlined,
+                  size: 24,
+                  color: Colors.black,
+                ),
+          onPressed: () {
+            setState(() {
+              obscureText = !obscureText;
+            });
+          },
+        ),
+      ),
       validator: (value) {
         final String val = value ?? "";
         bool step1 = true;
