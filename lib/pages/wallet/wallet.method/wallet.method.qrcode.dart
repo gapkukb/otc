@@ -49,11 +49,12 @@ class _WalletQRcodeState extends ConsumerState<WalletQRcode> {
           clipBehavior: Clip.none,
           columns: [
             const DataColumn2(label: Text("姓名")),
+            const DataColumn2(label: Text("备注")),
             DataColumn2(label: Text("${widget.addType.chinese}账号")),
             const DataColumn2(label: Text("收款二维码")),
             const DataColumn2(
               label: Text(
-                "\t\t\t操作",
+                "\t操作",
                 style: TextStyle(),
               ),
               fixedWidth: 120,
@@ -63,12 +64,9 @@ class _WalletQRcodeState extends ConsumerState<WalletQRcode> {
               .map(
                 (item) => DataRow(
                   cells: [
-                    DataCell(
-                      Text(item.name),
-                    ),
-                    DataCell(
-                      Text(item.account),
-                    ),
+                    DataCell(Text(item.name)),
+                    DataCell(Text(item.title)),
+                    DataCell(Text(item.account)),
                     DataCell(
                       onTap: () {
                         showDialog(

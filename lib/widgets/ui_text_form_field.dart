@@ -238,6 +238,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
     return (widget.decoration ?? const InputDecoration()).copyWith(
       counterText: "",
       labelText: widget.labelText,
+      isDense: true,
       border: const OutlineInputBorder(),
       suffix: _showClearButotn
           ? Transform.scale(

@@ -107,6 +107,8 @@ class _AdPostRangeState extends State<AdPostRange> {
       } else {
         val = value;
       }
+      print(val);
+      val = val.toFixed().toDouble();
       widget.formState.update(widget.name!, (_) => val, ifAbsent: () => val);
     }
   }

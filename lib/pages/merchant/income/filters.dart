@@ -25,7 +25,13 @@ class MerchantIncomeFilters extends PreferredSize {
                     width: 150,
                     height: 56,
                     child: UiTextFormField(
-                      labelText: "广告编号",
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      labelText: "订单编号",
                       name: "reference",
                       formState: formState,
                     ),
@@ -38,11 +44,11 @@ class MerchantIncomeFilters extends PreferredSize {
                       labelText: "类型",
                       name: "in",
                       formState: formState,
-                      initialValue: false,
+                      initialValue: "",
                       data: [
-                        DropdownItem(title: "全部", value: false),
-                        DropdownItem(title: "购买", value: true),
-                        DropdownItem(title: "出售", value: false),
+                        DropdownItem(title: "全部", value: ""),
+                        DropdownItem(title: "购买", value: false),
+                        DropdownItem(title: "出售", value: true),
                       ],
                     ),
                   ),
@@ -56,7 +62,10 @@ class MerchantIncomeFilters extends PreferredSize {
                       formState: formState,
                       data: PaymentMethods.values
                           .map(
-                            (e) => DropdownItem(title: e.text, value: e.value),
+                            (e) => DropdownItem(
+                              title: e.text,
+                              value: e.value,
+                            ),
                           )
                           .toList(),
                     ),
@@ -76,7 +85,7 @@ class MerchantIncomeFilters extends PreferredSize {
                     minDate: DateTime(1970),
                   ),
 
-                  TextButton.icon(
+                  FilledButton.icon(
                     onPressed: onSearch,
                     icon: const Text("搜索"),
                     label: const Icon(Icons.search_outlined),

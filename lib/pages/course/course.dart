@@ -9,7 +9,7 @@ class Course extends StatelessWidget {
   static final List<List<Map<String, dynamic>>> items = [
     [
       {
-        "title": "XXX平台是免手续费的在线市场，面向加密货币买卖双方寻求感兴趣的交易者",
+        "title": "Maoerduo平台是免手续费的在线市场，面向加密货币买卖双方寻求感兴趣的交易者",
         "image": Assets.images.course1.image(),
       },
       {

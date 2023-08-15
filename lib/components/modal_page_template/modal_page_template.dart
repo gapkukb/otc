@@ -78,7 +78,7 @@ class ModalPageTemplate extends StatelessWidget {
                               maxHeight: 48,
                             ),
                             onPressed: () {
-                              context.pop();
+                              Navigator.maybePop(context);
                             },
                             icon: const Icon(Icons.close_outlined, size: 24),
                           ),

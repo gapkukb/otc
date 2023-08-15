@@ -26,6 +26,12 @@ class UserInvitationFilters extends PreferredSize {
                       labelText: "邀请码",
                       name: "code",
                       formState: formState,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
                     ),
                   ),
                   //交易类型
@@ -43,6 +49,11 @@ class UserInvitationFilters extends PreferredSize {
                         DropdownItem(title: "未使用", value: false),
                       ],
                     ),
+                  ),
+                  FilledButton.icon(
+                    onPressed: onSearch,
+                    icon: const Text("搜索"),
+                    label: const Icon(Icons.search_outlined),
                   ),
                 ],
               ),

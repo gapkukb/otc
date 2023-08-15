@@ -187,7 +187,12 @@ class _CaptchaState extends State<Captcha> {
               onPressed: send,
               onlyNumber: session != CaptchaSession.addF2A,
             ),
-          ...switcher,
+          const Gap.mini(),
+          Wrap(
+            direction: Axis.vertical,
+            spacing: 4,
+            children: switcher,
+          ),
         ],
       ),
     );

@@ -31,8 +31,8 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
 
   updateFilters() {
     filters.addAll({
-      ...filters,
-      "code": filters["code"] == "" ? null : filters["code"],
+      "used": formState["used"] == "" ? null : formState["used"],
+      "code": formState["code"] == "" ? null : formState["code"],
       "page": 1,
       "pageSize": 50,
     });

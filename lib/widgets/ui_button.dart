@@ -72,7 +72,7 @@ class UiButton extends StatelessWidget {
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       disabledColor: Colors.grey,
       disabledTextColor: Colors.white,
-      child: _buildChild(),
+      child: SelectionContainer.disabled(child: _buildChild()),
     );
   }
 
@@ -92,18 +92,18 @@ class UiButton extends StatelessWidget {
   }
 
   ShapeBorder? _buildShape(BuildContext context, Color themeColor) {
-    final _color = disabled ? Theme.of(context).disabledColor : (color ?? themeColor);
+    final $color = disabled ? Theme.of(context).disabledColor : (color ?? themeColor);
     if (variant == UiButtonVariant.outline) {
       if (shape == UiButtonShape.rounded) {
         return RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(99),
           side: BorderSide(
-            color: _color,
+            color: $color,
           ),
         );
       }
       return OutlineInputBorder(
-        borderSide: BorderSide(color: _color),
+        borderSide: BorderSide(color: $color),
       );
     }
     return _shape[shape];

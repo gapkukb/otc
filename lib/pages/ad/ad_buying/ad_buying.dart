@@ -6,6 +6,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/avatar/avatar.dart';
+import 'package:otc/components/mix_text/mix_text.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/pagination/pagination.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
@@ -126,8 +127,8 @@ class _AdBuyingState extends State<AdBuying> {
                         columns: const [
                           DataColumn2(label: Text("广告主")),
                           DataColumn2(label: Text("价格")),
-                          DataColumn2(label: Text("限额/数量")),
-                          DataColumn2(label: Text("支付方式"), fixedWidth: 120),
+                          DataColumn2(label: Text("数量\n限额")),
+                          DataColumn2(label: Text("支付方式"), fixedWidth: 160),
                           DataColumn2(label: Text("操作"), fixedWidth: 100),
                         ],
                         columnSpacing: 4,
@@ -165,15 +166,20 @@ class _AdBuyingState extends State<AdBuying> {
                               ),
                             )),
                             DataCell(Text("${row.finalRate} CNY")),
-                            DataCell(Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("${(row.amount * row.finalRate).toStringAsFixed(2)} CNY"),
-                                const Text("￥0.00-￥9999999.99"),
-                              ],
+
+                            DataCell(MixText(
+                              child: "${(row.amount * row.finalRate).toStringAsFixed(2)} CNY\n",
+                              small: "￥${row.minLimit} - ￥${row.maxLimit}",
                             )),
-                            DataCell(Text(methods.map((e) => e.text).join(","))),
+                            DataCell(Tooltip(
+                              triggerMode: TooltipTriggerMode.tap,
+                              message: methods.map((pay) => pay.text).join(","),
+                              child: Wrap(
+                                spacing: 4,
+                                children: methods.map((pay) => pay.icon()).toList(),
+                              ),
+                            )),
+
                             // DataCell(Tooltip(
                             //   message: methods.map((e) => e.text).join(","),
                             //   triggerMode: TooltipTriggerMode.tap,

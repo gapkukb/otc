@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
-import 'package:otc/pages/merchant/dashboard/model.dart';
+// import 'package:otc/pages/merchant/dashboard/model.dart';
 import 'package:otc/pages/merchant/dashboard/provider.dart';
-import 'package:otc/widgets/ui_button.dart';
+// import 'package:otc/widgets/ui_button.dart';
 
 const _style = TextStyle(
   fontSize: 24,
@@ -23,9 +23,9 @@ class DashboardOverview extends ConsumerWidget {
     // ref.read(dashboradProvider.notifier).update();
     final data = ref.watch(dashboradProvider);
     final List<Map<String, dynamic>> items = [
-      {"label": "银行卡佣金比例", "value": data.bankcardRate, "unit": "%"},
-      {"label": "支付宝佣金比例", "value": data.aliRate, "unit": "%"},
-      {"label": "微信佣金比例", "value": data.wechatRate, "unit": "%"},
+      {"label": "银行卡佣金比例", "value": data.bankcardRate * 100, "unit": "%"},
+      {"label": "支付宝佣金比例", "value": data.aliRate * 100, "unit": "%"},
+      {"label": "微信佣金比例", "value": data.wechatRate * 100, "unit": "%"},
       {"label": "下级人数", "value": data.subordinates},
       {"label": "昨日收益", "value": data.yesterdayCommission, "unit": "USDT"},
       {"label": "昨日成交量", "value": data.yesterdaySuccess},

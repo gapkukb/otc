@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/layout/layout.header.dart';
+import 'package:otc/theme/text_theme.dart';
 
 ShellRouteBuilder layout = (context, state, child) {
   return Scaffold(
@@ -17,6 +18,7 @@ ShellRouteBuilder layout = (context, state, child) {
           child: Text(
             "Copyright ©2023 Maoerduo.io",
             textAlign: TextAlign.center,
+            style: Font.miniGrey,
           ),
         ),
       ),

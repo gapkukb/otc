@@ -28,6 +28,8 @@ AdAllModel _$AdAllModelFromJson(Map<String, dynamic> json) => AdAllModel(
       methods:
           (json['methods'] as List<dynamic>).map((e) => e as String).toList(),
       createdTime: json['createdTime'] as String,
+      minLimit: json['minLimit'] as num,
+      maxLimit: json['maxLimit'] as num,
     );
 
 Map<String, dynamic> _$AdAllModelToJson(AdAllModel instance) =>
@@ -52,6 +54,8 @@ Map<String, dynamic> _$AdAllModelToJson(AdAllModel instance) =>
       'makerSuccessTimes': instance.makerSuccessTimes,
       'methods': instance.methods,
       'createdTime': instance.createdTime,
+      'minLimit': instance.minLimit,
+      'maxLimit': instance.maxLimit,
     };
 
 const _$CryptocurrencyEnumMap = {

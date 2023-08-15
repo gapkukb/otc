@@ -33,13 +33,11 @@ class _UserInvitationState extends ConsumerState<UserInvitation> {
 
   updateFilters() {
     filters.addAll({
-      "used": filters["used"] == "" ? null : filters["used"],
-      "code": filters["code"] == "" ? null : filters["code"],
+      "used": formState["used"] == "" ? null : formState["used"],
+      "code": formState["code"] == "" ? null : formState["code"],
       "page": 1,
-      "pageSize": 50,
+      "pageSize": 30,
     });
-
-    inspect(filters);
   }
 
   @override

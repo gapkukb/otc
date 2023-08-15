@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/cell/cell.dart';
+import 'package:otc/components/mix_text/mix_text.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/pagination/pagination.dart';
@@ -132,9 +133,12 @@ class _AdOwnState extends State<AdOwn> {
                       cells: [
                         DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
                         DataCell(Text(row.sell ? "出售" : "购买")),
-                        DataCell(Text("${row.submitAmount} USDT\n￥$min - ￥$max")),
+                        DataCell(MixText(
+                          child: "${row.submitAmount} USDT\n",
+                          small: "￥$min - ￥$max",
+                        )),
                         DataCell(Text(row.totalCoinAmount.toString())),
-                        DataCell(Text(row.amount.toString())),
+                        DataCell(Text("${row.amount} USDT")),
                         DataCell(Text(row.totalMoneyAmount.toString())),
                         // DataCell(Tooltip(
                         //   triggerMode: TooltipTriggerMode.tap,
@@ -147,7 +151,10 @@ class _AdOwnState extends State<AdOwn> {
                         //   ),
                         // )),
 
-                        DataCell(Text(pays.map((pay) => pay.text).join(","))),
+                        DataCell(Wrap(
+                          spacing: 4,
+                          children: pays.map((pay) => pay.icon()).toList(),
+                        )),
                         DataCell(Text(getStateText(row.state))),
                         DataCell(Text(row.createdTime)),
                         if (widget.running)

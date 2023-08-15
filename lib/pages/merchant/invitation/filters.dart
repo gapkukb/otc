@@ -23,6 +23,12 @@ class MerchantInvitationFilters extends PreferredSize {
                     width: 150,
                     height: 56,
                     child: UiTextFormField(
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
                       labelText: "邀请码",
                       name: "code",
                       formState: formState,
@@ -36,13 +42,18 @@ class MerchantInvitationFilters extends PreferredSize {
                       labelText: "类型",
                       name: "used",
                       formState: formState,
-                      initialValue: null,
+                      initialValue: "",
                       data: [
-                        DropdownItem(title: "全部", value: null),
+                        DropdownItem(title: "全部", value: ""),
                         DropdownItem(title: "已使用", value: true),
                         DropdownItem(title: "未使用", value: false),
                       ],
                     ),
+                  ),
+                  FilledButton.icon(
+                    onPressed: onSearch,
+                    icon: const Text("搜索"),
+                    label: const Icon(Icons.search_outlined),
                   ),
                 ],
               ),

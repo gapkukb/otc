@@ -35,44 +35,41 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
           )
         ],
         data: (data) {
-          if (data.isEmpty) {
-            return [
-              const UiEmptyView(
-                title: "当前无可用的收款方式",
-              )
-            ];
-          }
           return [
-            SizedBox(
-              height: math.min(height - 400, 400),
-              child: ListView.separated(
-                cacheExtent: 100,
-                itemBuilder: (context, index) {
-                  final item = data[index];
-                  return AdPostPaymentTemplate(
-                      isBuying: widget.isBuying,
-                      editable: true,
-                      data: item,
-                      onSelectedChange: (selected) {
-                        setState(() {
-                          item.selected = selected;
-                        });
+            data.isEmpty
+                ? const UiEmptyView(
+                    title: "当前无可用的收款方式",
+                  )
+                : SizedBox(
+                    height: math.min(height - 400, 400),
+                    child: ListView.separated(
+                      cacheExtent: 100,
+                      itemBuilder: (context, index) {
+                        final item = data[index];
+                        return AdPostPaymentTemplate(
+                            isBuying: widget.isBuying,
+                            editable: true,
+                            data: item,
+                            onSelectedChange: (selected) {
+                              setState(() {
+                                item.selected = selected;
+                              });
+                            },
+                            onLimitChange: (min, max) {
+                              setState(() {
+                                item.inMax = max;
+                                item.inMin = min;
+                                item.outMax = max;
+                                item.outMin = min;
+                              });
+                            });
                       },
-                      onLimitChange: (min, max) {
-                        setState(() {
-                          item.inMax = max;
-                          item.inMin = min;
-                          item.outMax = max;
-                          item.outMin = min;
-                        });
-                      });
-                },
-                separatorBuilder: (context, index) {
-                  return const Gap.small();
-                },
-                itemCount: data.length,
-              ),
-            ),
+                      separatorBuilder: (context, index) {
+                        return const Gap.small();
+                      },
+                      itemCount: data.length,
+                    ),
+                  ),
             const Gap.small(),
             Row(
               children: [
@@ -80,7 +77,7 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
                   child: _Button(
                     label: "银行卡",
                     onPressed: () async {
-                      await context.push(Routes.walletMethodBankAddition);
+                      add(Routes.walletMethodBankAddition);
                     },
                   ),
                 ),
@@ -89,7 +86,7 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
                   child: _Button(
                     label: "支付宝",
                     onPressed: () async {
-                      await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.alipay);
+                      add(Routes.walletMethodQRcodeAddition, AddType.alipay);
                     },
                   ),
                 ),
@@ -97,8 +94,8 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
                 Expanded(
                   child: _Button(
                     label: "微信",
-                    onPressed: () async {
-                      await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.wechat);
+                    onPressed: () {
+                      add(Routes.walletMethodQRcodeAddition, AddType.wechat);
                     },
                   ),
                 ),
@@ -108,6 +105,13 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
         },
       ),
     );
+  }
+
+  add(String route, [AddType? type]) async {
+    final result = await context.push(route, extra: type);
+    if (result != null) {
+      return ref.refresh(adPostPaymentProvider);
+    }
   }
 }
 

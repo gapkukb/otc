@@ -14,7 +14,7 @@ extension Formatter on num {
 
   num toFixed([int decimal = 2, bool? floor]) {
     final scale = pow(10, decimal);
-    return (this * scale).floor() / scale;
+    return (this * scale).truncate() / scale;
   }
 }
 

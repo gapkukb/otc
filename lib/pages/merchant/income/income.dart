@@ -39,7 +39,7 @@ class _MerchantIncomeState extends ConsumerState<MerchantIncome> {
   updateFilters() {
     filters.addAll({
       ...formState,
-      "in": formState['in'] == false ? null : formState['in'],
+      "in": formState['in'] == "" ? null : formState['in'],
       "page": pageNo,
       "pageSize": pageSize,
       "begin": formState["minDate"] == null ? null : formState["minDate"] + " 00:00:00",
@@ -90,8 +90,8 @@ class _MerchantIncomeState extends ConsumerState<MerchantIncome> {
                         DataCell(Text(row.sell ? "出售" : "购买")),
                         DataCell(Text(row.takerCoinAmount.toString())),
                         DataCell(Text(row.takerMoneyAmount.toString())),
-                        DataCell(Text("出售")),
-                        DataCell(Text(PaymentMethods.getByValue(row.paymentMethod).text)),
+                        DataCell(Text(row.rate.toString())),
+                        DataCell(PaymentMethods.getByValue(row.paymentMethod).icon()),
                         DataCell(Text(row.createdTime)),
                         DataCell(Text(row.rate.toString())),
                         DataCell(Text(row.deservedReward.toString())),
