@@ -151,19 +151,19 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                       });
                     },
                   ),
-                  Text.rich(
+                  const Text.rich(
                     TextSpan(
                       text: '我已经阅读并且同意',
                       children: [
                         TextSpan(
                           text: 'Maoerduo使用条款',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Color(0xff7951F9),
                           ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              context.replace(Routes.terms);
-                            },
+                          // recognizer: TapGestureRecognizer()
+                          //   ..onTap = () {
+                          //     context.replace(Routes.terms);
+                          //   },
                         ),
                       ],
                     ),

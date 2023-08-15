@@ -16,25 +16,12 @@ void main() async {
   ]);
   usePathUrlStrategy();
 
-  // final future = app.loadLibrary();
+  await app.loadLibrary();
 
   runApp(
     ProviderScope(
       parent: provider,
-      child: FutureBuilder(
-        future: app.loadLibrary(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            return app.App();
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      child: app.App(),
     ),
   );
 }
