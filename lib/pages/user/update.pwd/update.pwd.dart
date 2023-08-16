@@ -15,6 +15,7 @@ class UpdatePwd extends StatefulWidget {
 class _UpdatePwdState extends State<UpdatePwd> {
   final Map<String, dynamic> _formState = {};
   final _formKey = GlobalKey<FormState>();
+  bool obscureText = true;
   late TextEditingController controller;
   late TextEditingController rawcontroller;
 
@@ -62,13 +63,23 @@ class _UpdatePwdState extends State<UpdatePwd> {
               const SizedBox(height: 16),
               UiTextFormField(
                 labelText: "确认新密码",
-                obscureText: true,
+                obscureText: obscureText,
                 maxLines: 1,
                 name: "renewPwd",
                 validator: (value) {
                   if (value != controller.text) return "两次密码输入不一致";
                   return null;
                 },
+                decoration: InputDecoration(
+                  suffixIcon: ObscureText(
+                    obscureText: obscureText,
+                    onPressed: () {
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                  ),
+                ),
               ),
             ],
           ),

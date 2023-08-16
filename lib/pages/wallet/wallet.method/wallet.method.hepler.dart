@@ -1,11 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:otc/components/modal/modal.dart';
-import 'package:otc/global/global.dart';
-import 'package:otc/models/kyc/kyc.model.dart';
-import 'package:otc/router/router.dart';
+import 'package:otc/utils/predication.dart';
 
 enum AddType {
   bank("BANK_CARD_TRANSFER", "银行卡"),
@@ -21,29 +17,15 @@ enum AddType {
 // 前置判断的高阶函数
 void Function() verify(BuildContext context, FutureOr Function() then) {
   return () async {
-    if (!global.user.base.phoneValid) {
-      Modal.confirm(
-        okButtonText: "去绑定",
-        title: "交易资格",
-        content: "您必须完成手机绑定才能使用此功能。",
-        onOk: () {
-          context.push(Routes.security);
-        },
-      );
-      return;
+    if (await predication(
+      context: context,
+      types: [
+        Predication.phone,
+        Predication.kyc1,
+        Predication.captcha,
+      ],
+    )) {
+      then();
     }
-    if (global.user.kyc?.lv1Status != KycStatus.pass) {
-      Modal.confirm(
-        okButtonText: "去认证",
-        title: "交易资格",
-        content: "您必须完成至少KYC1级别的身份认证才能使用此功能。",
-        onOk: () {
-          context.push(Routes.auth);
-        },
-      );
-      return;
-    }
-
-    await then();
   };
 }

@@ -72,18 +72,8 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
       autofocus: widget.autofocus,
       onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: obscureText
-              ? const Icon(
-                  Icons.visibility_outlined,
-                  size: 24,
-                  color: Colors.black,
-                )
-              : const Icon(
-                  Icons.visibility_off_outlined,
-                  size: 24,
-                  color: Colors.black,
-                ),
+        suffixIcon: ObscureText(
+          obscureText: obscureText,
           onPressed: () {
             setState(() {
               obscureText = !obscureText;
@@ -183,6 +173,35 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ObscureText extends StatelessWidget {
+  final bool obscureText;
+  final void Function()? onPressed;
+
+  const ObscureText({
+    super.key,
+    required this.obscureText,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: obscureText
+          ? const Icon(
+              Icons.visibility_outlined,
+              size: 24,
+              color: Colors.black,
+            )
+          : const Icon(
+              Icons.visibility_off_outlined,
+              size: 24,
+              color: Colors.black,
+            ),
+      onPressed: onPressed,
     );
   }
 }
