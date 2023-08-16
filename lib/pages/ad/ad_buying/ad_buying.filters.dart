@@ -83,7 +83,7 @@ class AdBuyingFilter extends PreferredSize {
                   ),
                   UiButton.text(
                     onPressed: onSearch,
-                    label: "筛选",
+                    label: "搜索",
                     height: 56,
                   )
                 ],
