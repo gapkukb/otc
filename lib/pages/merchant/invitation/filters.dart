@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class MerchantInvitationFilters extends PreferredSize {
@@ -16,12 +18,10 @@ class MerchantInvitationFilters extends PreferredSize {
             clipBehavior: Clip.none,
             title: Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: Wrap(
-                spacing: 16,
-                children: [
+              child: RowGap(
+                items: [
                   SizedBox(
                     width: 150,
-                    height: 56,
                     child: UiTextFormField(
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -37,7 +37,6 @@ class MerchantInvitationFilters extends PreferredSize {
                   //交易类型
                   SizedBox(
                     width: 150,
-                    height: 56,
                     child: Dropdown(
                       labelText: "类型",
                       name: "used",
@@ -50,10 +49,11 @@ class MerchantInvitationFilters extends PreferredSize {
                       ],
                     ),
                   ),
-                  FilledButton.icon(
+                  const Spacer(),
+                  UiButton(
                     onPressed: onSearch,
-                    icon: const Text("搜索"),
-                    label: const Icon(Icons.search_outlined),
+                    label: "搜索",
+                    height: 56,
                   ),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/gap/gap.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
@@ -24,8 +25,8 @@ class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilte
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: Row(
-        children: [
+      child: RowGap(
+        items: [
           SizedBox(
             width: 120,
             child: Dropdown(
@@ -39,7 +40,6 @@ class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilte
               ],
             ),
           ),
-          const Gap.small(horizition: true),
           SizedBox(
             width: 130,
             child: Dropdown(
@@ -67,7 +67,6 @@ class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilte
               ],
             ),
           ),
-          const Gap.small(horizition: true),
           SizedBox(
             width: 160,
             child: CurrencySelector(
@@ -76,7 +75,6 @@ class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilte
               initialValue: Cryptocurrency.USDT.name,
             ),
           ),
-          const Gap.small(horizition: true),
           SizedBox(
             width: 200,
             height: 48,
@@ -91,7 +89,7 @@ class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilte
             onPressed: widget.onSearch,
             label: "搜索",
             variant: UiButtonVariant.filled,
-            size: UiButtonSize.medium,
+            height: 56,
           ),
         ],
       ),

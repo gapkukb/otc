@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 class AdBuyingFilter extends PreferredSize {
   final Map<String, dynamic> formState;
@@ -26,12 +28,11 @@ class AdBuyingFilter extends PreferredSize {
             clipBehavior: Clip.none,
             title: Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: Wrap(
-                spacing: 16,
-                children: [
+              child: RowGap(
+                items: [
                   SizedBox(
                     width: 150,
-                    height: 56,
+                    height: 48,
                     child: Dropdown(
                         labelText: "法币",
                         name: "money",
@@ -50,7 +51,7 @@ class AdBuyingFilter extends PreferredSize {
                   // 交易方式
                   SizedBox(
                     width: 150,
-                    height: 56,
+                    height: 48,
                     child: Dropdown(
                       labelText: "支付方式",
                       name: "paymentMethod",
@@ -73,17 +74,17 @@ class AdBuyingFilter extends PreferredSize {
                   ),
                   SizedBox(
                     width: 150,
-                    height: 56,
+                    height: 48,
                     child: CurrencySelector(
                       name: "coin",
                       initialValue: Cryptocurrency.USDT.name,
                       formState: formState,
                     ),
                   ),
-                  FilledButton.icon(
+                  UiButton.text(
                     onPressed: onSearch,
-                    label: const Icon(Icons.search_outlined),
-                    icon: Text("筛选"),
+                    label: "筛选",
+                    height: 56,
                   )
                 ],
               ),

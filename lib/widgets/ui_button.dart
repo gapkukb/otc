@@ -29,6 +29,7 @@ class UiButton extends StatelessWidget {
   final UiButtonSize size;
   final UiButtonShape? shape;
   final Color? color;
+  final Color? textColor;
   final UiButtonVariant? variant;
   final IconData? iconData;
   final Icon? icon;
@@ -37,6 +38,7 @@ class UiButton extends StatelessWidget {
   final TextStyle? labelStyle;
   final double? minWidth;
   final double? height;
+  final Brightness? colorBrightness;
 
   const UiButton({
     super.key,
@@ -56,11 +58,17 @@ class UiButton extends StatelessWidget {
     this.labelStyle,
     this.minWidth,
     this.height,
+    this.colorBrightness,
+    this.textColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    var themeColor = Theme.of(context).primaryColor;
+    var themeColor = colorBrightness == Brightness.light
+        ? Theme.of(context).primaryColorLight
+        : colorBrightness == Brightness.dark
+            ? Theme.of(context).primaryColorDark
+            : Theme.of(context).primaryColor;
     return MaterialButton(
       padding: padding ?? _pad[size],
       minWidth: fullWidth ? double.infinity : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
@@ -72,6 +80,8 @@ class UiButton extends StatelessWidget {
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       disabledColor: Colors.grey,
       disabledTextColor: Colors.white,
+      colorBrightness: colorBrightness,
+      elevation: 0,
       child: SelectionContainer.disabled(child: _buildChild()),
     );
   }
@@ -86,6 +96,7 @@ class UiButton extends StatelessWidget {
 
   Color? getColor(Color themeColor) {
     if (disabled) return null;
+    if (textColor != null) return textColor;
     if (variant == UiButtonVariant.outline) return themeColor;
     if (variant == UiButtonVariant.text) return themeColor;
     return color != Colors.white ? Colors.white : null;
@@ -93,20 +104,20 @@ class UiButton extends StatelessWidget {
 
   ShapeBorder? _buildShape(BuildContext context, Color themeColor) {
     final $color = disabled ? Theme.of(context).disabledColor : (color ?? themeColor);
-    if (variant == UiButtonVariant.outline) {
-      if (shape == UiButtonShape.rounded) {
-        return RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(99),
-          side: BorderSide(
-            color: $color,
-          ),
-        );
-      }
-      return OutlineInputBorder(
-        borderSide: BorderSide(color: $color),
+    if (shape == UiButtonShape.rounded) {
+      return RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(99),
+        side: BorderSide(
+          color: $color,
+        ),
       );
     }
-    return _shape[shape];
+    if (variant == UiButtonVariant.text) {
+      return null;
+    }
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: $color),
+    );
   }
 
   Widget _buildChild() {
@@ -120,14 +131,12 @@ class UiButton extends StatelessWidget {
     Widget? $text = child ??
         (label == null
             ? null
-            : SelectionContainer.disabled(
-                child: Text(
-                  label!,
-                  style: labelStyle ??
-                      TextStyle(
-                        fontSize: _fontSize[size],
-                      ),
-                ),
+            : Text(
+                label!,
+                style: labelStyle ??
+                    TextStyle(
+                      fontSize: _fontSize[size],
+                    ),
               ));
 
     if ($icon != null && $text != null) {
@@ -189,5 +198,7 @@ class UiButton extends StatelessWidget {
     this.shape,
     this.height,
     this.variant = UiButtonVariant.text,
+    this.colorBrightness,
+    this.textColor,
   });
 }

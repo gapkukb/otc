@@ -6,8 +6,14 @@ ThemeData lightTheme = ThemeData(
     fontFamily: "PingFangSC",
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color(0xff522AD4),
-    primaryColorLight: Colors.purple.shade100,
-    primaryColorDark: Colors.deepPurple,
+    primaryColorLight: const Color(0xffE1E0FF),
+    primaryColorDark: const Color(0xff07006D),
+    // primarySwatch: ,
+
+    appBarTheme: const AppBarTheme(
+      surfaceTintColor: Colors.white,
+      backgroundColor: Colors.white,
+    ),
     cardTheme: CardTheme(
       surfaceTintColor: Colors.white,
       color: Colors.white,

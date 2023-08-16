@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -10,24 +11,25 @@ import 'package:otc/widgets/ui_button.dart';
 class AdOwnFilters extends PreferredSize {
   final Map<String, dynamic> formState;
   final Function() onSearch;
+  final bool running;
 
   AdOwnFilters({
     super.key,
     required this.formState,
     required this.onSearch,
+    required this.running,
   }) : super(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
             clipBehavior: Clip.none,
-            title: Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Row(children: [
-                  Wrap(
-                    spacing: 16,
-                    children: [
+            title: Builder(
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: RowGap(
+                    items: [
                       SizedBox(
                         width: 150,
-                        height: 56,
                         child: CurrencySelector(
                           name: "currency",
                           formState: formState,
@@ -37,7 +39,6 @@ class AdOwnFilters extends PreferredSize {
                       //交易类型
                       SizedBox(
                         width: 150,
-                        height: 56,
                         child: Dropdown(
                           labelText: "类型",
                           name: "sell",
@@ -53,7 +54,6 @@ class AdOwnFilters extends PreferredSize {
                       // 交易方式
                       SizedBox(
                         width: 150,
-                        height: 56,
                         child: Dropdown(
                             labelText: "状态",
                             name: "state",
@@ -84,26 +84,34 @@ class AdOwnFilters extends PreferredSize {
                         minDate: DateTime(1970),
                       ),
 
-                      TextButton.icon(
+                      UiButton.text(
                         onPressed: onSearch,
-                        icon: const Text("搜索"),
-                        label: const Icon(Icons.search_outlined),
+                        label: "搜索",
+                        height: 56,
                       ),
+                      const Spacer(),
+                      if (running == true)
+                        UiButton(
+                          label: "发布新广告",
+                          height: 56,
+                          colorBrightness: Brightness.light,
+                          color: Theme.of(context).primaryColorLight,
+                          textColor: Theme.of(context).primaryColor,
+                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                          onPressed: () async {
+                            final result = await GoRouter.of(navigatorKey.currentContext!).pushNamed(
+                              Routes.adPost,
+                            );
+                            if (result != null) {
+                              onSearch();
+                            }
+                          },
+                        ),
                     ],
                   ),
-                  const Spacer(),
-                  UiButton(
-                    label: "发布新广告",
-                    onPressed: () async {
-                      final result = await GoRouter.of(navigatorKey.currentContext!).pushNamed(
-                        Routes.adPost,
-                      );
-                      if (result != null) {
-                        onSearch();
-                      }
-                    },
-                  ),
-                ])),
+                );
+              },
+            ),
           ),
         );
 }

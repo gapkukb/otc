@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/menu/menu.dart';
 import 'package:otc/layout/layout.logo.dart';
 import 'package:otc/layout/layout.profile.dart';
-import 'package:otc/pages/notice/notice_appbar.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';

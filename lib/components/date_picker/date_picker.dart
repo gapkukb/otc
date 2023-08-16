@@ -101,7 +101,7 @@ class _DatePickerState extends State<DatePicker> {
             );
           },
           child: SizedBox(
-            height: 56,
+            height: 48,
             width: 150,
             child: InputDecorator(
                 isEmpty: text == null,

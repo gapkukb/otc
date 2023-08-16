@@ -20,6 +20,21 @@ FutureOr<bool> predication({
   FutureOr Function(BuildContext context)? extend,
 }) async {
   final ctx = context ?? navigatorKey.currentContext!;
+
+  if (types.contains(Predication.phone)) {
+    if (!global.user.base.phoneValid) {
+      Modal.confirm(
+        okButtonText: "去绑定",
+        title: "交易资格",
+        content: "您必须完成手机绑定才能使用此功能。",
+        onOk: () {
+          ctx.go(Routes.security);
+        },
+      );
+      return false;
+    }
+  }
+
   if (types.contains(Predication.kyc1)) {
     if (global.user.kyc?.lv1Status != KycStatus.pass) {
       Modal.confirm(
@@ -33,25 +48,13 @@ FutureOr<bool> predication({
       return false;
     }
   }
+
   if (types.contains(Predication.funds)) {
     if (!global.user.base.hasPaymentPassword) {
       Modal.alert(
         title: "提币提醒",
         content: "您尚未设置资金密码",
         okButtonText: "去开启",
-        onOk: () {
-          ctx.go(Routes.security);
-        },
-      );
-      return false;
-    }
-  }
-  if (types.contains(Predication.phone)) {
-    if (!global.user.base.phoneValid) {
-      Modal.confirm(
-        okButtonText: "去绑定",
-        title: "交易资格",
-        content: "您必须完成手机绑定才能使用此功能。",
         onOk: () {
           ctx.go(Routes.security);
         },

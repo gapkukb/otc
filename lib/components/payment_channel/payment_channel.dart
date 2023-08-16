@@ -52,17 +52,17 @@ enum PaymentMethods {
             : Colors.blue;
   }
 
-  Image icon([int? size]) {
+  Image icon([double? size]) {
     final s = size ?? 24;
     switch (type) {
       case 0:
-        return Assets.images.unionpay.image(cacheWidth: s);
+        return Assets.images.unionpay.image(width: s);
 
       case 1:
-        return Assets.images.wechat.image(cacheWidth: s);
+        return Assets.images.wechat.image(width: s);
 
       default:
-        return Assets.images.alipay.image(cacheWidth: s);
+        return Assets.images.alipay.image(width: s);
     }
   }
 

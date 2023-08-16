@@ -45,7 +45,6 @@ class _AdBuyingState extends State<AdBuying> {
   void initState() {
     super.initState();
     updateFilters();
-    inspect(filters);
   }
 
   @override
@@ -140,6 +139,7 @@ class _AdBuyingState extends State<AdBuying> {
                                 title: "未找到交易记录",
                               ),
                         rows: data.records.map<DataRow>((row) {
+                          inspect(row.methods);
                           final methods = row.methods.map((method) => PaymentMethods.getByValue(method));
 
                           return DataRow(cells: [

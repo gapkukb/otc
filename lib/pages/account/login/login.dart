@@ -123,6 +123,7 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                       UiButton(
                         fullWidth: true,
                         size: UiButtonSize.large,
+                        height: 56,
                         label: "登录",
                         onPressed: login,
                       ),
