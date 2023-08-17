@@ -41,11 +41,12 @@ class Course extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("如何使用C2C"),
       ),
       body: Padding(
-        padding: Pads.md,
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: ListView.separated(
           separatorBuilder: (context, index) => const Gap.medium(),
           itemCount: items.length,

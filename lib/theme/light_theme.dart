@@ -3,7 +3,7 @@ part of theme;
 ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    fontFamily: "PingFangSC",
+    // fontFamily: "PingFangSC",
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color(0xff522AD4),
     primaryColorLight: const Color(0xffE1E0FF),

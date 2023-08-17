@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/theme/padding.dart';
 
@@ -62,6 +63,14 @@ class UiButton extends StatelessWidget {
     this.textColor,
   });
 
+  get _height {
+    if (kIsWeb) {
+      return (height ?? _size[size]!) + 8;
+    }
+
+    return height ?? _size[size]!;
+  }
+
   @override
   Widget build(BuildContext context) {
     var themeColor = colorBrightness == Brightness.light
@@ -73,7 +82,7 @@ class UiButton extends StatelessWidget {
       padding: padding ?? _pad[size],
       minWidth: fullWidth ? double.infinity : minWidth ?? (size == UiButtonSize.mini ? 12 : null),
       onPressed: disabled ? null : onPressed,
-      height: height ?? _size[size],
+      height: _height,
       color: getbackgroundColor(themeColor),
       textColor: getColor(themeColor),
       shape: _buildShape(context, themeColor),

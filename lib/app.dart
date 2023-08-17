@@ -24,17 +24,19 @@ class _AppState extends ConsumerState<App> {
   @override
   void initState() {
     super.initState();
-    final authed = ref.read(authProvider);
-    if (authed) {
-      ref.read(userProvider.notifier)
-        ..updateUser()
-        ..timerRefreshToken();
-      ref.read(walletProvider.notifier).updateWallet();
+    Future.microtask(() {
+      final authed = ref.read(authProvider);
+      if (authed) {
+        ref.read(userProvider.notifier)
+          ..updateUser()
+          ..timerRefreshToken();
+        ref.read(walletProvider.notifier).updateWallet();
 
-      if (ref.read(kycProvider)?.lv1Status == KycStatus.pass) {
-        ref.read(otcProvider.notifier).updateOTC();
+        if (ref.read(kycProvider)?.lv1Status == KycStatus.pass) {
+          ref.read(otcProvider.notifier).updateOTC();
+        }
       }
-    }
+    });
 
     theme.addListener(themeHandle);
   }
