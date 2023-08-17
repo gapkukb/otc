@@ -72,7 +72,11 @@ class _HomeServicesState extends State<HomeServices> {
             width: 40,
             height: 56,
             alignment: Alignment.center,
-            decoration: BoxDecoration(color: const Color(0xff2D68FE), shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(100)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(100),
+            ),
             child: Text(
               (index + 1).toString().padLeft(2, '0'),
               style: const TextStyle(

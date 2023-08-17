@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/components/avatar/avatar.dart';
+import 'package:otc/components/menu/menu.dart';
 import 'package:otc/pages/user/layout/user.nav.list.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
@@ -22,64 +23,49 @@ class LayoutProfile extends ConsumerStatefulWidget {
 class _LayoutProfileState extends ConsumerState<LayoutProfile> {
   @override
   Widget build(context) {
-    return MenuAnchor(
-      // alignmentOffset: const Offset(10, 10),
-      style: const MenuStyle(
-        alignment: Alignment.bottomRight,
-      ),
-
-      menuChildren: UserNavList.values.map((item) {
-        return MenuItemButton(
-          style: MenuItemButton.styleFrom(
-            fixedSize: const Size.fromWidth(180.0),
-          ),
-          onPressed: item.go,
-          child: Text(
-            item.label,
-            style: Font.small,
-          ),
+    final userBase = ref.watch(userBaseProvider);
+    final nickname = ref.watch(userProvider.select((value) => userBase.nickname));
+    return Menu(
+      onSelected: (value) async {
+        if (value == "logout") {
+          context.go(Routes.home);
+          ref.read(userProvider.notifier).logout();
+        } else {
+          context.go(value);
+        }
+      },
+      items: UserNavList.values.map((item) {
+        return MenuItem(
+          title: item.label,
+          value: item.pathname,
         );
       }).toList()
-        ..add(MenuItemButton(
-          style: MenuItemButton.styleFrom(
-            fixedSize: const Size.fromWidth(180.0),
-          ),
-          child: const Text("退出", style: Font.small),
-          onPressed: () {
-            context.go(Routes.home);
-            ref.read(userProvider.notifier).logout();
-          },
+        ..add(const MenuItem(
+          title: "退出",
+          value: "logout",
         )),
-      builder: (context, controller, child) {
-        final userBase = ref.watch(userBaseProvider);
-        return MaterialButton(
-          height: 40,
-          shape: const StadiumBorder(),
-          child: Row(
-            children: [
-              SizedBox(width: 32, child: Avatar(avatar: userBase.avatar)),
-              const SizedBox(width: 8),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 60),
-                child: Text(
-                  ref.watch(userProvider.select((value) => userBase.nickname)),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+      child: MaterialButton(
+        // height: 40,
+        shape: const StadiumBorder(),
+        onPressed: null,
+        child: Row(
+          children: [
+            SizedBox(width: 32, child: Avatar(avatar: userBase.avatar)),
+            const SizedBox(width: 8),
+            Text(
+              nickname,
+              maxLines: 1,
+              // overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Color(0xff252F40),
+                fontSize: 16,
               ),
-              const SizedBox(width: 8),
-              const Icon(Icons.keyboard_arrow_down_outlined)
-            ],
-          ),
-          onPressed: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
-        );
-      },
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.keyboard_arrow_down_outlined)
+          ],
+        ),
+      ),
     );
   }
 }

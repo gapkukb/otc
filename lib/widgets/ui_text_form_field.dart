@@ -242,15 +242,21 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
       suffix: _showClearButotn
           ? Transform.scale(
               scale: 2,
-              child: GestureDetector(
-                child: const Icon(
-                  Icons.highlight_off,
-                  size: 12,
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: IconButton(
+                  padding: const EdgeInsets.all(0),
+                  icon: const Icon(
+                    Icons.highlight_off,
+                    size: 12,
+                    color: Color(0xff81899A),
+                  ),
+                  onPressed: () {
+                    _controller.clear();
+                    widget.onChanged?.call(_controller.text);
+                  },
                 ),
-                onTap: () {
-                  _controller.clear();
-                  widget.onChanged?.call(_controller.text);
-                },
               ),
             )
           : null,

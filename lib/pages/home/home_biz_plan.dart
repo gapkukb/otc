@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:go_router/go_router.dart';
-import 'package:otc/components/auth_button/auth_button.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_button.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeBizPlan extends StatelessWidget {
   const HomeBizPlan({super.key});
@@ -49,57 +47,6 @@ class HomeBizPlan extends StatelessWidget {
     );
   }
 
-  swiperItem(
-    IconData icon,
-    String title,
-    String description,
-  ) {
-    return Card(
-      elevation: 10,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  width: 2,
-                  color: Colors.white,
-                ),
-              ),
-              child: Icon(
-                icon,
-                size: 44,
-              ),
-            ),
-            Column(
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  swiperPagination() {}
-
   swiper() {
     const List<Map<String, dynamic>> items = [
       {
@@ -122,27 +69,19 @@ class HomeBizPlan extends StatelessWidget {
     return SizedBox(
       height: 324,
       width: double.infinity,
-      child: Swiper(
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return HomeBizPlanSwiperItem(
-            icon: item['icon'],
-            title: item['title'],
-            description: item['description'],
-          );
-        },
-
-        itemCount: 3,
-        // 区分pc 移动
-        viewportFraction: 0.33333,
-        physics: const NeverScrollableScrollPhysics(),
-        pagination: const SwiperPagination(
-          builder: RectSwiperPaginationBuilder(
-            activeColor: Color(0xff6E2DFA),
-            size: Size(54, 6),
-            color: Color(0xffEAEAEA),
-          ),
-        ),
+      child: RowGap(
+        spacing: 98,
+        items: items.map(
+          (item) {
+            return Expanded(
+              child: HomeBizPlanSwiperItem(
+                icon: item['icon'],
+                title: item['title'],
+                description: item['description'],
+              ),
+            );
+          },
+        ).toList(),
       ),
     );
   }
@@ -167,7 +106,7 @@ class HomeBizPlanSwiperItem extends StatefulWidget {
 class _HomeBizPlanSwiperItemState extends State<HomeBizPlanSwiperItem> {
   bool isActive = false;
 
-  _switch(PointerEvent event) {
+  _switch(_) {
     setState(() {
       isActive = !isActive;
     });
@@ -178,9 +117,18 @@ class _HomeBizPlanSwiperItemState extends State<HomeBizPlanSwiperItem> {
     return MouseRegion(
       onEnter: _switch,
       onExit: _switch,
-      child: Card(
-        elevation: 4,
-        color: isActive ? const Color(0xff97B2F9) : Colors.white,
+      child: Material(
+        color: isActive ? const Color(0xffEAF0FF) : Colors.white,
+        shape: isActive
+            ? const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16),
+                ),
+                side: BorderSide(
+                  color: Color(0xff97B2F9),
+                ),
+              )
+            : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
           child: Column(

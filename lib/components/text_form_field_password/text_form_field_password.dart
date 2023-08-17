@@ -189,19 +189,21 @@ class ObscureText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: obscureText
-          ? const Icon(
-              Icons.visibility_outlined,
-              size: 24,
-              color: Colors.black,
-            )
-          : const Icon(
-              Icons.visibility_off_outlined,
-              size: 24,
-              color: Colors.black,
-            ),
-      onPressed: onPressed,
+    return SizedBox(
+      width: 24,
+      height: 24,
+      child: IconButton(
+        icon: obscureText
+            ? const Icon(
+                Icons.visibility_outlined,
+                color: Color(0xff81899A),
+              )
+            : const Icon(
+                Icons.visibility_off_outlined,
+                color: Color(0xff81899A),
+              ),
+        onPressed: onPressed,
+      ),
     );
   }
 }

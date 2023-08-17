@@ -4,8 +4,9 @@ import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_chip.dart';
 
 class Menu extends PopupMenuButton {
-  final String text;
+  // final String text;
   final List<MenuItem> items;
+
   Menu({
     super.key,
     super.clipBehavior,
@@ -26,23 +27,12 @@ class Menu extends PopupMenuButton {
     super.splashRadius,
     super.surfaceTintColor = Colors.white,
     super.tooltip,
-    required this.text,
+    super.icon,
+    super.child,
+    // required this.text,
     required this.items,
   }) : super(
             padding: EdgeInsets.zero,
-            child: SizedBox(
-              height: 56,
-              child: Padding(
-                padding: Pads.xAxisSm,
-                child: UiChip(
-                  text: text,
-                  textStyle: Font.small,
-                  iconSize: 18,
-                  icon: Icons.keyboard_arrow_down_outlined,
-                  iconOnRight: true,
-                ),
-              ),
-            ),
             itemBuilder: (_) {
               return items.map((item) {
                 return PopupMenuItem(

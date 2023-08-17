@@ -32,8 +32,8 @@ class _HomeState extends State<Home> {
                 HomeTop(),
                 // HomeMarqueer(),
                 // SizedBox(height: 16),
-                HomeCarousel(),
-                SizedBox(height: 56),
+                // HomeCarousel(),
+                // SizedBox(height: 56),
                 // Text(
                 //   "市场",
                 //   style: Font.x6largeBold,

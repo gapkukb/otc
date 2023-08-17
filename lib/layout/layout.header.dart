@@ -5,9 +5,12 @@ import 'package:otc/components/menu/menu.dart';
 import 'package:otc/layout/layout.logo.dart';
 import 'package:otc/layout/layout.profile.dart';
 import 'package:otc/router/router.dart';
+import 'package:otc/theme/padding.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/widgets/ui_chip.dart';
 
 final _router = GoRouter.of(navigatorKey.currentContext!);
 
@@ -35,7 +38,6 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           Menu(
-            text: "买/卖数字货币",
             onSelected: (value) async {
               if (!isAuthed) {
                 context.push(Routes.login);
@@ -68,6 +70,19 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
                 value: Routes.adOwn,
               ),
             ],
+            child: const SizedBox(
+              height: 56,
+              child: Padding(
+                padding: Pads.xAxisSm,
+                child: UiChip(
+                  text: "买/卖数字货币",
+                  textStyle: Font.small,
+                  iconSize: 18,
+                  icon: Icons.keyboard_arrow_down_outlined,
+                  iconOnRight: true,
+                ),
+              ),
+            ),
           )
         ],
       ),
@@ -95,6 +110,7 @@ class LayoutHeader extends ConsumerWidget implements PreferredSizeWidget {
         ),
         // const NoticeAppbar(),
         const LayoutProfile(userName: "user"),
+        const SizedBox(width: 16),
       ];
     }
 

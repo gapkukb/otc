@@ -81,11 +81,11 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
           clipBehavior: Clip.none,
           children: [
             SizedBox(
-              height: 48,
+              height: 34,
               width: double.infinity,
               child: Text(
                 "注册账号",
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(height: 1),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -109,14 +109,11 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
           physics: const NeverScrollableScrollPhysics(),
           controller: _controller,
           tabs: const [
-            Tab(
-              text: "邮箱注册",
-            ),
-            Tab(
-              text: "手机注册",
-            ),
+            Tab(text: "邮箱"),
+            Tab(text: "手机"),
           ],
         ),
+        const SizedBox(height: 32),
         Form(
           key: _formKey,
           child: Column(
@@ -141,6 +138,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
               TextFormFieldInviteCode(
                 formState: _formState,
               ),
+              const Gap.small(),
               Row(
                 children: [
                   Checkbox(
@@ -170,6 +168,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                   )
                 ],
               ),
+              const Gap.small(),
               UiButton(
                 fullWidth: true,
                 size: UiButtonSize.large,
