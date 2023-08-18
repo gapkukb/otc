@@ -70,6 +70,7 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
             "channels": payments
                 .map((payment) => {
                       "reference": payment.reference,
+                      "finalRate": widget.formState['refRate'] + widget.formState['floatOffset'],
                       "min": isBuying ? payment.outMin : payment.inMin,
                       "max": isBuying ? payment.outMax : payment.inMax,
                       "title": payment.title,

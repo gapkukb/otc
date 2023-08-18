@@ -17,6 +17,7 @@ class _UserRebateState extends State<UserRebate> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.grey.shade50,
+      shape: LinearBorder.none,
       child: const SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -25,7 +25,7 @@ ShellRouteBuilder userLayout = (context, state, child) {
                   path: Routes.c2c,
                 ),
                 LayoutMenuItem(
-                  name: "返佣",
+                  name: "返佣(邀请好友)",
                   path: Routes.rebate,
                 ),
                 LayoutMenuItem(

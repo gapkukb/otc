@@ -67,8 +67,20 @@ class Merchant extends ConsumerWidget {
         child: Text("已认证"),
       );
     }
+    if (user.makerState != Audit.REJECT) {
+      return applyButton(
+        context,
+        ref,
+        "认证失败，重新申请",
+        Colors.orange,
+      );
+    }
 
-    return applyButton(context, ref, user.makerState == null ? "立即申请" : "重新申请");
+    return applyButton(
+      context,
+      ref,
+      "立即申请",
+    );
   }
 
   @override
@@ -171,10 +183,11 @@ class Merchant extends ConsumerWidget {
     );
   }
 
-  Widget applyButton(BuildContext context, WidgetRef ref, String? text) {
+  Widget applyButton(BuildContext context, WidgetRef ref, String? text, [Color? color]) {
     return UiButton(
       label: text,
       size: UiButtonSize.medium,
+      color: color,
       onPressed: () async {
         final kyc = ref.read(kycProvider);
         final balance = ref.read(balanceProvider);

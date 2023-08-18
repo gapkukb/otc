@@ -63,8 +63,10 @@ class _AdOwnState extends State<AdOwn> {
     updateFilters();
     try {
       final data = await apis.otc.myAdvertise(filters);
-      pageCount = data.pages;
-      rows = data.records;
+      setState(() {
+        pageCount = data.pages;
+        rows = data.records;
+      });
     } finally {
       if (widget.running) {
         timer = Future.delayed(const Duration(seconds: 5)).asStream().listen((_) {

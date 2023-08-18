@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/global/global.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/widgets/ui_button.dart';
 
@@ -99,6 +101,15 @@ class AdOwnFilters extends PreferredSize {
                           textColor: Theme.of(context).primaryColor,
                           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                           onPressed: () async {
+                            if (global.user.base.maker != true) {
+                              Modal.confirm(
+                                content: "请先认证做市商",
+                                okButtonText: "去认证",
+                                onOk: () {
+                                  GoRouter.of(navigatorKey.currentContext!).go(Routes.merchant);
+                                },
+                              );
+                            }
                             final result = await GoRouter.of(navigatorKey.currentContext!).pushNamed(
                               Routes.adPost,
                             );
