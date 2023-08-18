@@ -14,6 +14,11 @@ class _Agent {
 
   /// 仪表盘
   final getDashboard = get("/agent/dashboard");
+
+  /// 佣金明细
+  final commissionDeals = post("/agent/deals/page", (Map<String, dynamic> json) {
+    return PaginationModel.fromJson(json, (item) => MerchantIncomeModel.fromJson(item as dynamic));
+  }, HttpOptions(loading: false));
 }
 
 final agentApi = _Agent();
