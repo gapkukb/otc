@@ -8,7 +8,7 @@ DropdownItem buildItem(Cryptocurrency item) {
   return DropdownItem(
     leading: SvgPicture.asset(
       item.iconPath,
-      width: 22,
+      // width: 22,
       // fit: BoxFit.cover,
       // allowDrawingOutsideViewBox: true,
       // clipBehavior: Clip.none,
