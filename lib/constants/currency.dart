@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:otc/asstes/assets.gen.dart';
 
 enum Fiatcurrency {
   CNY(text: "人民币", symbol: "￥"),
@@ -50,11 +52,15 @@ enum Cryptocurrency {
   final String name;
 
   String get iconPath {
-    return "assets/coins/${name.toLowerCase()}.svg";
+    return "assets/coins/${name.toLowerCase()}.png";
   }
 
-  SvgPicture get icon {
-    return SvgPicture.asset(iconPath);
+  Image get icon {
+    return Image.asset(
+      iconPath,
+      width: 24,
+      height: 24,
+    );
   }
 
   static Cryptocurrency? getByName(String name) {

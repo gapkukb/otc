@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/widgets/ui_chip.dart';
 
 DropdownItem buildItem(Cryptocurrency item) {
   return DropdownItem(
-    leading: SvgPicture.asset(
-      item.iconPath,
-      height: 24,
-      // width: 22,
-      // fit: BoxFit.cover,
-      // allowDrawingOutsideViewBox: true,
-      // clipBehavior: Clip.none,
-    ),
+    leading: item.icon,
     title: item.name,
     value: item.name,
   );
