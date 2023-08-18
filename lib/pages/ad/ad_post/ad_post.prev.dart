@@ -94,7 +94,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
           child: Padding(
             padding: Pads.sm,
             child: SizedBox(
-              height: 46,
+              height: 48,
               child: Row(
                 children: [
                   const Expanded(
