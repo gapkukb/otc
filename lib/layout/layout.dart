@@ -8,7 +8,10 @@ ShellRouteBuilder layout = (context, state, child) {
     appBar: LayoutHeader(
       appBar: AppBar(),
     ),
-    body: SelectionArea(child: child),
+    body: Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: SelectionArea(child: child),
+    ),
     bottomNavigationBar: Material(
       color: Colors.grey.shade100,
       child: const SizedBox(

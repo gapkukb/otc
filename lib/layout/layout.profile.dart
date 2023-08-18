@@ -6,7 +6,6 @@ import 'package:otc/components/menu/menu.dart';
 import 'package:otc/pages/user/layout/user.nav.list.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
-import 'package:otc/theme/text_theme.dart';
 
 class LayoutProfile extends ConsumerStatefulWidget {
   final String userName;
@@ -58,7 +57,7 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
               // overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Color(0xff252F40),
-                fontSize: 16,
+                // fontSize: 16,
               ),
             ),
             const SizedBox(width: 8),

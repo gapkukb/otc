@@ -127,7 +127,7 @@ class _DropdownState extends State<Dropdown> {
         dropdownSearchDecoration: widget.inputDecoration.copyWith(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           border: const OutlineInputBorder(),
-          labelText: widget.labelText,
+          // labelText: widget.labelText,
           prefixIcon: widget.prefixIcon,
         ),
         baseStyle: Font.medium,

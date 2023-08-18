@@ -65,4 +65,7 @@ ThemeData lightTheme = ThemeData(
   iconButtonTheme: IconButtonThemeData(
     style: IconButton.styleFrom(foregroundColor: const Color(0xff67748e)),
   ),
+  dividerTheme: const DividerThemeData(
+    color: Color(0xffd9d9d9),
+  ),
 );

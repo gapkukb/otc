@@ -38,7 +38,7 @@ class _WalletHistoryState extends State<WalletHistory> {
         ),
         child: Expanded(
           child: Padding(
-            padding: EdgeInsets.all(32.0),
+            padding: EdgeInsets.all(24.0),
             child: TabBarView(
               clipBehavior: Clip.none,
               children: [

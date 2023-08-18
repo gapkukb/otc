@@ -37,10 +37,9 @@ class Panel extends StatelessWidget {
                   style: Font.largeBold,
                 ),
               ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 0.5,
-            color: Colors.grey.shade300,
           ),
           child,
           // if (footer != null) footer!,

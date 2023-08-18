@@ -23,6 +23,7 @@ class RebateProportion extends ConsumerWidget {
       }
     ];
     return Card(
+      margin: const EdgeInsets.only(top: 8),
       child: Container(
         height: 72,
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),

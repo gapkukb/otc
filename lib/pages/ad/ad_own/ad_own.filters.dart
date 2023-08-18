@@ -27,7 +27,7 @@ class AdOwnFilters extends PreferredSize {
             title: Builder(
               builder: (context) {
                 return Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(top: 24),
                   child: RowGap(
                     items: [
                       SizedBox(

@@ -80,6 +80,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                 },
                 formState: formState,
               ),
+              const SizedBox(height: 8),
               Expanded(
                 child: Stack(
                   children: [

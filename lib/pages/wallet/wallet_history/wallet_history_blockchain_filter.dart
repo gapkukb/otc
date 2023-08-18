@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
-import 'package:otc/components/gap/gap.dart';
 import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -98,7 +97,7 @@ class _WalletHistoryBlockchainFilterState extends State<WalletHistoryBlockchainF
               labelText: "订单编号",
             ),
           ),
-          UiButton(
+          UiButton.text(
             height: 48,
             onPressed: widget.onSearch,
             label: "搜索",
