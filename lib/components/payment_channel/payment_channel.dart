@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:otc/asstes/assets.gen.dart';
 
@@ -56,13 +55,13 @@ enum PaymentMethods {
     final s = size ?? 24;
     switch (type) {
       case 0:
-        return Assets.images.unionpay.image(width: s);
+        return Assets.images.unionpay.image(height: s);
 
       case 1:
-        return Assets.images.wechat.image(width: s);
+        return Assets.images.wechat.image(height: s);
 
       default:
-        return Assets.images.alipay.image(width: s);
+        return Assets.images.alipay.image(height: s);
     }
   }
 

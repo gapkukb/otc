@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/responsive.dart';
 import 'package:otc/widgets/ui_empty_view.dart';
 
@@ -55,12 +56,12 @@ class _UserTasksState extends State<UserTasks> with SingleTickerProviderStateMix
     return Panel(
       margin: const EdgeInsets.only(top: 8),
       titleWidget: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         child: Row(
           children: [
-            Text(
+            const Text(
               "任务",
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Font.largeBold,
             ),
             const Spacer(),
             TabBar(

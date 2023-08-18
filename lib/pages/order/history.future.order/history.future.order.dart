@@ -20,9 +20,9 @@ class _HistoryFutureOrderState extends State<HistoryFutureOrder> {
     return Card(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(80),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 16, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 32, 32, 0),
             child: AppBar(
               clipBehavior: Clip.none,
               title: Wrap(
@@ -53,23 +53,26 @@ class _HistoryFutureOrderState extends State<HistoryFutureOrder> {
             ),
           ),
         ),
-        body: DataTable2(
-          columnSpacing: 4,
-          headingTextStyle: Font.miniGrey,
-          columns: const [
-            DataColumn2(label: Text("合约")),
-            DataColumn2(label: Text("时间")),
-            DataColumn2(label: Text("订单类型")),
-            DataColumn2(label: Text("方向")),
-            DataColumn2(label: Text("价格")),
-            DataColumn2(label: Text("成交均价")),
-            DataColumn2(label: Text("成交数量")),
-            DataColumn2(label: Text("金额")),
-            DataColumn2(label: Text("触发条件")),
-            DataColumn2(label: Text("状态")),
-          ],
-          rows: const [],
-          empty: const UiEmptyView(),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: DataTable2(
+            columnSpacing: 4,
+            headingTextStyle: Font.miniGrey,
+            columns: const [
+              DataColumn2(label: Text("合约")),
+              DataColumn2(label: Text("时间")),
+              DataColumn2(label: Text("订单类型")),
+              DataColumn2(label: Text("方向")),
+              DataColumn2(label: Text("价格")),
+              DataColumn2(label: Text("成交均价")),
+              DataColumn2(label: Text("成交数量")),
+              DataColumn2(label: Text("金额")),
+              DataColumn2(label: Text("触发条件")),
+              DataColumn2(label: Text("状态")),
+            ],
+            rows: const [],
+            empty: const UiEmptyView(),
+          ),
         ),
       ),
     );

@@ -107,83 +107,86 @@ class _AdOwnState extends State<AdOwn> {
             research(1);
           },
         ),
-        body: DataTable2(
-          headingTextStyle: Font.miniGrey,
-          columns: [
-            const DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 220),
-            const DataColumn2(label: Text("类型")),
-            const DataColumn2(label: Text("广告数量\n限额"), fixedWidth: 200),
-            const DataColumn2(label: Text("已成交数量")),
-            const DataColumn2(label: Text("剩余数量")),
-            const DataColumn2(label: Text("已成交价格")),
-            const DataColumn2(label: Text("支付方式")),
-            const DataColumn2(label: Text("状态")),
-            const DataColumn2(label: Text("创建时间"), fixedWidth: 160),
-            if (widget.running)
-              const DataColumn2(
-                label: Text("操作"),
-                fixedWidth: 120,
-              ),
-            const DataColumn2(label: Text(""), fixedWidth: 40),
-          ],
-          columnSpacing: 4,
-          dataRowHeight: 60,
-          // dividerThickness: 0.001,
-          empty: const UiEmptyView(),
-          rows: rows.map((row) {
-            final min = row.channels.map((e) => e.amountMin).reduce(math.min);
-            final max = row.channels.map((e) => e.amountMax).reduce(math.max);
-            final badge = row.takerDeals.where((element) => element.state == AdOwnState.NOTIFIED.name).length;
-            final pays = row.methods.map((element) => PaymentMethods.getByValue(element));
-
-            return DataRow(
-              cells: [
-                DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
-                DataCell(Text(row.sell ? "出售" : "购买")),
-                DataCell(MixText(
-                  child: "${row.submitAmount} USDT\n",
-                  small: "￥$min - ￥$max",
-                )),
-                DataCell(Text(row.totalCoinAmount.toString())),
-                DataCell(Text("${row.amount} USDT")),
-                DataCell(Text(row.totalMoneyAmount.toString())),
-                DataCell(Tooltip(
-                  triggerMode: TooltipTriggerMode.tap,
-                  message: pays.map((pay) => pay.text).join(","),
-                  child: Wrap(
-                    spacing: 4,
-                    children: pays.map((pay) {
-                      return pay.icon();
-                    }).toList(),
-                  ),
-                )),
-                DataCell(Text(getStateText(row.state))),
-                DataCell(Text(row.createdTime)),
-                if (widget.running)
-                  DataCell(stateButton(
-                    context,
-                    row.state,
-                    row.reference,
-                    () {
-                      refetch();
-                    },
-                  )),
-                DataCell(
-                  Align(
-                    alignment: const Alignment(1, 0),
-                    child: Badge(
-                      isLabelVisible: badge > 0,
-                      label: Text(badge.toString()),
-                      alignment: Alignment.centerLeft,
-                      offset: const Offset(-14, 0.5),
-                      child: const Icon(Icons.keyboard_arrow_right_outlined),
-                    ),
-                  ),
-                  onTap: () => showDetail(context, row),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: DataTable2(
+            headingTextStyle: Font.miniGrey,
+            columns: [
+              const DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 220),
+              const DataColumn2(label: Text("类型")),
+              const DataColumn2(label: Text("广告数量\n限额"), fixedWidth: 200),
+              const DataColumn2(label: Text("已成交数量")),
+              const DataColumn2(label: Text("剩余数量")),
+              const DataColumn2(label: Text("已成交价格")),
+              const DataColumn2(label: Text("支付方式")),
+              const DataColumn2(label: Text("状态")),
+              const DataColumn2(label: Text("创建时间"), fixedWidth: 160),
+              if (widget.running)
+                const DataColumn2(
+                  label: Text("操作"),
+                  fixedWidth: 120,
                 ),
-              ],
-            );
-          }).toList(),
+              const DataColumn2(label: Text(""), fixedWidth: 40),
+            ],
+            columnSpacing: 4,
+            dataRowHeight: 60,
+            // dividerThickness: 0.001,
+            empty: const UiEmptyView(),
+            rows: rows.map((row) {
+              final min = row.channels.map((e) => e.amountMin).reduce(math.min);
+              final max = row.channels.map((e) => e.amountMax).reduce(math.max);
+              final badge = row.takerDeals.where((element) => element.state == AdOwnState.NOTIFIED.name).length;
+              final pays = row.methods.map((element) => PaymentMethods.getByValue(element));
+
+              return DataRow(
+                cells: [
+                  DataCell(Text("${row.reference}\n${row.coin.name}/${row.money.text}")),
+                  DataCell(Text(row.sell ? "出售" : "购买")),
+                  DataCell(MixText(
+                    child: "${row.submitAmount} USDT\n",
+                    small: "￥$min - ￥$max",
+                  )),
+                  DataCell(Text(row.totalCoinAmount.toString())),
+                  DataCell(Text("${row.amount} USDT")),
+                  DataCell(Text(row.totalMoneyAmount.toString())),
+                  DataCell(Tooltip(
+                    triggerMode: TooltipTriggerMode.tap,
+                    message: pays.map((pay) => pay.text).join(","),
+                    child: Wrap(
+                      spacing: 4,
+                      children: pays.map((pay) {
+                        return pay.icon();
+                      }).toList(),
+                    ),
+                  )),
+                  DataCell(Text(getStateText(row.state))),
+                  DataCell(Text(row.createdTime)),
+                  if (widget.running)
+                    DataCell(stateButton(
+                      context,
+                      row.state,
+                      row.reference,
+                      () {
+                        refetch();
+                      },
+                    )),
+                  DataCell(
+                    Align(
+                      alignment: const Alignment(1, 0),
+                      child: Badge(
+                        isLabelVisible: badge > 0,
+                        label: Text(badge.toString()),
+                        alignment: Alignment.centerLeft,
+                        offset: const Offset(-14, 0.5),
+                        child: const Icon(Icons.keyboard_arrow_right_outlined),
+                      ),
+                    ),
+                    onTap: () => showDetail(context, row),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
         ),
         bottomNavigationBar: Padding(
           padding: Pads.yAxisSm,

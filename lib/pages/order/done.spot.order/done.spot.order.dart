@@ -20,9 +20,9 @@ class _DoneSpotOrderState extends State<DoneSpotOrder> {
     return Card(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(80),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 16, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 32, 32, 0),
             child: AppBar(
               clipBehavior: Clip.none,
               title: Wrap(
@@ -84,20 +84,23 @@ class _DoneSpotOrderState extends State<DoneSpotOrder> {
             ),
           ),
         ),
-        body: DataTable2(
-          columnSpacing: 4,
-          headingTextStyle: Font.miniGrey,
-          columns: const [
-            DataColumn2(label: Text("日期")),
-            DataColumn2(label: Text("交易对")),
-            DataColumn2(label: Text("方向")),
-            DataColumn2(label: Text("价格")),
-            DataColumn2(label: Text("完全成交")),
-            DataColumn2(label: Text("手续费")),
-            DataColumn2(label: Text("共计")),
-          ],
-          rows: const [],
-          empty: const UiEmptyView(),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: DataTable2(
+            columnSpacing: 4,
+            headingTextStyle: Font.miniGrey,
+            columns: const [
+              DataColumn2(label: Text("日期")),
+              DataColumn2(label: Text("交易对")),
+              DataColumn2(label: Text("方向")),
+              DataColumn2(label: Text("价格")),
+              DataColumn2(label: Text("完全成交")),
+              DataColumn2(label: Text("手续费")),
+              DataColumn2(label: Text("共计")),
+            ],
+            rows: const [],
+            empty: const UiEmptyView(),
+          ),
         ),
       ),
     );

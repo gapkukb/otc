@@ -38,33 +38,37 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
     return Row(
       children: [
         Expanded(
+          flex: 3,
           child: _buildBaseInfo(user, lastLoggedIp),
         ),
-        SizedBox(
-          width: 300,
-          height: 228,
-          child: Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: Pads.sm,
-                  child: Text(
-                    "安全等级",
-                    style: Font.medium,
-                  ),
-                ),
-                const Divider(
-                  height: 1,
-                ),
-                Expanded(
-                  child: Center(
-                    child: Indicator(
-                      value: securityLevel,
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            width: 300,
+            height: 228,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: Pads.sm,
+                    child: Text(
+                      "安全等级",
+                      style: Font.medium,
                     ),
                   ),
-                ),
-              ],
+                  const Divider(
+                    height: 1,
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Indicator(
+                        value: securityLevel,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

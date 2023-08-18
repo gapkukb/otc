@@ -118,7 +118,10 @@ class Merchant extends ConsumerWidget {
             const Panel(
               title: "欢迎加入Maoerduo商户联盟",
               child: Padding(
-                padding: Pads.md,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 24,
+                ),
                 child: Text("您可以享受到以下服务。"),
               ),
             ),

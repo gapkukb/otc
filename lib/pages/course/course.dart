@@ -43,10 +43,13 @@ class Course extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text("如何使用C2C"),
+        title: const Padding(
+          padding: EdgeInsets.all(16),
+          child: Text("如何使用C2C"),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+        padding: const EdgeInsets.all(32),
         child: ListView.separated(
           separatorBuilder: (context, index) => const Gap.medium(),
           itemCount: items.length,

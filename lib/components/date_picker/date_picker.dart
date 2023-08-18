@@ -106,10 +106,11 @@ class _DatePickerState extends State<DatePicker> {
             child: InputDecorator(
                 isEmpty: text == null,
                 decoration: InputDecoration(
-                    contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
-                    labelText: widget.labelText,
-                    border: const OutlineInputBorder(),
-                    suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined)),
+                  contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+                  hintText: widget.labelText,
+                  border: const OutlineInputBorder(),
+                  suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
+                ),
                 child: Text(
                   text ?? "",
                   style: Font.medium,

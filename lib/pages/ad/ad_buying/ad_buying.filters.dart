@@ -27,7 +27,7 @@ class AdBuyingFilter extends PreferredSize {
           child: AppBar(
             clipBehavior: Clip.none,
             title: Padding(
-              padding: const EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.fromLTRB(16, 48, 32, 0),
               child: RowGap(
                 items: [
                   SizedBox(
