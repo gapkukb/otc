@@ -61,6 +61,7 @@ class UiTextFormField extends StatefulWidget {
   final String? labelText;
   final String? name;
   final Map<dynamic, dynamic>? formState;
+  final String? hintText;
 
   const UiTextFormField({
     super.key,
@@ -121,6 +122,7 @@ class UiTextFormField extends StatefulWidget {
     this.labelText,
     this.formState,
     this.name,
+    this.hintText,
   });
 
   @override
@@ -238,6 +240,7 @@ class _UiTextFormFieldState extends State<UiTextFormField> {
     return (widget.decoration ?? const InputDecoration()).copyWith(
       counterText: "",
       labelText: widget.labelText,
+      hintText: widget.hintText,
       border: const OutlineInputBorder(),
       suffix: _showClearButotn
           ? Transform.scale(

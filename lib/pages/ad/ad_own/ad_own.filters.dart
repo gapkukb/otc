@@ -108,6 +108,7 @@ class AdOwnFilters extends PreferredSize {
                                   GoRouter.of(navigatorKey.currentContext!).go(Routes.merchant);
                                 },
                               );
+                              return;
                             }
                             final result = await GoRouter.of(navigatorKey.currentContext!).pushNamed(
                               Routes.adPost,

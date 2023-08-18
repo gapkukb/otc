@@ -52,71 +52,76 @@ class _MerchantIncomeState extends ConsumerState<MerchantIncome> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Scaffold(
-        appBar: MerchantIncomeFilters(
-          formState: formState,
-          onSearch: () {
-            research(1);
-          },
-        ),
-        body: Consumer(
-          builder: (context, ref, child) {
-            final provider = ref.watch(merchantIncomeProvider(filters));
-            return provider.when(
-              data: (data) {
-                pageCount = data.pages;
-                return DataTable2(
-                  headingTextStyle: Font.miniGrey,
-                  columns: const [
-                    DataColumn2(label: Text("订单编号"), fixedWidth: 220),
-                    DataColumn2(label: Text("类型")),
-                    DataColumn2(label: Text("已成交数量")),
-                    DataColumn2(label: Text("已成交价格")),
-                    DataColumn2(label: Text("汇率")),
-                    DataColumn2(label: Text("支付方式")),
-                    DataColumn2(label: Text("更新时间"), fixedWidth: 160),
-                    DataColumn2(label: Text("佣金比例")),
-                    DataColumn2(label: Text("佣金数量")),
-                  ],
-                  columnSpacing: 4,
-                  dataRowHeight: 60,
-                  // dividerThickness: 0.001,
-                  empty: provider.isLoading ? null : const UiEmptyView(),
-                  rows: data.records.map((row) {
-                    return DataRow(
-                      cells: [
-                        DataCell(Text(row.reference)),
-                        DataCell(Text(row.sell ? "出售" : "购买")),
-                        DataCell(Text(row.takerCoinAmount.toString())),
-                        DataCell(Text(row.takerMoneyAmount.toString())),
-                        DataCell(Text(row.rate.toString())),
-                        DataCell(PaymentMethods.getByValue(row.paymentMethod).icon()),
-                        DataCell(Text(row.createdTime)),
-                        DataCell(Text(row.rate.toString())),
-                        DataCell(Text(row.deservedReward.toString())),
+    return Card(
+      child: Form(
+        key: formKey,
+        child: Scaffold(
+          appBar: MerchantIncomeFilters(
+            formState: formState,
+            onSearch: () {
+              research(1);
+            },
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Consumer(
+              builder: (context, ref, child) {
+                final provider = ref.watch(merchantIncomeProvider(filters));
+                return provider.when(
+                  data: (data) {
+                    pageCount = data.pages;
+                    return DataTable2(
+                      headingTextStyle: Font.miniGrey,
+                      columns: const [
+                        DataColumn2(label: Text("订单编号"), fixedWidth: 220),
+                        DataColumn2(label: Text("类型")),
+                        DataColumn2(label: Text("已成交数量")),
+                        DataColumn2(label: Text("已成交价格")),
+                        DataColumn2(label: Text("汇率")),
+                        DataColumn2(label: Text("支付方式")),
+                        DataColumn2(label: Text("更新时间"), fixedWidth: 160),
+                        DataColumn2(label: Text("佣金比例")),
+                        DataColumn2(label: Text("佣金数量")),
                       ],
+                      columnSpacing: 4,
+                      dataRowHeight: 60,
+                      // dividerThickness: 0.001,
+                      empty: provider.isLoading ? null : const UiEmptyView(),
+                      rows: data.records.map((row) {
+                        return DataRow(
+                          cells: [
+                            DataCell(Text(row.reference)),
+                            DataCell(Text(row.sell ? "出售" : "购买")),
+                            DataCell(Text(row.takerCoinAmount.toString())),
+                            DataCell(Text(row.takerMoneyAmount.toString())),
+                            DataCell(Text(row.changeRate.toString())),
+                            DataCell(PaymentMethods.getByValue(row.paymentMethod).icon()),
+                            DataCell(Text(row.createdTime)),
+                            DataCell(Text(row.rate.toString())),
+                            DataCell(Text(row.deservedReward.toString())),
+                          ],
+                        );
+                      }).toList(),
                     );
-                  }).toList(),
+                  },
+                  error: (err, stack) {
+                    return Text(err.toString() + stack.toString());
+                  },
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               },
-              error: (err, stack) {
-                return Text(err.toString() + stack.toString());
-              },
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          },
-        ),
-        bottomNavigationBar: Padding(
-          padding: Pads.yAxisSm,
-          child: Pagination(
-            pageCount: pageCount,
-            pageNo: pageNo,
-            // disabled: loading,
-            onChange: research,
+            ),
+          ),
+          bottomNavigationBar: Padding(
+            padding: Pads.yAxisSm,
+            child: Pagination(
+              pageCount: pageCount,
+              pageNo: pageNo,
+              // disabled: loading,
+              onChange: research,
+            ),
           ),
         ),
       ),

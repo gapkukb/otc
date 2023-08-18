@@ -38,13 +38,7 @@ ShellRouteBuilder merchantLayout = (context, state, child) {
             ),
           ],
         ),
-        Expanded(
-          child: Material(
-            color: Colors.grey.shade100,
-            // padding: Pads.sm,
-            child: child,
-          ),
-        ),
+        Expanded(child: child),
       ],
     ),
   );

@@ -19,7 +19,7 @@ class MerchantIncomeFilters extends PreferredSize {
           child: AppBar(
             clipBehavior: Clip.none,
             title: Padding(
-              padding: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.fromLTRB(16, 56, 32, 0),
               child: RowGap(
                 items: [
                   SizedBox(
@@ -31,7 +31,7 @@ class MerchantIncomeFilters extends PreferredSize {
                           vertical: 12,
                         ),
                       ),
-                      labelText: "订单编号",
+                      hintText: "订单编号",
                       name: "reference",
                       formState: formState,
                     ),
@@ -84,11 +84,11 @@ class MerchantIncomeFilters extends PreferredSize {
                     maxDate: DateTime.now(),
                     minDate: DateTime(1970),
                   ),
-                  const Spacer(),
-                  UiButton(
+
+                  UiButton.text(
                     onPressed: onSearch,
                     label: "搜索",
-                    height: 56,
+                    height: 48,
                   ),
                 ],
               ),

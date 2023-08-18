@@ -17,7 +17,7 @@ class MerchantInvitationFilters extends PreferredSize {
           child: AppBar(
             clipBehavior: Clip.none,
             title: Padding(
-              padding: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.fromLTRB(16, 56, 32, 0),
               child: RowGap(
                 items: [
                   SizedBox(

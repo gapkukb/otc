@@ -67,7 +67,7 @@ class Merchant extends ConsumerWidget {
         child: Text("已认证"),
       );
     }
-    if (user.makerState != Audit.REJECT) {
+    if (user.makerState == Audit.REJECT) {
       return applyButton(
         context,
         ref,
