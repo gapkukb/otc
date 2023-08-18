@@ -80,8 +80,9 @@ class UserAuth extends ConsumerWidget {
 
     final level = items[index + 1];
 
-    return Material(
+    return Card(
       color: Colors.grey.shade50,
+      shape: LinearBorder.none,
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

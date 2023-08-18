@@ -91,6 +91,7 @@ class UiButton extends StatelessWidget {
       disabledTextColor: Colors.white,
       colorBrightness: colorBrightness,
       elevation: 0,
+      hoverElevation: 0,
       child: SelectionContainer.disabled(child: _buildChild()),
     );
   }

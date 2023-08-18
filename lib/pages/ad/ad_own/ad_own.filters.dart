@@ -95,8 +95,7 @@ class AdOwnFilters extends PreferredSize {
                       if (running == true)
                         UiButton(
                           label: "发布新广告",
-                          height: 56,
-                          colorBrightness: Brightness.light,
+                          height: 48,
                           color: Theme.of(context).primaryColorLight,
                           textColor: Theme.of(context).primaryColor,
                           labelStyle: const TextStyle(fontWeight: FontWeight.bold),

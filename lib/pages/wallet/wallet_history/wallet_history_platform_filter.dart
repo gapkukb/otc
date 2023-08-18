@@ -84,7 +84,6 @@ class _WalletHistoryPlatformFilterState extends State<WalletHistoryPlatformFilte
               labelText: "订单编号",
             ),
           ),
-          const Spacer(),
           UiButton(
             onPressed: widget.onSearch,
             label: "搜索",

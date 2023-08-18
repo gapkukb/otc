@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_axis_count_and_fixed_height.dart';
 import 'package:otc/components/panel/panel.dart';
@@ -36,8 +35,9 @@ class _UserTasksState extends State<UserTasks> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Card(
       color: Colors.grey.shade50,
+      shape: LinearBorder.none,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -53,6 +53,7 @@ class _UserTasksState extends State<UserTasks> with SingleTickerProviderStateMix
 
   _buildTaskView() {
     return Panel(
+      margin: const EdgeInsets.only(top: 8),
       titleWidget: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -198,38 +199,36 @@ class _UserTasksState extends State<UserTasks> with SingleTickerProviderStateMix
   }
 
   _buildHeader() {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(32),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.deepPurpleAccent,
-          image: DecorationImage(image: Assets.images.image4.provider(), alignment: Alignment.centerRight),
-        ),
-        child: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "在任务中心参与活动，赢取丰厚奖励。",
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+    return Container(
+      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.deepPurpleAccent,
+        image: DecorationImage(image: Assets.images.image4.provider(), alignment: Alignment.centerRight),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "在任务中心参与活动，赢取丰厚奖励。",
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
-            SizedBox(
-              height: 24,
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          Text(
+            "活动不定期发布，奖励有限，请多加关注。",
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
             ),
-            Text(
-              "活动不定期发布，奖励有限，请多加关注。",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

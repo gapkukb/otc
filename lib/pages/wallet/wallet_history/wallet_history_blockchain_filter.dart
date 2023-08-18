@@ -98,9 +98,8 @@ class _WalletHistoryBlockchainFilterState extends State<WalletHistoryBlockchainF
               labelText: "订单编号",
             ),
           ),
-          const Spacer(),
           UiButton(
-            height: 56,
+            height: 48,
             onPressed: widget.onSearch,
             label: "搜索",
           ),

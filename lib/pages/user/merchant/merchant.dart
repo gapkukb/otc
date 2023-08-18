@@ -86,99 +86,105 @@ class Merchant extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final user = ref.watch(userBaseProvider);
-    return Material(
-      color: Colors.grey.shade50,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 56),
-            const Text(
-              "认证商户申请",
-              textAlign: TextAlign.center,
-              style: Font.x4largeBold,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              child: Column(
+                children: [
+                  const SizedBox(height: 56),
+                  const Text(
+                    "认证商户申请",
+                    textAlign: TextAlign.center,
+                    style: Font.x4largeBold,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    "成为Maoerduo认证商户，获得广告发布权限，享受更多交易特权",
+                    textAlign: TextAlign.center,
+                    style: Font.largeGrey,
+                  ),
+                  const SizedBox(height: 32),
+                  stateButton(context, ref),
+                  const SizedBox(height: 48),
+                ],
+              ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              "成为Maoerduo认证商户，获得广告发布权限，享受更多交易特权",
-              textAlign: TextAlign.center,
-              style: Font.largeGrey,
+          ),
+          if (user.makerState == Audit.PASS)
+            const Panel(
+              title: "欢迎加入Maoerduo商户联盟",
+              child: Padding(
+                padding: Pads.md,
+                child: Text("您可以享受到以下服务。"),
+              ),
             ),
-            const SizedBox(height: 32),
-            stateButton(context, ref),
-            const SizedBox(height: 48),
-            if (user.makerState == Audit.PASS)
-              const Panel(
-                title: "欢迎加入Maoerduo商户联盟",
-                child: Padding(
-                  padding: Pads.md,
-                  child: Text("您可以享受到以下服务。"),
+          if (user.makerState == Audit.PENDING)
+            const Panel(
+              title: "信息上传成功",
+              child: Padding(
+                padding: Pads.md,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("平台会在48小时内审核完毕"),
+                    Text("审核通过后，您将获得以下权益！"),
+                  ],
                 ),
               ),
-            if (user.makerState == Audit.PENDING)
-              const Panel(
-                title: "信息上传成功",
+            ),
+          if (user.makerState == null || user.makerState == Audit.REJECT)
+            Panel(
+              title: "申请条件",
+              child: Padding(
+                padding: Pads.md,
+                child: Wrap(
+                  children: items
+                      .map(
+                        (e) => FractionallySizedBox(
+                          widthFactor: context.responsive(1, md: 0.5),
+                          child: Padding(
+                            padding: Pads.xs,
+                            child: Text(
+                              e,
+                              style: Font.mediumBold,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
+          UiFlex(
+            children: features.map((item) {
+              return Card(
                 child: Padding(
-                  padding: Pads.md,
+                  padding: Pads.lg,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("平台会在48小时内审核完毕"),
-                      Text("审核通过后，您将获得以下权益！"),
+                      item.image,
+                      Text(
+                        item.title,
+                        style: Font.x2largeBold,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        item.description,
+                        style: Font.miniGrey,
+                      ),
                     ],
                   ),
                 ),
-              ),
-            if (user.makerState == null || user.makerState == Audit.REJECT)
-              Panel(
-                title: "申请条件",
-                child: Padding(
-                  padding: Pads.md,
-                  child: Wrap(
-                    children: items
-                        .map(
-                          (e) => FractionallySizedBox(
-                            widthFactor: context.responsive(1, md: 0.5),
-                            child: Padding(
-                              padding: Pads.xs,
-                              child: Text(
-                                e,
-                                style: Font.mediumBold,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ),
-            UiFlex(
-              children: features.map((item) {
-                return Card(
-                  child: Padding(
-                    padding: Pads.lg,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        item.image,
-                        Text(
-                          item.title,
-                          style: Font.x2largeBold,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          item.description,
-                          style: Font.miniGrey,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }

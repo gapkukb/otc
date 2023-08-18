@@ -99,7 +99,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryPlatform>
                             ? null
                             : const UiEmptyView(
                                 iconSize: 140,
-                                title: "未找到交易记录",
+                                title: "未找到转账记录",
                               ),
                         rows: data.records.map((row) {
                           return DataRow(cells: [

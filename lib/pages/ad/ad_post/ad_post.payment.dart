@@ -108,9 +108,18 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
   }
 
   add(String route, [AddType? type]) async {
-    final result = await context.push(route, extra: type);
-    if (result != null) {
-      return ref.refresh(adPostPaymentProvider);
+    if (await predication(
+      context: context,
+      types: [
+        Predication.phone,
+        Predication.kyc1,
+        Predication.captcha,
+      ],
+    )) {
+      final result = await context.push(route, extra: type);
+      if (result != null) {
+        return ref.refresh(adPostPaymentProvider);
+      }
     }
   }
 }

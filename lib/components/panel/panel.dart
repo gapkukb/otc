@@ -6,6 +6,7 @@ class Panel extends StatelessWidget {
   final Widget? titleWidget;
   final Widget child;
   final Widget? footer;
+  final EdgeInsets? margin;
 
   const Panel({
     super.key,
@@ -13,11 +14,13 @@ class Panel extends StatelessWidget {
     required this.child,
     this.titleWidget,
     this.footer,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: margin,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,10 +37,10 @@ class Panel extends StatelessWidget {
                   style: Font.largeBold,
                 ),
               ),
-          const Divider(
+          Divider(
             height: 1,
             thickness: 0.5,
-            // color: Colors.grey.shade100,
+            color: Colors.grey.shade300,
           ),
           child,
           // if (footer != null) footer!,
