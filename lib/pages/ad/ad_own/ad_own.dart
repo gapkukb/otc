@@ -202,8 +202,7 @@ class _AdOwnState extends State<AdOwn> {
     formKey.currentState!.save();
     setState(() {
       pageNo = currentPage;
-      updateFilters();
-      return provider.refresh(adOwnProvider(filters));
+      refetch();
     });
   }
 
