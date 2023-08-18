@@ -49,11 +49,11 @@ class MerchantInvitationFilters extends PreferredSize {
                       ],
                     ),
                   ),
-                  const Spacer(),
-                  UiButton(
+
+                  UiButton.text(
                     onPressed: onSearch,
                     label: "搜索",
-                    height: 56,
+                    height: 48,
                   ),
                 ],
               ),

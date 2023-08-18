@@ -40,66 +40,73 @@ class _MerchantIncomeState extends ConsumerState<MerchantInvitation> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Scaffold(
-        appBar: MerchantInvitationFilters(
-          formState: formState,
-          onSearch: () {
-            research(1);
-          },
-        ),
-        body: Consumer(
-          builder: (context, ref, child) {
-            final provider = ref.watch(merchantInvitationProvider(filters));
-            int i = 0;
-            return provider.when(
-              data: (data) {
-                return DataTable2(
-                  headingTextStyle: Font.miniGrey,
-                  columns: const [
-                    DataColumn2(label: Text("序号"), fixedWidth: 220),
-                    DataColumn2(label: Text("邀请码")),
-                    // DataColumn2(label: Text("邀请链接")),
-                    DataColumn2(label: Text("状态")),
-                    DataColumn2(label: Text("银行卡佣金")),
-                    DataColumn2(label: Text("支付宝佣金")),
-                    DataColumn2(label: Text("微信佣金"), fixedWidth: 160),
-                    DataColumn2(label: Text("用户ID")),
-                  ],
-                  columnSpacing: 4,
-                  dataRowHeight: 60,
-                  // dividerThickness: 0.001,
-                  empty: provider.isLoading ? null : const UiEmptyView(),
-                  rows: data.records.map((row) {
-                    i++;
-                    return DataRow(
-                      cells: [
-                        DataCell(Text(i.toString())),
-                        DataCell(UiClipboard(
-                          text: row.invCode,
-                          iconSize: 16,
-                          child: Text(row.invCode),
-                        )),
-                        // DataCell(Text(row.creator)),
-                        DataCell(Text(row.used ? "已使用" : "未使用")),
-                        DataCell(Text("${row.bankcardRate * 100}%")),
-                        DataCell(Text("${row.alipayRate * 100}%")),
-                        DataCell(Text("${row.wechatRate * 100}%")),
-                        DataCell(Text(row.username)),
-                      ],
-                    );
-                  }).toList(),
-                );
-              },
-              error: (err, stack) {
-                return Text(err.toString() + stack.toString());
-              },
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          },
+    return Card(
+      child: Form(
+        key: formKey,
+        child: Scaffold(
+          appBar: MerchantInvitationFilters(
+            formState: formState,
+            onSearch: () {
+              research(1);
+            },
+          ),
+          body: Consumer(
+            builder: (context, ref, child) {
+              final provider = ref.watch(merchantInvitationProvider(filters));
+              int i = 0;
+              return provider.when(
+                data: (data) {
+                  return DataTable2(
+                    headingTextStyle: Font.miniGrey,
+                    columns: const [
+                      DataColumn2(label: Text("序号"), fixedWidth: 220),
+                      DataColumn2(label: Text("邀请码")),
+                      // DataColumn2(label: Text("邀请链接")),
+                      DataColumn2(label: Text("状态")),
+                      DataColumn2(label: Text("银行卡佣金")),
+                      DataColumn2(label: Text("支付宝佣金")),
+                      DataColumn2(label: Text("微信佣金"), fixedWidth: 160),
+                      DataColumn2(label: Text("用户ID")),
+                    ],
+                    columnSpacing: 4,
+                    dataRowHeight: 60,
+                    // dividerThickness: 0.001,
+                    empty: provider.isLoading ? null : const UiEmptyView(),
+                    rows: data.records.map((row) {
+                      i++;
+                      return DataRow(
+                        cells: [
+                          DataCell(Text(i.toString())),
+                          DataCell(UiClipboard(
+                            text: row.invCode,
+                            iconSize: 16,
+                            child: Text(row.invCode),
+                          )),
+                          // DataCell(Text(row.creator)),
+                          DataCell(Text(
+                            row.used ? "已使用" : "未使用",
+                            style: TextStyle(
+                              color: row.used ? null : Colors.green,
+                            ),
+                          )),
+                          DataCell(Text("${row.bankcardRate * 100}%")),
+                          DataCell(Text("${row.alipayRate * 100}%")),
+                          DataCell(Text("${row.wechatRate * 100}%")),
+                          DataCell(Text(row.username)),
+                        ],
+                      );
+                    }).toList(),
+                  );
+                },
+                error: (err, stack) {
+                  return Text(err.toString() + stack.toString());
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

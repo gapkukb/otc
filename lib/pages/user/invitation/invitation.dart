@@ -84,7 +84,12 @@ class _UserInvitationState extends ConsumerState<UserInvitation> {
                           child: Text(row.invCode),
                         )),
                         // DataCell(Text(row.creator)),
-                        DataCell(Text(row.used ? "已使用" : "未使用")),
+                        DataCell(Text(
+                          row.used ? "已使用" : "未使用",
+                          style: TextStyle(
+                            color: row.used ? null : Colors.green,
+                          ),
+                        )),
                         DataCell(Text("${row.bankcardRate * 100}%")),
                         DataCell(Text("${row.alipayRate * 100}%")),
                         DataCell(Text("${row.wechatRate * 100}%")),

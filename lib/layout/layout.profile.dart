@@ -44,7 +44,7 @@ class _LayoutProfileState extends ConsumerState<LayoutProfile> {
           value: "logout",
         )),
       child: MaterialButton(
-        // height: 40,
+        mouseCursor: SystemMouseCursors.click,
         shape: const StadiumBorder(),
         onPressed: null,
         child: Row(

@@ -44,6 +44,7 @@ class _MerchantIncomeState extends ConsumerState<MerchantIncome> {
       "pageSize": pageSize,
       "begin": formState["minDate"] == null ? null : formState["minDate"] + " 00:00:00",
       "end": formState["maxDate"] == null ? null : formState["maxDate"] + " 23:59:59",
+      "reference": formState["reference"] == "" ? null : formState["reference"],
     });
 
     inspect(filters);

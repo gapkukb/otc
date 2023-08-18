@@ -11,34 +11,32 @@ ShellRouteBuilder merchantLayout = (context, state, child) {
     color: const Color(0xffF8F9FA),
     child: Row(
       children: [
-        Card(
-          child: SidebarMenu(
-            items: [
-              LayoutMenuSub(
-                title: "代理系统",
-                underline: false,
-                items: [
+        SidebarMenu(
+          items: [
+            LayoutMenuSub(
+              title: "代理系统",
+              underline: false,
+              items: [
+                const LayoutMenuItem(
+                  name: "仪表盘",
+                  path: Routes.merchantDashboard,
+                ),
+                const LayoutMenuItem(
+                  name: "佣金明细",
+                  path: Routes.merchantIncome,
+                ),
+                const LayoutMenuItem(
+                  name: "下级邀请码",
+                  path: Routes.merchantInvitation,
+                ),
+                if (global.user.base.type == "AGENT_LV_1")
                   const LayoutMenuItem(
-                    name: "仪表盘",
-                    path: Routes.merchantDashboard,
+                    name: "佣金比例设置",
+                    path: Routes.merchantSetting,
                   ),
-                  const LayoutMenuItem(
-                    name: "佣金明细",
-                    path: Routes.merchantIncome,
-                  ),
-                  const LayoutMenuItem(
-                    name: "下级邀请码",
-                    path: Routes.merchantInvitation,
-                  ),
-                  if (global.user.base.type == "AGENT_LV_1")
-                    const LayoutMenuItem(
-                      name: "佣金比例设置",
-                      path: Routes.merchantSetting,
-                    ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
         Expanded(
           child: Material(
