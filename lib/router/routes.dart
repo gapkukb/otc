@@ -290,8 +290,4 @@ final List<RouteBase> routes = [
     path: Routes.notice,
     page: const NoticeWindow(),
   ),
-  GoRoute(
-    path: "/test",
-    builder: (context, state) => const HomeTest(),
-  )
 ];
