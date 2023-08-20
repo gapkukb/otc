@@ -12,7 +12,6 @@ class AdPostPayment extends ConsumerStatefulWidget {
 }
 
 class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
-  final List<PaymentItem> payments = [];
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -23,7 +22,7 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
       title: "添加收款方式",
       iconData: Icons.ads_click_outlined,
       onCompelete: (context) {
-        context.pop(payments);
+        context.pop(resp.value!.where((element) => element.selected).toList());
       },
       physics: const NeverScrollableScrollPhysics(),
       children: resp.when(
@@ -36,42 +35,41 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
           )
         ],
         data: (data) {
-          if (data.isEmpty) {
-            return [
-              const UiEmptyView(
-                title: "当前无可用的收款方式",
-              )
-            ];
-          }
           return [
-            SizedBox(
-              height: height - 400,
-              child: ListView.separated(
-                cacheExtent: 100,
-                itemBuilder: (context, index) {
-                  final item = data[index];
-                  return AdPostPaymentTemplate(
-                    isBuying: widget.isBuying,
-                    editable: true,
-                    data: item,
-                    onSelectedChange: (selected) {
-                      setState(() {
-                        item.selected = selected;
-                        if (selected) {
-                          payments.add(item);
-                        } else {
-                          payments.remove(item);
-                        }
-                      });
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Gap.small();
-                },
-                itemCount: data.length,
-              ),
-            ),
+            data.isEmpty
+                ? const UiEmptyView(
+                    title: "当前无可用的收款方式",
+                  )
+                : SizedBox(
+                    height: math.min(height - 400, 400),
+                    child: ListView.separated(
+                      cacheExtent: 100,
+                      itemBuilder: (context, index) {
+                        final item = data[index];
+                        return AdPostPaymentTemplate(
+                            isBuying: widget.isBuying,
+                            editable: true,
+                            data: item,
+                            onSelectedChange: (selected) {
+                              setState(() {
+                                item.selected = selected;
+                              });
+                            },
+                            onLimitChange: (min, max) {
+                              setState(() {
+                                item.inMax = max;
+                                item.inMin = min;
+                                item.outMax = max;
+                                item.outMin = min;
+                              });
+                            });
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Gap.small();
+                      },
+                      itemCount: data.length,
+                    ),
+                  ),
             const Gap.small(),
             Row(
               children: [
@@ -79,7 +77,7 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
                   child: _Button(
                     label: "银行卡",
                     onPressed: () async {
-                      await context.push(Routes.walletMethodBankAddition);
+                      add(Routes.walletMethodBankAddition);
                     },
                   ),
                 ),
@@ -88,7 +86,7 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
                   child: _Button(
                     label: "支付宝",
                     onPressed: () async {
-                      await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.alipay);
+                      add(Routes.walletMethodQRcodeAddition, AddType.alipay);
                     },
                   ),
                 ),
@@ -96,8 +94,8 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
                 Expanded(
                   child: _Button(
                     label: "微信",
-                    onPressed: () async {
-                      await context.push(Routes.walletMethodQRcodeAddition, extra: AddType.wechat);
+                    onPressed: () {
+                      add(Routes.walletMethodQRcodeAddition, AddType.wechat);
                     },
                   ),
                 ),
@@ -107,6 +105,22 @@ class _AdPostPaymentState extends ConsumerState<AdPostPayment> {
         },
       ),
     );
+  }
+
+  add(String route, [AddType? type]) async {
+    if (await predication(
+      context: context,
+      types: [
+        Predication.phone,
+        Predication.kyc1,
+        Predication.captcha,
+      ],
+    )) {
+      final result = await context.push(route, extra: type);
+      if (result != null) {
+        return ref.refresh(adPostPaymentProvider);
+      }
+    }
   }
 }
 

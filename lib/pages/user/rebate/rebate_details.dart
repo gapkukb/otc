@@ -24,6 +24,7 @@ class _RebateDetailsState extends ConsumerState<RebateDetails> {
   @override
   Widget build(context) {
     return Panel(
+      margin: const EdgeInsets.only(top: 8),
       title: "佣金明细",
       child: Consumer(
         builder: (context, ref, child) {

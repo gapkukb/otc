@@ -10,11 +10,11 @@ class WalletBlockchainHistoryModel with _$WalletBlockchainHistoryModel {
     required bool deposit,
     required String currency,
     required num amount,
-    required String fromAddress,
+    required String? fromAddress,
     required String toAddress,
     required num transactionIndex,
     required String transactionHash,
-    required String confirmed,
+    required String? confirmed,
   }) = _WalletBlockchainHistoryModel;
 
   factory WalletBlockchainHistoryModel.fromJson(Map<String, Object?> json) => _$WalletBlockchainHistoryModelFromJson(json);

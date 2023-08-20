@@ -20,7 +20,7 @@ class CountdownButton extends StatefulWidget {
     this.beforeText = "获取验证码",
     this.endText = "重新获取",
     this.runingText,
-    this.duration = 60,
+    this.duration = 30,
     this.disabled = false,
     this.onEnd,
     this.onPressed,

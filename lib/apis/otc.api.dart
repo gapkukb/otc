@@ -39,6 +39,12 @@ class _OTCApi {
   /// 下架广告
   final stopAd = post("/otc/maker/stop");
 
+  /// Maker暂停广告
+  final pauseAd = post("/otc/maker/pause");
+
+  /// Maker暂停广告
+  final restartAd = post("/otc/maker/restart");
+
   /// 确认发放
   final confirm = post("/otc/taker/confirm");
 

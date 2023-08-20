@@ -1,92 +1,127 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:otc/components/currency_selector/currency_selector.dart';
 import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
+import 'package:otc/components/modal/modal.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
 import 'package:otc/constants/currency.dart';
+import 'package:otc/global/global.dart';
+import 'package:otc/router/router.dart';
+import 'package:otc/widgets/ui_button.dart';
 
 class AdOwnFilters extends PreferredSize {
   final Map<String, dynamic> formState;
   final Function() onSearch;
+  final bool running;
 
   AdOwnFilters({
     super.key,
     required this.formState,
     required this.onSearch,
+    required this.running,
   }) : super(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
             clipBehavior: Clip.none,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Wrap(
-                spacing: 16,
-                children: [
-                  SizedBox(
-                    width: 150,
-                    height: 56,
-                    child: CurrencySelector(
-                      name: "currency",
-                      formState: formState,
-                      initialValue: Cryptocurrency.USDT.name,
-                    ),
-                  ),
-                  //交易类型
-                  SizedBox(
-                    width: 150,
-                    height: 56,
-                    child: Dropdown(
-                      labelText: "类型",
-                      name: "sell",
-                      formState: formState,
-                      initialValue: "all",
-                      data: [
-                        DropdownItem(title: "全部", value: "all"),
-                        DropdownItem(title: "购买", value: false),
-                        DropdownItem(title: "出售", value: true),
-                      ],
-                    ),
-                  ),
-                  // 交易方式
-                  SizedBox(
-                    width: 150,
-                    height: 56,
-                    child: Dropdown(
-                        labelText: "状态",
-                        name: "state",
-                        initialValue: "all",
-                        formState: formState,
-                        data: AdOwnState.values
-                            .map(
-                              (e) => DropdownItem(title: e.text, value: e.name),
-                            )
-                            .toList()
-                          ..insert(
-                            0,
+            title: Builder(
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 48, 32, 0),
+                  child: RowGap(
+                    items: [
+                      SizedBox(
+                        width: 150,
+                        child: CurrencySelector(
+                          name: "currency",
+                          formState: formState,
+                          initialValue: Cryptocurrency.USDT.name,
+                        ),
+                      ),
+                      //交易类型
+                      SizedBox(
+                        width: 150,
+                        child: Dropdown(
+                          labelText: "类型",
+                          name: "sell",
+                          formState: formState,
+                          initialValue: "all",
+                          data: [
                             DropdownItem(title: "全部", value: "all"),
-                          )),
-                  ),
-                  DatePicker(
-                    labelText: "开始日期",
-                    formState: formState,
-                    name: "minDate",
-                    maxDate: DateTime.now(),
-                    minDate: DateTime(1970),
-                  ),
-                  DatePicker(
-                    labelText: "结束日期",
-                    formState: formState,
-                    name: "maxDate",
-                    maxDate: DateTime.now(),
-                    minDate: DateTime(1970),
-                  ),
+                            DropdownItem(title: "购买", value: false),
+                            DropdownItem(title: "出售", value: true),
+                          ],
+                        ),
+                      ),
+                      // 交易方式
+                      SizedBox(
+                        width: 150,
+                        child: Dropdown(
+                            labelText: "状态",
+                            name: "state",
+                            initialValue: "all",
+                            formState: formState,
+                            data: AdOwnState.values
+                                .map(
+                                  (e) => DropdownItem(title: e.text, value: e.name),
+                                )
+                                .toList()
+                              ..insert(
+                                0,
+                                DropdownItem(title: "全部", value: "all"),
+                              )),
+                      ),
+                      DatePicker(
+                        labelText: "开始日期",
+                        formState: formState,
+                        name: "minDate",
+                        maxDate: DateTime.now(),
+                        minDate: DateTime(1970),
+                      ),
+                      DatePicker(
+                        labelText: "结束日期",
+                        formState: formState,
+                        name: "maxDate",
+                        maxDate: DateTime.now(),
+                        minDate: DateTime(1970),
+                      ),
 
-                  TextButton.icon(
-                    onPressed: onSearch,
-                    icon: const Text("搜索"),
-                    label: const Icon(Icons.search_outlined),
-                  )
-                ],
-              ),
+                      UiButton.text(
+                        onPressed: onSearch,
+                        label: "搜索",
+                        height: 56,
+                      ),
+                      const Spacer(),
+                      if (running == true)
+                        UiButton(
+                          label: "发布新广告",
+                          height: 48,
+                          color: Theme.of(context).primaryColorLight,
+                          textColor: Theme.of(context).primaryColor,
+                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                          onPressed: () async {
+                            if (global.user.base.maker != true) {
+                              Modal.confirm(
+                                content: "请先认证做市商",
+                                okButtonText: "去认证",
+                                onOk: () {
+                                  GoRouter.of(navigatorKey.currentContext!).go(Routes.merchant);
+                                },
+                              );
+                              return;
+                            }
+                            final result = await GoRouter.of(navigatorKey.currentContext!).pushNamed(
+                              Routes.adPost,
+                            );
+                            if (result != null) {
+                              onSearch();
+                            }
+                          },
+                        ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         );

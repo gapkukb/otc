@@ -28,30 +28,30 @@ class WalletDetail extends ConsumerWidget {
           cancelButtonText: "关闭",
           onCompelete: (context) {},
           children: [
-            _Stepper(),
+            const _Stepper(),
             _Cell(
               titleText: "状态",
               trailingText: "▪已完成",
               trailingTextStyle: Font.miniGrey.copyWith(color: Colors.green),
             ),
-            _Cell(
+            const _Cell(
               titleText: "时间",
               trailingText: "2023-06-09 10:50",
             ),
-            _Cell(
+            const _Cell(
               titleText: "币种",
               trailingText: "USDT",
             ),
-            _Cell(
+            const _Cell(
               titleText: "充值数量",
               trailingText: "323,443.23",
               trailingTextStyle: Font.largeBold,
             ),
-            _Cell(
+            const _Cell(
               titleText: "转账网络",
               trailingText: "ERC20",
             ),
-            _Cell(
+            const _Cell(
               titleText: "地址",
               trailing: UiClipboard(
                 text: "0x34de6aef66432cbdbc1f6d64abbb1bb7eff764cf",
@@ -62,7 +62,7 @@ class WalletDetail extends ConsumerWidget {
                 ),
               ),
             ),
-            _Cell(
+            const _Cell(
               titleText: "地址",
               trailingTextStyle: Font.miniGrey,
               trailing: UiClipboard(
@@ -75,12 +75,12 @@ class WalletDetail extends ConsumerWidget {
                 ),
               ),
             ),
-            _Cell(
+            const _Cell(
               titleText: "充币账户",
               trailingText: "资金钱包",
             ),
-            Gap.small(),
-            Divider(
+            const Gap.small(),
+            const Divider(
               height: 1,
             )
           ],

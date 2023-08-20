@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/amount_input/amount_input.dart';
@@ -12,33 +14,33 @@ import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/wallet_address.input/wallet_address.input.dart';
 import 'package:otc/constants/blockchain.dart';
 import 'package:otc/constants/currency.dart';
-import 'package:otc/global/global.dart';
-import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.book.dart';
 import 'package:otc/pages/wallet/withdrawal/withdrawal.order.dart';
+import 'package:otc/providers/lowest_limit.provider.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/utils/navigator.dart';
-import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
 
-class Withdrawal extends StatefulWidget {
+class Withdrawal extends ConsumerStatefulWidget {
   const Withdrawal({super.key});
 
   @override
-  State<Withdrawal> createState() => _WithdrawalState();
+  ConsumerState<Withdrawal> createState() => _WithdrawalState();
 }
 
-class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateMixin {
+class _WithdrawalState extends ConsumerState<Withdrawal> with SingleTickerProviderStateMixin {
   late final TabController controller;
   String amount = "";
   final Map<String, dynamic> formState = {};
   final formKey = GlobalKey<FormState>();
   Protocal? protocal;
+  final amountController = TextEditingController();
 
-  num fee = 10;
+  num fee = 0;
 
   @override
   void initState() {
@@ -49,11 +51,14 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
   @override
   void dispose() {
     controller.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final lowestLimit = ref.watch(lowestLimitProvider);
+    final balance = ref.watch(balanceProvider);
     return Form(
       key: formKey,
       child: ModalPageTemplate(
@@ -77,7 +82,7 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
                 );
               },
             );
-            if (!next) return;
+            if (next == null) return;
             final data = await openCaptchaWindow(CaptchaWindowOptions(
               legend: "安全验证",
               context: context,
@@ -143,6 +148,11 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
                 BlockchainSelector(
                   name: "blockchain",
                   formState: formState,
+                  onChanged: (selectedItem) {
+                    setState(() {
+                      fee = lowestLimit.gas[selectedItem!.value] ?? 0;
+                    });
+                  },
                   validator: (value) {
                     protocal = value?.extra;
                     return value == null ? "请选择转账网络" : null;
@@ -160,14 +170,26 @@ class _WithdrawalState extends State<Withdrawal> with SingleTickerProviderStateM
             WithdrawalBook(
               formState: formState,
               name: "book",
+              onChange: (address, coin) {
+                setState(() {
+                  fee = lowestLimit.gas[coin] ?? 0;
+                  formState.addAll({
+                    "wallet": address,
+                    "blockchain": coin,
+                  });
+                });
+              },
             ),
           const Gap.medium(),
           AmountInput(
+            controller: amountController,
             coin: Cryptocurrency.USDT,
-            labelText: "提币数量",
-            hintText: "0.00USDT可用",
+            labelText: "提币数量 可用余额:${balance.valid}",
+            // hintText: "${} USDT可用",
             formState: formState,
             name: "amount",
+            maxAmount: min(balance.valid, lowestLimit.maxWithdrawDaily.toDouble()),
+            minAmount: lowestLimit.minWithdraw.toDouble(),
             onChanged: (value) {
               setState(() {
                 amount = value;

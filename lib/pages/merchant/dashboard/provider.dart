@@ -15,6 +15,6 @@ class MerchantDashboardNotifier extends StateNotifier<MerchantDashboradModel> {
   }
 }
 
-final dashboradProvider = StateNotifierProvider<MerchantDashboardNotifier, MerchantDashboradModel>((ref) {
+final dashboradProvider = StateNotifierProvider.autoDispose<MerchantDashboardNotifier, MerchantDashboradModel>((ref) {
   return MerchantDashboardNotifier();
 });

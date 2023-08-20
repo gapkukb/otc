@@ -4,12 +4,14 @@ class AdOwnDetail extends StatefulWidget {
   final List<AdMyTakerModel> detail;
   final List<AdMyChannleModel> channels;
   final Function() onRefresh;
+  final bool running;
 
   const AdOwnDetail({
     super.key,
     required this.detail,
     required this.onRefresh,
     required this.channels,
+    required this.running,
   });
 
   @override
@@ -39,11 +41,11 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
               DataCell(Text(row.coinAmount.toString())),
               DataCell(Text(row.moneyAmount.toString())),
               DataCell(Text(row.rate.toString())),
-              DataCell(Text(PaymentMethods.getByValue(row.paymentMethod).text)),
+              DataCell(PaymentMethods.getByValue(row.paymentMethod).icon()),
               DataCell(Text(row.takerAccountName.toString())),
               DataCell(AdOwnState.getWidgetByValue(row.state)),
               DataCell(Text(row.createdTime)),
-              DataCell(stateButton(context, row, index)),
+              if (widget.running) DataCell(stateButton(context, row, index)),
             ]);
             rows.add(rowWidget);
           }
@@ -52,17 +54,17 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
             height: constraints.maxHeight * 0.8,
             child: DataTable2(
               headingTextStyle: Font.miniGrey,
-              columns: const [
-                DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 200),
-                DataColumn2(label: Text("类型")),
-                DataColumn2(label: Text("已成交数量")),
-                DataColumn2(label: Text("已成交价格")),
-                DataColumn2(label: Text("汇率")),
-                DataColumn2(label: Text("支付方式")),
-                DataColumn2(label: Text("买方姓名")),
-                DataColumn2(label: Text("状态")),
-                DataColumn2(label: Text("创建时间"), fixedWidth: 180),
-                DataColumn2(label: Text("操作"), fixedWidth: 150),
+              columns: [
+                const DataColumn2(label: Text("广告编号\n币种/法币"), fixedWidth: 200),
+                const DataColumn2(label: Text("类型")),
+                const DataColumn2(label: Text("已成交数量")),
+                const DataColumn2(label: Text("已成交价格")),
+                const DataColumn2(label: Text("汇率")),
+                const DataColumn2(label: Text("支付方式")),
+                const DataColumn2(label: Text("买方姓名")),
+                const DataColumn2(label: Text("状态")),
+                const DataColumn2(label: Text("创建时间"), fixedWidth: 180),
+                if (widget.running) const DataColumn2(label: Text("操作"), fixedWidth: 150),
               ],
               columnSpacing: 4,
               dataRowHeight: 60,
@@ -78,9 +80,9 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
   stateButton(BuildContext context, AdMyTakerModel row, int index) {
     if (row.state == AdOwnState.NOTIFIED.name) {
       return CountdownTimer(
-        endTime: dateFormatter.parse(row.overTime).millisecondsSinceEpoch,
+        endTime: DateTime.now().millisecondsSinceEpoch + row.overTimeSeconds * 1000,
         widgetBuilder: (context, time) {
-          final timeText = time == null ? "" : "\n${addZero(time.hours)}:${addZero(time.min)}:${addZero(time.sec)}";
+          final timeText = time == null ? "" : "\n${addZero(time.min)}:${addZero(time.sec)}";
           final channel = widget.channels.firstWhere((element) => element.reference == row.makerChannelReference);
           return Wrap(
             spacing: 4,
@@ -91,7 +93,6 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
                   await showDialog(
                     context: context,
                     builder: (context) {
-                      final text = time == null ? "00:00" : "${addZero(time.min)}:${addZero(time.sec)}";
                       return ModalPageTemplate(
                         title: "确认收款",
                         onCompelete: (context) async {
@@ -100,7 +101,26 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
                         },
                         children: [
                           _Cell(titleText: "广告编号", trailingText: row.reference),
-                          _Cell(titleText: "倒计时", trailingText: text),
+                          Cell(
+                            titleText: "倒计时",
+                            height: 28,
+                            trailing: Builder(
+                              builder: (context) {
+                                if (time == null) {
+                                  return const Text("00:00", style: Font.miniGrey);
+                                }
+                                return CountdownTimer(
+                                  endTime: DateTime.now().millisecondsSinceEpoch + (time.min ?? 0) * 60 * 1000 + time.sec! * 60,
+                                  widgetBuilder: (context, time) {
+                                    return Text(
+                                      "\n${addZero(time!.min)}:${addZero(time.sec)}",
+                                      style: Font.miniGrey,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
                           _Cell(titleText: "汇率", trailingText: row.rate.toString()),
                           _Cell(titleText: "成交数量", trailingText: row.coinAmount.toString()),
                           _Cell(titleText: "成交价格", trailingText: "￥${row.moneyAmount}"),
@@ -119,7 +139,7 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
               UiButton(
                 size: UiButtonSize.mini,
                 color: Colors.red,
-                disabled: time != null,
+                disabled: (time?.min ?? 0) > 4,
                 onPressed: () {
                   Modal.confirm(
                     title: "确认未收款",
@@ -146,12 +166,12 @@ class _AdOwnDetailState extends State<AdOwnDetail> {
       "receipted": receipted,
     });
 
-    data['overTime'] = 0;
-
     setState(() {
       rowsData.replaceRange(index, index + 1, [AdMyTakerModel.fromJson(data)]);
       widget.onRefresh();
     });
+
+    Modal.showText(text: receipted ? "交易完成" : "交易取消");
   }
 
   String addZero(num? n) {
@@ -197,7 +217,7 @@ class PaymentCard extends StatelessWidget {
                     width: 60,
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: payment.icon,
+                      child: payment.icon(60),
                     ),
                   ),
                   const SizedBox(width: 16),

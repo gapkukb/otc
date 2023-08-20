@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/components/payment_channel/payment_channel.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class MerchantIncomeFilters extends PreferredSize {
@@ -17,15 +19,19 @@ class MerchantIncomeFilters extends PreferredSize {
           child: AppBar(
             clipBehavior: Clip.none,
             title: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Wrap(
-                spacing: 16,
-                children: [
+              padding: const EdgeInsets.fromLTRB(16, 56, 32, 0),
+              child: RowGap(
+                items: [
                   SizedBox(
                     width: 150,
-                    height: 56,
                     child: UiTextFormField(
-                      labelText: "广告编号",
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      hintText: "订单编号",
                       name: "reference",
                       formState: formState,
                     ),
@@ -33,30 +39,33 @@ class MerchantIncomeFilters extends PreferredSize {
                   //交易类型
                   SizedBox(
                     width: 150,
-                    height: 56,
+                    height: 48,
                     child: Dropdown(
                       labelText: "类型",
                       name: "in",
                       formState: formState,
-                      initialValue: false,
+                      initialValue: "",
                       data: [
-                        DropdownItem(title: "全部", value: false),
-                        DropdownItem(title: "购买", value: true),
-                        DropdownItem(title: "出售", value: false),
+                        DropdownItem(title: "全部", value: ""),
+                        DropdownItem(title: "购买", value: false),
+                        DropdownItem(title: "出售", value: true),
                       ],
                     ),
                   ),
                   // 交易方式
                   SizedBox(
                     width: 150,
-                    height: 56,
+                    height: 48,
                     child: Dropdown(
                       labelText: "支付方式",
                       name: "method",
                       formState: formState,
                       data: PaymentMethods.values
                           .map(
-                            (e) => DropdownItem(title: e.text, value: e.value),
+                            (e) => DropdownItem(
+                              title: e.text,
+                              value: e.value,
+                            ),
                           )
                           .toList(),
                     ),
@@ -76,10 +85,10 @@ class MerchantIncomeFilters extends PreferredSize {
                     minDate: DateTime(1970),
                   ),
 
-                  TextButton.icon(
+                  UiButton.text(
                     onPressed: onSearch,
-                    icon: const Text("搜索"),
-                    label: const Icon(Icons.search_outlined),
+                    label: "搜索",
+                    height: 48,
                   ),
                 ],
               ),

@@ -47,6 +47,10 @@ final List<RouteBase> routes = [
             path: Routes.rebate,
             page: const UserRebate(),
           ),
+          AuthRoute(
+            path: Routes.userInvitation,
+            page: const UserInvitation(),
+          ),
         ],
       ),
       ShellRoute(
@@ -157,6 +161,10 @@ final List<RouteBase> routes = [
             path: Routes.adHistory,
             page: const AdHistory(),
           ),
+          AuthRoute(
+            path: Routes.course,
+            page: const Course(),
+          ),
         ],
       ),
     ],
@@ -254,7 +262,7 @@ final List<RouteBase> routes = [
   ),
   ModalRoute(
     path: Routes.adPost,
-    statePage: (context, state) => AdPost(type: state.extra as AdPostType),
+    page: const AdPost(),
   ),
   ModalRoute(
     path: Routes.transfer,

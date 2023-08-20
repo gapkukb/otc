@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:otc/components/mix_text/mix_text.dart';
 import 'package:otc/utils/responsive.dart';
@@ -108,6 +109,7 @@ class _FeeState extends State<Fee> {
                     text: data['label'],
                     style: const TextStyle(
                       fontSize: 10,
+                      letterSpacing: kIsWeb ? 2 : 0,
                     ),
                   ),
                 ],

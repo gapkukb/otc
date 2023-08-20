@@ -5,6 +5,7 @@ import 'package:otc/apis/apis.dart';
 import 'package:otc/asstes/assets.gen.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/panel/panel.dart';
+import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/providers/wallet.provider.dart';
@@ -66,118 +67,140 @@ class Merchant extends ConsumerWidget {
         child: Text("已认证"),
       );
     }
+    if (user.makerState == Audit.REJECT) {
+      return applyButton(
+        context,
+        ref,
+        "认证失败，重新申请",
+        Colors.orange,
+      );
+    }
 
-    return applyButton(context, ref, user.makerState == null ? "立即申请" : "重新申请");
+    return applyButton(
+      context,
+      ref,
+      "立即申请",
+    );
   }
 
   @override
   Widget build(BuildContext context, ref) {
     final user = ref.watch(userBaseProvider);
-    return Material(
-      color: Colors.grey.shade50,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 56),
-            const Text(
-              "认证商户申请",
-              textAlign: TextAlign.center,
-              style: Font.x4largeBold,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              child: Column(
+                children: [
+                  const SizedBox(height: 56),
+                  const Text(
+                    "认证商户申请",
+                    textAlign: TextAlign.center,
+                    style: Font.x4largeBold,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    "成为Maoerduo认证商户，获得广告发布权限，享受更多交易特权",
+                    textAlign: TextAlign.center,
+                    style: Font.largeGrey,
+                  ),
+                  const SizedBox(height: 32),
+                  stateButton(context, ref),
+                  const SizedBox(height: 48),
+                ],
+              ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              "成为Maoerduo认证商户，获得广告发布权限，享受更多交易特权",
-              textAlign: TextAlign.center,
-              style: Font.largeGrey,
+          ),
+          if (user.makerState == Audit.PASS)
+            const Panel(
+              title: "欢迎加入Maoerduo商户联盟",
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 24,
+                ),
+                child: Text("您可以享受到以下服务。"),
+              ),
             ),
-            const SizedBox(height: 32),
-            stateButton(context, ref),
-            const SizedBox(height: 48),
-            if (user.makerState == Audit.PASS)
-              const Panel(
-                title: "欢迎加入Maoerduo商户联盟",
-                child: Padding(
-                  padding: Pads.md,
-                  child: Text("您可以享受到以下服务。"),
+          if (user.makerState == Audit.PENDING)
+            const Panel(
+              title: "信息上传成功",
+              child: Padding(
+                padding: Pads.md,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("平台会在48小时内审核完毕"),
+                    Text("审核通过后，您将获得以下权益！"),
+                  ],
                 ),
               ),
-            if (user.makerState == Audit.PENDING)
-              const Panel(
-                title: "信息上传成功",
+            ),
+          if (user.makerState == null || user.makerState == Audit.REJECT)
+            Panel(
+              title: "申请条件",
+              child: Padding(
+                padding: Pads.md,
+                child: Wrap(
+                  children: items
+                      .map(
+                        (e) => FractionallySizedBox(
+                          widthFactor: context.responsive(1, md: 0.5),
+                          child: Padding(
+                            padding: Pads.xs,
+                            child: Text(
+                              e,
+                              style: Font.mediumBold,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
+          UiFlex(
+            children: features.map((item) {
+              return Card(
                 child: Padding(
-                  padding: Pads.md,
+                  padding: Pads.lg,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("平台会在48小时内审核完毕"),
-                      Text("审核通过后，您将获得以下权益！"),
+                      item.image,
+                      Text(
+                        item.title,
+                        style: Font.x2largeBold,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        item.description,
+                        style: Font.miniGrey,
+                      ),
                     ],
                   ),
                 ),
-              ),
-            if (user.makerState == null || user.makerState == Audit.REJECT)
-              Panel(
-                title: "申请条件",
-                child: Padding(
-                  padding: Pads.md,
-                  child: Wrap(
-                    children: items
-                        .map(
-                          (e) => FractionallySizedBox(
-                            widthFactor: context.responsive(1, md: 0.5),
-                            child: Padding(
-                              padding: Pads.xs,
-                              child: Text(
-                                e,
-                                style: Font.mediumBold,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ),
-            UiFlex(
-              children: features.map((item) {
-                return Card(
-                  child: Padding(
-                    padding: Pads.lg,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        item.image,
-                        Text(
-                          item.title,
-                          style: Font.x2largeBold,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          item.description,
-                          style: Font.miniGrey,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
 
-  Widget applyButton(BuildContext context, WidgetRef ref, String? text) {
+  Widget applyButton(BuildContext context, WidgetRef ref, String? text, [Color? color]) {
     return UiButton(
       label: text,
       size: UiButtonSize.medium,
+      color: color,
       onPressed: () async {
         final kyc = ref.read(kycProvider);
         final balance = ref.read(balanceProvider);
-        if (kyc?.lv1Status == null) {
+        if (kyc?.lv1Status == null || kyc?.lv1Status == KycStatus.pending) {
           Modal.confirm(
             title: "商户申请",
             content: "您需要先完成初级或以上身份认证，请先认证",
@@ -192,7 +215,7 @@ class Merchant extends ConsumerWidget {
             content: "您的账户余额不足500 USDT，请先充值。",
             okButtonText: "充币",
             onOk: () {
-              context.go(Routes.recharge);
+              context.push(Routes.recharge);
             },
           );
         } else if ((await apis.wallet.getAllBankCards()).isEmpty) {

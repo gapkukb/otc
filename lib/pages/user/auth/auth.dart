@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +5,7 @@ import 'package:otc/components/avatar/avatar.dart';
 import 'package:otc/components/cell/cell.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user_base/user_base.model.dart';
-import 'package:otc/pages/user/auth/auth.provider.dart';
+import 'package:otc/providers/kyc_configuration.provider.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
@@ -77,11 +76,13 @@ class UserAuth extends ConsumerWidget {
       kyc?.lv1Status == KycStatus.pass,
       kyc?.lv2Status == KycStatus.pass,
       kyc?.lv3Status == KycStatus.pass,
-    ].indexWhere((element) => element == true);
+    ].lastIndexWhere((element) => element == true);
+
     final level = items[index + 1];
-    inspect(level);
-    return Material(
+
+    return Card(
       color: Colors.grey.shade50,
+      shape: LinearBorder.none,
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

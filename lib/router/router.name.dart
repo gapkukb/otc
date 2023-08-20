@@ -16,7 +16,8 @@ class Routes {
   static const updateAvatar = "/update_avatar";
   static const terms = "/terms";
   static const notice = "/notice";
-  static const webview = "/webview";
+  static const privatePolice = "/private_police";
+  static const userInvitation = "/rebate/user_invitation";
   // 钱包
   static const wallet = "/wallet";
   static const walletMethodBanks = "/wallet_method_banks";
@@ -63,6 +64,7 @@ class Routes {
   static const adPost = "/ad_post";
   static const adPostPayment = "/ad_payment";
   static const adHistory = "/ad_history";
+  static const course = "/course";
 
   //kyc
   static const authPrimary = "/auth_primary";

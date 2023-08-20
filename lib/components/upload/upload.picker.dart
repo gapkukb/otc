@@ -239,12 +239,10 @@ class _UploadPickerState extends State<UploadPicker> {
     );
 
     if (result != null) {
-      result.readAsBytes();
-      final newFile = File(result.path);
       if (isImage) {
         _onChange(result);
       } else {
-        _controller = VideoPlayerController.file(newFile)
+        _controller = VideoPlayerController.network(result.path)
           ..initialize().then(
             (_) {
               _onChange(result);

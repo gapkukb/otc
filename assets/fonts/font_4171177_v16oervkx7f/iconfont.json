@@ -1,0 +1,65 @@
+{
+  "id": "4171177",
+  "name": "otc",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "734312",
+      "name": "银联",
+      "font_class": "yinlian",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "1010232",
+      "name": "alipay",
+      "font_class": "alipay_company",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "4936955",
+      "name": "alipay",
+      "font_class": "alipay1",
+      "unicode": "e87c",
+      "unicode_decimal": 59516
+    },
+    {
+      "icon_id": "4936991",
+      "name": "wechat-fill",
+      "font_class": "wechat",
+      "unicode": "e883",
+      "unicode_decimal": 59523
+    },
+    {
+      "icon_id": "5466008",
+      "name": "alipay",
+      "font_class": "alipay_sqaure",
+      "unicode": "e70a",
+      "unicode_decimal": 59146
+    },
+    {
+      "icon_id": "9096739",
+      "name": "alipay",
+      "font_class": "alipay_rounded",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "10928221",
+      "name": "wechatpayment",
+      "font_class": "wechat_payment",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "18986850",
+      "name": "WeChat",
+      "font_class": "WeChat_rounded",
+      "unicode": "e8db",
+      "unicode_decimal": 59611
+    }
+  ]
+}

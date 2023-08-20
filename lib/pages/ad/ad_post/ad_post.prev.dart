@@ -2,13 +2,11 @@ part of ad_post;
 
 class AdPostPrev extends ConsumerStatefulWidget {
   final Map<String, dynamic> formState;
-  final AdPostType type;
   final Function(bool isBuying) onCompelete;
 
   const AdPostPrev({
     super.key,
     required this.formState,
-    required this.type,
     required this.onCompelete,
   });
 
@@ -18,13 +16,15 @@ class AdPostPrev extends ConsumerStatefulWidget {
 
 class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProviderStateMixin {
   late final TabController controller;
+  final amountController = TextEditingController();
+  int signal = 0;
   @override
   void initState() {
     controller = TabController(
       length: 2,
       vsync: this,
-      initialIndex: widget.type == AdPostType.selling ? 0 : 1,
     );
+    signal = controller.index;
     apis.otc
         .rate(
             null,
@@ -43,17 +43,21 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
   @override
   void dispose() {
     controller.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final rate = ref.watch(rateProvider);
+    final otc = ref.watch(otcProvider);
+    final balance = ref.watch(balanceProvider);
+    final isSelling = signal == 0;
     final double max = rate + 0.1;
     final double min = rate - 0.1;
 
     return ModalPageTemplate(
-      legend: "发布新广告",
+      title: "发布新广告",
       iconData: Icons.ads_click_outlined,
       okButtonText: "下一步",
       onCompelete: (context) {
@@ -73,6 +77,11 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
             indicatorSize: TabBarIndicatorSize.tab,
             isScrollable: true,
             dividerColor: Colors.transparent,
+            onTap: (value) {
+              setState(() {
+                signal = value;
+              });
+            },
             tabs: const [
               Tab(text: "出售"),
               Tab(text: "购买"),
@@ -85,7 +94,7 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
           child: Padding(
             padding: Pads.sm,
             child: SizedBox(
-              height: 46,
+              height: 48,
               child: Row(
                 children: [
                   const Expanded(
@@ -136,20 +145,31 @@ class _AdPostPrevState extends ConsumerState<AdPostPrev> with SingleTickerProvid
         const Gap.medium(),
         const Text("价格类型", style: Font.smallGrey),
         AdPostRange(
+          key: ValueKey(rate),
           rate: rate,
           name: "floatOffset",
           formState: widget.formState,
         ),
         const Gap.mini(),
         Text("可设定的价格区间是${min.toStringAsFixed(2)}~${max.toStringAsFixed(2)}", style: Font.smallGrey),
-        UiTextFormField(
-          labelText: "请输入${widget.type == AdPostType.selling ? "出售" : "购买"}数量",
-          name: "amount",
-          formState: widget.formState,
-          validator: (value) {
-            return value?.isEmpty == true ? "请输入数量" : null;
-          },
-        ),
+        const Gap.small(),
+        isSelling
+            ? AmountInput(
+                amountInputType: AmountInputType.ad,
+                controller: amountController,
+                labelText: "请输入出售数量",
+                coin: Cryptocurrency.USDT,
+                name: "amount",
+                formState: widget.formState,
+                maxAmount: math.min(otc.makerMax.toDouble(), balance.valid),
+                minAmount: otc.makerMin.toDouble(),
+              )
+            : UiTextFormField(
+                keyboardType: TextInputType.number,
+                labelText: "请输入购买数量",
+                name: "amount",
+                formState: widget.formState,
+              ),
       ],
     );
   }

@@ -69,7 +69,6 @@ class _F2AState extends State<F2A> {
         _buildTitle("Step3: 输入谷歌验证器中6位数验证码"),
         const SizedBox(height: 8),
         UiTextFormField(
-          autofocus: true,
           controller: _controller,
           maxLength: _length,
           keyboardType: const TextInputType.numberWithOptions(decimal: false),

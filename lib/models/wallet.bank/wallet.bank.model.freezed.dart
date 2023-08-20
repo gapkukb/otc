@@ -34,6 +34,7 @@ mixin _$WalletBankModel {
 
   /// 	银行,可用值:CMB,ICBC,BOCOM,CCB,ABC,CEB,CMBC,PAB,SPDB,CIB,BOCSH,CITIC,BOB,NJCB,GDB,HXBC,PSBC,SDB,BEA,BOS,HSB,ZSB,BJAB,HZBC,NBBC,HBNNX,HKBC,NEBC,GDNX,GXNX,GZNX,HANNX,HENNX,HLJNX,EBCL,HBNX,HNNX,ZJNX,CQSB,QLSB,QHNX,SDNX,YKSB,YNNX,CSBC,SXNX,SHXNX,SRCB,JSBC,JXNX,JJBC,NYSBC,NMNX,LNNX,SCNX,BRCB,FJNX,GSNX,BSBC
   String get bank => throw _privateConstructorUsedError;
+  String get bankCnName => throw _privateConstructorUsedError;
 
   /// 	支行地址
   String get bankBranch => throw _privateConstructorUsedError;
@@ -64,6 +65,7 @@ abstract class $WalletBankModelCopyWith<$Res> {
       String cardNumber,
       String account,
       String bank,
+      String bankCnName,
       String bankBranch,
       bool defaultUsed,
       String name,
@@ -89,6 +91,7 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
     Object? cardNumber = null,
     Object? account = null,
     Object? bank = null,
+    Object? bankCnName = null,
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
@@ -115,6 +118,10 @@ class _$WalletBankModelCopyWithImpl<$Res, $Val extends WalletBankModel>
       bank: null == bank
           ? _value.bank
           : bank // ignore: cast_nullable_to_non_nullable
+              as String,
+      bankCnName: null == bankCnName
+          ? _value.bankCnName
+          : bankCnName // ignore: cast_nullable_to_non_nullable
               as String,
       bankBranch: null == bankBranch
           ? _value.bankBranch
@@ -154,6 +161,7 @@ abstract class _$$_WalletBankModelCopyWith<$Res>
       String cardNumber,
       String account,
       String bank,
+      String bankCnName,
       String bankBranch,
       bool defaultUsed,
       String name,
@@ -177,6 +185,7 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
     Object? cardNumber = null,
     Object? account = null,
     Object? bank = null,
+    Object? bankCnName = null,
     Object? bankBranch = null,
     Object? defaultUsed = null,
     Object? name = null,
@@ -203,6 +212,10 @@ class __$$_WalletBankModelCopyWithImpl<$Res>
       bank: null == bank
           ? _value.bank
           : bank // ignore: cast_nullable_to_non_nullable
+              as String,
+      bankCnName: null == bankCnName
+          ? _value.bankCnName
+          : bankCnName // ignore: cast_nullable_to_non_nullable
               as String,
       bankBranch: null == bankBranch
           ? _value.bankBranch
@@ -237,6 +250,7 @@ class _$_WalletBankModel implements _WalletBankModel {
       required this.cardNumber,
       required this.account,
       required this.bank,
+      required this.bankCnName,
       required this.bankBranch,
       required this.defaultUsed,
       required this.name,
@@ -265,6 +279,8 @@ class _$_WalletBankModel implements _WalletBankModel {
   /// 	银行,可用值:CMB,ICBC,BOCOM,CCB,ABC,CEB,CMBC,PAB,SPDB,CIB,BOCSH,CITIC,BOB,NJCB,GDB,HXBC,PSBC,SDB,BEA,BOS,HSB,ZSB,BJAB,HZBC,NBBC,HBNNX,HKBC,NEBC,GDNX,GXNX,GZNX,HANNX,HENNX,HLJNX,EBCL,HBNX,HNNX,ZJNX,CQSB,QLSB,QHNX,SDNX,YKSB,YNNX,CSBC,SXNX,SHXNX,SRCB,JSBC,JXNX,JJBC,NYSBC,NMNX,LNNX,SCNX,BRCB,FJNX,GSNX,BSBC
   @override
   final String bank;
+  @override
+  final String bankCnName;
 
   /// 	支行地址
   @override
@@ -284,7 +300,7 @@ class _$_WalletBankModel implements _WalletBankModel {
 
   @override
   String toString() {
-    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name, disabled: $disabled, used: $used)';
+    return 'WalletBankModel(reference: $reference, title: $title, cardNumber: $cardNumber, account: $account, bank: $bank, bankCnName: $bankCnName, bankBranch: $bankBranch, defaultUsed: $defaultUsed, name: $name, disabled: $disabled, used: $used)';
   }
 
   @override
@@ -299,6 +315,8 @@ class _$_WalletBankModel implements _WalletBankModel {
                 other.cardNumber == cardNumber) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.bank, bank) || other.bank == bank) &&
+            (identical(other.bankCnName, bankCnName) ||
+                other.bankCnName == bankCnName) &&
             (identical(other.bankBranch, bankBranch) ||
                 other.bankBranch == bankBranch) &&
             (identical(other.defaultUsed, defaultUsed) ||
@@ -312,7 +330,7 @@ class _$_WalletBankModel implements _WalletBankModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, reference, title, cardNumber,
-      account, bank, bankBranch, defaultUsed, name, disabled, used);
+      account, bank, bankCnName, bankBranch, defaultUsed, name, disabled, used);
 
   @JsonKey(ignore: true)
   @override
@@ -335,6 +353,7 @@ abstract class _WalletBankModel implements WalletBankModel {
       required final String cardNumber,
       required final String account,
       required final String bank,
+      required final String bankCnName,
       required final String bankBranch,
       required final bool defaultUsed,
       required final String name,
@@ -364,6 +383,8 @@ abstract class _WalletBankModel implements WalletBankModel {
 
   /// 	银行,可用值:CMB,ICBC,BOCOM,CCB,ABC,CEB,CMBC,PAB,SPDB,CIB,BOCSH,CITIC,BOB,NJCB,GDB,HXBC,PSBC,SDB,BEA,BOS,HSB,ZSB,BJAB,HZBC,NBBC,HBNNX,HKBC,NEBC,GDNX,GXNX,GZNX,HANNX,HENNX,HLJNX,EBCL,HBNX,HNNX,ZJNX,CQSB,QLSB,QHNX,SDNX,YKSB,YNNX,CSBC,SXNX,SHXNX,SRCB,JSBC,JXNX,JJBC,NYSBC,NMNX,LNNX,SCNX,BRCB,FJNX,GSNX,BSBC
   String get bank;
+  @override
+  String get bankCnName;
   @override
 
   /// 	支行地址

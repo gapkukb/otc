@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:otc/components/date_picker/date_picker.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
-import 'package:otc/components/payment_channel/payment_channel.dart';
+import 'package:otc/components/row_gap/row_gap.dart';
+import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
 class MerchantInvitationFilters extends PreferredSize {
@@ -17,14 +17,18 @@ class MerchantInvitationFilters extends PreferredSize {
           child: AppBar(
             clipBehavior: Clip.none,
             title: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Wrap(
-                spacing: 16,
-                children: [
+              padding: const EdgeInsets.fromLTRB(16, 56, 32, 0),
+              child: RowGap(
+                items: [
                   SizedBox(
                     width: 150,
-                    height: 56,
                     child: UiTextFormField(
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
                       labelText: "邀请码",
                       name: "code",
                       formState: formState,
@@ -33,18 +37,23 @@ class MerchantInvitationFilters extends PreferredSize {
                   //交易类型
                   SizedBox(
                     width: 150,
-                    height: 56,
                     child: Dropdown(
                       labelText: "类型",
                       name: "used",
                       formState: formState,
-                      initialValue: null,
+                      initialValue: "",
                       data: [
-                        DropdownItem(title: "全部", value: null),
+                        DropdownItem(title: "全部", value: ""),
                         DropdownItem(title: "已使用", value: true),
                         DropdownItem(title: "未使用", value: false),
                       ],
                     ),
+                  ),
+
+                  UiButton.text(
+                    onPressed: onSearch,
+                    label: "搜索",
+                    height: 48,
                   ),
                 ],
               ),

@@ -99,38 +99,41 @@ class _DropdownState extends State<Dropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearch<DropdownItem>(
-      items: widget.data,
-      selectedItem: selectedItem,
-      autoValidateMode: AutovalidateMode.onUserInteraction,
-      onSaved: (now) {
-        if (selectedItem == null) return;
+    return SelectionContainer.disabled(
+      child: DropdownSearch<DropdownItem>(
+        items: widget.data,
+        selectedItem: selectedItem,
+        autoValidateMode: AutovalidateMode.onUserInteraction,
+        onSaved: (now) {
+          if (selectedItem == null) return;
 
-        final $value = selectedItem?.value ?? selectedItem?.title;
-        widget.formState?.update(widget.name, (_) => $value, ifAbsent: () => $value);
-      },
-      asyncItems: widget.asyncItems,
-      dropdownBuilder: widget.dropdownBuilder,
-      validator: widget.validator,
-      onChanged: (now) {
-        selectedItem = now;
-        widget.onChanged?.call(now);
-      },
-      popupProps: props,
-      itemAsString: (item) {
-        return item.title;
-      },
-      dropdownButtonProps: const DropdownButtonProps(
-        icon: Icon(Icons.keyboard_arrow_down_outlined),
-      ),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: widget.inputDecoration.copyWith(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          border: const OutlineInputBorder(),
-          labelText: widget.labelText,
-          prefixIcon: widget.prefixIcon,
+          final $value = selectedItem?.value ?? selectedItem?.title;
+          widget.formState?.update(widget.name, (_) => $value, ifAbsent: () => $value);
+        },
+        asyncItems: widget.asyncItems,
+        dropdownBuilder: widget.dropdownBuilder,
+        validator: widget.validator,
+        onChanged: (now) {
+          selectedItem = now;
+          widget.onChanged?.call(now);
+        },
+        popupProps: props,
+        itemAsString: (item) {
+          return item.title;
+        },
+        dropdownButtonProps: const DropdownButtonProps(
+          icon: Icon(Icons.keyboard_arrow_down_outlined),
+          mouseCursor: SystemMouseCursors.click,
         ),
-        baseStyle: Font.medium,
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownSearchDecoration: widget.inputDecoration.copyWith(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            border: const OutlineInputBorder(),
+            hintText: widget.labelText,
+            prefixIcon: widget.prefixIcon,
+          ),
+          baseStyle: Font.medium,
+        ),
       ),
     );
   }

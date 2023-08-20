@@ -41,6 +41,8 @@ class OtcNotifier extends StateNotifier<OtcModel> {
         wechatPayoutDaily: 0,
         aliPayoutDaily: 0,
         lowestCommission: 0,
+        makerMax: 0,
+        makerMin: 0,
       );
     }
   }

@@ -38,7 +38,7 @@ final adPostPaymentProvider = FutureProvider<List<PaymentItem>>((ref) async {
           .where((element) => !element.used!)
           .map(
             (item) => PaymentItem(
-              outMin: otc.bankcardPayoutMax.toDouble(),
+              outMin: otc.bankcardPayoutMin.toDouble(),
               outMax: otc.bankcardPayoutMax.toDouble(),
               inMin: otc.bankcardReceiptMin.toDouble(),
               inMax: otc.bankcardReceiptMax.toDouble(),

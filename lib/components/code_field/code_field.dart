@@ -4,6 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:otc/components/countdown_button/countdown_button.dart';
+import 'package:otc/theme/padding.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 
@@ -33,7 +34,7 @@ class CodeField extends StatefulWidget {
     this.target = "",
     this.labelText,
     this.onlyNumber = true,
-    this.autofocus = true,
+    this.autofocus = false,
     this.disabled = true,
     this.formState,
     this.name,
@@ -78,10 +79,13 @@ class _CodeFieldState extends State<CodeField> {
       decoration: InputDecoration(
         label: Text(widget.labelText ?? "请输入${widget.maxLength.toString()}位数验证码"),
         border: const OutlineInputBorder(),
-        suffixIcon: CountdownButton(
-          disabled: widget.disabled,
-          controller: widget.controller,
-          onPressed: widget.onPressed,
+        suffixIcon: Padding(
+          padding: Pads.rightMini,
+          child: CountdownButton(
+            disabled: widget.disabled,
+            controller: widget.controller,
+            onPressed: widget.onPressed,
+          ),
         ),
       ),
     );

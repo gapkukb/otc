@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
@@ -8,6 +10,7 @@ import 'package:otc/components/gridview/sliver_grid_delegate_with_fixed_cross_ax
 import 'package:otc/constants/blockchain.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/pages/wallet/recharge/recharge.stepper.dart';
+import 'package:otc/providers/lowest_limit.provider.dart';
 import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
@@ -27,13 +30,6 @@ class _RechargeState extends ConsumerState<Recharge> {
   String? coinName;
   String? address;
 
-  List<Map<String, dynamic>> items = [
-    {"name": "最小充币数量", "value": "0.00000001 USDT"},
-    {"name": "平均到达时间", "value": "≈ 5 分钟"},
-    {"name": "预计到账", "value": "6次网络确认"},
-    {"name": "预计解锁", "value": "6次网络确认"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -49,7 +45,7 @@ class _RechargeState extends ConsumerState<Recharge> {
         maxWidth: 600,
         iconData: Icons.wallet,
         filledButton: true,
-        okButtonText: "充值",
+        showOkButton: false,
         children: [
           Container(
             color: Colors.grey.shade100,
@@ -99,99 +95,125 @@ class _RechargeState extends ConsumerState<Recharge> {
           Consumer(
             builder: (context, ref, child) {
               final resp = ref.watch(rechageProvider);
+              final limit = ref.watch(lowestLimitProvider);
               return resp.when(
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
                 ),
-                error: (_, __) => const SizedBox.shrink(),
+                error: (err, trace) => Text(err.toString() + trace.toString()),
                 data: (data) {
+                  if (data == null) {
+                    return const SizedBox.shrink();
+                  }
                   address = data;
-                  if (data == null) return const SizedBox.shrink();
-                  return ListTile(
-                    tileColor: Colors.grey.shade100,
-                    title: const Text(
-                      "地址：",
-                      style: Font.mediumBold,
-                    ),
-                    subtitle: UiClipboard(
-                      text: data,
-                      iconSize: 18,
-                      child: Text(data),
-                    ),
-                    trailing: CompositedTransformTarget(
-                      link: _linker,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          createOverlay();
-                        },
-                        child: QrImageView(
-                          data: "data",
+                  if (address == "") return const SizedBox.shrink();
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        tileColor: Colors.grey.shade100,
+                        title: const Text(
+                          "地址：",
+                          style: Font.mediumBold,
+                        ),
+                        subtitle: UiClipboard(
+                          text: address,
+                          iconSize: 18,
+                          child: Text(address!),
+                        ),
+                        trailing: CompositedTransformTarget(
+                          link: _linker,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              createOverlay();
+                            },
+                            child: QrImageView(
+                              data: "data",
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 24),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final resp = ref.watch(rechageProvider);
+
+                          List<Map<String, dynamic>> items = [];
+                          resp.whenData(
+                            (value) {
+                              items = [
+                                {"name": "最小充币数量", "value": "${limit.minDeposit} USDT"},
+                                {"name": "平均到达时间", "value": "≈ 5 分钟"},
+                                {"name": "预计到账", "value": "6次网络确认"},
+                                {"name": "预计解锁", "value": "6次网络确认"},
+                              ];
+                            },
+                          );
+
+                          return Padding(
+                            padding: Pads.sm,
+                            child: DefaultTextStyle(
+                              style: Font.smallGrey,
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: items.length,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 16,
+                                  height: 48,
+                                ),
+                                itemBuilder: (context, index) {
+                                  final item = items[index];
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(item['name']),
+                                      const Gap.micro(),
+                                      Text(
+                                        item['value'],
+                                        style: Font.mini,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      Text.rich(
+                        TextSpan(
+                          text: "▪此地址只可接收 ",
+                          children: [
+                            TextSpan(
+                              text: coinName,
+                              style: const TextStyle(color: Colors.red),
+                            )
+                          ],
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          text: "▪请再次确认您选择的主网络是 ",
+                          children: [
+                            TextSpan(
+                              text: blockChainName,
+                              style: const TextStyle(color: Colors.red),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   );
                 },
               );
             },
           ),
-          const SizedBox(height: 24),
-          Padding(
-            padding: Pads.sm,
-            child: DefaultTextStyle(
-              style: Font.smallGrey,
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: items.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  height: 48,
-                ),
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(item['name']),
-                      const Gap.micro(),
-                      Text(
-                        item['value'],
-                        style: Font.mini,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          if (coinName != null)
-            Text.rich(
-              TextSpan(
-                text: "▪此地址只可接收 ",
-                children: [
-                  TextSpan(
-                    text: coinName,
-                    style: const TextStyle(color: Colors.red),
-                  )
-                ],
-              ),
-            ),
-          if (blockChainName != null)
-            Text.rich(
-              TextSpan(
-                text: "▪请再次确认您选择的主网络是 ",
-                children: [
-                  TextSpan(
-                    text: blockChainName,
-                    style: const TextStyle(color: Colors.red),
-                  )
-                ],
-              ),
-            )
         ],
       ),
     );
@@ -256,16 +278,20 @@ final _blockchainProvider = StateProvider.autoDispose<Blockchain?>((ref) {
   return null;
 });
 
-final rechageProvider = FutureProvider.autoDispose<dynamic>((
+final rechageProvider = FutureProvider.autoDispose<String?>((
   ref,
 ) async {
   final currency = ref.watch(_currencyProvider);
   final blockchain = ref.watch(_blockchainProvider);
 
-  if (currency == null || blockchain == null) return;
+  if (currency == null || blockchain == null) {
+    return null;
+  }
 
-  return apis.wallet.getDepositAddress({
+  final address = await apis.wallet.getDepositAddress({
     "currency": currency.name,
     "blockchain": blockchain.name,
   });
+
+  return address;
 });

@@ -11,9 +11,10 @@ class SecurityAuthrization extends StatelessWidget {
         name: "邮箱",
         value: maskEmail(user.email),
         description: "用于登录、提现和修改安全设置",
-        action: UiButton.text(
+        action: SecurityButton(
+          context: context,
           label: user.emailValid ? "修改" : "绑定",
-          onPressed: () async {
+          onTap: () async {
             await context.pushNamed(Routes.updateEmail);
           },
         ),
@@ -23,9 +24,10 @@ class SecurityAuthrization extends StatelessWidget {
         name: "手机",
         value: maskPhoneNumber(user.phone),
         description: "用于登录、提现和修改安全设置",
-        action: UiButton.text(
+        action: SecurityButton(
+          context: context,
           label: user.phoneValid ? "修改" : "绑定",
-          onPressed: () async {
+          onTap: () async {
             await context.pushNamed(Routes.updatePhone);
           },
         ),
@@ -35,9 +37,10 @@ class SecurityAuthrization extends StatelessWidget {
         name: "谷歌验证器",
         value: "",
         description: "用于登录、提现和修改安全设置",
-        action: UiButton.text(
+        action: SecurityButton(
+          context: context,
           label: user.googleSecretValid ? "修改" : "绑定",
-          onPressed: () async {
+          onTap: () async {
             final String code = await apis.user.applyF2A();
             await context.pushNamed(Routes.f2a, extra: code);
           },

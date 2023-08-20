@@ -60,60 +60,63 @@ class _DatePickerState extends State<DatePicker> {
       validator: widget.validator,
       onSaved: _setValue,
       builder: (field) {
-        return GestureDetector(
-          onTap: () async {
-            String value = await showDialog(
-              context: context,
-              builder: (context) {
-                return Center(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: Container(
-                      color: Colors.white,
-                      width: 360,
-                      height: 360,
-                      child: SfDateRangePicker(
-                        controller: DateRangePickerController(),
-                        minDate: widget.minDate,
-                        maxDate: widget.maxDate,
-                        initialDisplayDate: widget.initDate,
-                        showTodayButton: true,
-                        showActionButtons: true,
-                        cancelText: "取消",
-                        confirmText: "确定",
-                        onCancel: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                        onSelectionChanged: (dateTime) {
-                          final value = dateFormatter.format(dateTime.value as DateTime);
-                          text = value;
-                          Navigator.of(context, rootNavigator: true).pop(value);
-                          field.setState(() {
-                            field.setValue(value);
-                            field.validate();
-                          });
-                        },
+        return SelectionContainer.disabled(
+          child: InkWell(
+            onTap: () async {
+              String value = await showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      child: Container(
+                        color: Colors.white,
+                        width: 360,
+                        height: 360,
+                        child: SfDateRangePicker(
+                          controller: DateRangePickerController(),
+                          minDate: widget.minDate,
+                          maxDate: widget.maxDate,
+                          initialDisplayDate: widget.initDate,
+                          showTodayButton: true,
+                          showActionButtons: true,
+                          cancelText: "取消",
+                          confirmText: "确定",
+                          onCancel: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                          onSelectionChanged: (dateTime) {
+                            final value = dateFormatter.format(dateTime.value as DateTime);
+                            text = value;
+                            Navigator.of(context, rootNavigator: true).pop(value);
+                            field.setState(() {
+                              field.setValue(value);
+                              field.validate();
+                            });
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-            );
-          },
-          child: SizedBox(
-            height: 56,
-            width: 150,
-            child: InputDecorator(
-                isEmpty: text == null,
-                decoration: InputDecoration(
+                  );
+                },
+              );
+            },
+            child: SizedBox(
+              height: 48,
+              width: 150,
+              child: InputDecorator(
+                  isEmpty: text == null,
+                  decoration: InputDecoration(
                     contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
-                    labelText: widget.labelText,
+                    hintText: widget.labelText,
                     border: const OutlineInputBorder(),
-                    suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined)),
-                child: Text(
-                  text ?? "",
-                  style: Font.medium,
-                )),
+                    suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
+                  ),
+                  child: Text(
+                    text ?? "",
+                    style: Font.medium,
+                  )),
+            ),
           ),
         );
       },

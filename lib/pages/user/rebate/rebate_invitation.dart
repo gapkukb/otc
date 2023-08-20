@@ -11,6 +11,7 @@ class RebateInvitation extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     return Panel(
+      margin: const EdgeInsets.only(top: 8),
       title: "邀请明细",
       child: Consumer(
         builder: (context, ref, child) {

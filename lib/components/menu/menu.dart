@@ -4,8 +4,9 @@ import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_chip.dart';
 
 class Menu extends PopupMenuButton {
-  final String text;
+  // final String text;
   final List<MenuItem> items;
+
   Menu({
     super.key,
     super.clipBehavior,
@@ -26,23 +27,12 @@ class Menu extends PopupMenuButton {
     super.splashRadius,
     super.surfaceTintColor = Colors.white,
     super.tooltip,
-    required this.text,
+    super.icon,
+    super.child,
+    // required this.text,
     required this.items,
   }) : super(
             padding: EdgeInsets.zero,
-            child: SizedBox(
-              height: 56,
-              child: Padding(
-                padding: Pads.xAxisSm,
-                child: UiChip(
-                  text: text,
-                  textStyle: Font.small,
-                  iconSize: 18,
-                  icon: Icons.keyboard_arrow_down_outlined,
-                  iconOnRight: true,
-                ),
-              ),
-            ),
             itemBuilder: (_) {
               return items.map((item) {
                 return PopupMenuItem(
@@ -73,32 +63,32 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-      leading: icon == null
-          ? null
-          : Material(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(4),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(icon),
+    return SelectionContainer.disabled(
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
+        leading: icon == null
+            ? null
+            : Material(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(4),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(icon),
+                ),
               ),
-            ),
-      title: Text(
-        title,
-        style: Font.small,
+        title: Text(
+          title,
+          style: Font.small,
+        ),
+        subtitle: subtitle == null
+            ? null
+            : Text(
+                subtitle!,
+                style: Font.miniGrey,
+              ),
+        trailing: showArrow == true ? const Icon(Icons.keyboard_arrow_right_outlined) : trailing,
       ),
-      subtitle: subtitle == null
-          ? null
-          : Text(
-              subtitle!,
-              style: Font.miniGrey,
-            ),
-      trailing: showArrow == true
-          ? const Icon(Icons.keyboard_arrow_right_outlined)
-          : trailing,
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:otc/components/tip/tip.dart';
 import 'package:otc/providers/wallet.provider.dart';
 import 'package:otc/router/router.dart';
 import 'package:otc/theme/text_theme.dart';
+import 'package:otc/utils/auth.dart';
 import 'package:otc/utils/number.dart';
 import 'package:otc/utils/predication.dart';
 import 'package:otc/widgets/ui_button.dart';
@@ -72,7 +73,7 @@ class WalletHome extends ConsumerWidget {
         "child": "提币",
         "variant": UiButtonVariant.outline,
         "onPressed": () async {
-          if (await predication(types: [Predication.kyc1])) {
+          if (await authUtil()) {
             context.push(Routes.withdrawal);
           }
         },
@@ -80,8 +81,10 @@ class WalletHome extends ConsumerWidget {
       {
         "child": "平台转账",
         "variant": UiButtonVariant.outline,
-        "onPressed": () {
-          context.push(Routes.transfer);
+        "onPressed": () async {
+          if (await authUtil()) {
+            context.push(Routes.transfer);
+          }
         },
       },
     ];

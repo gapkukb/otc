@@ -26,29 +26,33 @@ class Overview extends ConsumerWidget {
       ),
       children: items.map(item).toList()
         ..add(_buildItem(
-          ListTile(
-            title: UiButton(
-              size: UiButtonSize.medium,
-              label: "充值",
-              onPressed: () {
-                context.push(Routes.recharge);
-              },
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: UiButton(
-                variant: UiButtonVariant.outline,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(0),
+              title: UiButton(
                 size: UiButtonSize.medium,
-                label: "提币",
-                onPressed: () async {
-                  if (await predication(types: [
-                    Predication.phone,
-                    Predication.kyc1,
-                    Predication.funds,
-                  ])) {
-                    context.push(Routes.withdrawal);
-                  }
+                label: "充值",
+                onPressed: () {
+                  context.push(Routes.recharge);
                 },
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 24.0),
+                child: UiButton(
+                  variant: UiButtonVariant.outline,
+                  size: UiButtonSize.medium,
+                  label: "提币",
+                  onPressed: () async {
+                    if (await predication(types: [
+                      Predication.phone,
+                      Predication.kyc1,
+                      Predication.funds,
+                    ])) {
+                      context.push(Routes.withdrawal);
+                    }
+                  },
+                ),
               ),
             ),
           ),
@@ -86,11 +90,8 @@ class Overview extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              item['unit'] ?? "USDT",
-              // style: Theme.of(context)
-              //     .textTheme
-              //     .bodySmall!
-              //     .copyWith(color: Colors.grey),
+              item['unit'] ?? "USD",
+              style: const TextStyle(color: Color(0xff7c8db5)),
             ),
           ],
         ),

@@ -32,6 +32,7 @@ class WalletMethodBank extends ConsumerWidget {
             DataColumn2(label: Text("银行卡号")),
             DataColumn2(label: Text("银行名称")),
             DataColumn2(label: Text("开户支行")),
+            DataColumn2(label: Text("备注")),
             DataColumn2(
                 label: Text(
                   "\t\t\t操作",
@@ -44,8 +45,9 @@ class WalletMethodBank extends ConsumerWidget {
               cells: [
                 DataCell(Text(item.name)),
                 DataCell(Text(item.cardNumber)),
-                DataCell(Text(item.bank)),
+                DataCell(Text(item.bankCnName)),
                 DataCell(Text(item.bankBranch)),
+                DataCell(Text(item.title)),
                 DataCell(
                   UiButton(
                     variant: UiButtonVariant.text,

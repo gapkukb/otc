@@ -52,19 +52,22 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
         if (widget.formKey.currentState!.validate()) {
           widget.formKey.currentState!.save();
           final List<String> keys = [];
-          final List<SvgPicture> icons = [];
+          final List<Image> icons = [];
 
           for (var method in payments) {
             if (keys.contains(method.paymentMethod.value)) {
               continue;
             }
             keys.add(method.paymentMethod.value);
-            icons.add(method.paymentMethod.icon);
+            icons.add(
+              method.paymentMethod.icon(),
+            );
           }
           final isBuying = widget.type == AdPostType.buying;
 
           final ok = await adPostSubmit(context, icons, {
             ...widget.formState,
+            "finalRate": widget.formState['refRate'] + widget.formState['floatOffset'],
             "channels": payments
                 .map((payment) => {
                       "reference": payment.reference,
@@ -114,7 +117,7 @@ class _AdPostNextState extends ConsumerState<AdPostNext> with SingleTickerProvid
               )
             else
               SizedBox(
-                height: height - 500,
+                height: math.min(height - 400, 400),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
                     crossAxisCount: 2,

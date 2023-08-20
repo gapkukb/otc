@@ -30,6 +30,7 @@ class RebateStatics extends ConsumerWidget {
     return DefaultTabController(
       length: items.length,
       child: Panel(
+        margin: const EdgeInsets.only(top: 8),
         titleWidget: TabBar(
           isScrollable: true,
           padding: const EdgeInsets.symmetric(horizontal: 32),

@@ -22,21 +22,23 @@ class _WalletHistoryState extends State<WalletHistory> {
       length: 3,
       initialIndex: widget.initialIndex ?? 0,
       child: const Panel(
-        titleWidget: TabBar(
-          isScrollable: true,
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          dividerColor: Colors.transparent,
-          labelPadding: EdgeInsets.all(16.0),
-          physics: NeverScrollableScrollPhysics(),
-          tabs: [
-            Text("区块链转账"),
-            Text("平台转账"),
-            Text("划转记录"),
-          ],
+        titleWidget: SelectionContainer.disabled(
+          child: TabBar(
+            isScrollable: true,
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            dividerColor: Colors.transparent,
+            labelPadding: EdgeInsets.all(16.0),
+            physics: NeverScrollableScrollPhysics(),
+            tabs: [
+              Text("区块链转账"),
+              Text("平台转账"),
+              Text("划转记录"),
+            ],
+          ),
         ),
         child: Expanded(
           child: Padding(
-            padding: EdgeInsets.all(32.0),
+            padding: EdgeInsets.all(24.0),
             child: TabBarView(
               clipBehavior: Clip.none,
               children: [

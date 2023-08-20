@@ -12,48 +12,50 @@ class OrderC2c extends StatefulWidget {
 class _OrderC2cState extends State<OrderC2c> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: DefaultTabController(
-        initialIndex: 1,
-        length: 2,
-        child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return const [
-              SliverToBoxAdapter(
-                child: TabBar(
-                  isScrollable: true,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  dividerColor: Colors.transparent,
-                  tabs: [
-                    Tab(
-                      child: Text(
-                        "进行中",
-                        style: TextStyle(color: Colors.black),
+    return Card(
+      child: Scaffold(
+        body: DefaultTabController(
+          initialIndex: 1,
+          length: 2,
+          child: NestedScrollView(
+            floatHeaderSlivers: false,
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return const [
+                SliverToBoxAdapter(
+                  child: TabBar(
+                    isScrollable: true,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    dividerColor: Colors.transparent,
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "进行中",
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "全部订单",
-                        style: TextStyle(color: Colors.black),
+                      Tab(
+                        child: Text(
+                          "全部订单",
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Divider(
-                  height: 1,
-                  thickness: 0.5,
+                SliverToBoxAdapter(
+                  child: Divider(
+                    height: 1,
+                    thickness: 0.5,
+                  ),
                 ),
-              ),
-            ];
-          },
-          body: const TabBarView(
-            children: [
-              PendingC2cOrder(),
-              AllC2cOrder(),
-            ],
+              ];
+            },
+            body: const TabBarView(
+              children: [
+                PendingC2cOrder(),
+                AllC2cOrder(),
+              ],
+            ),
           ),
         ),
       ),

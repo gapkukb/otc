@@ -31,15 +31,15 @@ Future<bool?> adPostSubmit(BuildContext context, List<Widget> icons, Map<String,
                   ),
                   _Cell(
                     titleText: "成交单价",
-                    trailingText: "${payload['refRate']} ${payload['coin']}",
+                    trailingText: "${((payload['finalRate']) as double).decimalize()} ${payload['coin']}",
                   ),
                   _Cell(
                     titleText: "数量",
-                    trailingText: "${payload['amount']} ${payload['coin']}",
+                    trailingText: "${(payload['amount'] as String).decimalize()} ${payload['coin']}",
                   ),
                   _Cell(
                     titleText: "成交总价",
-                    trailingText: "${(double.parse(payload['amount'].toString()) * double.parse(payload['refRate'].toString())).toString()} ${payload['money']}",
+                    trailingText: "${(double.parse(payload['amount']) * payload['finalRate']).decimalize()} ${payload['money']}",
                   ),
                 ],
               ),

@@ -56,9 +56,31 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "登录",
-                  style: Theme.of(context).textTheme.headlineSmall,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SizedBox(
+                      height: 48,
+                      width: double.infinity,
+                      child: Text(
+                        "登录",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Positioned(
+                      right: -12,
+                      top: -12,
+                      width: 48,
+                      height: 48,
+                      child: IconButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                        icon: const Icon(Icons.close_outlined),
+                      ),
+                    )
+                  ],
                 ),
                 const SizedBox(height: 32),
                 TabBar(
@@ -67,10 +89,10 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                   controller: _controller,
                   tabs: const [
                     Tab(
-                      text: "邮箱登录",
+                      text: "邮箱",
                     ),
                     Tab(
-                      text: "手机登录",
+                      text: "手机",
                     ),
                   ],
                 ),
@@ -80,7 +102,7 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Gap.small(),
+                      const Gap.xlarge(),
                       _showEmail
                           ? TextFormFieldEmail(
                               name: "username",
@@ -90,14 +112,14 @@ class _LoginState extends ConsumerState<Login> with SingleTickerProviderStateMix
                               name: "username",
                               formState: _formState,
                             ),
-                      const Gap.small(),
+                      const Gap.medium(),
                       TextFormFieldPassword(
                         formState: _formState,
                         onFieldSubmitted: (_) {
                           login();
                         },
                       ),
-                      const Gap.small(),
+                      const SizedBox(height: 86),
                       UiButton(
                         fullWidth: true,
                         size: UiButtonSize.large,

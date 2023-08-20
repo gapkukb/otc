@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/global/global.dart';
 import 'package:otc/models/kyc/kyc.model.dart';
 import 'package:otc/models/user/user.model.dart';
 import 'package:otc/providers/provider.dart';
+import 'package:otc/providers/wallet.provider.dart';
+import 'package:universal_html/html.dart' as html;
 
 class UserNotifier extends StateNotifier<UserModel> {
   UserNotifier() : super(global.user);
@@ -19,7 +22,6 @@ class UserNotifier extends StateNotifier<UserModel> {
       "username": username,
       "password": password,
     });
-
     global.updateAuthorization(token);
     timerRefreshToken();
     return await updateUser();
@@ -31,6 +33,7 @@ class UserNotifier extends StateNotifier<UserModel> {
     updateShouldNotify(state, user);
     state = user;
     provider.read(authProvider.notifier).state = true;
+    provider.read(walletProvider.notifier).updateWallet();
     return user;
   }
 
@@ -44,8 +47,12 @@ class UserNotifier extends StateNotifier<UserModel> {
     state = newState;
     global.updateUser(state);
     global.updateAuthorization(null);
+    global.updateCaptchaToken(null);
     _timer?.cancel();
     provider.read(authProvider.notifier).state = false;
+    if (kIsWeb) {
+      html.window.location.reload();
+    }
   }
 
   void updateNickName(String nickname) {

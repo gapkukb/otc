@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
@@ -20,7 +18,9 @@ class _AuthSeniorState extends State<AuthSenior> {
   int step = 1;
   final formKey = GlobalKey<FormState>();
   final Map<String, dynamic> formState = {};
-  final controller = UploadController();
+  final controller = UploadController(
+    mediaType: MediaType.video,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,6 @@ class _AuthSeniorState extends State<AuthSenior> {
         onCompelete: (_) async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-
             final close = Modal.showLoading("正在上传并提交，这可能需要一点时间\n请勿离开");
             try {
               final urls = await controller.upload();

@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otc/components/dropdown/dropdown.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/widgets/ui_chip.dart';
 
 DropdownItem buildItem(Cryptocurrency item) {
   return DropdownItem(
-    leading: SvgPicture.asset(
-      item.iconPath,
-      width: 24,
-      fit: BoxFit.cover,
-      allowDrawingOutsideViewBox: true,
-      clipBehavior: Clip.none,
-    ),
+    leading: item.icon,
     title: item.name,
     value: item.name,
   );
@@ -31,11 +24,11 @@ class CurrencySelector extends Dropdown {
           dropdownBuilder: (context, selectedItem) {
             if (selectedItem == null) return null;
             return SizedBox(
-              height: 60,
+              height: 48,
               child: UiChip(
                 text: selectedItem.title,
                 iconWidget: selectedItem.leading,
-                spacing: 16,
+                spacing: 8,
               ),
             );
           },

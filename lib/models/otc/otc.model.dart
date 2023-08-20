@@ -67,8 +67,13 @@ class OtcModel with _$OtcModel {
 
     /// 最低返佣额度
     required num lowestCommission,
+
+    ///maker单最低限额
+    required num makerMin,
+
+    ///Maker单的最高限额
+    required num makerMax,
   }) = _OtcModel;
 
-  factory OtcModel.fromJson(Map<String, Object?> json) =>
-      _$OtcModelFromJson(json);
+  factory OtcModel.fromJson(Map<String, Object?> json) => _$OtcModelFromJson(json);
 }

@@ -43,12 +43,6 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
   }
 
   @override
-  void didUpdateWidget(covariant UiNumberStepper oldWidget) {
-    _value = widget.initValue ?? widget.min;
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: widget.disabeld,
@@ -72,7 +66,10 @@ class _UiNumberStepperState extends State<UiNumberStepper> {
               fillColor: Colors.grey.shade100.withOpacity(0.6),
               prefixIcon: IconButton(
                 onPressed: decrease,
-                icon: const Icon(Icons.remove),
+                icon: Icon(
+                  Icons.remove,
+                  color: Colors.black.withAlpha(200),
+                ),
               ),
               suffixIcon: IconButton(
                 onPressed: increase,

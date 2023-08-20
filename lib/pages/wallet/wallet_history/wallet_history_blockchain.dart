@@ -38,7 +38,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
       "deposit": formState["deposit"] ?? true,
       "currency": formState["currency"] ?? Cryptocurrency.USDT.name,
       "reference": formState["reference"],
-      "confirmed": formState["confirmed"] ?? "UNKNOWN",
+      "confirmed": formState["confirmed"] == "" ? null : formState["confirmed"],
       "page": pageNo,
       "pageSize": pageSize,
       "begin": "$begin 00:00:00",
@@ -80,6 +80,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                 },
                 formState: formState,
               ),
+              const SizedBox(height: 8),
               Expanded(
                 child: Stack(
                   children: [
@@ -98,7 +99,12 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                         ],
                         columnSpacing: 4,
                         dividerThickness: 0.001,
-                        empty: provider.isLoading ? null : const UiEmptyView(),
+                        empty: provider.isLoading
+                            ? null
+                            : const UiEmptyView(
+                                iconSize: 140,
+                                title: "未找到转账记录",
+                              ),
                         rows: data.records.map((row) {
                           return DataRow(cells: [
                             DataCell(Text(row.createdTime)),
@@ -108,7 +114,7 @@ class _WalletHistoryBlockchainState extends ConsumerState<WalletHistoryBlockchai
                             DataCell(UiClipboard(
                               text: row.fromAddress,
                               iconSize: 16,
-                              child: Text(maskText(row.fromAddress)),
+                              child: Text(maskText(row.fromAddress ?? "")),
                             )),
                             DataCell(UiClipboard(
                               text: row.toAddress,

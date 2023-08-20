@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/global/global.dart';
-import 'package:otc/models/wallet.bank/wallet.bank.model.dart';
 import 'package:otc/pages/ad/ad_buying/ad_buying.dart';
 import 'package:otc/pages/ad/ad_history/ad_history.dart';
 import 'package:otc/pages/ad/ad_own/ad_own.dart';
@@ -28,6 +27,7 @@ import 'package:otc/pages/order/pending.spot.order/pending.spot.order.dart';
 import 'package:otc/pages/user/auth/auth_junior.dart';
 import 'package:otc/pages/user/auth/auth_primary.dart';
 import 'package:otc/pages/user/auth/auth_senior.dart';
+import 'package:otc/pages/user/invitation/invitation.dart';
 import 'package:otc/pages/user/merchant/merchant.dart';
 import 'package:otc/pages/user/auth/auth.dart';
 import 'package:otc/pages/user/c2c/c2c.dart';
@@ -68,7 +68,7 @@ import 'package:otc/pages/merchant/income/income.dart';
 
 import 'package:otc/pages/account/register/register.dart';
 import 'package:otc/pages/terms/terms.dart';
-import 'package:otc/pages/webview/webview.dart';
+import 'package:otc/pages/course/course.dart';
 import 'package:otc/utils/navigator.dart';
 
 import '../layout/layout.dart';
@@ -80,7 +80,7 @@ part "router.helper.dart";
 final router = GoRouter(
   navigatorKey: navigatorKey,
   // 根据平台和启动页引导页区分
-  initialLocation: Routes.rebate,
+  initialLocation: Routes.course,
   debugLogDiagnostics: true,
 
   redirect: (context, state) {

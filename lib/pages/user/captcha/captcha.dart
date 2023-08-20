@@ -130,10 +130,10 @@ class _CaptchaState extends State<Captcha> {
             UiTextFormField(
               formState: formState,
               name: "payPassword",
-              autofocus: true,
               labelText: "资金密码",
               maxLength: 6,
               keyboardType: TextInputType.number,
+              obscureText: true,
               validator: (value) {
                 return value?.length == 6 ? null : "资金密码为6位数字";
               },
@@ -163,7 +163,6 @@ class _CaptchaState extends State<Captcha> {
           const Gap.small(),
           if (device == CaptchaDevice.f2a)
             UiTextFormField(
-              autofocus: session != CaptchaSession.funds,
               name: "code",
               formState: formState,
               labelText: "谷歌验证码",
@@ -188,7 +187,12 @@ class _CaptchaState extends State<Captcha> {
               onPressed: send,
               onlyNumber: session != CaptchaSession.addF2A,
             ),
-          ...switcher,
+          const Gap.mini(),
+          Wrap(
+            direction: Axis.vertical,
+            spacing: 4,
+            children: switcher,
+          ),
         ],
       ),
     );

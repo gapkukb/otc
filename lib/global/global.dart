@@ -1,8 +1,6 @@
 library globals;
 
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:otc/apis/apis.dart';
@@ -23,6 +21,7 @@ class _Global {
 
   /// 是否已验证是本人
   late String? captchaToken;
+  late DateTime captchaTokenExpire;
   UserModel user = fakerUser();
 
   final keys = _Keys();
@@ -40,6 +39,7 @@ class _Global {
     }
     authorization = prefs.getString(keys.authorization);
     captchaToken = prefs.getString(keys.captchaToken);
+    captchaTokenExpire = DateTime.fromMillisecondsSinceEpoch(prefs.getInt(keys.captchaTokenExpire) ?? 0);
     updateCaptchaToken(captchaToken);
 
     if (authorization != null) {
@@ -56,26 +56,28 @@ class _Global {
 
   updateAuthorization(String? newValue) {
     final String key = keys.authorization;
-
     authorization = newValue;
+    http.updateHeader(key, newValue);
 
     if (newValue == null) {
       prefs.remove(key);
     } else {
       prefs.setString(key, newValue);
     }
-    http.updateHeader(key, newValue);
   }
 
   updateCaptchaToken(String? newValue) {
-    // token 是用于免验证
     final key = keys.captchaToken;
     global.captchaToken = newValue;
     http.updateHeader(key, newValue);
     if (newValue == null) {
       prefs.remove(key);
+      prefs.remove(keys.captchaTokenExpire);
     } else {
       prefs.setString(key, newValue);
+      // 后台15分钟过期，前端设置14分钟过期，尽量确保触发接口的验证逻辑
+      captchaTokenExpire = DateTime.now().add(const Duration(minutes: 14));
+      prefs.setInt(keys.captchaTokenExpire, captchaTokenExpire.millisecondsSinceEpoch);
     }
   }
 

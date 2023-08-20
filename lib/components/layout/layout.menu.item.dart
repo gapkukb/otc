@@ -60,55 +60,60 @@ class LayoutMenuItem extends ListTile {
 
   @override
   Widget build(BuildContext context) {
-    final selected = (GoRouter.of(context).location == path || GoRouter.of(context).location == pathname);
-    return ListTile(
-      key: key,
-      autofocus: autofocus,
-      contentPadding: contentPadding,
-      dense: dense,
-      enableFeedback: enableFeedback,
-      enabled: enabled,
-      focusColor: focusColor,
-      focusNode: focusNode,
-      horizontalTitleGap: horizontalTitleGap,
-      hoverColor: hoverColor,
-      iconColor: iconColor,
-      isThreeLine: isThreeLine,
-      title: Text(name),
-      leading: leading,
-      leadingAndTrailingTextStyle: leadingAndTrailingTextStyle,
-      minLeadingWidth: minLeadingWidth,
-      minVerticalPadding: minVerticalPadding,
-      mouseCursor: mouseCursor,
-      onFocusChange: onFocusChange,
-      onLongPress: onLongPress,
-      selected: selected,
-      selectedColor: selectedColor,
-      selectedTileColor: selectedTileColor,
-      shape: shape,
-      splashColor: splashColor,
-      style: style,
-      subtitle: subtitle,
-      subtitleTextStyle: subtitleTextStyle,
-      textColor: textColor,
-      tileColor: tileColor,
-      titleAlignment: titleAlignment,
-      titleTextStyle: TextStyle(
-        fontSize: 14,
-        color: Colors.black,
-        fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+    final location = GoRouter.of(context).location.split("/");
+
+    final selected = location.contains(path!.substring(1)) || location.contains(pathname?.substring(1));
+
+    return SelectionContainer.disabled(
+      child: ListTile(
+        key: key,
+        autofocus: autofocus,
+        contentPadding: contentPadding,
+        dense: dense,
+        enableFeedback: enableFeedback,
+        enabled: enabled,
+        focusColor: focusColor,
+        focusNode: focusNode,
+        horizontalTitleGap: horizontalTitleGap,
+        hoverColor: hoverColor,
+        iconColor: iconColor,
+        isThreeLine: isThreeLine,
+        title: Text(name),
+        leading: leading,
+        leadingAndTrailingTextStyle: leadingAndTrailingTextStyle,
+        minLeadingWidth: minLeadingWidth,
+        minVerticalPadding: minVerticalPadding,
+        mouseCursor: mouseCursor,
+        onFocusChange: onFocusChange,
+        onLongPress: onLongPress,
+        selected: selected,
+        selectedColor: selectedColor,
+        selectedTileColor: selectedTileColor,
+        shape: shape,
+        splashColor: splashColor,
+        style: style,
+        subtitle: subtitle,
+        subtitleTextStyle: subtitleTextStyle,
+        textColor: textColor,
+        tileColor: tileColor,
+        titleAlignment: titleAlignment,
+        titleTextStyle: TextStyle(
+          fontSize: 14,
+          color: Colors.black,
+          fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+        ),
+        trailing: trailing,
+        visualDensity: visualDensity,
+        onTap: () {
+          if (onPressed != null) {
+            onPressed!();
+          } else if (path != null) {
+            navigatorKey.currentContext!.go(path!);
+          } else if (pathname != null) {
+            navigatorKey.currentContext!.goNamed(pathname!);
+          }
+        },
       ),
-      trailing: trailing,
-      visualDensity: visualDensity,
-      onTap: () {
-        if (onPressed != null) {
-          onPressed!();
-        } else if (path != null) {
-          navigatorKey.currentContext!.go(path!);
-        } else if (pathname != null) {
-          navigatorKey.currentContext!.goNamed(pathname!);
-        }
-      },
     );
   }
 }

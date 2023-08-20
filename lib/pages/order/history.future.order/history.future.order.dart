@@ -17,58 +17,63 @@ class HistoryFutureOrder extends StatefulWidget {
 class _HistoryFutureOrderState extends State<HistoryFutureOrder> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 16, 16, 0),
-          child: AppBar(
-            clipBehavior: Clip.none,
-            title: Wrap(
-              spacing: 16,
-              children: [
-                SizedBox(
-                  width: 150,
-                  child: DatePicker(
-                    labelText: "开始日期",
-                    maxDate: DateTime.now(),
+    return Card(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 32, 32, 0),
+            child: AppBar(
+              clipBehavior: Clip.none,
+              title: Wrap(
+                spacing: 16,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: DatePicker(
+                      labelText: "开始日期",
+                      maxDate: DateTime.now(),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 150,
-                  child: DatePicker(
-                    labelText: "结束日期",
-                    maxDate: DateTime.now(),
+                  SizedBox(
+                    width: 150,
+                    child: DatePicker(
+                      labelText: "结束日期",
+                      maxDate: DateTime.now(),
+                    ),
                   ),
-                ),
+                ],
+              ),
+              actions: [
+                UiButton(
+                  onPressed: () {},
+                  label: "搜索",
+                )
               ],
             ),
-            actions: [
-              UiButton(
-                onPressed: () {},
-                label: "搜索",
-              )
-            ],
           ),
         ),
-      ),
-      body: DataTable2(
-        columnSpacing: 4,
-        headingTextStyle: Font.miniGrey,
-        columns: const [
-          DataColumn2(label: Text("合约")),
-          DataColumn2(label: Text("时间")),
-          DataColumn2(label: Text("订单类型")),
-          DataColumn2(label: Text("方向")),
-          DataColumn2(label: Text("价格")),
-          DataColumn2(label: Text("成交均价")),
-          DataColumn2(label: Text("成交数量")),
-          DataColumn2(label: Text("金额")),
-          DataColumn2(label: Text("触发条件")),
-          DataColumn2(label: Text("状态")),
-        ],
-        rows: const [],
-        empty: const UiEmptyView(),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: DataTable2(
+            columnSpacing: 4,
+            headingTextStyle: Font.miniGrey,
+            columns: const [
+              DataColumn2(label: Text("合约")),
+              DataColumn2(label: Text("时间")),
+              DataColumn2(label: Text("订单类型")),
+              DataColumn2(label: Text("方向")),
+              DataColumn2(label: Text("价格")),
+              DataColumn2(label: Text("成交均价")),
+              DataColumn2(label: Text("成交数量")),
+              DataColumn2(label: Text("金额")),
+              DataColumn2(label: Text("触发条件")),
+              DataColumn2(label: Text("状态")),
+            ],
+            rows: const [],
+            empty: const UiEmptyView(),
+          ),
+        ),
       ),
     );
   }

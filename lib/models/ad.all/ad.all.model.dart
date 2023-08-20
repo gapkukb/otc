@@ -26,6 +26,8 @@ class AdAllModel {
   final int makerSuccessTimes;
   final List<String> methods;
   final String createdTime;
+  final num minLimit;
+  final num maxLimit;
 
   AdAllModel({
     required this.reference,
@@ -48,6 +50,8 @@ class AdAllModel {
     required this.makerSuccessTimes,
     required this.methods,
     required this.createdTime,
+    required this.minLimit,
+    required this.maxLimit,
   });
 
   factory AdAllModel.fromJson(Map<String, dynamic> json) => _$AdAllModelFromJson(json);

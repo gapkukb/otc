@@ -6,6 +6,7 @@ import 'package:otc/models/user_base/user_base.model.dart';
 import 'package:otc/pages/user/home/indicator.dart';
 import 'package:otc/providers/user.provider.dart';
 import 'package:otc/router/router.dart';
+import 'package:otc/theme/padding.dart';
 import 'package:otc/theme/text_theme.dart';
 import 'package:otc/widgets/ui_clipboard.dart';
 
@@ -37,33 +38,37 @@ class _UserTopBlockState extends ConsumerState<UserTopBlock> {
     return Row(
       children: [
         Expanded(
+          flex: 3,
           child: _buildBaseInfo(user, lastLoggedIp),
         ),
-        SizedBox(
-          width: 300,
-          height: 228,
-          child: Card(
-            child: Column(
-              children: [
-                ListTile(
-                  // isThreeLine: true,
-                  title: const Text("安全等级"),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    context.push(Routes.security);
-                  },
-                ),
-                const Divider(
-                  height: 2,
-                ),
-                Expanded(
-                  child: Center(
-                    child: Indicator(
-                      value: securityLevel,
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            width: 300,
+            height: 228,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: Pads.sm,
+                    child: Text(
+                      "安全等级",
+                      style: Font.medium,
                     ),
                   ),
-                ),
-              ],
+                  const Divider(
+                    height: 1,
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Indicator(
+                        value: securityLevel,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -48,7 +48,7 @@ class HomeAdvantage extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
             crossAxisCount: 4,
             height: 420,
-            // crossAxisSpacing: 32,
+            crossAxisSpacing: 24,
           ),
           itemBuilder: (context, index) {
             final item = datalist[index];
@@ -60,8 +60,14 @@ class HomeAdvantage extends StatelessWidget {
   }
 
   Widget newItem(dynamic item) {
-    return Card(
-      elevation: 6,
+    return Material(
+      elevation: 3,
+      color: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

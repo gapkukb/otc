@@ -1951,6 +1951,22 @@ class $AssetsCoinsGen {
       ];
 }
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/MicrosoftYaHei.ttf
+  String get microsoftYaHei => 'assets/fonts/MicrosoftYaHei.ttf';
+
+  /// File path: assets/fonts/PingFangSC.ttf
+  String get pingFangSC => 'assets/fonts/PingFangSC.ttf';
+
+  /// File path: assets/fonts/iconfont.ttf
+  String get iconfont => 'assets/fonts/iconfont.ttf';
+
+  /// List of all assets
+  List<String> get values => [microsoftYaHei, pingFangSC, iconfont];
+}
+
 class $AssetsHtmlsGen {
   const $AssetsHtmlsGen();
 
@@ -1972,8 +1988,32 @@ class $AssetsImagesGen {
   SvgGenImage get adCloseButton =>
       const SvgGenImage('assets/images/ad_close_button.svg');
 
-  /// File path: assets/images/alipay.svg
-  SvgGenImage get alipay => const SvgGenImage('assets/images/alipay.svg');
+  /// File path: assets/images/alipay.png
+  AssetGenImage get alipay => const AssetGenImage('assets/images/alipay.png');
+
+  /// File path: assets/images/course_1.png
+  AssetGenImage get course1 =>
+      const AssetGenImage('assets/images/course_1.png');
+
+  /// File path: assets/images/course_2.png
+  AssetGenImage get course2 =>
+      const AssetGenImage('assets/images/course_2.png');
+
+  /// File path: assets/images/course_3.png
+  AssetGenImage get course3 =>
+      const AssetGenImage('assets/images/course_3.png');
+
+  /// File path: assets/images/course_4.png
+  AssetGenImage get course4 =>
+      const AssetGenImage('assets/images/course_4.png');
+
+  /// File path: assets/images/course_5.png
+  AssetGenImage get course5 =>
+      const AssetGenImage('assets/images/course_5.png');
+
+  /// File path: assets/images/course_6.png
+  AssetGenImage get course6 =>
+      const AssetGenImage('assets/images/course_6.png');
 
   /// File path: assets/images/default_avatar.png
   AssetGenImage get defaultAvatar =>
@@ -2045,17 +2085,24 @@ class $AssetsImagesGen {
   AssetGenImage get topBanner =>
       const AssetGenImage('assets/images/top-banner.png');
 
-  /// File path: assets/images/unionpay.svg
-  SvgGenImage get unionpay => const SvgGenImage('assets/images/unionpay.svg');
+  /// File path: assets/images/unionpay.png
+  AssetGenImage get unionpay =>
+      const AssetGenImage('assets/images/unionpay.png');
 
-  /// File path: assets/images/wechat.svg
-  SvgGenImage get wechat => const SvgGenImage('assets/images/wechat.svg');
+  /// File path: assets/images/wechat.png
+  AssetGenImage get wechat => const AssetGenImage('assets/images/wechat.png');
 
   /// List of all assets
   List<dynamic> get values => [
         waveHeader,
         adCloseButton,
         alipay,
+        course1,
+        course2,
+        course3,
+        course4,
+        course5,
+        course6,
         defaultAvatar,
         empty,
         image1,
@@ -2096,6 +2143,7 @@ class Assets {
   Assets._();
 
   static const $AssetsCoinsGen coins = $AssetsCoinsGen();
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsHtmlsGen htmls = $AssetsHtmlsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsJsonsGen jsons = $AssetsJsonsGen();

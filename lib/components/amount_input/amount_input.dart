@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:otc/components/gap/gap.dart';
 import 'package:otc/constants/currency.dart';
 import 'package:otc/widgets/ui_button.dart';
 import 'package:otc/widgets/ui_text_form_field.dart';
 import 'package:otc/utils/formatter.dart';
 
+enum AmountInputType {
+  transfer("转账"),
+  widthraw("提币"),
+  ad("广告"),
+  ;
+
+  const AmountInputType(this.text);
+
+  final String text;
+}
+
 class AmountInput extends UiTextFormField {
   final Cryptocurrency coin;
   final double? maxAmount;
+  final double? minAmount;
   final String? hintText;
+  final AmountInputType amountInputType;
 
   AmountInput({
     super.key,
@@ -19,8 +31,10 @@ class AmountInput extends UiTextFormField {
     super.controller,
     required this.coin,
     this.maxAmount,
+    this.minAmount,
     this.hintText,
     super.onChanged,
+    this.amountInputType = AmountInputType.widthraw,
   }) : super(
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: decimalTextInputFormatter,
@@ -33,7 +47,7 @@ class AmountInput extends UiTextFormField {
                     minWidth: 50,
                     size: UiButtonSize.small,
                     onPressed: () {
-                      if (controller != null) {
+                      if (controller != null && maxAmount != null) {
                         controller.text = maxAmount.toString();
                         controller.selection = TextSelection.fromPosition(
                           TextPosition(offset: controller.text.length),
@@ -53,8 +67,13 @@ class AmountInput extends UiTextFormField {
               if (val == null) {
                 return "您的输入格式不正确";
               }
+
               if (maxAmount != null && val > maxAmount) {
-                return "请不要输入大于可用余额的数量";
+                return "最大${amountInputType.text}数量：$maxAmount USDT";
+              }
+
+              if (minAmount != null && val < minAmount) {
+                return "最小${amountInputType.text}数量：$minAmount USDT";
               }
               return null;
             });

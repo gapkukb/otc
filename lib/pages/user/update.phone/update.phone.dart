@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otc/apis/apis.dart';
 import 'package:otc/components/code_field/code_field.dart';
 import 'package:otc/components/modal/modal.dart';
 import 'package:otc/components/modal_page_template/modal_page_template.dart';
 import 'package:otc/components/text_form_field_phone/text_form_field_phone.dart';
-import 'package:otc/global/global.dart';
 import 'package:otc/pages/user/captcha/captcha.dart';
 import 'package:otc/providers/provider.dart';
 import 'package:otc/providers/user.provider.dart';
@@ -68,7 +66,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
 
             provider.read(userProvider.notifier).updateUser();
             context.pop();
-            Modal.showText(text: "邮箱修改成功");
+            Modal.showText(text: "手机修改成功");
           }
         },
         children: [
