@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:otc/layout/layout.footer.dart';
+// import 'package:otc/layout/layout.footer.dart';
 import 'package:otc/pages/home/home_advantage.dart';
-import 'package:otc/pages/home/home_carousel.dart';
-import 'package:otc/pages/home/home_market.dart';
+// import 'package:otc/pages/home/home_carousel.dart';
+// import 'package:otc/pages/home/home_market.dart';
 import 'package:otc/pages/home/home_biz_plan.dart';
-import 'package:otc/pages/home/home_marqueer.dart';
+// import 'package:otc/pages/home/home_marqueer.dart';
 import 'package:otc/pages/home/home_services.dart';
-import 'package:otc/pages/home/home_test.dart';
 import 'package:otc/pages/home/home_top.dart';
-import 'package:otc/theme/text_theme.dart';
+// import 'package:otc/theme/text_theme.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

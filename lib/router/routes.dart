@@ -291,9 +291,7 @@ final List<RouteBase> routes = [
     page: const NoticeWindow(),
   ),
   GoRoute(
-    path: Routes.webview,
-    builder: (context, state) {
-      return Webview(url: "");
-    },
-  ),
+    path: "/test",
+    builder: (context, state) => const HomeTest(),
+  )
 ];

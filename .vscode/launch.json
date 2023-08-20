@@ -8,7 +8,14 @@
       "name": "otc",
       "request": "launch",
       "type": "dart",
-      "args": ["-d", "edge", "--web-renderer", "html"]
+      "args": [
+        "-d",
+        "edge",
+        "--web-renderer",
+        "html",
+        "--web-hostname",
+        "127.0.0.1"
+      ]
     },
     {
       "name": "otc (profile mode)",
