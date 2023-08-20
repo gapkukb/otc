@@ -68,6 +68,7 @@ import 'package:otc/pages/merchant/income/income.dart';
 
 import 'package:otc/pages/account/register/register.dart';
 import 'package:otc/pages/terms/terms.dart';
+import 'package:otc/pages/webview/webview.dart';
 import 'package:otc/utils/navigator.dart';
 
 import '../layout/layout.dart';
